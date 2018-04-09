@@ -8,9 +8,14 @@ namespace REALWorks.AuthServer.Models
 {
     public class ApplicationUser: IdentityUser
   {
-      public string FirstName { get; set; }
-      public string LastName { get; set; }
-      public DateTime JoinDate { get; set; }
-      public string AvatarImgUrl { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }        
+        public string AvatarImgUrl { get; set; }       
+        public string Telepone1 { get; set; }
+        public string Telepone2 { get; set; }
+        public string SocialMediaContact1 { get; set; }
+        public string SocialMediaContact2 { get; set; }
+        public DateTime JoinDate { get; set; }
+        public DateTime LastLogOn { get; set; }
     }
 }
