@@ -20,6 +20,13 @@ namespace REALWorks.AuthServer.Controllers
         return new string[] { "value1_secured", "value2_secured" };
       }
 
+      [HttpGet]
+      [Route("hello")]
+      public string SayHello()
+      {
+         return "Hello!";
+      }
+
       // GET api/values/5
       [HttpGet("{id}")]
       public string Get(int id)
