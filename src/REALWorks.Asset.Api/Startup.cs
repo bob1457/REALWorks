@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using REALWorks.Asset.Api.Data;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace REALWorks.Asset.Api
@@ -66,6 +67,10 @@ namespace REALWorks.Asset.Api
                                     .AllowAnyHeader()
                                     .AllowCredentials());
             });
+
+            // DI Implementation
+            services.AddTransient<IPropertyRepository, PropertyRepository>();
+            services.AddTransient<IImageRepository, ImageRepository>();
 
             services.AddMvc();
         }

@@ -51,6 +51,9 @@ namespace REALWorks.AuthServer.Controllers
         return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
       }
 
+      // Add update user logon date
+      //
+
       var claims = new[]
                     {
                         new Claim(JwtRegisteredClaimNames.Sub, model.UserName),
