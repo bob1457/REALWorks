@@ -86,14 +86,16 @@ namespace REALWorks.Asset.Api.Controllers
             try
             {
                 await _imageRepository.RemoveImage(imgId);
-               
+
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
- System.IO.File.Delete(filePath + fName); // Delete the file from storage
+            string f = filePath + "\\" + fName;
+
+            System.IO.File.Delete(f); // Delete the file from storage
 
         }
     }
