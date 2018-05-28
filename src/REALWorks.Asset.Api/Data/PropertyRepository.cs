@@ -79,7 +79,7 @@ namespace REALWorks.Asset.Api.Data
             try
             {
                 DeleteResult actionResult
-                    = await _context.Property.DeleteManyAsync(new BsonDocument());
+                    = await _context.ManagementContract.DeleteManyAsync(new BsonDocument());
 
                 return actionResult.IsAcknowledged
                     && actionResult.DeletedCount > 0;

@@ -40,5 +40,13 @@ namespace REALWorks.Asset.Api.Data
                 return _database.GetCollection<PropertyImage>("PropertyImage");
             }
         }
+
+        public IMongoCollection<ManagementContract> ManagementContract
+        {
+            get
+            {
+                return _database.GetCollection<ManagementContract>("ManagementContract");
+            }
+        }
     }
 }

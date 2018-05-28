@@ -10,10 +10,11 @@ namespace REALWorks.Asset.Api.Data
     public interface IManagementContractRepository
     {
         Task<IEnumerable<ManagementContract>> GetAllManagementContract();
-        Task<ManagementContract> GetPropertyManagementContract(ObjectId id);
+
+        Task<ManagementContract> GetPropertyManagementContract(string id);
 
         // add new roperty document
-        Task AddContract(ManagementContract item);
+        Task AddContractAsync(ManagementContract item);
 
         // remove a single document / roperty
         Task<bool> RemoveContract(ObjectId id);

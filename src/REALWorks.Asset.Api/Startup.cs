@@ -77,6 +77,7 @@ namespace REALWorks.Asset.Api
             // DI Implementation
             services.AddTransient<IPropertyRepository, PropertyRepository>();
             services.AddTransient<IImageRepository, ImageRepository>();
+            services.AddTransient<IManagementContractRepository, ManagementContractRepository>();
 
             services.AddMvc();
         }

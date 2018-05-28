@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
+using MongoDB.Driver;
 using REALWorks.Asset.Api.Model;
+using MongoDB.Driver.Linq;
+
+
+
 
 namespace REALWorks.Asset.Api.Data
 {
@@ -19,9 +25,17 @@ namespace REALWorks.Asset.Api.Data
         }
 
 
-        public Task AddContract(ManagementContract item)
+        public async Task AddContractAsync(ManagementContract item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _context.ManagementContract.InsertOneAsync(item);
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
 
         public Task<string> CreateIndex()
@@ -34,9 +48,20 @@ namespace REALWorks.Asset.Api.Data
             throw new NotImplementedException();
         }
 
-        public Task<ManagementContract> GetPropertyManagementContract(ObjectId id)
+        public async Task<ManagementContract> GetPropertyManagementContract(string propertyId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var query = _context.ManagementContract.AsQueryable<ManagementContract>()
+                    .Where(m => m.PropertyId == propertyId);
+                return await query.FirstOrDefaultAsync();
+            }
+
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
 
         public Task<bool> RemoveAllContracts()
