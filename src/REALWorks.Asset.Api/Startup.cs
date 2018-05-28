@@ -68,6 +68,12 @@ namespace REALWorks.Asset.Api
                                     .AllowCredentials());
             });
 
+            services.Configure<Settings>(options =>
+            {
+                options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
+                options.Database = Configuration.GetSection("MongoConnection:Database").Value;
+            });
+
             // DI Implementation
             services.AddTransient<IPropertyRepository, PropertyRepository>();
             services.AddTransient<IImageRepository, ImageRepository>();

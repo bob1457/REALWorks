@@ -10,15 +10,16 @@ namespace REALWorks.Asset.Api.Data
 {
     public class DbContext
     {
-        private readonly IMongoDatabase _datbase = null;
+        private readonly IMongoDatabase _database = null;
 
         public DbContext(IOptions<Settings> settings)
         {
-            //var client = new MongoClient(settings.Value.ConnectionString);
-            var client = new MongoClient("mongodb://localhost:27017");
+            var client = new MongoClient(settings.Value.ConnectionString);
+            //var client = new MongoClient("mongodb://localhost:27017");
             if (client != null)
             {
-                _datbase = client.GetDatabase("AssetDb");
+                //_datbase = client.GetDatabase("AssetDb");
+                _database = client.GetDatabase(settings.Value.Database);
             }
         }
 
@@ -26,7 +27,7 @@ namespace REALWorks.Asset.Api.Data
         {
             get
             {
-                return _datbase.GetCollection<Property>("Property");
+                return _database.GetCollection<Property>("Property");
             }
         }
 
@@ -36,7 +37,7 @@ namespace REALWorks.Asset.Api.Data
         {
             get
             {
-                return _datbase.GetCollection<PropertyImage>("PropertyImage");
+                return _database.GetCollection<PropertyImage>("PropertyImage");
             }
         }
     }

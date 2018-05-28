@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace REALWorks.AuthServer.Migrations
 {
-    public partial class @new : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

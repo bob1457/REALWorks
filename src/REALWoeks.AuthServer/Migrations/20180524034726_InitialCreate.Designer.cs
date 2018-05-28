@@ -11,8 +11,8 @@ using System;
 namespace REALWorks.AuthServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180409205318_new")]
-    partial class @new
+    [Migration("20180524034726_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

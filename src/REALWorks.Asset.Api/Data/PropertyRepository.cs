@@ -22,7 +22,7 @@ namespace REALWorks.Asset.Api.Data
             _context = new DbContext(settings);
         }
 
-        public async Task Addroperty(Property item)
+        public async Task AddProperty(Property item)
         {
             try
             {
@@ -109,7 +109,7 @@ namespace REALWorks.Asset.Api.Data
             }
         }
 
-        public async Task<bool> Updateroperty(ObjectId id, Property property) // This update will update ALL fields of the document
+        public async Task<bool> UpdateProperty(ObjectId id, Property property) // This update will update ALL fields of the document
         {
 
             var filter = Builders<Property>.Filter.Eq(s => s.Id, id);
@@ -191,39 +191,6 @@ namespace REALWorks.Asset.Api.Data
         }
 
 
-
-        //public async Task AddOwnerToProperty(Owner owner, string id)
-        //{
-        //    var propertyOwner = new Owner() {
-        //        FirsName = owner.FirsName,
-        //        LastName = owner.LastName,
-        //        ContactEmail = owner.ContactEmail,
-        //        Addressline1 = owner.Addressline1,
-        //        City = owner.City,
-        //        ProvinceState = owner.ProvinceState,
-        //        PostZipCode = owner.ProvinceState,
-        //        Country = owner.Country
-        //     };
-
-        //    var filter = Builders<Property>.Filter.Eq(s => s.Id, id);
-        //    var update = Builders<Property>.Update.Push(o => o.PropertyOwner.FirsName, propertyOwner.FirsName);
-
-        //    try
-        //    {
-
-        //        UpdateResult result = await _context.Property.UpdateOneAsync(filter, { $push: { } });
-
-
-
-
-        //        //await _context.Property.InsertOneAsync(owner);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // log or manage the exception
-        //        throw ex;
-        //    }
-        //}
 
         #region Private Implementation
 

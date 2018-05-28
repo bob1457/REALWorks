@@ -29,10 +29,12 @@ namespace REALWorks.Asset.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public async Task<Property> GetProperty(ObjectId id)
+        [Route("{id:length(24)}")]
+        public async Task<Property> GetProperty(string id) //(ObjectId id)
         {
-            return await _propertyRepository.GetProperty(id);
+            var propertyId = new ObjectId(id);
+
+            return await _propertyRepository.GetProperty(propertyId);
         }
 
         [HttpPost]
@@ -95,7 +97,7 @@ namespace REALWorks.Asset.Api.Controllers
 
             try
             {
-                _propertyRepository.Addroperty(new Property
+                _propertyRepository.AddProperty(new Property
                 {
                     Id = property.Id,
                     PropertyName = property.PropertyName,
@@ -123,17 +125,21 @@ namespace REALWorks.Asset.Api.Controllers
 
 
         [HttpPut]
-        [Route("{id}")]
-        public void UpdateProperty(ObjectId id, [FromBody] Property value)
+        [Route("{id:length(24)}")]
+        public void UpdateProperty(string id, [FromBody] Property value)
         {
-            _propertyRepository.Updateroperty(id, value);
+            var propertyId = new ObjectId(id);
+
+            _propertyRepository.UpdateProperty(propertyId, value);
         }
 
         [HttpDelete]
-        [Route("delete/{id}")]
-        public void DeleteProperty(ObjectId id)
+        [Route("delete/{id:length(24)}")]
+        public void DeleteProperty(string id)
         {
-            _propertyRepository.RemoveProperty(id);
+            var propertyId = new ObjectId(id);
+
+            _propertyRepository.RemoveProperty(propertyId);
         }
     }
 }

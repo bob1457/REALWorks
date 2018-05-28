@@ -7,25 +7,25 @@ using System.Threading.Tasks;
 
 namespace REALWorks.Asset.Api.Data
 {
-    public interface IPropertyRepository
+    public interface IManagementContractRepository
     {
-        Task<IEnumerable<Property>> GetAllProperties();
-        Task<Property> GetProperty(ObjectId id);
+        Task<IEnumerable<ManagementContract>> GetAllManagementContract();
+        Task<ManagementContract> GetPropertyManagementContract(ObjectId id);
 
         // add new roperty document
-        Task AddProperty(Property item);
+        Task AddContract(ManagementContract item);
 
         // remove a single document / roperty
-        Task<bool> RemoveProperty(ObjectId id);
+        Task<bool> RemoveContract(ObjectId id);
 
         // update just a single document / roperty
-        Task<bool> UpdateProperty(ObjectId id, Property body);
+        Task<bool> UpdateContract(ObjectId id, ManagementContract contract);
 
         // demo interface - full document update
         //Task<bool> UpdateropertyDocument(string id, string body);
 
         // should be used with high cautious, only in relation with demo setup
-        Task<bool> RemoveAllroperties();
+        Task<bool> RemoveAllContracts();
 
         // creates a sample index
         Task<string> CreateIndex();

@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿//using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using REALWorks.Asset.Api.Model;
 using System;
 using System.Collections.Generic;
@@ -54,14 +57,38 @@ namespace REALWorks.Asset.Api.Data
         }
 
 
-        public Task<PropertyImage> GetImage(string id)
+        public async Task<PropertyImage> GetImage(ObjectId id)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            try
+            {                
+                var query = _context.PropertyImage.AsQueryable()
+                    .Where(p => p.Id == id);
+                return await query.FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
 
-        public Task<bool> RemoveImage(PropertyImage id)
+        public async Task<bool> RemoveImage(ObjectId id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DeleteResult actionResult
+                    = await _context.PropertyImage.DeleteOneAsync(
+                        Builders<PropertyImage>.Filter.Eq("Id", id));
+
+                return actionResult.IsAcknowledged
+                    && actionResult.DeletedCount > 0;
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
     }
 }
