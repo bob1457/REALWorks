@@ -64,14 +64,41 @@ namespace REALWorks.Asset.Api.Data
             }
         }
 
-        public Task<bool> RemoveAllContracts()
+        public async Task<bool> RemoveAllContracts()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            try
+            {
+                DeleteResult actionResult
+                    = await _context.ManagementContract.DeleteManyAsync(new BsonDocument());
+
+                return actionResult.IsAcknowledged
+                    && actionResult.DeletedCount > 0;
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
 
-        public Task<bool> RemoveContract(ObjectId id)
+        public async Task<bool> RemoveContract(ObjectId id)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            try
+            {
+                DeleteResult actionResult
+                    = await _context.ManagementContract.DeleteOneAsync(
+                        Builders<ManagementContract>.Filter.Eq("Id", id));
+
+                return actionResult.IsAcknowledged
+                    && actionResult.DeletedCount > 0;
+            }
+            catch (Exception ex)
+            {
+                // log or manage the exception
+                throw ex;
+            }
         }
 
         public Task<bool> UpdateContract(ObjectId id, ManagementContract contract)

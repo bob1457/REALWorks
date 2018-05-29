@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
+using MongoDB.Driver;
 using REALWorks.Asset.Api.Data;
 using REALWorks.Asset.Api.Model;
 
@@ -117,12 +118,47 @@ namespace REALWorks.Asset.Api.Controllers
                 string msg = ex.Message;
             }
 
-
-
-
         }
 
 
+        [HttpPost]
+        [Route("addTenant/{id}")]
+        public void AddTenantToProperty(string id, Tenant tenant) // It runs whenever the property is rented
+        {
+            var tnt = new Tenant()
+            {
+                FirstName = tenant.FirstName,
+                LastName = tenant.LastName,
+                ContactEmail = tenant.ContactEmail,
+                ContactTelephone = tenant.ContactTelephone,
+                ProoertyId = id,
+                MoveInDate = tenant.MoveInDate,
+                RentalStartDate = tenant.RentalStartDate,
+                MoveOutDate = tenant.MoveOutDate,
+                RentalEndDate = tenant.RentalEndDate,
+                Notes = tenant.Notes,
+
+                DateAdded = DateTime.Now,
+                DateUpdated = DateTime.Now
+            };
+
+            
+            try
+            {
+                _propertyRepository.AddTenantToProperty(id, tnt);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+      
+        [HttpGet]
+        [Route("tenant/{id}")]
+        public async Task<IEnumerable<Tenant>> GetTenantsForProperty(string id)
+        {
+            return await _propertyRepository.GetTenantsForProperty(id);
+        }
 
         [HttpPut]
         [Route("{id:length(24)}")]
@@ -140,6 +176,13 @@ namespace REALWorks.Asset.Api.Controllers
             var propertyId = new ObjectId(id);
 
             _propertyRepository.RemoveProperty(propertyId);
+        }
+
+        [HttpDelete]
+        [Route("delete")]
+        public void DeleteAllProperty()
+        {
+            _propertyRepository.RemoveAllroperties();
         }
     }
 }

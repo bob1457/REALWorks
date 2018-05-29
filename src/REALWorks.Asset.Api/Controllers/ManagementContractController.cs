@@ -63,6 +63,22 @@ namespace REALWorks.Asset.Api.Controllers
             return await _contractRepository.GetPropertyManagementContract(id);
         }
 
+        [HttpDelete]
+        [Route("delete/{id:length(24)}")]
+        public void DeleteContract(string id)
+        {
+            var propertyId = new ObjectId(id);
+
+            //_propertyRepository.RemoveProperty(propertyId);
+        }
+
+        [HttpDelete]
+        [Route("delete")]
+        public void DeleteAllProperty()
+        {
+            _contractRepository.RemoveAllContracts();
+        }
+
 
     }
 }

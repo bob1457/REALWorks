@@ -74,12 +74,51 @@ namespace REALWorks.Asset.Api.Data
             }
         }
 
+
+        public async Task AddTenantToProperty(string id, Tenant tenant)
+        {
+            //var propertyId = new ObjectId(id);
+
+            //var property = Builders<Property>.Filter.Eq(p => p.Id, propertyId);
+
+            //var updateBuilder = Builders<Property>.Update.AddToSet(p => p.TenantList, tenant);
+
+            //try
+            //{
+            //    _context.Property.UpdateOneAsync(property, updateBuilder, new UpdateOptions() { IsUpsert = true }).Wait();
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
+
+            try
+            {
+                await _context.Tenant.InsertOneAsync(tenant);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }            
+
+        }
+
+        public async Task<IEnumerable<Tenant>> GetTenantsForProperty(string id)
+        {
+            //throw new NotImplementedException();
+            var query = _context.Tenant.AsQueryable()
+                   .Where(p => p.ProoertyId == id);
+
+            return await query.ToListAsync();
+        }
+
+
         public async Task<bool> RemoveAllroperties()
         {
             try
             {
                 DeleteResult actionResult
-                    = await _context.ManagementContract.DeleteManyAsync(new BsonDocument());
+                    = await _context.Property.DeleteManyAsync(new BsonDocument());
 
                 return actionResult.IsAcknowledged
                     && actionResult.DeletedCount > 0;
@@ -202,6 +241,8 @@ namespace REALWorks.Asset.Api.Data
 
             return internalId;
         }
+
+        
 
         #endregion
     }

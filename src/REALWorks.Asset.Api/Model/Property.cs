@@ -26,6 +26,10 @@ namespace REALWorks.Asset.Api.Model
         //public List<Owner> PropertyOwners { get; set; } // For future implmemtation
         public Owner PropertyOwner { get; set; }
 
+        //public List<Tenant> TenantList { get; set; }
+        //[BsonIgnore]
+        //public Tenant [] TenantList { get; set; }
+
         public DateTime DateAdded { get; set; }
         public DateTime DateUpdated { get; set; }
     }
