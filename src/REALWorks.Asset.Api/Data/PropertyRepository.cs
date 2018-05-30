@@ -58,13 +58,23 @@ namespace REALWorks.Asset.Api.Data
             //throw new NotImplementedException();
             try
             {
-                //ObjectId internalId = GetInternalId(id);
-                //return await _context.Property
-                //                .Find(property => property.Id == id
-                //                        || property.InternalId == internalId)
-                //                .FirstOrDefaultAsync();
                 var query = _context.Property.AsQueryable()
                     .Where(p => p.Id == id);
+
+                //var cp = _context.ManagementContract.AsQueryable().Where(c => c.PropertyId == id);
+
+                //var query = from property in _context.Property.AsQueryable()
+                //            join contract in _context.ManagementContract.AsQueryable()
+
+                //            on property.Id equals contract.PropertyId   
+                //            into ppt
+                //            select new
+                //            {
+                //                Name = property.PropertyName//,
+                //                //Contract = cp
+
+                //            };
+
                 return await query.FirstOrDefaultAsync();
             }
             catch (Exception ex)

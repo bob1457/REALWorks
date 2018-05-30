@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace REALWorks.Asset.Api.Model
 {
-    public class ManagementContract
+    public class ManagementContract: BaseModel
     {
-        [BsonId]
-        public ObjectId Id { get; set; }
+        //[BsonId]
+        //public ObjectId Id { get; set; }
 
         public string PropertyId { get; set; }
         public string ContractTitle { get; set; }
