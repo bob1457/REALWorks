@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace REALWorks.Asset.Api.Data
 {
@@ -222,6 +223,33 @@ namespace REALWorks.Asset.Api.Data
 
         // it creates a compound index (first using UserId, and then Body)
         // MongoDb automatically detects if the index already exists - in this case it just returns the index details
+
+
+        public async Task<bool> UpdatePropertyStatus(ObjectId id, string status)
+        {
+            //throw new NotImplementedException();
+            var filter = Builders<Property>.Filter.Eq(s => s.Id, id);
+
+            var update = Builders<Property>.Update
+                .Set(s => s.Status, status);
+
+            try
+            {
+                UpdateResult actionResult
+                    = await _context.Property.UpdateOneAsync(filter, update);
+
+                return actionResult.IsAcknowledged
+                    && actionResult.ModifiedCount > 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            
+
+        }
+
         public async Task<string> CreateIndex()
         {
             try
@@ -252,7 +280,6 @@ namespace REALWorks.Asset.Api.Data
             return internalId;
         }
 
-        
 
         #endregion
     }

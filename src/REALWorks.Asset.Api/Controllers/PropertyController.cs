@@ -169,6 +169,19 @@ namespace REALWorks.Asset.Api.Controllers
             _propertyRepository.UpdateProperty(propertyId, value);
         }
 
+
+        [HttpPost]
+        [Route("status/id:length(24)")]
+        public void UpdatePropertyStatus(string id, string status)
+        {
+            var propertyId = new ObjectId(id);
+
+            _propertyRepository.UpdatePropertyStatus(propertyId, status);
+        }
+
+
+
+
         [HttpDelete]
         [Route("delete/{id:length(24)}")]
         public void DeleteProperty(string id)

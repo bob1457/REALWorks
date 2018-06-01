@@ -25,6 +25,8 @@ namespace REALWorks.Asset.Api.Data
         // update just a single document / roperty
         Task<bool> UpdateProperty(ObjectId id, Property body);
 
+        Task<bool> UpdatePropertyStatus(ObjectId id, string status);
+
         // demo interface - full document update
         //Task<bool> UpdateropertyDocument(string id, string body);
 
