@@ -90,6 +90,8 @@ namespace REALWorks.Asset.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
             app.UseCors("CorsPolicy");
 
             app.UseMvc();

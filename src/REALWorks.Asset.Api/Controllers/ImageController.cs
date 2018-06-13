@@ -39,7 +39,7 @@ namespace REALWorks.Asset.Api.Controllers
             if (file == null || file.Length == 0)
                 return Content("file not selected");
 
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "Contents\\");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
             using (var fs = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
             {
                 await file.CopyToAsync(fs);
@@ -48,7 +48,8 @@ namespace REALWorks.Asset.Api.Controllers
 
                 await _imageRepository.AddImageAsync(new PropertyImage
                 {
-                    Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
+                    //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
+                    Url = "images/" + file.FileName,
                     Caption = "First image for the property",
                     PropertyId = image.PropertyId, // "62541",
                     DateAdded = DateTime.Now
