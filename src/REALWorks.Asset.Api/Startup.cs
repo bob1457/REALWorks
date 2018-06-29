@@ -94,7 +94,10 @@ namespace REALWorks.Asset.Api
 
             app.UseCors("CorsPolicy");
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

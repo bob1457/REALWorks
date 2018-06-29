@@ -44,11 +44,12 @@ namespace REALWorks.AuthServer.Controllers
           {
             UserName = model.UserName,
             Email = model.Email,
-            AvatarImgUrl = "~/Contents/Images/Avatars/default.png",
+            AvatarImgUrl = "Images/Avatars/default.png",
             FirstName = model.FirstName,
             LastName = model.LastName,
             JoinDate = DateTime.Now,
-            EmailConfirmed = true
+            EmailConfirmed = true,
+            UserRole = model.UserRole
           };
 
           // Create the account
