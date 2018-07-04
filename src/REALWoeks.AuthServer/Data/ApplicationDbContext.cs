@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.AuthServer.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
       public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
           : base(options)

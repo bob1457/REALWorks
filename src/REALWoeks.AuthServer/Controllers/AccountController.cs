@@ -19,13 +19,13 @@ namespace REALWorks.AuthServer.Controllers
     {
         private readonly ApplicationDbContext _appDbContext;
         private readonly UserManager<ApplicationUser> _userManager;
-        //private readonly RoleManager<AppRole> _roleManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
         //private readonly IMapper _mapper;
 
-        public AccountController(UserManager<ApplicationUser> userManager, /*RoleManager<AppRole> roleManager,IMapper mapper,*/  ApplicationDbContext appDbContext)
+        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,*/  ApplicationDbContext appDbContext)
         {
           _userManager = userManager;
-          //_roleManager = roleManager;
+          _roleManager = roleManager;
           //_mapper = mapper;
           _appDbContext = appDbContext;
         }
@@ -52,15 +52,36 @@ namespace REALWorks.AuthServer.Controllers
             UserRole = model.UserRole
           };
 
+          
+
           // Create the account
           var result = await _userManager.CreateAsync(user, model.Password);
+          
+          // Add role to the new user
+          var role_resuls = await _userManager.AddToRoleAsync(user, model.UserRole);
 
-          if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
+          if (!result.Succeeded /*&& !role_resuls.Succeeded*/) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
           //await _appDbContext.Customers.AddAsync(new Customer { IdentityId = userIdentity.Id, Location = model.Location });
           await _appDbContext.SaveChangesAsync();
 
-          return new OkObjectResult("Account created");
+          return new OkObjectResult("Account: " + user.UserName + ", created");
+        }
+
+        [Route("addrole")]
+        public async Task<IActionResult> AddRole([FromBody]ApplicationRoleModel model)
+        {
+            ApplicationRole role = new ApplicationRole();
+            role.Name = model.Name;
+            role.Description = model.Description;
+
+            var result = await _roleManager.CreateAsync(role);
+            if (!result.Succeeded ) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
+
+            //await _appDbContext.Customers.AddAsync(new Customer { IdentityId = userIdentity.Id, Location = model.Location });
+            await _appDbContext.SaveChangesAsync();
+
+            return new OkObjectResult("Application Role: " + role.Name + ", Added");
         }
 
         [HttpGet]
