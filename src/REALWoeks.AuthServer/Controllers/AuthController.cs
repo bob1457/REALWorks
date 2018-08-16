@@ -50,12 +50,19 @@ namespace REALWorks.AuthServer.Controllers
             if (user == null && model.UserName.Contains("@"))
                 user = await _userManager.FindByEmailAsync(model.UserName);
 
-           // var user = await _userManager.FindByNameAsync(model.UserName);
+            // var user = await _userManager.FindByNameAsync(model.UserName);
 
-      if (user == null)
-      {
-        return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
-      }
+            var userToVerify = await _userManager.CheckPasswordAsync(user, model.Password);
+
+      //if (user == null)
+      //{
+      //  return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
+      //}
+
+      if (await _userManager.CheckPasswordAsync(user, model.Password) == false)
+       {
+                return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
+            }
 
       // Add update user logon date
       //
