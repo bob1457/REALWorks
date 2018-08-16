@@ -44,7 +44,13 @@ namespace REALWorks.AuthServer.Controllers
         return BadRequest(ModelState);
       }
 
-      var user = await _userManager.FindByNameAsync(model.UserName);
+            // check if there's an user with the given username
+            var user = await _userManager.FindByNameAsync(model.UserName);
+            // fallback to support e-mail address instead of username
+            if (user == null && model.UserName.Contains("@"))
+                user = await _userManager.FindByEmailAsync(model.UserName);
+
+           // var user = await _userManager.FindByNameAsync(model.UserName);
 
       if (user == null)
       {
