@@ -8,7 +8,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "REALWorks.Asset", "REALWork
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REALWorks.Asset.Api", "REALWorks.Asset.Api\REALWorks.Asset.Api.csproj", "{D5366B43-ED39-4D6F-A069-890E08CA01F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REALWorks.Libs", "REALWorks.Libs\REALWorks.Libs.csproj", "{8E0CCD6A-56E9-4E2E-A34B-FBD74157554C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REALWorks.Libs", "REALWorks.Libs\REALWorks.Libs.csproj", "{8E0CCD6A-56E9-4E2E-A34B-FBD74157554C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{0429A19C-4B98-4310-91E5-AEB684D5A162}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\s3enterprise\client-bk\src\app\user\login\login.component.html = ..\..\s3enterprise\client-bk\src\app\user\login\login.component.html
+		..\..\s3enterprise\client-bk\src\app\user\login\login.component.scss = ..\..\s3enterprise\client-bk\src\app\user\login\login.component.scss
+		..\..\s3enterprise\client-bk\src\app\user\login\login.component.ts = ..\..\s3enterprise\client-bk\src\app\user\login\login.component.ts
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
