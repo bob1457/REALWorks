@@ -84,7 +84,13 @@ namespace REALWorks.AuthServer.Controllers
                                 SecurityAlgorithms.HmacSha256)
                     );
 
-      return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+
+            var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
+            //var jwtToken = new JwtSecurityToken(encodedToken);
+
+            return Json(encodedToken);
+
+      //return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
 
     }
   }

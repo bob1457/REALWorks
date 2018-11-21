@@ -85,10 +85,10 @@ namespace REALWorks.AuthServer.Controllers
         }
 
         [HttpGet]
-        [Route("user")]
-        public async Task<IActionResult> GetUserInfo()
+        [Route("user/{username}")]
+        public async Task<IActionResult> GetUserInfo(string username)
         {
-            var user = await _userManager.FindByNameAsync("bob");
+            var user = await _userManager.FindByNameAsync(username);
 
             return  Ok(user);
         }
