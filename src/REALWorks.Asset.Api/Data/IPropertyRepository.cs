@@ -17,6 +17,8 @@ namespace REALWorks.Asset.Api.Data
 
         Task AddTenantToProperty(string id, Tenant tenant);
 
+        Task AddOwner(string id, Owner owner);
+
         Task<IEnumerable<Tenant>> GetTenantsForProperty(string id);
 
         // remove a single document / roperty

@@ -23,10 +23,10 @@ namespace REALWorks.Asset.Api.Model
         public Facility PropertyFacility { get; set; }
         public Feature PropertyFeature { get; set; }
 
-        //public List<Owner> PropertyOwners { get; set; } // For future implmemtation
-        public Owner PropertyOwner { get; set; }
+        public List<string> PropertyOwners { get; set; } // only contains owner Id, no detailed data for owner
+        //public Owner PropertyOwner { get; set; }
 
-        //public List<Tenant> TenantList { get; set; }
+        public List<Tenant> PropertyTenants { get; set; }
         //[BsonIgnore]
         //public Tenant [] TenantList { get; set; }
 

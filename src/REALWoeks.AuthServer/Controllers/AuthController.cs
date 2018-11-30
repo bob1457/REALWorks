@@ -71,6 +71,12 @@ namespace REALWorks.AuthServer.Controllers
                     {
                         new Claim(JwtRegisteredClaimNames.Sub, model.UserName),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                        /*
+                        //new Claim(JwtRegisteredClaimNames.GivenName, UserRole), // Add user role to claim
+                        new Claim(JwtRegisteredClaimNames.FamilyName, user.AvatarImgUrl),
+                        new Claim(JwtRegisteredClaimNames.Gender, user.UserName),
+                        //new Claim(ClaimTypes.Role, UserRole), // Add user role to claim
+                        new Claim(JwtRegisteredClaimNames.Email, user.Email)*/
                     };
 
       var token = new JwtSecurityToken
@@ -84,14 +90,35 @@ namespace REALWorks.AuthServer.Controllers
                                 SecurityAlgorithms.HmacSha256)
                     );
 
+           
+
 
             var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
+
             //var jwtToken = new JwtSecurityToken(encodedToken);
 
+            /*
+            var jwtToken = new JwtSecurityToken(encodedToken);
+
+            
+            var response = new TokenResponseViewModel()
+            {
+                token = encodedToken,
+                //expiration = tokenExpirationMins,
+
+                //role = jwtToken.Claims.First().Value
+                role = jwtToken.Claims.FirstOrDefault(r => r.Type == "given_name").Value,
+                //};
+                avatarImgUrl = jwtToken.Claims.FirstOrDefault(i => i.Type == "family_name").Value,
+                username = jwtToken.Claims.FirstOrDefault(i => i.Type == "gender").Value,
+                email = jwtToken.Claims.FirstOrDefault(i => i.Type == "email").Value
+            };
+            */
             return Json(encodedToken);
+            //return Json(response);
 
-      //return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+            //return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
 
-    }
+        }
   }
 }

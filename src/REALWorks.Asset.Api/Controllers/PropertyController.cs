@@ -22,6 +22,115 @@ namespace REALWorks.Asset.Api.Controllers
             _propertyRepository = propertyRepository;
         }
 
+        #region Testing
+
+        [HttpPost]
+        [Route("owner")]
+        public async Task<IActionResult> AddOwner(Owner owner)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            //await _propertyRepository.AddOwner();
+            return Ok(owner);
+        }
+
+        [HttpPost]
+        [Route("init")]
+        public void Initialize() // Add initial/seed data (for testing purposes) - for property 
+        {
+            var address = new Address()
+            {
+                Addressline1 = "10621 158A Street",
+                Addressline2 = "",
+                City = "Surrey",
+                ProvinceState = "BC",
+                PostZipCode = "V4N 3J2",
+                Country ="Canada"
+            };
+
+
+
+
+            var feature = new Feature()
+            {
+                IsBasement = false,
+                IsShared = false,
+                NumOfBathrooms = "3",
+                NumOfBedrooms = "4",
+                TotalArea = "2400",
+                NumOflayers = "2",
+                NumOfParking = "2",
+                Others = "",
+                Notes = ""
+            };
+
+            var facility = new Facility()
+            {
+                CommonArea = false,
+                Fridgerator = true,
+                WasherDryer = true,
+                Internet = false,
+                SecurityAlarm = false,
+                SmokeDetector = true,
+                TVCable = false,
+                WindowsDrappers = true,
+                StoreOven = true,
+                Notes = ""
+            };
+
+            /* // need a separate operation to add owner(s) to property*/
+
+            var owner = new Owner()
+            {
+                OwnerId = "5b731f5752c40e3944cdfb51",
+                FirsName = "Michelle",
+                LastName = "Lu",
+                Addressline1 = "15686 107 Avenue",
+                Addressline2 = "",
+                City = "Surrey",
+                ProvinceState = "BC",
+                PostZipCode = "V4N 3H8",
+                Country = "Canada",
+                ContactEmail = "778-863-0550",
+                ContactTelephone = "cadlu2000@yahoo.com",
+                OwnedProperty = {
+                    "6bc731f5752c40e3944cdfb40"
+                },
+
+                CreatedOn = DateTime.Now,
+                UpdatedOn = DateTime.Now
+
+            };
+
+            try
+            {
+                _propertyRepository.AddOwner("6bc731f5752c40e3944cdfb40", owner);
+
+                _propertyRepository.AddProperty(new Property
+                {
+                    //Id = property.Id,
+                    PropertyName = "10621 Fraser Height",
+                    PropertyDesc = "Two level family home in North Surrey",
+                    Category = "Single Family Home",
+                    YearBuilt = 1996,
+
+                    PropertyAddress = address,
+                    PropertyFacility = facility,
+                    PropertyFeature = feature,
+
+                    //PropertyOwner = owner,
+                    DateAdded = DateTime.Now,
+                    DateUpdated = DateTime.Now
+                });
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+            }
+        }
+
+        #endregion
+
         [HttpGet]
         [Route("all")]
         public async Task<IEnumerable<Property>> GetAll()
@@ -72,7 +181,7 @@ namespace REALWorks.Asset.Api.Controllers
             {
                 CommonArea = property.PropertyFacility.CommonArea,
                 Fridgerator = property.PropertyFacility.Fridgerator,
-                WaherDryer = property.PropertyFacility.WaherDryer,
+                WasherDryer = property.PropertyFacility.WasherDryer,
                 Internet = property.PropertyFacility.Internet,
                 SecurityAlarm = property.PropertyFacility.SecurityAlarm,
                 SmokeDetector = property.PropertyFacility.SmokeDetector,
@@ -82,18 +191,21 @@ namespace REALWorks.Asset.Api.Controllers
                 Notes = property.PropertyFacility.Notes
             };
 
-            var owner = new Owner()
+            /* // need a separate operation to add owner(s) to property*/
+
+            var owner = new List<Owner>()
             {
-                FirsName = property.PropertyOwner.FirsName,
-                LastName = property.PropertyOwner.LastName,
-                Addressline1 = property.PropertyOwner.Addressline1,
-                Addressline2 = property.PropertyOwner.Addressline2,
-                City = property.PropertyOwner.City,
-                ProvinceState = property.PropertyOwner.ProvinceState,
-                PostZipCode = property.PropertyOwner.PostZipCode,
-                Country = property.PropertyOwner.Country,
-                ContactEmail = property.PropertyOwner.ContactEmail,
-                ContactTelephone = property.PropertyOwner.ContactTelephone
+                //FirsName = property.PropertyOwner.FirsName,
+                //LastName = property.PropertyOwner.LastName,
+                //Addressline1 = property.PropertyOwner.Addressline1,
+                //Addressline2 = property.PropertyOwner.Addressline2,
+                //City = property.PropertyOwner.City,
+                //ProvinceState = property.PropertyOwner.ProvinceState,
+                //PostZipCode = property.PropertyOwner.PostZipCode,
+                //Country = property.PropertyOwner.Country,
+                //ContactEmail = property.PropertyOwner.ContactEmail,
+                //ContactTelephone = property.PropertyOwner.ContactTelephone
+                
             };
 
             try
@@ -105,10 +217,12 @@ namespace REALWorks.Asset.Api.Controllers
                     PropertyDesc = property.PropertyDesc,
                     Category = property.Category,
                     YearBuilt = property.YearBuilt,
+
                     PropertyAddress = address,
                     PropertyFacility = facility,
                     PropertyFeature = feature,
-                    PropertyOwner = owner,
+
+                    //PropertyOwner = owner,
                     DateAdded = DateTime.Now,
                     DateUpdated = DateTime.Now
                 });
@@ -120,6 +234,79 @@ namespace REALWorks.Asset.Api.Controllers
 
         }
 
+        [HttpPost]
+        [Route("addOwner/{id}")] //id:property Id
+        public void AddOwnerToProperty(string id, Owner owner)
+        {
+
+            /**/
+            var propertyOwner = new Owner()
+            {
+                FirsName = owner.FirsName,
+                LastName = owner.LastName,
+                Addressline1 = owner.Addressline1,
+                Addressline2 = owner.Addressline2,
+                City = owner.City,
+                ProvinceState = owner.ProvinceState,
+                PostZipCode = owner.PostZipCode,
+                Country = owner.Country,
+                ContactTelephone = owner.ContactTelephone,
+                ContactEmail = owner.ContactEmail,
+                
+
+                CreatedOn = owner.CreatedOn,
+                UpdatedOn = owner.UpdatedOn
+            };
+
+            try
+            {
+                _propertyRepository.AddOwner(id, propertyOwner);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+            //var doc = CreateOwner(id, owner).ToBsonDocument();
+
+
+            //var ownerId = new ObjectId(doc.GetElement("_id").Value.ToString());  // new ObjectId(""); // owner.ObjectId; //new Owner()
+            var oId = "5bfa17b5efde9332a03768b0";
+
+            var ownerId = new ObjectId(oId);
+            //{
+            //FirsName = owner.FirsName,
+            //    LastName = owner.LastName,
+            //    Addressline1 = owner.Addressline1,
+            //    Addressline2 = owner.Addressline2,
+            //    City = owner.City,
+            //    ProvinceState = owner.ProvinceState,
+            //    PostZipCode = owner.PostZipCode,
+            //    Country = owner.Country,
+            //    ContactTelephone = owner.ContactTelephone,
+            //    ContactEmail = owner.ContactEmail,
+
+            //    CreatedOn = owner.CreatedOn,
+            //    UpdatedOn = owner.UpdatedOn
+
+            //};
+
+            var ownerList = new List<ObjectId>();
+            ownerList.Add(ownerId);
+
+            var propertyId = new ObjectId(id);
+            // find the by Id
+            var property = _propertyRepository.GetProperty(propertyId).ToBsonDocument();
+            
+            try
+            {
+                property.Add("PropertyOwners", new BsonArray( ownerList) );
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         [HttpPost]
         [Route("addTenant/{id}")]
@@ -142,10 +329,17 @@ namespace REALWorks.Asset.Api.Controllers
                 DateUpdated = DateTime.Now
             };
 
-            
+            var tenantList = new List<Tenant>();
+            tenantList.Add(tnt);
+
+            var propertyId = new ObjectId(id);
+            // find the by Id
+            var property = _propertyRepository.GetProperty(propertyId).ToBsonDocument();
+
             try
             {
-                _propertyRepository.AddTenantToProperty(id, tnt);
+                //_propertyRepository.AddTenantToProperty(id, tnt);
+                property.Add("PropertyTenants", new BsonArray(tenantList));
             }
             catch (Exception ex)
             {
@@ -197,5 +391,39 @@ namespace REALWorks.Asset.Api.Controllers
         {
             _propertyRepository.RemoveAllroperties();
         }
+
+        #region Private Implementation
+
+        private Task CreateOwner(string id, Owner owner)
+        {
+            var propertyOwner = new Owner()
+            {
+                FirsName = owner.FirsName,
+                LastName = owner.LastName,
+                Addressline1 = owner.Addressline1,
+                Addressline2 = owner.Addressline2,
+                City = owner.City,
+                ProvinceState = owner.ProvinceState,
+                PostZipCode = owner.PostZipCode,
+                Country = owner.Country,
+                ContactTelephone = owner.ContactTelephone,
+                ContactEmail = owner.ContactEmail,
+
+                CreatedOn = owner.CreatedOn,
+                UpdatedOn = owner.UpdatedOn
+            };
+
+            try
+            {
+                return _propertyRepository.AddOwner(id, propertyOwner);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion
+
     }
 }

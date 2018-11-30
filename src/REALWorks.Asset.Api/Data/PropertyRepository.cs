@@ -86,6 +86,20 @@ namespace REALWorks.Asset.Api.Data
         }
 
 
+        public async Task AddOwner(string id, Owner owner)
+        {
+            try
+            {
+                await _context.Owner.InsertOneAsync(owner);
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public async Task AddTenantToProperty(string id, Tenant tenant)
         {
             //var propertyId = new ObjectId(id);
@@ -189,16 +203,16 @@ namespace REALWorks.Asset.Api.Data
                             .Set(b => b.PropertyFacility.SmokeDetector, property.PropertyFacility.SmokeDetector)
                             .Set(b => b.PropertyFacility.TVCable, property.PropertyFacility.TVCable)
                             .Set(b => b.PropertyFacility.Internet, property.PropertyFacility.Internet)
-                            .Set(b => b.PropertyOwner.FirsName, property.PropertyOwner.FirsName)
-                            .Set(b => b.PropertyOwner.LastName, property.PropertyOwner.LastName)
-                            .Set(b => b.PropertyOwner.Addressline1, property.PropertyOwner.Addressline1)
-                            .Set(b => b.PropertyOwner.Addressline2, property.PropertyOwner.Addressline2)
-                            .Set(b => b.PropertyOwner.City, property.PropertyOwner.City)
-                            .Set(b => b.PropertyOwner.ProvinceState, property.PropertyOwner.ProvinceState)
-                            .Set(b => b.PropertyOwner.PostZipCode, property.PropertyOwner.PostZipCode)
-                            .Set(b => b.PropertyOwner.Country, property.PropertyOwner.Country)
-                            .Set(b => b.PropertyOwner.ContactEmail, property.PropertyOwner.ContactEmail)
-                            .Set(b => b.PropertyOwner.ContactTelephone, property.PropertyOwner.ContactTelephone)
+                            //.Set(b => b.PropertyOwner.FirsName, property.PropertyOwner.FirsName) //need a separate operation to update owner(s) in property
+                            //.Set(b => b.PropertyOwner.LastName, property.PropertyOwner.LastName)
+                            //.Set(b => b.PropertyOwner.Addressline1, property.PropertyOwner.Addressline1)
+                            //.Set(b => b.PropertyOwner.Addressline2, property.PropertyOwner.Addressline2)
+                            //.Set(b => b.PropertyOwner.City, property.PropertyOwner.City)
+                            //.Set(b => b.PropertyOwner.ProvinceState, property.PropertyOwner.ProvinceState)
+                            //.Set(b => b.PropertyOwner.PostZipCode, property.PropertyOwner.PostZipCode)
+                            //.Set(b => b.PropertyOwner.Country, property.PropertyOwner.Country)
+                            //.Set(b => b.PropertyOwner.ContactEmail, property.PropertyOwner.ContactEmail)
+                            //.Set(b => b.PropertyOwner.ContactTelephone, property.PropertyOwner.ContactTelephone)
                             .CurrentDate(s => s.DateUpdated);
 
             try

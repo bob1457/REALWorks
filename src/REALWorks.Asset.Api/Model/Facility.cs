@@ -15,7 +15,7 @@ namespace REALWorks.Asset.Api.Model
         public bool SecurityAlarm { get; set; }
         public bool SmokeDetector { get; set; }
         public bool CommonArea { get; set; }
-        public bool WaherDryer { get; set; }
+        public bool WasherDryer { get; set; }
 
         public string Notes { get; set; }
     }
