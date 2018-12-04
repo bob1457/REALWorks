@@ -4,6 +4,7 @@ using REALWorks.AssetServer.Services.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace REALWorks.AssetServer.Services
@@ -33,6 +34,10 @@ namespace REALWorks.AssetServer.Services
         public async Task<PropertyAddViewModel> AddProperty(PropertyAddViewModel property)
         {
             //throw new NotImplementedException();
+
+            object pOwner;
+            object ownerProperty;
+
             var address = new PropertyAddress()
             {
                 PropertySuiteNumber = property.PropertySuiteNumber,
@@ -71,22 +76,6 @@ namespace REALWorks.AssetServer.Services
                 Notes = property.FacilityNotes
             };
 
-            var pOwner = new PropertyOwner()
-            {
-                UserName = "notset",
-                //PropertyOwnerId = property.PropertyOwnerId
-                FirstName = property.FirstName,
-                LastName = property.LastName,
-                ContactEmail = property.ContactEmail,
-                ContactTelephone1 = property.ContactTelephone1,
-                ContactTelephone2 = property.ContactTelephone2,
-                UserAvartaImgUrl = "",
-                IsActive = true,
-                RoleId = 2, // RoleId = 1: pm, 2:owner, 3: tenant, 4: vendor
-                OnlineAccessEnbaled = false,
-                CreationDate = DateTime.Now,
-                UpdateDate = DateTime.Now                
-            };
 
             var newProperty = new Property(
                        property.PropertyName,
@@ -128,6 +117,58 @@ namespace REALWorks.AssetServer.Services
                 
             };
 
+
+            await _context.AddAsync(newProperty);
+
+            if (property.PropertyOwnerId == 0)
+            {
+               pOwner = new PropertyOwner()
+                {
+                    UserName = "notset",
+                    //PropertyOwnerId = property.PropertyOwnerId
+                    FirstName = property.FirstName,
+                    LastName = property.LastName,
+                    ContactEmail = property.ContactEmail,
+                    ContactTelephone1 = property.ContactTelephone1,
+                    ContactTelephone2 = property.ContactTelephone2,
+                    UserAvartaImgUrl = "",
+                    IsActive = true,
+                    RoleId = 2, // RoleId = 1: pm, 2:owner, 3: tenant, 4: vendor
+                    OnlineAccessEnbaled = false,
+                    CreationDate = DateTime.Now,
+                    UpdateDate = DateTime.Now                
+                };
+
+                await _context.AddAsync(pOwner);
+
+                ownerProperty = new OwnerProperty()
+                {
+                    Property = newProperty,
+                    PropertyOwner = (PropertyOwner)pOwner
+                    //PropertyId = newProperty.PropertyId,
+                    //PropertyOwnerId = pOwner.PropertyOwnerId
+                };
+            }
+            else
+            {
+                //Get owner
+                //pOwner = _context.PropertyOwner.Where(o => o.PropertyOwnerId == property.PropertyOwnerId); //this could be a verification that the owner does exist
+
+                ownerProperty = new OwnerProperty()
+                {
+                    Property = newProperty,
+                    //PropertyOwner = pOwner
+                    //PropertyId = newProperty.PropertyId,
+                    PropertyOwnerId = property.PropertyOwnerId
+                };
+
+
+            }
+
+            
+
+            
+
             
 
             try
@@ -135,14 +176,14 @@ namespace REALWorks.AssetServer.Services
                 
                 if (_context != null)
                 {
-                    await _context.AddAsync(pOwner);    
+                    //await _context.AddAsync(pOwner);
                     await _context.AddAsync(address);
                     await _context.AddAsync(feature);
                     await _context.AddAsync(facility);
 
                     
 
-                    await  _context.AddAsync(newProperty);// if use fuill ddd pattern then use the followsing Create
+                    //await  _context.AddAsync(newProperty);// if use fuill ddd pattern then use the followsing Create
 
                     //var ppt = Property.CreateProperty(property.PropertyName, // This will be tested in full ddd environemnt later
                     //    property.PropertyDesc, 
@@ -160,13 +201,13 @@ namespace REALWorks.AssetServer.Services
                     
 
 
-                    var ownerProperty = new OwnerProperty()
-                    {
-                        Property = newProperty,
-                        PropertyOwner = pOwner
-                        //PropertyId = newProperty.PropertyId,
-                        //PropertyOwnerId = pOwner.PropertyOwnerId
-                    };
+                    //var ownerProperty = new OwnerProperty()
+                    //{
+                    //    Property = newProperty,
+                    //    PropertyOwner = pOwner
+                    //    //PropertyId = newProperty.PropertyId,
+                    //    //PropertyOwnerId = pOwner.PropertyOwnerId
+                    //};
 
                     await _context.AddAsync(ownerProperty);
 
@@ -175,7 +216,14 @@ namespace REALWorks.AssetServer.Services
                     try
                     {
                         await _context.SaveChangesAsync();
-                        int propertyId = ownerProperty.PropertyId;
+
+                        int propertyId = newProperty.PropertyId;
+
+                        //Update the view model to be returned
+                        property.PropertyId = newProperty.PropertyId;
+                        property.CreatedDate = newProperty.CreatedDate;
+                        property.UpdateDate = newProperty.UpdateDate;
+
                     } catch (Exception ex)
                     {
                         throw ex;
@@ -195,15 +243,37 @@ namespace REALWorks.AssetServer.Services
 
         #region Retrive
 
-        public Task<IQueryable<Property>> GetAllProperty()
+        public async Task<IQueryable<PropertyListViewModel>> GetAllProperty() // Task<List<PropertyListViewModel>> GetAllProperty()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            //  var allProperties = _context.Property; //.Include(t => t.PropertyType).Include(s => s.RentalStatus).ToList(); // using Microsoft.EntityFrameworkCore; is required
+            //  return allProperties.AsQueryable();
+
+            return /*await*/ (from p in _context.Property
+                          from t in _context.PropertyType
+                          from s in _context.RentalStatus
+                          where p.RentalStatusId == s.RentalStatusId
+                          where p.PropertyTypeId == t.PropertyTypeId
+                          select new PropertyListViewModel
+                          {
+                              PropertyId = p.PropertyId,
+                              PropertyName = p.PropertyName,
+                              PropertyLogoImgUrl = p.PropertyLogoImgUrl,
+                              IsActive = p.IsActive,
+                              IsShared = p.IsShared,
+                              Status = s.Status,
+                              PropertyType1 = t.PropertyType1
+
+                          }).AsQueryable(); //.ToListAsync()
         }
 
-        public Task<Property> GetPropertyById(int id)
+        public async Task<Property> GetPropertyById(int id)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+
+            return _context.Property.Where(p => p.PropertyId == id).FirstOrDefault();
         }
+        
 
         #endregion
     }

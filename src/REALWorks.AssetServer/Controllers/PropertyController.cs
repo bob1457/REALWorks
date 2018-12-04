@@ -35,5 +35,48 @@ namespace REALWorks.AssetServer.Controllers
             return Ok(ppt);
 
         }
+
+        [HttpGet]
+        [Route("all")]
+        public async Task<IActionResult> GetAllProperties()
+        {
+            try
+            {
+                var properties = await _propertyService.GetAllProperty();
+
+                if (properties == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(properties);
+            }
+            catch (Exception ex)
+            {
+                throw ex; // For testing
+                //return BadRequest(); // For production
+            }
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetPropertyById(int id)
+        {
+            try
+            {
+                var property = await _propertyService.GetPropertyById(id);
+                if(property == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(property);
+            }
+            catch (Exception ex)
+            {
+                throw ex; // For testing
+                //return BadRequest(); // For production
+            }
+        }
     }
 }

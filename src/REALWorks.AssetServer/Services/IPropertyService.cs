@@ -22,7 +22,7 @@ namespace REALWorks.AssetServer.Services
         /// </summary>
         
         Task<Property> GetPropertyById(int id);
-        Task<IQueryable<Property>> GetAllProperty();
+        Task<IQueryable<PropertyListViewModel>> GetAllProperty(); // Task<List<PropertyListViewModel>> GetAllProperty();
 
 
     }
