@@ -1,4 +1,5 @@
 ﻿using REALWorks.AssetServer.Models;
+using REALWorks.AssetServer.Services.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace REALWorks.AssetServer.Services
         /// Create Operations (C)
         /// </summary>
         
-        Task<Property> AddProperty(Property property, PropertyOwner owner);
+        Task<PropertyAddViewModel> AddProperty(PropertyAddViewModel property);
         Task<PropertyImg> AddImgToProperty(PropertyImg img, int id);
-        Task<PropertyOwner> AddOnerToProperty(PropertyOwner owner, int id);
+        Task<PropertyOwner> AddOwnerToProperty(PropertyOwner owner, int id);
 
         /// <summary>
         /// Retrieve Operations (R)

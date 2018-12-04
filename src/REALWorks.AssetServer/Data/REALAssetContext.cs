@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using REALWorks.AssetServer.Models;
-
 
 namespace REALWorks.AssetServer.Data
 {
@@ -30,23 +28,12 @@ namespace REALWorks.AssetServer.Data
         public virtual DbSet<PropertyType> PropertyType { get; set; }
         public virtual DbSet<RentalStatus> RentalStatus { get; set; }
 
-        /// <summary>
-        /// Query types to query SQL Server views corresponding to ViewModel/DTO in service level
-        /// </summary>
-        /// <param name="optionsBuilder"></param>
-        /// 
-        //public virtual DbQuery<>
-
-
-
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings. install NuGet package:System.Configuration.ConfigurationManager 
-                optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["AppDbConnection"].ConnectionString);
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=REALAsset;UID=real;PWD=1234567;");
             }
         }
 
@@ -98,8 +85,6 @@ namespace REALWorks.AssetServer.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OwnerProperty_PropertyOwner");
             });
-
-            //modelBuilder.Entity<Property>().Find
 
             modelBuilder.Entity<Property>(entity =>
             {

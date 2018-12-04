@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using REALWorks.AssetServer.Models;
 using REALWorks.AssetServer.Services;
+using REALWorks.AssetServer.Services.ViewModels;
 
 namespace REALWorks.AssetServer.Controllers
 {
@@ -22,14 +23,14 @@ namespace REALWorks.AssetServer.Controllers
 
         [HttpPost]
         [Route("add")]
-        public async Task<IActionResult> AddProperty([FromBody] Property property, [FromBody] PropertyOwner owner)
+        public async Task<IActionResult> AddProperty([FromBody] PropertyAddViewModel property)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(400);
             }
 
-            var ppt = await _propertyService.AddProperty(property, owner);
+            var ppt = await _propertyService.AddProperty(property);
 
             return Ok(ppt);
 

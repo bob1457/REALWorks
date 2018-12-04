@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using REALWorks.AssetServer.Data;
+using REALWorks.AssetServer.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace REALWorks.AssetServer
@@ -75,8 +77,10 @@ namespace REALWorks.AssetServer
                                     .AllowCredentials());
             });
 
-            
+            // DI Implementation
+            services.AddTransient<IPropertyService, PropertyService>();
 
+            services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

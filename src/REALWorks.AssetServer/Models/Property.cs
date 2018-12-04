@@ -1,37 +1,42 @@
-﻿using System;
+﻿using REALWorks.AssetServer.Data;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace REALWorks.AssetServer.Models
 {
     public partial class Property
     {
-        //public Property()
-        //{
-        //    OwnerProperty = new HashSet<OwnerProperty>();
-        //    PropertyImg = new HashSet<PropertyImg>();
-        //}
-
-        private Property()
+        public Property()
         {
-            // Required by EF
+            OwnerProperty = new HashSet<OwnerProperty>();
+            PropertyImg = new HashSet<PropertyImg>();
         }
 
         /// <summary>
-        /// Constructor
+        /// Inject database context if full ddd pattern is used
         /// </summary>
+        private readonly REALAssetContext _context;
 
+        public Property(REALAssetContext context)
+        {
+            _context = context;
+        }
+
+        /// <summary>
+        /// Constructor - for creating new instance with all required parameters (enforced)
+        /// </summary>
+        ///
         public Property(
             //int propertyId, 
             string propertyName,
             string propertyDesc,
             //int propertyTypeId, 
             //int? strataCouncilId, 
-            //int propertyAddressId, 
-            //int propertyFeatureId, 
-            //int propertyFacilityId, 
-            //int propertyOwnerId, 
-            int propertyManagerId,
+            //int propertyAddressId,
+            //int propertyFeatureId,
+            //int propertyFacilityId,
+            //int? propertyOwnerId,
+            //int? propertyManagerId,
             //string propertyLogoImgUrl, 
             //string propertyVideoUrl, 
             int propertyBuildYear,
@@ -41,11 +46,12 @@ namespace REALWorks.AssetServer.Models
             //int? furnishingId, 
             //int rentalStatusId, 
             bool isBasementSuite,
-            DateTime createdDate,
-            DateTime updateDate,
-            //PropertyAddress propertyAddress, 
-            //PropertyFacility propertyFacility, 
-            //PropertyFeature propertyFeature, 
+            //DateTime createdDate,
+            //DateTime updateDate,
+            PropertyAddress propertyAddress,
+            PropertyFacility propertyFacility,
+            PropertyFeature propertyFeature,
+
             int propertyTypeId, //PropertyType propertyType, 
             int rentalStatusId
             )
@@ -59,7 +65,7 @@ namespace REALWorks.AssetServer.Models
             //PropertyFeatureId = propertyFeatureId;
             //PropertyFacilityId = propertyFacilityId;
             //PropertyOwnerId = propertyOwnerId;
-            PropertyManagerId = propertyManagerId;
+            //PropertyManagerId = propertyManagerId;
             //PropertyLogoImgUrl = propertyLogoImgUrl;
             //PropertyVideoUrl = propertyVideoUrl;
             PropertyBuildYear = propertyBuildYear;
@@ -71,91 +77,40 @@ namespace REALWorks.AssetServer.Models
             IsBasementSuite = isBasementSuite;
             //CreatedDate = createdDate;
             //UpdateDate = updateDate;
-            //PropertyAddress = propertyAddress;
-            //PropertyFacility = propertyFacility;
-            //PropertyFeature = propertyFeature;
+            PropertyAddress = propertyAddress;
+            PropertyFacility = propertyFacility;
+            PropertyFeature = propertyFeature;
+
             PropertyTypeId = propertyTypeId; //PropertyType = propertyType;
             RentalStatusId = rentalStatusId;//RentalStatus = rentalStatus;
         }
 
-        /// <summary>
-        /// The new code for complying with DDD principle
-        /// </summary>
-        private HashSet<PropertyImg> _propertyImgs;
-        //private HashSet<OwnerProperty> _ownerProperty;
-        private HashSet<PropertyOwner> _propertyOwner;
-
-        public IEnumerable<PropertyImg> PropertyImgs => _propertyImgs?.ToList();
-        //public IEnumerable<OwnerProperty> OwnerPropertyList => _ownerProperty?.ToList();
-        public IEnumerable<PropertyOwner> PropertyOwner => _propertyOwner?.ToList();
-
-        /// <summary>
-        /// All Properties
-        /// </summary>
-        public int PropertyId { get; private set; }
-        public string PropertyName { get; private set; }
-        public string PropertyDesc { get; private set; }
-        public int PropertyTypeId { get; private set; }
-        public int? StrataCouncilId { get; private set; }
-        public int PropertyAddressId { get; private set; }
-        public int PropertyFeatureId { get; private set; }
-        public int PropertyFacilityId { get; private set; }
-        //public int PropertyOwnerId { get; set; }
-        public int PropertyManagerId { get; private set; }
-        public string PropertyLogoImgUrl { get; private set; }
-        public string PropertyVideoUrl { get; private set; }
-        public int PropertyBuildYear { get; private set; }
-        //public int PropertyMgmntlStatusId { get; private set; }
-        public bool IsActive { get; private set; }
-        public bool IsShared { get; private set; }
-        public int FurnishingId { get; private set; }
+        public int PropertyId { get; set; }
+        public string PropertyName { get; set; }
+        public string PropertyDesc { get; set; }
+        public int PropertyTypeId { get; set; }
+        public int? StrataCouncilId { get; set; }
+        public int PropertyAddressId { get; set; }
+        public int PropertyFeatureId { get; set; }
+        public int PropertyFacilityId { get; set; }
+        public int? PropertyManagerId { get; set; }
+        public string PropertyLogoImgUrl { get; set; }
+        public string PropertyVideoUrl { get; set; }
+        public int PropertyBuildYear { get; set; }
+        public bool? IsActive { get; set; }
+        public bool IsShared { get; set; }
+        public int? FurnishingId { get; set; }
         public int RentalStatusId { get; set; }
-        public bool IsBasementSuite { get; private set; }
-        public DateTime CreatedDate { get; private set; }
-        public DateTime UpdateDate { get; private set; }
+        public bool IsBasementSuite { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdateDate { get; set; }
 
-        public PropertyAddress PropertyAddress { get; private set; }
-        public PropertyFacility PropertyFacility { get; private set; }
-        public PropertyFeature PropertyFeature { get; private set; }
-        public PropertyType PropertyType { get; private set; }
-        public RentalStatus RentalStatus { get; private set; }
-
-
-        public ICollection<OwnerProperty> OwnerProperty { get; private set; }
-        public ICollection<PropertyImg> PropertyImg { get; private set; }
-
-        public static Property CreateProperty(
-            string Name, 
-            string Desc,
-            int ManerId,
-            int Year, 
-            bool Active, 
-            bool Shared, 
-            bool Basement, 
-            //PropertyType Type, 
-            //RentalStatus Status//,
-            int TypeId,
-            int StatusId
-            //DateTime Created,
-            //DateTime Updated
-            )
-        {
-            Property property = new Property()
-            {
-                PropertyName = Name,
-                PropertyDesc = Desc,
-                PropertyManagerId = ManerId,                
-                PropertyBuildYear = Year,
-                IsActive = Active,
-                IsShared = Shared,
-                IsBasementSuite = Basement,
-                PropertyTypeId = TypeId,
-                RentalStatusId = StatusId//,
-                //CreatedDate = Created,
-                //UpdateDate = Updated
-            };
-
-            return property;
-        }
+        public PropertyAddress PropertyAddress { get; set; }
+        public PropertyFacility PropertyFacility { get; set; }
+        public PropertyFeature PropertyFeature { get; set; }
+        public PropertyType PropertyType { get; set; }
+        public RentalStatus RentalStatus { get; set; }
+        public ICollection<OwnerProperty> OwnerProperty { get; set; }
+        public ICollection<PropertyImg> PropertyImg { get; set; }
     }
 }
