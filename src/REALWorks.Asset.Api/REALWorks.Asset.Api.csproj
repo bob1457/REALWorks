@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Contents\" />
+    <Folder Include="Temp\" />
   </ItemGroup>
 
   <ItemGroup>

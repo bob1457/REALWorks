@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using REALWorks.AssetServer.Models;
@@ -18,6 +19,8 @@ namespace REALWorks.AssetServer.Data
 
         public virtual DbSet<Community> Community { get; set; }
         public virtual DbSet<Furnishing> Furnishing { get; set; }
+        public virtual DbSet<ManagementContract> ManagementContract { get; set; }
+        public virtual DbSet<ManagementFee> ManagementFee { get; set; }
         public virtual DbSet<OwnerProperty> OwnerProperty { get; set; }
         public virtual DbSet<Property> Property { get; set; }
         public virtual DbSet<PropertyAddress> PropertyAddress { get; set; }
@@ -33,7 +36,8 @@ namespace REALWorks.AssetServer.Data
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=REALAsset;UID=real;PWD=1234567;");
+                optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["BloggingDatabase"].ConnectionString);
+                //optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=REALAsset;UID=real;PWD=1234567;");
             }
         }
 
@@ -69,6 +73,44 @@ namespace REALWorks.AssetServer.Data
                 entity.Property(e => e.Notes).HasMaxLength(650);
             });
 
+            modelBuilder.Entity<ManagementContract>(entity =>
+            {
+                entity.Property(e => e.ManagementContractDocUrl).HasMaxLength(150);
+
+                entity.Property(e => e.ManagementContractTitile)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ManagementFeeScale)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.PlacementFeeScale)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.Property)
+                    .WithMany(p => p.ManagementContract)
+                    .HasForeignKey(d => d.PropertyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ManagementContract_Property");
+            });
+
+            modelBuilder.Entity<ManagementFee>(entity =>
+            {
+                entity.Property(e => e.ManagementFeeType)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Notes).HasMaxLength(450);
+
+                entity.HasOne(d => d.ManagementContract)
+                    .WithMany(p => p.ManagementFee)
+                    .HasForeignKey(d => d.ManagementContractId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ManagementFee_ManagementContract");
+            });
+
             modelBuilder.Entity<OwnerProperty>(entity =>
             {
                 entity.HasKey(e => new { e.PropertyId, e.PropertyOwnerId });
@@ -90,9 +132,7 @@ namespace REALWorks.AssetServer.Data
             {
                 entity.Property(e => e.FurnishingId).HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.IsActive)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.PropertyDesc).HasMaxLength(250);
 
@@ -178,33 +218,21 @@ namespace REALWorks.AssetServer.Data
 
             modelBuilder.Entity<PropertyFacility>(entity =>
             {
-                entity.Property(e => e.BlindsCurtain)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.BlindsCurtain).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.Dishwasher)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.Dishwasher).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.FireAlarmSystem)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.FireAlarmSystem).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.Laundry)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.Laundry).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Notes).HasMaxLength(400);
 
                 entity.Property(e => e.Others).HasMaxLength(350);
 
-                entity.Property(e => e.Refrigerator)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.Refrigerator).HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.Stove)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.Stove).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Tvinternet).HasColumnName("TVInternet");
             });
@@ -212,6 +240,8 @@ namespace REALWorks.AssetServer.Data
             modelBuilder.Entity<PropertyFeature>(entity =>
             {
                 entity.Property(e => e.Notes).HasMaxLength(400);
+
+                entity.Property(e => e.TotalLivingArea).HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<PropertyImg>(entity =>
@@ -245,9 +275,7 @@ namespace REALWorks.AssetServer.Data
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.IsActive)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.LastName)
                     .IsRequired()

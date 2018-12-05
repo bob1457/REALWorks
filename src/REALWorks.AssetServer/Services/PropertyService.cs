@@ -267,11 +267,38 @@ namespace REALWorks.AssetServer.Services
                           }).AsQueryable(); //.ToListAsync()
         }
 
-        public async Task<Property> GetPropertyById(int id)
+        public async Task<PropertyDetailViewModel> GetPropertyById(int id)
         {
             //throw new NotImplementedException();
 
-            return _context.Property.Where(p => p.PropertyId == id).FirstOrDefault();
+            //return _context.Property.Where(p => p.PropertyId == id).FirstOrDefault();
+            return (from p in _context.Property
+                    from a in _context.PropertyAddress
+                    //from o in _context.PropertyOwner
+                    //from c in _context.ManagementContract
+                    from t in _context.PropertyType
+                    from s in _context.RentalStatus
+                    where p.RentalStatusId == s.RentalStatusId
+                    where p.PropertyTypeId == t.PropertyTypeId
+                    where p.PropertyId == id
+                    select new PropertyDetailViewModel
+                    {
+                        PropertyId = p.PropertyId,
+                        PropertyName = p.PropertyName,
+                        PropertyLogoImgUrl = p.PropertyLogoImgUrl,
+                        IsActive = p.IsActive,
+                        IsShared = p.IsShared,
+
+                        Status = s.Status,
+                        PropertyType1 = t.PropertyType1,
+
+                        PropertySuiteNumber = a.PropertySuiteNumber,
+                        PropertyNumber = a.PropertyNumber,
+                        PropertyStreet = a.PropertyStreet,
+                        PropertyStateProvince = a.PropertyStateProvince,
+                        PropertyZipPostCode = a.PropertyZipPostCode,
+                        PropertyCountry = a.PropertyCountry
+                    }).FirstOrDefault();
         }
         
 

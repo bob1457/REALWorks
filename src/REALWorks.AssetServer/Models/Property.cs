@@ -110,6 +110,7 @@ namespace REALWorks.AssetServer.Models
         public PropertyFeature PropertyFeature { get; set; }
         public PropertyType PropertyType { get; set; }
         public RentalStatus RentalStatus { get; set; }
+        public ICollection<ManagementContract> ManagementContract { get; set; }
         public ICollection<OwnerProperty> OwnerProperty { get; set; }
         public ICollection<PropertyImg> PropertyImg { get; set; }
     }

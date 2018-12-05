@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using REALWorks.AssetServer.Models;
+//using REALWorks.AssetServer.Models;
 using REALWorks.AssetServer.Services;
 using REALWorks.AssetServer.Services.ViewModels;
 
@@ -64,7 +64,7 @@ namespace REALWorks.AssetServer.Controllers
         {
             try
             {
-                var property = await _propertyService.GetPropertyById(id);
+                PropertyDetailViewModel property = await _propertyService.GetPropertyById(id);
                 if(property == null)
                 {
                     return NotFound();
