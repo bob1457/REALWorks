@@ -12,7 +12,7 @@ namespace REALWorks.AssetServer.Services
         /// </summary>        
         Task<PropertyAddViewModel> AddProperty(PropertyAddViewModel property);
         Task<PropertyImg> AddImgToProperty(PropertyImg img, int id);
-        Task<PropertyOwner> AddOwnerToProperty(PropertyOwner owner, int id);
+        Task AddOwnerToProperty(AddOwnerViewModel owner);
 
         /// <summary>
         /// Retrieve Operations (R)

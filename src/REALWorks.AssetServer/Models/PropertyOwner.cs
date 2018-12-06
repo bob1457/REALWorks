@@ -10,6 +10,24 @@ namespace REALWorks.AssetServer.Models
             OwnerProperty = new HashSet<OwnerProperty>();
         }
 
+        public PropertyOwner(//int ownerId,
+                             string firstName, 
+                             string lastName, 
+                             string contactEmail, 
+                             string contactTelephone1, 
+                             string contactTelephone2, 
+                             bool onlineAccessEnbaled
+            )
+        {
+            //PropertyOwnerId = ownerId;
+            FirstName = firstName;
+            LastName = lastName;
+            ContactEmail = contactEmail;
+            ContactTelephone1 = contactTelephone1;
+            ContactTelephone2 = contactTelephone2;
+            OnlineAccessEnbaled = onlineAccessEnbaled;
+        }
+
         public int PropertyOwnerId { get; set; }
         public string UserName { get; set; }
         public string FirstName { get; set; }

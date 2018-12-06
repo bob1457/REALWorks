@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using REALWorks.AssetServer.Models;
 //using REALWorks.AssetServer.Models;
 using REALWorks.AssetServer.Services;
 using REALWorks.AssetServer.Services.ViewModels;
@@ -77,6 +78,20 @@ namespace REALWorks.AssetServer.Controllers
                 throw ex; // For testing
                 //return BadRequest(); // For production
             }
+        }
+
+        [HttpPost]
+        [Route("addOwner")] // id: PropertyId
+        public async Task<IActionResult> AddPropertyOwner([FromBody] AddOwnerViewModel owner)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(400);
+            }
+
+            await _propertyService.AddOwnerToProperty(owner);
+
+            return Ok();
         }
     }
 }

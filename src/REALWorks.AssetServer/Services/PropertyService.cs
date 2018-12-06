@@ -21,15 +21,12 @@ namespace REALWorks.AssetServer.Services
 
         #region Create
 
-        public Task<PropertyImg> AddImgToProperty(PropertyImg img, int id)
-        {
-            throw new NotImplementedException();
-        }
+        
 
-        public Task<PropertyOwner> AddOwnerToProperty(PropertyOwner owner, int id)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<PropertyOwner> AddOwnerToProperty(PropertyOwner owner, int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public async Task<PropertyAddViewModel> AddProperty(PropertyAddViewModel property)
         {
@@ -165,12 +162,6 @@ namespace REALWorks.AssetServer.Services
 
             }
 
-            
-
-            
-
-            
-
             try
             {
                 
@@ -274,12 +265,17 @@ namespace REALWorks.AssetServer.Services
             //return _context.Property.Where(p => p.PropertyId == id).FirstOrDefault();
             return (from p in _context.Property
                     from a in _context.PropertyAddress
-                    //from o in _context.PropertyOwner
-                    //from c in _context.ManagementContract
+                    from o in _context.PropertyOwner
+                    join c in _context.ManagementContract on p.PropertyId equals c.PropertyId into ManagementConract          // Left Outer Join to get management contract even if it is empty          
+                    from fe in _context.PropertyFeature
+                    from fa in _context.PropertyFacility
                     from t in _context.PropertyType
                     from s in _context.RentalStatus
                     where p.RentalStatusId == s.RentalStatusId
                     where p.PropertyTypeId == t.PropertyTypeId
+                    //where c.PropertyId == p.PropertyId
+                    where p.PropertyFeatureId == fe.PropertyFeatureId
+                    where p.PropertyFacilityId == fa.PropertyFacilityId
                     where p.PropertyId == id
                     select new PropertyDetailViewModel
                     {
@@ -292,6 +288,18 @@ namespace REALWorks.AssetServer.Services
                         Status = s.Status,
                         PropertyType1 = t.PropertyType1,
 
+                        FirstName = o.FirstName,
+                        LastName = o.LastName,
+                        ContactEmail = o.ContactEmail,
+                        ContactTelephone1 = o.ContactTelephone1,
+
+                        ManagementContractTitile = ManagementConract.FirstOrDefault().ManagementContractTitile,
+
+                        NumberOfBedrooms = fe.NumberOfBedrooms,
+
+                        Stove = fa.Stove,
+
+
                         PropertySuiteNumber = a.PropertySuiteNumber,
                         PropertyNumber = a.PropertyNumber,
                         PropertyStreet = a.PropertyStreet,
@@ -300,7 +308,90 @@ namespace REALWorks.AssetServer.Services
                         PropertyCountry = a.PropertyCountry
                     }).FirstOrDefault();
         }
+
         
+        #endregion
+
+        #region Other Implementation (Business Logics) 
+
+        public async Task AddOwnerToProperty(AddOwnerViewModel owner)
+        {
+            //throw new NotImplementedException();
+
+            var property = _context.Find<Property>(owner.PropertyId); // Get the property to which the owner will be added
+
+            //property.AddOwner(owner.PropertyOwnerId, owner.FirstName, owner.LastName, owner.ContactEmail, owner.ContactTelephone1, owner.ContactTelephone2, owner.OnlineAccessEnbaled);
+
+            object ownerProperty;
+            object pOwner;
+
+            if (owner.PropertyOwnerId == 0) // this PeoprtyOwnerId coming from the ViewModel thorugh web api controller
+            {
+                // New Owner
+                pOwner = new PropertyOwner(
+                    owner.FirstName,
+                    owner.LastName,
+                    owner.ContactEmail,
+                    owner.ContactTelephone1,
+                    owner.ContactTelephone2,
+                    owner.OnlineAccessEnbaled)
+                {
+                    UserName = "notset",
+                    FirstName = owner.FirstName,
+                    LastName = owner.LastName,
+                    ContactEmail = owner.ContactEmail,
+                    ContactTelephone1 = owner.ContactTelephone1,
+                    ContactTelephone2 = owner.ContactTelephone2,
+                    OnlineAccessEnbaled = owner.OnlineAccessEnbaled,
+                    UserAvartaImgUrl = "",
+                    RoleId = 2,
+                    IsActive = true,
+                    CreationDate = DateTime.Now,
+                    UpdateDate = DateTime.Now
+                };
+
+                await _context.AddAsync(pOwner);
+
+                ownerProperty = new OwnerProperty()
+                {
+                    Property = property,
+                    PropertyOwner = (PropertyOwner)pOwner
+                    //PropertyId = newProperty.PropertyId,
+                    //PropertyOwnerId = pOwner.PropertyOwnerId
+                };
+
+                //await _context.AddAsync(ownerProperty);
+            }
+            else
+            {
+                // Existing Owner
+                ownerProperty = new OwnerProperty()
+                {
+                    Property = property,
+                    //PropertyOwner = pOwner
+                    //PropertyId = newProperty.PropertyId,
+                    PropertyOwnerId = owner.PropertyOwnerId
+                };
+
+                //await _context.AddAsync(ownerProperty);
+            }
+
+            await _context.AddAsync(ownerProperty);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<PropertyImg> AddImgToProperty(PropertyImg img, int id)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
     }
