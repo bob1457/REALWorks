@@ -1,4 +1,5 @@
-﻿using System;
+﻿using REALWorks.AssetServer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public string UserAvartaImgUrl { get; set; }
         public bool? OwnerIsActive { get; set; }        
         public DateTime OwnerCreationDate { get; set; }
-        public DateTime OwnerpdateDate { get; set; }
+        public DateTime OwnerUpdateDate { get; set; }
 
         /// <summary>
         /// Features
@@ -80,21 +81,26 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public string FacilityNotes { get; set; }
 
         /// <summary>
-        /// Owner
+        /// Owners
         /// </summary>
+        public ICollection<PropertyOwner> OwnerList { get; set; }
+        //public ICollection<OwnerProperty> OP { get; set; }
+
+        /// <summary>
+        /// Management Contract
+        /// </summary>
+        /// 
         public string ManagementContractTitile { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string PlacementFeeScale { get; set; }
-        public string ManagementFeeScale { get; set; }
-        public DateTime ContractSignDate { get; set; }
-        
-        /// <summary>
-        /// Management Contract
-        /// </summary>
+        public string ManagementFeeScale { get; set; }        
         public string ManagementContractDocUrl { get; set; }
         public bool ContractIsActive { get; set; }
+        public DateTime ContractSignDate { get; set; }
         public DateTime ContractCreationDate { get; set; }
         public DateTime ContractUpdateDate { get; set; }
+
+        
     }
 }

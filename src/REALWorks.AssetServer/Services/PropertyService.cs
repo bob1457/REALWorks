@@ -253,7 +253,9 @@ namespace REALWorks.AssetServer.Services
                               IsActive = p.IsActive,
                               IsShared = p.IsShared,
                               Status = s.Status,
-                              PropertyType1 = t.PropertyType1
+                              PropertyType1 = t.PropertyType1,
+                              CreatedDate = p.CreatedDate,
+                              UpdateDate = p.UpdateDate
 
                           }).AsQueryable(); //.ToListAsync()
         }
@@ -263,9 +265,9 @@ namespace REALWorks.AssetServer.Services
             //throw new NotImplementedException();
 
             //return _context.Property.Where(p => p.PropertyId == id).FirstOrDefault();
-            return (from p in _context.Property
+            var property = (from p in _context.Property.Include(op => op.OwnerProperty).ThenInclude(po => po.PropertyOwner)
                     from a in _context.PropertyAddress
-                    from o in _context.PropertyOwner
+                    from o in _context.PropertyOwner//.Select(o => o.OwnerProperty)
                     join c in _context.ManagementContract on p.PropertyId equals c.PropertyId into ManagementConract          // Left Outer Join to get management contract even if it is empty          
                     from fe in _context.PropertyFeature
                     from fa in _context.PropertyFacility
@@ -279,34 +281,61 @@ namespace REALWorks.AssetServer.Services
                     where p.PropertyId == id
                     select new PropertyDetailViewModel
                     {
+                        //Property attributers
                         PropertyId = p.PropertyId,
                         PropertyName = p.PropertyName,
                         PropertyLogoImgUrl = p.PropertyLogoImgUrl,
                         IsActive = p.IsActive,
                         IsShared = p.IsShared,
-
                         Status = s.Status,
                         PropertyType1 = t.PropertyType1,
 
+                        //Load the first owner, others will be loaded with explicit load when needed.
                         FirstName = o.FirstName,
                         LastName = o.LastName,
                         ContactEmail = o.ContactEmail,
                         ContactTelephone1 = o.ContactTelephone1,
+                        //...
+                        
 
                         ManagementContractTitile = ManagementConract.FirstOrDefault().ManagementContractTitile,
 
+                        // Features
                         NumberOfBedrooms = fe.NumberOfBedrooms,
 
+                        // ...
+                        
+
+                        // Facilities
                         Stove = fa.Stove,
 
+                        //...
 
+                        // Address
                         PropertySuiteNumber = a.PropertySuiteNumber,
                         PropertyNumber = a.PropertyNumber,
                         PropertyStreet = a.PropertyStreet,
                         PropertyStateProvince = a.PropertyStateProvince,
                         PropertyZipPostCode = a.PropertyZipPostCode,
                         PropertyCountry = a.PropertyCountry
-                    }).FirstOrDefault();
+
+                    }).Include(o => o.OwnerList).FirstOrDefault();
+
+            var owners = _context.PropertyOwner.Include(o => o.OwnerProperty);
+
+            //var owners = _context.Entry(property)
+            //    .Collection(p => p.OwnerList)
+            //    .Query().Select(x => x.OwnerProperty)
+            //    .ToList();
+
+            //property.OwnerList = owners.ToList();
+
+            //foreach (PropertyOwner ol in owners)
+            //{
+            //    property.OwnerList.Add(ol);
+            //}
+
+            return property;
         }
 
         

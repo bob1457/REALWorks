@@ -72,6 +72,7 @@ namespace REALWorks.AssetServer.Controllers
                 }
 
                 return Ok(property);
+
             }
             catch (Exception ex)
             {
