@@ -121,22 +121,22 @@ namespace REALWorks.AssetServer.Models
         /// Domain Behaviors(Methods)
         /// </summary>
         /// <returns></returns>
-        public /*PropertyOwner*/ void AddOwner( /*int ownerId, */string firstName, string lastName, string contactEmail, string contactTel1, string contactTel2, bool onlineAccess )
-        {
-            var propertyOwner = new PropertyOwner( /*ownerId, */firstName, lastName, contactEmail, contactTel1, contactTel2, false)
-            {
-                //PropertyOwnerId = ownerId,
-                FirstName = firstName,
-                LastName = lastName,
-                ContactEmail = contactEmail,
-                ContactTelephone1 = contactTel1,
-                ContactTelephone2 = contactTel2,
-                //OnlineAccessEnbaled = onlineAccess,
-                CreationDate = DateTime.Now,
-                UpdateDate = DateTime.Now
-            };
+        //public /*PropertyOwner*/ void AddOwner( /*int ownerId, */string firstName, string lastName, string contactEmail, string contactTel1, string contactTel2, bool onlineAccess )
+        //{
+        //    var propertyOwner = new PropertyOwner( /*ownerId, */firstName, lastName, contactEmail, contactTel1, contactTel2, false)
+        //    {
+        //        //PropertyOwnerId = ownerId,
+        //        FirstName = firstName,
+        //        LastName = lastName,
+        //        ContactEmail = contactEmail,
+        //        ContactTelephone1 = contactTel1,
+        //        ContactTelephone2 = contactTel2,
+        //        //OnlineAccessEnbaled = onlineAccess,
+        //        CreationDate = DateTime.Now,
+        //        UpdateDate = DateTime.Now
+        //    };
 
 
-        }
+        //}
     }
 }

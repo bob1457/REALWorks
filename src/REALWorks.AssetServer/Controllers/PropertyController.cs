@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using REALWorks.AssetServer.Models;
 //using REALWorks.AssetServer.Models;
 using REALWorks.AssetServer.Services;
@@ -61,28 +62,60 @@ namespace REALWorks.AssetServer.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetPropertyById(int id)
+        public async Task<ActionResult<PropertyDetailViewModel>> GetPropertyById(int id)
         {
-            try
+            var options = new JsonSerializerSettings
             {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+
+            try
+              {
                 PropertyDetailViewModel property = await _propertyService.GetPropertyById(id);
-                if(property == null)
+                if (property == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(property);
+                return new OkObjectResult(property); //  Ok(property);  //await _propertyService.GetPropertyById(id);
+                //return Json(property, options);
 
             }
-            catch (Exception ex)
+            catch (Exception ex) {
+                    throw ex;
+                }
+
+        }
+
+
+
+
+        [HttpGet]
+        [Route("owners/{id}")]
+        public async Task<IActionResult> GetOwnersByProperty(int id)
+        {
+            try
             {
-                throw ex; // For testing
-                //return BadRequest(); // For production
+                var owners = await _propertyService.GetOwnerListByProperty(id);
+
+                if (owners == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(owners);
+
+            } catch(Exception ex)
+            {
+                throw ex;
             }
         }
 
+
+
+
         [HttpPost]
-        [Route("addOwner")] // id: PropertyId
+        [Route("addOwner")] 
         public async Task<IActionResult> AddPropertyOwner([FromBody] AddOwnerViewModel owner)
         {
             if (!ModelState.IsValid)
@@ -93,6 +126,34 @@ namespace REALWorks.AssetServer.Controllers
             await _propertyService.AddOwnerToProperty(owner);
 
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("addContract")] 
+        public async Task<IActionResult> AddManagementContract([FromBody] AddManagementContractViewModel contract)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(400);
+            }
+
+            var ct = await _propertyService.AddManagementContract(contract);
+
+            return Ok(ct);
+        }
+
+        [HttpPost]
+        [Route("updateStatus/id/statusId")]
+        public async Task<IActionResult> UpdateRentalStatus(int id, int statusId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(400);
+            }
+
+            var status = await _propertyService.UpdateRentalStatus(id, statusId);
+
+            return Ok(status);
         }
     }
 }

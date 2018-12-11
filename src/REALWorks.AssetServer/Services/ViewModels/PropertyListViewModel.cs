@@ -20,7 +20,15 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public DateTime CreatedDate { get; set; }
         public DateTime UpdateDate { get; set; }
 
-        public string PropertyType1 { get; set; }        
+        public string PropertyType1 { get; set; }
+
+        public string PropertySuiteNumber { get; set; }
+        public string PropertyNumber { get; set; }
+        public string PropertyStreet { get; set; }
+        public string PropertyCity { get; set; }
+        public string PropertyStateProvince { get; set; }
+        public string PropertyCountry { get; set; }
+        public string PropertyZipPostCode { get; set; }
 
         public string Status { get; set; }
         

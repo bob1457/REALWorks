@@ -10,6 +10,31 @@ namespace REALWorks.AssetServer.Models
             ManagementFee = new HashSet<ManagementFee>();
         }
 
+        public ManagementContract(
+            int propertyId,
+            string managementContractTitile,
+            DateTime startDate,
+            DateTime endDate,
+            string placementFeeScale,
+            string managementFeeScale,
+            DateTime contractSignDate,
+            string managementContractDocUrl,
+            bool isActive//, 
+                         //ICollection<ManagementFee> managementFee
+            )
+        {
+            PropertyId = propertyId;
+            ManagementContractTitile = managementContractTitile;
+            StartDate = startDate;
+            EndDate = endDate;
+            PlacementFeeScale = placementFeeScale;
+            ManagementFeeScale = managementFeeScale;
+            ContractSignDate = contractSignDate;
+            ManagementContractDocUrl = managementContractDocUrl;
+            IsActive = isActive;//;
+           // ManagementFee = managementFee;
+        }
+
         public int ManagementContractId { get; set; }
         public string ManagementContractTitile { get; set; }
         public DateTime StartDate { get; set; }

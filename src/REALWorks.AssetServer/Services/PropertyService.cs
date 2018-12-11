@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace REALWorks.AssetServer.Services
 {
@@ -265,51 +266,57 @@ namespace REALWorks.AssetServer.Services
             //throw new NotImplementedException();
 
             //return _context.Property.Where(p => p.PropertyId == id).FirstOrDefault();
-            var property = (from p in _context.Property.Include(op => op.OwnerProperty).ThenInclude(po => po.PropertyOwner)
-                    from a in _context.PropertyAddress
-                    from o in _context.PropertyOwner//.Select(o => o.OwnerProperty)
-                    join c in _context.ManagementContract on p.PropertyId equals c.PropertyId into ManagementConract          // Left Outer Join to get management contract even if it is empty          
-                    from fe in _context.PropertyFeature
-                    from fa in _context.PropertyFacility
-                    from t in _context.PropertyType
-                    from s in _context.RentalStatus
-                    where p.RentalStatusId == s.RentalStatusId
-                    where p.PropertyTypeId == t.PropertyTypeId
-                    //where c.PropertyId == p.PropertyId
-                    where p.PropertyFeatureId == fe.PropertyFeatureId
-                    where p.PropertyFacilityId == fa.PropertyFacilityId
-                    where p.PropertyId == id
-                    select new PropertyDetailViewModel
-                    {
-                        //Property attributers
-                        PropertyId = p.PropertyId,
-                        PropertyName = p.PropertyName,
-                        PropertyLogoImgUrl = p.PropertyLogoImgUrl,
-                        IsActive = p.IsActive,
-                        IsShared = p.IsShared,
-                        Status = s.Status,
-                        PropertyType1 = t.PropertyType1,
+            var property = (from p in _context.Property.Include(op => op.OwnerProperty).ThenInclude(po => po.PropertyOwner)                                                       
+                            from a in _context.PropertyAddress where p.PropertyAddressId == a.PropertyAddressId
+                            //from o in _context.PropertyOwner.Select(o => o.OwnerProperty).ToList()
+                            join c in _context.ManagementContract on p.PropertyId equals c.PropertyId into ManagementConract          // Left Outer Join to get management contract even if it is empty          
+                            from fe in _context.PropertyFeature
+                            from fa in _context.PropertyFacility
+                            from t in _context.PropertyType
+                            from s in _context.RentalStatus
+                            where p.RentalStatusId == s.RentalStatusId
+                            where p.PropertyTypeId == t.PropertyTypeId                            
+                            where p.PropertyFeatureId == fe.PropertyFeatureId
+                            where p.PropertyFacilityId == fa.PropertyFacilityId
+                            where p.PropertyId == id
+                            select new PropertyDetailViewModel
+                            {
+                                //Property attributers
+                                PropertyId = p.PropertyId,
+                                PropertyName = p.PropertyName,
+                                PropertyLogoImgUrl = p.PropertyLogoImgUrl,
+                                IsActive = p.IsActive,
+                                IsShared = p.IsShared,
+                                Status = s.Status,
+                                PropertyType1 = t.PropertyType1,
 
-                        //Load the first owner, others will be loaded with explicit load when needed.
-                        FirstName = o.FirstName,
-                        LastName = o.LastName,
-                        ContactEmail = o.ContactEmail,
-                        ContactTelephone1 = o.ContactTelephone1,
-                        //...
-                        
 
-                        ManagementContractTitile = ManagementConract.FirstOrDefault().ManagementContractTitile,
+                                //Load the first owner, others will be loaded with explicit load when needed.
+                                //FirstName = p.OwnerProperty.FirstOrDefault().PropertyOwner.FirstName, //o.FirstName,
+                                //LastName = o.LastName,
+                                //ContactEmail = o.ContactEmail,
+                                //ContactTelephone1 = o.ContactTelephone1,
+                                //...
+                                
+                                //OwnerList = {
+                                    
+                                //},
 
-                        // Features
-                        NumberOfBedrooms = fe.NumberOfBedrooms,
+                                ManagementContractTitile = ManagementConract.FirstOrDefault().ManagementContractTitile,
 
-                        // ...
-                        
+                                // Features
+                                NumberOfBedrooms = fe.NumberOfBedrooms,
+                                NumberOfBathrooms = fe.NumberOfBathrooms,
 
-                        // Facilities
-                        Stove = fa.Stove,
+                                // ...
 
-                        //...
+
+                                // Facilities
+                                Stove = fa.Stove,
+
+                                //...
+
+                                //OwnerList = ,
 
                         // Address
                         PropertySuiteNumber = a.PropertySuiteNumber,
@@ -319,26 +326,38 @@ namespace REALWorks.AssetServer.Services
                         PropertyZipPostCode = a.PropertyZipPostCode,
                         PropertyCountry = a.PropertyCountry
 
-                    }).Include(o => o.OwnerList).FirstOrDefault();
+                    })/*.Include(o => o.OwnerList)*/.FirstOrDefault();
 
-            var owners = _context.PropertyOwner.Include(o => o.OwnerProperty);
+            //var owners = _context.PropertyOwner.Include(o => o.OwnerProperty);
 
-            //var owners = _context.Entry(property)
-            //    .Collection(p => p.OwnerList)
-            //    .Query().Select(x => x.OwnerProperty)
-            //    .ToList();
 
-            //property.OwnerList = owners.ToList();
+            //property.OwnerList = owners.ToList(); // Need to figure how the data is returned in controller
 
-            //foreach (PropertyOwner ol in owners)
-            //{
-            //    property.OwnerList.Add(ol);
-            //}
 
             return property;
         }
 
         
+        public async Task<IQueryable<PropertyOwnerListViewModel>> GetOwnerListByProperty(int id)
+        {
+            //throw new NotImplementedException();
+            var owners =   (from o in _context.PropertyOwner//.Include(pt => pt.OwnerProperty).ThenInclude(x => x.Property)
+                           from op in _context.OwnerProperty where o.PropertyOwnerId == op.PropertyOwnerId
+                            from p in _context.Property where p.PropertyId == op.PropertyId
+                            where op.PropertyId == id
+                            select new PropertyOwnerListViewModel
+                            {
+                                FirstName = o.FirstName,
+                                LastName = o.LastName,
+                                PropertyName = p.PropertyName
+                            }).AsQueryable();
+
+
+            return owners;
+            
+        }
+
+
         #endregion
 
         #region Other Implementation (Business Logics) 
@@ -420,6 +439,86 @@ namespace REALWorks.AssetServer.Services
         public async Task<PropertyImg> AddImgToProperty(PropertyImg img, int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<AddManagementContractViewModel> AddManagementContract(AddManagementContractViewModel contract)
+        {
+            //throw new NotImplementedException();
+            var property = _context.Find<Property>(contract.PropertyId); // Get the property to which the contract will be added
+
+            var newContract = new ManagementContract(
+                contract.PropertyId,
+                contract.ManagementContractTitile,
+                contract.StartDate,
+                contract.EndDate,
+                contract.PlacementFeeScale,
+                contract.ManagementFeeScale,
+                contract.ContractSignDate,
+                contract.ManagementContractDocUrl,
+                contract.IsActive
+                )
+            {
+                PropertyId = contract.PropertyId,
+                ManagementContractTitile = contract.ManagementContractTitile,
+                StartDate = contract.StartDate,
+                EndDate = contract.EndDate,
+                PlacementFeeScale = contract.PlacementFeeScale,
+                ManagementFeeScale = contract.ManagementFeeScale,
+                ContractSignDate = contract.StartDate,
+                ManagementContractDocUrl = contract.ManagementContractDocUrl,
+                IsActive = contract.IsActive,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now
+            };
+
+            //var placementFee = new ManagementFee()
+            //{
+            //    ManagementFeeType = contract.ManagementFeeType1,
+            //    ManagementFeeAmount = contract.ManagementFeeAmount,
+            //    Notes = contract.ManagemetnFeeNotes
+            //};
+
+            //var managementFee = new ManagementFee()
+            //{
+            //    ManagementFeeType = contract.ManagementFeeType2,
+            //    ManagementFeeAmount = contract.ManagementFeeAmount,
+            //    Notes = contract.ManagemetnFeeNotes
+            //};
+
+            //newContract.ManagementFee.Add(managementFee);
+            //newContract.ManagementFee.Add(placementFee);
+                      
+
+            try
+            {
+                await _context.AddAsync(newContract);
+
+                await _context.SaveChangesAsync();
+
+                contract.ManagementContractId = newContract.ManagementContractId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return contract;
+        }
+
+        public async Task<RentalStatus> UpdateRentalStatus(int id, int statusId) //id: property id
+        {
+            var property = _context.Find<Property>(id);
+
+            property.RentalStatusId = statusId;
+
+            //EntityEntry entiy = _context.Entry(property);
+
+            await _context.SaveChangesAsync();
+
+            var newStatus = _context.RentalStatus.Where(s => s.RentalStatusId == statusId);
+
+            return await newStatus.FirstOrDefaultAsync();
+
         }
 
         #endregion

@@ -39,16 +39,16 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public string GpslongitudeValue { get; set; }
         public string GpslatitudeValue { get; set; }
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string ContactEmail { get; set; }
-        public string ContactTelephone1 { get; set; }
-        public string ContactTelephone2 { get; set; }
-        public bool OnlineAccessEnbaled { get; set; }
-        public string UserAvartaImgUrl { get; set; }
-        public bool? OwnerIsActive { get; set; }        
-        public DateTime OwnerCreationDate { get; set; }
-        public DateTime OwnerUpdateDate { get; set; }
+        //public string FirstName { get; set; }
+        //public string LastName { get; set; }
+        //public string ContactEmail { get; set; }
+        //public string ContactTelephone1 { get; set; }
+        //public string ContactTelephone2 { get; set; }
+        //public bool OnlineAccessEnbaled { get; set; }
+        //public string UserAvartaImgUrl { get; set; }
+        //public bool? OwnerIsActive { get; set; }        
+        //public DateTime OwnerCreationDate { get; set; }
+        //public DateTime OwnerUpdateDate { get; set; }
 
         /// <summary>
         /// Features
@@ -85,6 +85,7 @@ namespace REALWorks.AssetServer.Services.ViewModels
         /// </summary>
         public ICollection<PropertyOwner> OwnerList { get; set; }
         //public ICollection<OwnerProperty> OP { get; set; }
+        
 
         /// <summary>
         /// Management Contract
