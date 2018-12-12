@@ -12,8 +12,8 @@ namespace REALWorks.AssetServer.Services
         /// </summary>        
         Task<PropertyAddViewModel> AddProperty(PropertyAddViewModel property);
         Task<PropertyImg> AddImgToProperty(PropertyImg img, int id);
-        Task AddOwnerToProperty(AddOwnerViewModel owner);
-        Task<AddManagementContractViewModel>AddManagementContract(AddManagementContractViewModel contract);
+        Task AddOwnerToProperty(OwnerAddViewModel owner);
+        Task<ManagementContractAddViewModel>AddManagementContract(ManagementContractAddViewModel contract);
 
         /// <summary>
         /// Retrieve Operations (R)
@@ -23,6 +23,9 @@ namespace REALWorks.AssetServer.Services
         Task<IQueryable<PropertyOwnerListViewModel>> GetOwnerListByProperty(int id); // id: property id
 
         Task<RentalStatus> UpdateRentalStatus(int id, int statusId);
+        Task<bool> UpdateProeprtyStatus(int id, bool status);
+
+        Task<PropertyUpdateViewModel> UpdateProperty(PropertyUpdateViewModel property);
 
 
     }

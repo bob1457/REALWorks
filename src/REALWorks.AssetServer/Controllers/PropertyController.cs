@@ -116,7 +116,7 @@ namespace REALWorks.AssetServer.Controllers
 
         [HttpPost]
         [Route("addOwner")] 
-        public async Task<IActionResult> AddPropertyOwner([FromBody] AddOwnerViewModel owner)
+        public async Task<IActionResult> AddPropertyOwner([FromBody] OwnerAddViewModel owner)
         {
             if (!ModelState.IsValid)
             {
@@ -130,7 +130,7 @@ namespace REALWorks.AssetServer.Controllers
 
         [HttpPost]
         [Route("addContract")] 
-        public async Task<IActionResult> AddManagementContract([FromBody] AddManagementContractViewModel contract)
+        public async Task<IActionResult> AddManagementContract([FromBody] ManagementContractAddViewModel contract)
         {
             if (!ModelState.IsValid)
             {
@@ -154,6 +154,30 @@ namespace REALWorks.AssetServer.Controllers
             var status = await _propertyService.UpdateRentalStatus(id, statusId);
 
             return Ok(status);
+        }
+
+        [HttpPost]
+        [Route("status/state")]
+        public async Task<IActionResult> UpdatePropertyStatus(int id, bool status)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(400);
+            }
+
+            var state = await _propertyService.UpdateProeprtyStatus(id, status);
+
+            return Ok(state);
+        }
+
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> UpdateProperty(PropertyUpdateViewModel property)
+        {
+
+            await _propertyService.UpdateProperty(property);
+
+            return Ok();
         }
     }
 }

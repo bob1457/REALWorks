@@ -287,7 +287,7 @@ namespace REALWorks.AssetServer.Services
                                 PropertyLogoImgUrl = p.PropertyLogoImgUrl,
                                 IsActive = p.IsActive,
                                 IsShared = p.IsShared,
-                                Status = s.Status,
+                                Status = s.Status,  //p.OwnerProperty.First().PropertyOwner.f // 
                                 PropertyType1 = t.PropertyType1,
 
 
@@ -328,7 +328,7 @@ namespace REALWorks.AssetServer.Services
 
                     })/*.Include(o => o.OwnerList)*/.FirstOrDefault();
 
-            //var owners = _context.PropertyOwner.Include(o => o.OwnerProperty);
+            var owners = _context.PropertyOwner.Include(o => o.OwnerProperty);
 
 
             //property.OwnerList = owners.ToList(); // Need to figure how the data is returned in controller
@@ -362,7 +362,7 @@ namespace REALWorks.AssetServer.Services
 
         #region Other Implementation (Business Logics) 
 
-        public async Task AddOwnerToProperty(AddOwnerViewModel owner)
+        public async Task AddOwnerToProperty(OwnerAddViewModel owner)
         {
             //throw new NotImplementedException();
 
@@ -441,7 +441,7 @@ namespace REALWorks.AssetServer.Services
             throw new NotImplementedException();
         }
 
-        public async Task<AddManagementContractViewModel> AddManagementContract(AddManagementContractViewModel contract)
+        public async Task<ManagementContractAddViewModel> AddManagementContract(ManagementContractAddViewModel contract)
         {
             //throw new NotImplementedException();
             var property = _context.Find<Property>(contract.PropertyId); // Get the property to which the contract will be added
@@ -520,6 +520,108 @@ namespace REALWorks.AssetServer.Services
             return await newStatus.FirstOrDefaultAsync();
 
         }
+
+        public async Task<bool> UpdateProeprtyStatus(int id, bool status)
+        {
+            var property = _context.Find<Property>(id);
+
+            property.IsActive = status;
+
+            //var newStatus = _context.Property.Where(s => s.IsActive == status);
+
+            await _context.SaveChangesAsync();
+
+            return status;
+
+        }
+
+        public async Task<PropertyUpdateViewModel> UpdateProperty(PropertyUpdateViewModel property)
+        {
+            //throw new NotImplementedException();
+
+            // Populate the object with new updated value, NOTE: entity Id must be present or a new record will be inserted
+
+            var feature = new PropertyFeature()
+            {
+                PropertyFeatureId = property.PropertyFeatureId,
+                BasementAvailable = property.BasementAvailable,
+                IsShared = property.IsShared,
+                NumberOfBedrooms = property.NumberOfBedrooms,
+                NumberOfBathrooms = property.NumberOfBathrooms,
+                TotalLivingArea = property.TotalLivingArea,
+                NumberOfLayers = property.NumberOfLayers,
+                NumberOfParking = property.NumberOfParking,
+                Notes = property.FacilityNotes
+            };
+
+            var facility = new PropertyFacility()
+            {
+                PropertyFacilityId = property.PropertyFacilityId,
+                CommonFacility = property.CommonFacility,
+                Refrigerator = property.Refrigerator,
+                Laundry = property.Laundry,
+                UtilityIncluded = property.UtilityIncluded,
+                SecuritySystem = property.SecuritySystem,
+                FireAlarmSystem = property.FireAlarmSystem,
+                Tvinternet = property.Tvinternet,
+                BlindsCurtain = property.BlindsCurtain,
+                Stove = property.Stove,
+                Dishwasher = property.Dishwasher,
+                Notes = property.FacilityNotes
+            };
+
+            var address = new PropertyAddress()
+            {
+                PropertyAddressId = property.PropertyAddressId,
+                PropertySuiteNumber = property.PropertySuiteNumber,
+                PropertyNumber = property.PropertyNumber,
+                PropertyStreet = property.PropertyStreet,
+                PropertyCity = property.PropertyCity,
+                PropertyStateProvince = property.PropertyStateProvince,
+                PropertyZipPostCode = property.PropertyZipPostCode,
+                PropertyCountry = property.PropertyCountry
+            };
+
+
+            var ppt = new Property() //_context.Property.Find(property.PropertyId);
+            {
+                PropertyId = property.PropertyId,
+                PropertyName = property.PropertyName,
+                PropertyDesc = property.PropertyDesc,                
+                PropertyBuildYear = property.PropertyBuildYear,
+                IsActive = property.IsActive,
+                IsShared = property.IsShared,
+                IsBasementSuite = property.IsBasementSuite,
+                PropertyAddress = address,
+                PropertyFacility = facility,
+                PropertyFeature = feature,
+                PropertyTypeId = property.PropertyTypeId,
+                RentalStatusId = property.RentalStatusId,                
+                UpdateDate = DateTime.Now
+            };
+            
+
+            //ppt.UpdateDate = DateTime.Now;
+
+            _context.Property.Update(ppt);
+            _context.PropertyFeature.Update(feature);
+            _context.PropertyFacility.Update(facility);
+            _context.PropertyAddress.Update(address);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return property;
+
+        }
+
+
 
         #endregion
     }

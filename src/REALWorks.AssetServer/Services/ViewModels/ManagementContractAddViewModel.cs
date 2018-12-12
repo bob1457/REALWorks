@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.AssetServer.Services.ViewModels
 {
-    public class AddManagementContractViewModel
+    public class ManagementContractAddViewModel
     {
         public int ManagementContractId { get; set; }
         public string ManagementContractTitile { get; set; }

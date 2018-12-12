@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.AssetServer.Services.ViewModels
 {
-    public class AddOwnerViewModel
+    public class OwnerAddViewModel
     {
         public int PropertyOwnerId { get; set; }
         public int PropertyId { get; set; }
