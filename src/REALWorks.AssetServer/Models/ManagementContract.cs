@@ -7,7 +7,7 @@ namespace REALWorks.AssetServer.Models
     {
         public ManagementContract()
         {
-            ManagementFee = new HashSet<ManagementFee>();
+            
         }
 
         public ManagementContract(
@@ -19,8 +19,8 @@ namespace REALWorks.AssetServer.Models
             string managementFeeScale,
             DateTime contractSignDate,
             string managementContractDocUrl,
-            bool isActive//, 
-                         //ICollection<ManagementFee> managementFee
+            bool isActive,
+            bool isRenewal
             )
         {
             PropertyId = propertyId;
@@ -31,8 +31,8 @@ namespace REALWorks.AssetServer.Models
             ManagementFeeScale = managementFeeScale;
             ContractSignDate = contractSignDate;
             ManagementContractDocUrl = managementContractDocUrl;
-            IsActive = isActive;//;
-           // ManagementFee = managementFee;
+            IsActive = isActive;
+            IsRenewal = isRenewal;
         }
 
         public int ManagementContractId { get; set; }
@@ -44,11 +44,12 @@ namespace REALWorks.AssetServer.Models
         public DateTime ContractSignDate { get; set; }
         public int PropertyId { get; set; }
         public string ManagementContractDocUrl { get; set; }
+        public string ContentTemplateUrl { get; set; }
         public bool IsActive { get; set; }
+        public bool? IsRenewal { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
 
         public Property Property { get; set; }
-        public ICollection<ManagementFee> ManagementFee { get; set; }
     }
 }

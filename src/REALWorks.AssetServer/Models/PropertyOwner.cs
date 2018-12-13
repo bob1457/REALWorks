@@ -11,11 +11,11 @@ namespace REALWorks.AssetServer.Models
         }
 
         public PropertyOwner(//int ownerId,
-                             string firstName, 
-                             string lastName, 
-                             string contactEmail, 
-                             string contactTelephone1, 
-                             string contactTelephone2, 
+                             string firstName,
+                             string lastName,
+                             string contactEmail,
+                             string contactTelephone1,
+                             string contactTelephone2,
                              bool onlineAccessEnbaled
             )
         {

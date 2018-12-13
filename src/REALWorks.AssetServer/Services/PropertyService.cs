@@ -455,7 +455,8 @@ namespace REALWorks.AssetServer.Services
                 contract.ManagementFeeScale,
                 contract.ContractSignDate,
                 contract.ManagementContractDocUrl,
-                contract.IsActive
+                contract.IsActive,
+                contract.IsRenewal
                 )
             {
                 PropertyId = contract.PropertyId,
@@ -467,6 +468,7 @@ namespace REALWorks.AssetServer.Services
                 ContractSignDate = contract.StartDate,
                 ManagementContractDocUrl = contract.ManagementContractDocUrl,
                 IsActive = contract.IsActive,
+                IsRenewal = contract.IsRenewal,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now
             };

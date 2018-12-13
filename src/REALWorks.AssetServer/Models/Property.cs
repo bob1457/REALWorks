@@ -8,6 +8,7 @@ namespace REALWorks.AssetServer.Models
     {
         public Property()
         {
+            ManagementContract = new HashSet<ManagementContract>();
             OwnerProperty = new HashSet<OwnerProperty>();
             PropertyImg = new HashSet<PropertyImg>();
         }
@@ -85,6 +86,7 @@ namespace REALWorks.AssetServer.Models
             RentalStatusId = rentalStatusId;//RentalStatus = rentalStatus;
         }
 
+
         /// <summary>
         /// All Domain Attributes(Domain Properties)
         /// </summary>
@@ -116,27 +118,5 @@ namespace REALWorks.AssetServer.Models
         public ICollection<ManagementContract> ManagementContract { get; set; }
         public ICollection<OwnerProperty> OwnerProperty { get; set; }
         public ICollection<PropertyImg> PropertyImg { get; set; }
-
-        /// <summary>
-        /// Domain Behaviors(Methods)
-        /// </summary>
-        /// <returns></returns>
-        //public /*PropertyOwner*/ void AddOwner( /*int ownerId, */string firstName, string lastName, string contactEmail, string contactTel1, string contactTel2, bool onlineAccess )
-        //{
-        //    var propertyOwner = new PropertyOwner( /*ownerId, */firstName, lastName, contactEmail, contactTel1, contactTel2, false)
-        //    {
-        //        //PropertyOwnerId = ownerId,
-        //        FirstName = firstName,
-        //        LastName = lastName,
-        //        ContactEmail = contactEmail,
-        //        ContactTelephone1 = contactTel1,
-        //        ContactTelephone2 = contactTel2,
-        //        //OnlineAccessEnbaled = onlineAccess,
-        //        CreationDate = DateTime.Now,
-        //        UpdateDate = DateTime.Now
-        //    };
-
-
-        //}
     }
 }

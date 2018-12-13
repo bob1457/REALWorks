@@ -17,6 +17,7 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public int PropertyId { get; set; }
         public string ManagementContractDocUrl { get; set; }
         public bool IsActive { get; set; }
+        public bool IsRenewal { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
 
