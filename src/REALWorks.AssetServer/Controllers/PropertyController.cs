@@ -59,7 +59,7 @@ namespace REALWorks.AssetServer.Controllers
                 //return BadRequest(); // For production
             }
         }
-
+/*
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult<PropertyDetailViewModel>> GetPropertyById(int id)
@@ -86,9 +86,29 @@ namespace REALWorks.AssetServer.Controllers
                 }
 
         }
+*/
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<Property>> GetPropertyAndOnwers(int id)
+        {            
+            try
+            {
+                Property property = await _propertyService.GetPropertyAndOwner(id);
+                if (property == null)
+                {
+                    return NotFound();
+                }
 
+                return new OkObjectResult(property); //  Ok(property);  //await _propertyService.GetPropertyById(id);
+                //return Json(property, options);
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
+        }
 
         [HttpGet]
         [Route("owners/{id}")]

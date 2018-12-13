@@ -261,7 +261,8 @@ namespace REALWorks.AssetServer.Services
                           }).AsQueryable(); //.ToListAsync()
         }
 
-        public async Task<PropertyDetailViewModel> GetPropertyById(int id)
+        //Archived for future use the eager loading below
+        public async Task<PropertyDetailViewModel> GetPropertyById(int id)  // **************** Use view model (DTO) to load only the attributes needed!!!!
         {
             //throw new NotImplementedException();
 
@@ -269,7 +270,7 @@ namespace REALWorks.AssetServer.Services
             var property = (from p in _context.Property.Include(op => op.OwnerProperty).ThenInclude(po => po.PropertyOwner)                                                       
                             from a in _context.PropertyAddress where p.PropertyAddressId == a.PropertyAddressId
                             //from o in _context.PropertyOwner.Select(o => o.OwnerProperty).ToList()
-                            join c in _context.ManagementContract on p.PropertyId equals c.PropertyId into ManagementConract          // Left Outer Join to get management contract even if it is empty          
+                            //join c in _context.ManagementContract on p.PropertyId equals c.PropertyId into ManagementConract          // Left Outer Join to get management contract even if it is empty          
                             from fe in _context.PropertyFeature
                             from fa in _context.PropertyFacility
                             from t in _context.PropertyType
@@ -290,19 +291,7 @@ namespace REALWorks.AssetServer.Services
                                 Status = s.Status,  //p.OwnerProperty.First().PropertyOwner.f // 
                                 PropertyType1 = t.PropertyType1,
 
-
-                                //Load the first owner, others will be loaded with explicit load when needed.
-                                //FirstName = p.OwnerProperty.FirstOrDefault().PropertyOwner.FirstName, //o.FirstName,
-                                //LastName = o.LastName,
-                                //ContactEmail = o.ContactEmail,
-                                //ContactTelephone1 = o.ContactTelephone1,
-                                //...
-                                
-                                //OwnerList = {
-                                    
-                                //},
-
-                                ManagementContractTitile = ManagementConract.FirstOrDefault().ManagementContractTitile,
+                                // ManagementContractTitile = ManagementConract.FirstOrDefault().ManagementContractTitile,
 
                                 // Features
                                 NumberOfBedrooms = fe.NumberOfBedrooms,
@@ -316,22 +305,24 @@ namespace REALWorks.AssetServer.Services
 
                                 //...
 
-                                //OwnerList = ,
+                                
 
-                        // Address
-                        PropertySuiteNumber = a.PropertySuiteNumber,
-                        PropertyNumber = a.PropertyNumber,
-                        PropertyStreet = a.PropertyStreet,
-                        PropertyStateProvince = a.PropertyStateProvince,
-                        PropertyZipPostCode = a.PropertyZipPostCode,
-                        PropertyCountry = a.PropertyCountry
+                            // Address
+                            PropertySuiteNumber = a.PropertySuiteNumber,
+                            PropertyNumber = a.PropertyNumber,
+                            PropertyStreet = a.PropertyStreet,
+                            PropertyStateProvince = a.PropertyStateProvince,
+                            PropertyZipPostCode = a.PropertyZipPostCode,
+                            PropertyCountry = a.PropertyCountry
 
-                    })/*.Include(o => o.OwnerList)*/.FirstOrDefault();
+                        })/*.Include(o => o.OwnerList)*/.FirstOrDefault();
 
             var owners = _context.PropertyOwner.Include(o => o.OwnerProperty);
 
+            var contracts = _context.ManagementContract.Where(x => x.PropertyId == id).ToList();
 
-            //property.OwnerList = owners.ToList(); // Need to figure how the data is returned in controller
+            property.OwnerList = owners.ToList(); // Also see the service below with eager loading example (without using view model)
+            property.CotnractList = contracts;
 
 
             return property;
@@ -621,6 +612,47 @@ namespace REALWorks.AssetServer.Services
 
             return property;
 
+        }
+
+
+
+
+        public async Task<Property> GetPropertyAndOwner(int id) // ************************** Withut view model (DTO), all attributes will be loaded!!!
+        {
+            //throw new NotImplementedException();
+
+            // Explicit Loading
+            //
+            //var property = _context.Property.First(p => p.PropertyId == id);
+            //_context.Entry(property)
+            //    .Collection(o => o.OwnerProperty).Load();
+            //foreach (var owner in property.OwnerProperty)
+            //{
+            //    _context.Entry(owner)
+            //        .Reference(po => po.PropertyOwner).Load();
+            //}
+
+            //_context.Entry(property)
+            //    .Collection(c => c.ManagementContract).Load();
+
+            //foreach (var contract in property.ManagementContract)
+            //{
+            //    _context.Entry(contract)
+            //        .Reference(co => co.ManagementContractTitile).Load();
+            //}
+
+            //Eager Loading (NO VIEW MODEL - Load all attributes)
+            //
+            var property = _context.Property
+                .Include(c=>c.ManagementContract)
+                .Include(fe => fe.PropertyFeature)
+                .Include(fa => fa.PropertyFacility)
+                .Include(a => a.PropertyAddress)
+                .Include(op => op.OwnerProperty)
+                .ThenInclude(po => po.PropertyOwner).ToList()                
+                .First(p => p.PropertyId == id);
+
+            return property;
         }
 
 

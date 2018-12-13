@@ -85,7 +85,8 @@ namespace REALWorks.AssetServer.Services.ViewModels
         /// </summary>
         public ICollection<PropertyOwner> OwnerList { get; set; }
         //public ICollection<OwnerProperty> OP { get; set; }
-        
+        public ICollection<OwnerProperty> OwnerProperty { get; set; }
+        public ICollection<ManagementContract> CotnractList { get; set; }
 
         /// <summary>
         /// Management Contract
