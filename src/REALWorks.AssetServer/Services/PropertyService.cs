@@ -261,13 +261,13 @@ namespace REALWorks.AssetServer.Services
                           }).AsQueryable(); //.ToListAsync()
         }
 
-        //Archived for future use the eager loading below
+        //**************************Archived for future use! Use the eager loading below
         public async Task<PropertyDetailViewModel> GetPropertyById(int id)  // **************** Use view model (DTO) to load only the attributes needed!!!!
         {
             //throw new NotImplementedException();
 
             //return _context.Property.Where(p => p.PropertyId == id).FirstOrDefault();
-            var property = (from p in _context.Property.Include(op => op.OwnerProperty).ThenInclude(po => po.PropertyOwner)                                                       
+            var property = (from p in _context.Property.Include(c => c.ManagementContract).Include(op => op.OwnerProperty).ThenInclude(po => po.PropertyOwner)                                                       
                             from a in _context.PropertyAddress where p.PropertyAddressId == a.PropertyAddressId
                             //from o in _context.PropertyOwner.Select(o => o.OwnerProperty).ToList()
                             //join c in _context.ManagementContract on p.PropertyId equals c.PropertyId into ManagementConract          // Left Outer Join to get management contract even if it is empty          
@@ -317,34 +317,36 @@ namespace REALWorks.AssetServer.Services
 
                         })/*.Include(o => o.OwnerList)*/.FirstOrDefault();
 
-            var owners = _context.PropertyOwner.Include(o => o.OwnerProperty);
+            //var owners = _context.PropertyOwner.Include(o => o.OwnerProperty);
 
-            var contracts = _context.ManagementContract.Where(x => x.PropertyId == id).ToList();
+            //var contracts = _context.ManagementContract.Where(x => x.PropertyId == id).ToList();
 
-            property.OwnerList = owners.ToList(); // Also see the service below with eager loading example (without using view model)
-            property.CotnractList = contracts;
+            //property.OwnerList = owners.ToList(); // Also see the service below with eager loading example (without using view model)
+            //property.CotnractList = contracts;
 
 
             return property;
         }
-
+        //******************************************************************************
         
-        public async Task<IQueryable<PropertyOwnerListViewModel>> GetOwnerListByProperty(int id)
+        public async Task<IQueryable<PropertyOwner>> GetOwnerListByProperty(int id)
         {
             //throw new NotImplementedException();
-            var owners =   (from o in _context.PropertyOwner//.Include(pt => pt.OwnerProperty).ThenInclude(x => x.Property)
-                           from op in _context.OwnerProperty where o.PropertyOwnerId == op.PropertyOwnerId
-                            from p in _context.Property where p.PropertyId == op.PropertyId
-                            where op.PropertyId == id
-                            select new PropertyOwnerListViewModel
-                            {
-                                FirstName = o.FirstName,
-                                LastName = o.LastName,
-                                PropertyName = p.PropertyName
-                            }).AsQueryable();
+            //var owners =   (from o in _context.PropertyOwner//.Include(pt => pt.OwnerProperty).ThenInclude(x => x.Property)
+            //               from op in _context.OwnerProperty where o.PropertyOwnerId == op.PropertyOwnerId
+            //                from p in _context.Property where p.PropertyId == op.PropertyId
+            //                where op.PropertyId == id
+            //                select new PropertyOwnerListViewModel
+            //                {
+            //                    FirstName = o.FirstName,
+            //                    LastName = o.LastName,
+            //                    PropertyName = p.PropertyName
+            //                }).AsQueryable();
+
+            var owners = _context.PropertyOwner.Include(op => op.OwnerProperty).ThenInclude(po => po.PropertyOwner).ToList();
 
 
-            return owners;
+            return owners.AsQueryable();
             
         }
 
@@ -617,7 +619,7 @@ namespace REALWorks.AssetServer.Services
 
 
 
-        public async Task<Property> GetPropertyAndOwner(int id) // ************************** Withut view model (DTO), all attributes will be loaded!!!
+        public async Task<Property> GetPropertyAndOwner(int id) // ****** Get Property By Id ******************** Without view model (DTO), all attributes will be loaded!!!
         {
             //throw new NotImplementedException();
 
@@ -653,6 +655,74 @@ namespace REALWorks.AssetServer.Services
                 .First(p => p.PropertyId == id);
 
             return property;
+        }
+
+        public async Task<PropertyOwner> UpdatePropertyOwner(PropertyOwner owner)
+        {
+            //throw new NotImplementedException();
+
+            var ownerUpdated = new PropertyOwner()
+            {
+                PropertyOwnerId = owner.PropertyOwnerId,
+                UserName = owner.UserName,
+                FirstName = owner.FirstName,
+                LastName = owner.LastName,
+                ContactEmail = owner.ContactEmail,
+                IsActive = owner.IsActive,
+                ContactTelephone1 = owner.ContactTelephone1,
+                ContactTelephone2 = owner.ContactTelephone2,
+                UserAvartaImgUrl = owner.UserAvartaImgUrl,
+                RoleId = owner.RoleId,
+                UpdateDate = DateTime.Now
+            };
+
+            _context.Update(ownerUpdated);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return ownerUpdated;
+        }
+
+        public async Task<ManagementContract> UpdateContract(ManagementContract contract)
+        {
+            //throw new NotImplementedException();
+
+            var contractUpdate = new ManagementContract()
+            {
+                ManagementContractId = contract.ManagementContractId,
+                ManagementContractTitile = contract.ManagementContractTitile,
+                StartDate = contract.StartDate,
+                EndDate = contract.EndDate,
+                ContractSignDate = contract.ContractSignDate,
+                ContentTemplateUrl = contract.ContentTemplateUrl,
+                ManagementContractDocUrl = contract.ManagementContractDocUrl,
+                ManagementFeeScale = contract.ManagementFeeScale,
+                PlacementFeeScale = contract.PlacementFeeScale,
+                IsActive = contract.IsActive,
+                IsRenewal = contract.IsRenewal,
+                PropertyId = contract.PropertyId,
+                UpdateDate = DateTime.Now
+            };
+
+            _context.Update(contractUpdate);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return contractUpdate;
         }
 
 

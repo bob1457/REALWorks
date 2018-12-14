@@ -89,7 +89,7 @@ namespace REALWorks.AssetServer.Controllers
 */
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Property>> GetPropertyAndOnwers(int id)
+        public async Task<ActionResult<Property>> GetPropertyAndOnwers(int id) //id: property id
         {            
             try
             {
@@ -198,6 +198,24 @@ namespace REALWorks.AssetServer.Controllers
             await _propertyService.UpdateProperty(property);
 
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("owner/update")]
+        public async Task<IActionResult> UpdateOwner(PropertyOwner owner)
+        {
+            await _propertyService.UpdatePropertyOwner(owner);
+
+            return Ok(owner);
+        }
+
+        [HttpPost]
+        [Route("contract/update")]
+        public async Task<IActionResult> UpdateContract(ManagementContract contract)
+        {
+            await _propertyService.UpdateContract(contract);
+
+            return Ok(contract);
         }
     }
 }
