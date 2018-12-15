@@ -1,4 +1,5 @@
-﻿using REALWorks.AssetServer.Models;
+﻿using Microsoft.AspNetCore.Http;
+using REALWorks.AssetServer.Models;
 using REALWorks.AssetServer.Services.ViewModels;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace REALWorks.AssetServer.Services
         Task<PropertyImg> AddImgToProperty(PropertyImg img, int id);
         Task AddOwnerToProperty(OwnerAddViewModel owner);
         Task<ManagementContractAddViewModel>AddManagementContract(ManagementContractAddViewModel contract);
+        Task<AddImageViewModel> AddImgToProperty(AddImageViewModel img);
+        Task<string> AddImage(IFormFile img);
 
         /// <summary>
         /// Retrieve Operations (R)

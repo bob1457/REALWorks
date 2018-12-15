@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using REALWorks.AssetServer.Infrastructure;
 using REALWorks.AssetServer.Models;
 //using REALWorks.AssetServer.Models;
 using REALWorks.AssetServer.Services;
@@ -17,10 +19,12 @@ namespace REALWorks.AssetServer.Controllers
     public class PropertyController : ControllerBase
     {
         private readonly IPropertyService _propertyService;
+        //private readonly IImageHandler _imageHandler;
 
-        public PropertyController(IPropertyService propertyServic)
+        public PropertyController(IPropertyService propertyServic/*, IImageHandler imageHandler*/)
         {
             _propertyService = propertyServic;
+            //_imageHandler = imageHandler;
         }
 
         [HttpPost]
@@ -216,6 +220,51 @@ namespace REALWorks.AssetServer.Controllers
             await _propertyService.UpdateContract(contract);
 
             return Ok(contract);
+        }
+
+
+        [HttpPost]
+        [Route("img/upload")]
+        public async Task<IActionResult> UploadImage(/**/[FromForm]AddImageViewModel image, [FromForm]IFormFile file)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            //using(var memoryStream = new MemoryStream())
+            //{
+            //    await image.PropertyImage.CopyToAsync(memoryStream);
+            //}
+
+            //var file = image.PropertyImage;
+
+            if (file == null || file.Length == 0)
+                return Content("file not selected");
+
+            //string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
+            //using (var fs = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
+            //{
+            //    await file.CopyToAsync(fs);
+
+            //    // Add image path to DB
+
+                
+            //    //{
+            //    //    var imgUpload = new PropertyImg()
+            //    //    {
+            //    //        PropertyImgTitle = image.PropertyImgTitle,
+            //    //        PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
+            //    //        PropertyId = image.PropertyId, // "62541",
+            //    //        CreatedOn = DateTime.Now
+            //    //    };
+            //    //    //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
+                    
+            //    //};
+            //}
+            var filename = await _propertyService.AddImage(file);
+
+            return Content(filename +" uploaded");
         }
     }
 }

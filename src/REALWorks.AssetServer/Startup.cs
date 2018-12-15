@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using REALWorks.AssetServer.Data;
-
+using REALWorks.AssetServer.Infrastructure;
 using REALWorks.AssetServer.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -80,6 +80,8 @@ namespace REALWorks.AssetServer
 
             // DI Implementation
             services.AddTransient<IPropertyService, PropertyService>();
+            services.AddTransient<IImageHandler, ImageHandler>();
+            services.AddTransient<IImageWriter, ImageWriter>();
 
             services.AddAutoMapper();
             services.AddMvc()
@@ -97,6 +99,8 @@ namespace REALWorks.AssetServer
             {
                 app.UseHsts();
             }
+
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
             app.UseMvc();

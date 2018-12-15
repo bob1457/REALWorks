@@ -7,6 +7,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using REALWorks.AssetServer.Infrastructure;
 
 namespace REALWorks.AssetServer.Services
 {
@@ -14,9 +17,12 @@ namespace REALWorks.AssetServer.Services
     {
         private readonly REALAssetContext _context;
 
-        public PropertyService(REALAssetContext context)
+        private readonly IImageHandler _imageHandler;
+
+        public PropertyService(REALAssetContext context, IImageHandler imageHandler)
         {
             _context = context;
+            _imageHandler = imageHandler;
         }
 
 
@@ -723,6 +729,97 @@ namespace REALWorks.AssetServer.Services
             }
 
             return contractUpdate;
+        }
+
+        public async Task<AddImageViewModel> AddImgToProperty(AddImageViewModel img)
+        {
+            //throw new NotImplementedException();
+            var file = img.PropertyImage;
+            /*
+                        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
+
+                        using (var fs = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
+                        {
+                            await file.CopyToAsync(fs);
+
+                            // Add image path to DB
+
+
+                            {
+                                var imgUpload = new PropertyImg()
+                                {
+                                    PropertyImgTitle = img.PropertyImgTitle,
+                                    PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
+                                    PropertyId = img.PropertyId, // "62541",
+                                    CreatedOn = DateTime.Now
+                                };
+                                //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
+
+                                await _context.AddAsync(img);
+
+                                try
+                                {
+                                    await _context.SaveChangesAsync();
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw;
+                                }
+                            };
+                        }
+            */
+            try
+            {
+                //Upload image file
+                //
+                await _imageHandler.UploadImage(file);
+
+                // Create DB entry
+                //
+                var imgUpload = new PropertyImg()
+                {
+                    PropertyImgTitle = img.PropertyImgTitle,
+                    PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
+                    PropertyId = img.PropertyId, // "62541",
+                    CreatedOn = DateTime.Now
+                };
+                //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
+
+                await _context.AddAsync(img);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return img;
+        }
+
+        public async Task<string> AddImage(IFormFile file)
+        {
+            //throw new NotImplementedException();
+
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
+
+            if (file.Length > 0)
+            {
+                using (var fileStream = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+            }
+
+            return file.FileName;
         }
 
 
