@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,7 +18,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using REALWorks.AssetServer.Data;
-
+using REALWorks.AssetServer.Infrastructure;
 using REALWorks.AssetServer.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -80,9 +82,14 @@ namespace REALWorks.AssetServer
 
             // DI Implementation
             services.AddTransient<IPropertyService, PropertyService>();
+            services.AddTransient<IImageHandler, ImageHandler>();
+            services.AddTransient<IImageWriter, ImageWriter>();
 
             services.AddAutoMapper();
-            services.AddMvc(); //.SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddXmlSerializerFormatters();
+            services.AddMvc()
+                .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); //.SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddXmlSerializerFormatters();
+
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,6 +103,9 @@ namespace REALWorks.AssetServer
             {
                 app.UseHsts();
             }
+
+            app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
 
             app.UseHttpsRedirection();
             app.UseMvc();

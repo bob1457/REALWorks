@@ -7,6 +7,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using REALWorks.AssetServer.Infrastructure;
 
 namespace REALWorks.AssetServer.Services
 {
@@ -14,9 +17,12 @@ namespace REALWorks.AssetServer.Services
     {
         private readonly REALAssetContext _context;
 
-        public PropertyService(REALAssetContext context)
+        private readonly IImageHandler _imageHandler;
+
+        public PropertyService(REALAssetContext context, IImageHandler imageHandler)
         {
             _context = context;
+            _imageHandler = imageHandler;
         }
 
 
@@ -261,15 +267,16 @@ namespace REALWorks.AssetServer.Services
                           }).AsQueryable(); //.ToListAsync()
         }
 
-        public async Task<PropertyDetailViewModel> GetPropertyById(int id)
+        //**************************Archived for future use! Use the eager loading below
+        public async Task<PropertyDetailViewModel> GetPropertyById(int id)  // **************** Use view model (DTO) to load only the attributes needed!!!!
         {
             //throw new NotImplementedException();
 
             //return _context.Property.Where(p => p.PropertyId == id).FirstOrDefault();
-            var property = (from p in _context.Property.Include(op => op.OwnerProperty).ThenInclude(po => po.PropertyOwner)                                                       
+            var property = (from p in _context.Property.Include(c => c.ManagementContract).Include(op => op.OwnerProperty).ThenInclude(po => po.PropertyOwner)                                                       
                             from a in _context.PropertyAddress where p.PropertyAddressId == a.PropertyAddressId
                             //from o in _context.PropertyOwner.Select(o => o.OwnerProperty).ToList()
-                            join c in _context.ManagementContract on p.PropertyId equals c.PropertyId into ManagementConract          // Left Outer Join to get management contract even if it is empty          
+                            //join c in _context.ManagementContract on p.PropertyId equals c.PropertyId into ManagementConract          // Left Outer Join to get management contract even if it is empty          
                             from fe in _context.PropertyFeature
                             from fa in _context.PropertyFacility
                             from t in _context.PropertyType
@@ -290,19 +297,7 @@ namespace REALWorks.AssetServer.Services
                                 Status = s.Status,  //p.OwnerProperty.First().PropertyOwner.f // 
                                 PropertyType1 = t.PropertyType1,
 
-
-                                //Load the first owner, others will be loaded with explicit load when needed.
-                                //FirstName = p.OwnerProperty.FirstOrDefault().PropertyOwner.FirstName, //o.FirstName,
-                                //LastName = o.LastName,
-                                //ContactEmail = o.ContactEmail,
-                                //ContactTelephone1 = o.ContactTelephone1,
-                                //...
-                                
-                                //OwnerList = {
-                                    
-                                //},
-
-                                ManagementContractTitile = ManagementConract.FirstOrDefault().ManagementContractTitile,
+                                // ManagementContractTitile = ManagementConract.FirstOrDefault().ManagementContractTitile,
 
                                 // Features
                                 NumberOfBedrooms = fe.NumberOfBedrooms,
@@ -316,44 +311,48 @@ namespace REALWorks.AssetServer.Services
 
                                 //...
 
-                                //OwnerList = ,
+                                
 
-                        // Address
-                        PropertySuiteNumber = a.PropertySuiteNumber,
-                        PropertyNumber = a.PropertyNumber,
-                        PropertyStreet = a.PropertyStreet,
-                        PropertyStateProvince = a.PropertyStateProvince,
-                        PropertyZipPostCode = a.PropertyZipPostCode,
-                        PropertyCountry = a.PropertyCountry
+                            // Address
+                            PropertySuiteNumber = a.PropertySuiteNumber,
+                            PropertyNumber = a.PropertyNumber,
+                            PropertyStreet = a.PropertyStreet,
+                            PropertyStateProvince = a.PropertyStateProvince,
+                            PropertyZipPostCode = a.PropertyZipPostCode,
+                            PropertyCountry = a.PropertyCountry
 
-                    })/*.Include(o => o.OwnerList)*/.FirstOrDefault();
+                        })/*.Include(o => o.OwnerList)*/.FirstOrDefault();
 
-            var owners = _context.PropertyOwner.Include(o => o.OwnerProperty);
+            //var owners = _context.PropertyOwner.Include(o => o.OwnerProperty);
 
+            //var contracts = _context.ManagementContract.Where(x => x.PropertyId == id).ToList();
 
-            //property.OwnerList = owners.ToList(); // Need to figure how the data is returned in controller
+            //property.OwnerList = owners.ToList(); // Also see the service below with eager loading example (without using view model)
+            //property.CotnractList = contracts;
 
 
             return property;
         }
-
+        //******************************************************************************
         
-        public async Task<IQueryable<PropertyOwnerListViewModel>> GetOwnerListByProperty(int id)
+        public async Task<IQueryable<PropertyOwner>> GetOwnerListByProperty(int id)
         {
             //throw new NotImplementedException();
-            var owners =   (from o in _context.PropertyOwner//.Include(pt => pt.OwnerProperty).ThenInclude(x => x.Property)
-                           from op in _context.OwnerProperty where o.PropertyOwnerId == op.PropertyOwnerId
-                            from p in _context.Property where p.PropertyId == op.PropertyId
-                            where op.PropertyId == id
-                            select new PropertyOwnerListViewModel
-                            {
-                                FirstName = o.FirstName,
-                                LastName = o.LastName,
-                                PropertyName = p.PropertyName
-                            }).AsQueryable();
+            //var owners =   (from o in _context.PropertyOwner//.Include(pt => pt.OwnerProperty).ThenInclude(x => x.Property)
+            //               from op in _context.OwnerProperty where o.PropertyOwnerId == op.PropertyOwnerId
+            //                from p in _context.Property where p.PropertyId == op.PropertyId
+            //                where op.PropertyId == id
+            //                select new PropertyOwnerListViewModel
+            //                {
+            //                    FirstName = o.FirstName,
+            //                    LastName = o.LastName,
+            //                    PropertyName = p.PropertyName
+            //                }).AsQueryable();
+
+            var owners = _context.PropertyOwner.Include(op => op.OwnerProperty).ThenInclude(po => po.PropertyOwner).ToList();
 
 
-            return owners;
+            return owners.AsQueryable();
             
         }
 
@@ -455,7 +454,8 @@ namespace REALWorks.AssetServer.Services
                 contract.ManagementFeeScale,
                 contract.ContractSignDate,
                 contract.ManagementContractDocUrl,
-                contract.IsActive
+                contract.IsActive,
+                contract.IsRenewal
                 )
             {
                 PropertyId = contract.PropertyId,
@@ -467,6 +467,7 @@ namespace REALWorks.AssetServer.Services
                 ContractSignDate = contract.StartDate,
                 ManagementContractDocUrl = contract.ManagementContractDocUrl,
                 IsActive = contract.IsActive,
+                IsRenewal = contract.IsRenewal,
                 CreateDate = DateTime.Now,
                 UpdateDate = DateTime.Now
             };
@@ -619,6 +620,238 @@ namespace REALWorks.AssetServer.Services
 
             return property;
 
+        }
+
+
+
+
+        public async Task<Property> GetPropertyAndOwner(int id) // ****** Get Property By Id ******************** Without view model (DTO), all attributes will be loaded!!!
+        {
+            //throw new NotImplementedException();
+
+            // Explicit Loading
+            //
+            //var property = _context.Property.First(p => p.PropertyId == id);
+            //_context.Entry(property)
+            //    .Collection(o => o.OwnerProperty).Load();
+            //foreach (var owner in property.OwnerProperty)
+            //{
+            //    _context.Entry(owner)
+            //        .Reference(po => po.PropertyOwner).Load();
+            //}
+
+            //_context.Entry(property)
+            //    .Collection(c => c.ManagementContract).Load();
+
+            //foreach (var contract in property.ManagementContract)
+            //{
+            //    _context.Entry(contract)
+            //        .Reference(co => co.ManagementContractTitile).Load();
+            //}
+
+            //Eager Loading (NO VIEW MODEL - Load all attributes)
+            //
+            var property = _context.Property
+                .Include(c=>c.ManagementContract)
+                .Include(fe => fe.PropertyFeature)
+                .Include(fa => fa.PropertyFacility)
+                .Include(a => a.PropertyAddress)
+                .Include(m => m.PropertyImg)
+                .Include(op => op.OwnerProperty)
+                .ThenInclude(po => po.PropertyOwner).ToList()                
+                .First(p => p.PropertyId == id);
+
+            //_context.Entry(property)
+            //    .Collection(m => m.PropertyImg).Load(); // Not necessary in this case (already loaded - eager load)
+
+            return property;
+        }
+
+        public async Task<PropertyOwner> UpdatePropertyOwner(PropertyOwner owner)
+        {
+            //throw new NotImplementedException();
+
+            var ownerUpdated = new PropertyOwner()
+            {
+                PropertyOwnerId = owner.PropertyOwnerId,
+                UserName = owner.UserName,
+                FirstName = owner.FirstName,
+                LastName = owner.LastName,
+                ContactEmail = owner.ContactEmail,
+                IsActive = owner.IsActive,
+                ContactTelephone1 = owner.ContactTelephone1,
+                ContactTelephone2 = owner.ContactTelephone2,
+                UserAvartaImgUrl = owner.UserAvartaImgUrl,
+                RoleId = owner.RoleId,
+                UpdateDate = DateTime.Now
+            };
+
+            _context.Update(ownerUpdated);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return ownerUpdated;
+        }
+
+        public async Task<ManagementContract> UpdateContract(ManagementContract contract)
+        {
+            //throw new NotImplementedException();
+
+            var contractUpdate = new ManagementContract()
+            {
+                ManagementContractId = contract.ManagementContractId,
+                ManagementContractTitile = contract.ManagementContractTitile,
+                StartDate = contract.StartDate,
+                EndDate = contract.EndDate,
+                ContractSignDate = contract.ContractSignDate,
+                ContentTemplateUrl = contract.ContentTemplateUrl,
+                ManagementContractDocUrl = contract.ManagementContractDocUrl,
+                ManagementFeeScale = contract.ManagementFeeScale,
+                PlacementFeeScale = contract.PlacementFeeScale,
+                IsActive = contract.IsActive,
+                IsRenewal = contract.IsRenewal,
+                PropertyId = contract.PropertyId,
+                UpdateDate = DateTime.Now
+            };
+
+            _context.Update(contractUpdate);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return contractUpdate;
+        }
+
+        public async Task<AddImageViewModel> AddImgToProperty(AddImageViewModel img)
+        {
+            //throw new NotImplementedException();
+            var file = img.PropertyImage;
+            /*
+                        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
+
+                        using (var fs = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
+                        {
+                            await file.CopyToAsync(fs);
+
+                            // Add image path to DB
+
+
+                            {
+                                var imgUpload = new PropertyImg()
+                                {
+                                    PropertyImgTitle = img.PropertyImgTitle,
+                                    PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
+                                    PropertyId = img.PropertyId, // "62541",
+                                    CreatedOn = DateTime.Now
+                                };
+                                //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
+
+                                await _context.AddAsync(img);
+
+                                try
+                                {
+                                    await _context.SaveChangesAsync();
+                                }
+                                catch (Exception ex)
+                                {
+                                    throw;
+                                }
+                            };
+                        }
+            */
+            try
+            {
+                //Upload image file
+                //
+                await _imageHandler.UploadImage(file);
+
+                // Create DB entry
+                //
+                var imgUpload = new PropertyImg()
+                {
+                    PropertyImgTitle = img.PropertyImgTitle,
+                    PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
+                    PropertyId = img.PropertyId, // "62541",
+                    CreatedOn = DateTime.Now
+                };
+                //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
+
+                await _context.AddAsync(img);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return img;
+        }
+
+        public async Task<string> AddImage(IFormFile file, PropertyImg propertyImg)
+        {
+            //throw new NotImplementedException();
+
+            var imgUpload = new PropertyImg()
+            {
+                PropertyImgTitle = propertyImg.PropertyImgTitle,
+                PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
+                PropertyId = propertyImg.PropertyId, // "62541",
+                CreatedOn = DateTime.Now
+            };
+
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
+
+            if (file.Length > 0)
+            {
+                using (var fileStream = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
+                {
+                    try
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
+                    
+                    
+                }
+            }
+
+            await _context.AddAsync(imgUpload);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return file.FileName;
         }
 
 

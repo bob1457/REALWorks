@@ -7,6 +7,7 @@
   <ItemGroup>
     <Folder Include="Contents\" />
     <Folder Include="Temp\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
   <ItemGroup>
