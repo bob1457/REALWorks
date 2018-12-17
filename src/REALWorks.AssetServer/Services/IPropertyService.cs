@@ -16,7 +16,7 @@ namespace REALWorks.AssetServer.Services
         Task AddOwnerToProperty(OwnerAddViewModel owner);
         Task<ManagementContractAddViewModel>AddManagementContract(ManagementContractAddViewModel contract);
         Task<AddImageViewModel> AddImgToProperty(AddImageViewModel img);
-        Task<string> AddImage(IFormFile img);
+        Task<string> AddImage(IFormFile img, PropertyImg propertyImg);
 
         /// <summary>
         /// Retrieve Operations (R)

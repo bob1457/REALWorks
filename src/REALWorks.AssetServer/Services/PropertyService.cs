@@ -656,9 +656,13 @@ namespace REALWorks.AssetServer.Services
                 .Include(fe => fe.PropertyFeature)
                 .Include(fa => fa.PropertyFacility)
                 .Include(a => a.PropertyAddress)
+                .Include(m => m.PropertyImg)
                 .Include(op => op.OwnerProperty)
                 .ThenInclude(po => po.PropertyOwner).ToList()                
                 .First(p => p.PropertyId == id);
+
+            //_context.Entry(property)
+            //    .Collection(m => m.PropertyImg).Load(); // Not necessary in this case (already loaded - eager load)
 
             return property;
         }
@@ -805,9 +809,17 @@ namespace REALWorks.AssetServer.Services
             return img;
         }
 
-        public async Task<string> AddImage(IFormFile file)
+        public async Task<string> AddImage(IFormFile file, PropertyImg propertyImg)
         {
             //throw new NotImplementedException();
+
+            var imgUpload = new PropertyImg()
+            {
+                PropertyImgTitle = propertyImg.PropertyImgTitle,
+                PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
+                PropertyId = propertyImg.PropertyId, // "62541",
+                CreatedOn = DateTime.Now
+            };
 
             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
 
@@ -815,8 +827,28 @@ namespace REALWorks.AssetServer.Services
             {
                 using (var fileStream = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
                 {
-                    await file.CopyToAsync(fileStream);
+                    try
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
+                    
+                    
                 }
+            }
+
+            await _context.AddAsync(imgUpload);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
 
             return file.FileName;

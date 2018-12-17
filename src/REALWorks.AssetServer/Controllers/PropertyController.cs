@@ -225,7 +225,7 @@ namespace REALWorks.AssetServer.Controllers
 
         [HttpPost]
         [Route("img/upload")]
-        public async Task<IActionResult> UploadImage(/**/[FromForm]AddImageViewModel image, [FromForm]IFormFile file)
+        public async Task<IActionResult> UploadImage(/**/[FromForm]PropertyImg image, [FromForm]IFormFile file)
         {
             if (!ModelState.IsValid)
             {
@@ -262,7 +262,7 @@ namespace REALWorks.AssetServer.Controllers
                     
             //    //};
             //}
-            var filename = await _propertyService.AddImage(file);
+            var filename = await _propertyService.AddImage(file, image);
 
             return Content(filename +" uploaded");
         }
