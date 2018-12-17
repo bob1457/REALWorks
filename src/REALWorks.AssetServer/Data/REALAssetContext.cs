@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using REALWorks.AssetServer.Models;
@@ -33,8 +34,9 @@ namespace REALWorks.AssetServer.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=REALAsset;UID=real;PWD=1234567;");
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                //optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=REALAsset;UID=real;PWD=1234567;");
+                optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["AppDbConnection"].ConnectionString);
             }
         }
 

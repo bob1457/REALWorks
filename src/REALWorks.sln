@@ -10,17 +10,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REALWorks.Asset.Api", "REAL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REALWorks.Libs", "REALWorks.Libs\REALWorks.Libs.csproj", "{8E0CCD6A-56E9-4E2E-A34B-FBD74157554C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REALWorks.AssetServer", "REALWorks.AssetServer\REALWorks.AssetServer.csproj", "{F480A0BF-8210-4211-B5D7-76CE97534128}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REALWorks.AssetServer", "REALWorks.AssetServer\REALWorks.AssetServer.csproj", "{F480A0BF-8210-4211-B5D7-76CE97534128}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "REALWorls.LeaseManagement", "REALWorls.LeaseManagement", "{54161048-7E1F-4169-91B8-FC7878207AA9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "REALWorls.AssetManagement", "REALWorls.AssetManagement", "{4CD78CCB-566C-406E-AD5B-62E8A9F50334}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REALWorks.LeaseServer", "REALWorks.LeaseServer\REALWorks.LeaseServer.csproj", "{378F7819-07C7-40EC-8A52-44A1799EAB14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REALWorks.LeaseServer", "REALWorks.LeaseServer\REALWorks.LeaseServer.csproj", "{378F7819-07C7-40EC-8A52-44A1799EAB14}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "REALWorks.Infrastructure", "REALWorks.Infrastructure", "{1A851DB6-5360-463F-809D-F6ADF22FA3C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REALWorks.InfrastructureServer", "REALWorks.InfrastructureServer\REALWorks.InfrastructureServer.csproj", "{E8E50800-7CF4-4569-B8C1-529F6999740A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REALWorks.InfrastructureServer", "REALWorks.InfrastructureServer\REALWorks.InfrastructureServer.csproj", "{E8E50800-7CF4-4569-B8C1-529F6999740A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
