@@ -13,6 +13,9 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using REALWorks.AuthServer.Helpers;
+using MediatR;
+using REALWorks.AuthServer.Commands;
+using Microsoft.Extensions.Logging;
 
 namespace REALWorks.AuthServer.Controllers
 {
@@ -20,24 +23,32 @@ namespace REALWorks.AuthServer.Controllers
   [Route("api/Auth")]
   public class AuthController : Controller
   {
+        private readonly IMediator _mediator; // Only this one is required
 
+        // The DI below will NOT be required as MediatR is implemented, will be retired
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IConfiguration _configuration;
+        //private readonly ILogger<AuthController> _logger;
 
-    public AuthController(UserManager<ApplicationUser> userManager,
-                          SignInManager<ApplicationUser> signInManager,
-                          IConfiguration configuration)
+        public AuthController(IMediator mediator, 
+        UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager,
+        IConfiguration configuration//,
+        //ILogger<AuthController> logger
+            )
     {
+            _mediator = mediator;// Only this one is required
 
-      _userManager = userManager;
+            _userManager = userManager;
       _signInManager = signInManager;
       _configuration = configuration;
+            //_logger = logger;      
     }
 
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Authenticate([FromBody] LoginViewModel model)
+    public async Task<IActionResult> Authenticate([FromBody] LoginViewModel model) // This endpoint will be retired, instead using the MediatR pattern
     {
       if (!ModelState.IsValid)
       {
@@ -119,6 +130,16 @@ namespace REALWorks.AuthServer.Controllers
 
             //return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
 
+        }
+
+
+        [HttpPost]
+        [Route("signin")]
+        public async Task<IActionResult> SignIn([FromBody] LoginCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
         }
   }
 }

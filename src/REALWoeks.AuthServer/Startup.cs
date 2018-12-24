@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using MediatR;
 
 namespace REALWorks.AuthServer
 {
@@ -62,6 +63,8 @@ namespace REALWorks.AuthServer
                               .AllowAnyHeader()
                               .AllowCredentials());
         });
+
+        services.AddMediatR(typeof(Startup));
 
         services.AddMvc();
 
