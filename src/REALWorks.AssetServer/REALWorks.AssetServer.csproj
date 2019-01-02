@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\REALWorks.AssetCore\REALWorks.AssetCore.csproj" />
     <ProjectReference Include="..\REALWorks.InfrastructureServer\REALWorks.InfrastructureServer.csproj" />
   </ItemGroup>
 
