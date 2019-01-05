@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using REALWorks.AssetData;
 using REALWorks.AssetServer.Data;
 using REALWorks.AssetServer.Infrastructure;
 using REALWorks.AssetServer.Services;
@@ -38,6 +39,11 @@ namespace REALWorks.AssetServer
         {
             services.AddDbContext<REALAssetContext>(options =>
                                                                 options.UseSqlServer(Configuration.GetConnectionString("AppDbConnection")));
+
+            string dbConnectionString = Configuration.GetConnectionString("AppDbConnection2");
+
+            services.AddDbContext<AppDataBaseContext>(options =>
+                     options.UseSqlServer(dbConnectionString, builder => builder.MigrationsAssembly("REALWorks.AssetData"))); // Specify the migration assembly (project name)
 
             // For token validation: make sure the Issuer, Audience and SigningKey match those of the AuthServer or validation will fail!!
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

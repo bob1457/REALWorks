@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace REALWorks.AssetCore
+namespace REALWorks.AssetCore.Base
 {
-    public class Property
+    public interface IEntity
     {
     }
 }
