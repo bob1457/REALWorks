@@ -5,6 +5,7 @@ using System;
 using System.Configuration;
 using System.Collections.Generic;
 using System.Text;
+using REALWorks.AssetData.Configuration;
 
 namespace REALWorks.AssetData
 {
@@ -38,9 +39,19 @@ namespace REALWorks.AssetData
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //**********************************************
+            // Entity for mapping DDD entities
+            //**********************************************
+
+            modelBuilder.ApplyConfiguration(new PropertyConfig());
+            modelBuilder.ApplyConfiguration(new OwnerConfig());
+            modelBuilder.ApplyConfiguration(new OwnerPropertyConfig());
+
+
+            /*
             modelBuilder.Entity<Property>(entity =>
             {
-                entity.Property(e => e.FurnishingId).HasDefaultValueSql("((0))");
+                //entity.Property(e => e.FurnishingId).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.IsActive)
                     .IsRequired()
@@ -90,6 +101,11 @@ namespace REALWorks.AssetData
                 //    .OnDelete(DeleteBehavior.ClientSetNull)
                 //    .HasConstraintName("FK_Property_RentalStatus");
             });
+*/
+
+            //**********************************************
+            // Owned Entity for mapping DDD value objects
+            //**********************************************
 
             //modelBuilder.Entity<Property>().OwnsOne(typeof(PropertyAddress), "Address"); // this operation will put the onwed entity in the principal entity (one table)
 
@@ -117,6 +133,45 @@ namespace REALWorks.AssetData
                     sa.ToTable("PropertyFacility");
                 }
             );
+
+
+            /*
+            modelBuilder.Entity<PropertyOwner>(entity =>
+            {
+                entity.Property(e => e.ContactEmail)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.ContactTelephone1)
+                    .IsRequired()
+                    .HasMaxLength(25);
+
+                entity.Property(e => e.ContactTelephone2).HasMaxLength(25);
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.UserAvartaImgUrl)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasDefaultValueSql("('default')");
+
+                entity.Property(e => e.UserName)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("('tba')");
+            });
+*/
+
         }
 
 

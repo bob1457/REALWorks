@@ -7,7 +7,38 @@ namespace REALWorks.AssetCore.Entities
 {
     public class PropertyOwner: Entity
     {
+        public PropertyOwner()
+        {
+            OwnerProperty = new HashSet<OwnerProperty>();
+        }
 
+        public PropertyOwner(string userName, 
+            string firstName, 
+            string lastName, 
+            string contactEmail, 
+            string contactTelephone1, 
+            string contactTelephone2, 
+            bool onlineAccess, 
+            string userAvartaImgUrl, 
+            bool? isActive, 
+            int? roleId, 
+            string notes, 
+            ICollection<OwnerProperty> ownerProperty
+            )
+        {
+            UserName = userName;
+            FirstName = firstName;
+            LastName = lastName;
+            ContactEmail = contactEmail;
+            ContactTelephone1 = contactTelephone1;
+            ContactTelephone2 = contactTelephone2;
+            OnlineAccess = onlineAccess;
+            UserAvartaImgUrl = userAvartaImgUrl;
+            IsActive = isActive;
+            RoleId = roleId;
+            Notes = notes;
+            OwnerProperty = ownerProperty;
+        }
 
         public string UserName { get; private set; }
         public string FirstName { get; private set; }
