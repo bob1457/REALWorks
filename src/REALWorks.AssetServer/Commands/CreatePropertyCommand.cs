@@ -1,14 +1,17 @@
-﻿using REALWorks.AssetServer.Common;
-using REALWorks.AssetServer.Models;
+﻿using MediatR;
+using REALWorks.AssetCore.ValueObjects;
+using REALWorks.AssetServer.Common;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using static REALWorks.AssetCore.Entities.Property;
 
 namespace REALWorks.AssetServer.Commands
 {
-    public class CreatePropertyCommand: ICommand // input view model
+    public class CreatePropertyCommand: IRequest<CreatePropertyCommandResult> //   ICommand // input view model
     {
         /// <summary>
         /// Property Baisc
@@ -18,15 +21,15 @@ namespace REALWorks.AssetServer.Commands
         [Required]
         public string PropertyName { get; set; }
         public string PropertyDesc { get; set; }
-        public int PropertyTypeId { get; set; }
+        public PropertyType Type { get; set; }
         public int PropertyManagerId { get; set; }
         public string PropertyLogoImgUrl { get; set; }
         public string PropertyVideoUrl { get; set; }
         public int PropertyBuildYear { get; set; }
         public bool IsActive { get; set; }
         public bool IsShared { get; set; }
-        public int FurnishingId { get; set; }
-        public int RentalStatusId { get; set; }
+        
+        public RentalStatus Status { get; set; }
         public bool IsBasementSuite { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdateDate { get; set; }
@@ -83,7 +86,7 @@ namespace REALWorks.AssetServer.Commands
         /// Property Owner
         /// </summary>
         /// 
-        //public int PropertyOwnerId { get; set; }
+        public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ContactEmail { get; set; }
@@ -92,6 +95,7 @@ namespace REALWorks.AssetServer.Commands
         public bool OnlineAccessEnbaled { get; set; }
         public string UserAvartaImgUrl { get; set; }
         public int? RoleId { get; set; }
+        public string Notes { get; set; }
 
         public PropertyAddress PropertyAddress { get; set; }
         public PropertyFacility PropertyFacility { get; set; }
@@ -105,8 +109,8 @@ namespace REALWorks.AssetServer.Commands
             //int propertyId, 
             string propertyName,
             string propertyDesc,
-            //int propertyTypeId, 
-            //int? strataCouncilId, 
+            PropertyType propertyType,
+            //int? strataCouncilId,
             //int propertyAddressId,
             //int propertyFeatureId,
             //int propertyFacilityId,
@@ -119,22 +123,22 @@ namespace REALWorks.AssetServer.Commands
             bool isActive,
             bool isShared,
             //int? furnishingId, 
-            //int rentalStatusId, 
+            RentalStatus rentalStatus,
             bool isBasementSuite,
             //DateTime createdDate,
             //DateTime updateDate,
             PropertyAddress propertyAddress,
             PropertyFacility propertyFacility,
-            PropertyFeature propertyFeature,
+            PropertyFeature propertyFeature//,
 
-            int propertyTypeId, //PropertyType propertyType, 
-            int rentalStatusId
+            //int propertyTypeId, //PropertyType propertyType, 
+            //int rentalStatusId
             )
         {
             //PropertyId = propertyId;
             PropertyName = propertyName;
             PropertyDesc = propertyDesc;
-            //PropertyTypeId = propertyTypeId;
+            Type = propertyType;
             //StrataCouncilId = strataCouncilId;
             //PropertyAddressId = propertyAddressId;
             //PropertyFeatureId = propertyFeatureId;
@@ -148,7 +152,7 @@ namespace REALWorks.AssetServer.Commands
             IsActive = isActive;
             IsShared = isShared;
             //FurnishingId = furnishingId;
-            //RentalStatusId = rentalStatusId;
+            Status = rentalStatus;
             IsBasementSuite = isBasementSuite;
             //CreatedDate = createdDate;
             //UpdateDate = updateDate;
@@ -156,8 +160,8 @@ namespace REALWorks.AssetServer.Commands
             PropertyFacility = propertyFacility;
             PropertyFeature = propertyFeature;
 
-            PropertyTypeId = propertyTypeId; //PropertyType = propertyType;
-            RentalStatusId = rentalStatusId;//RentalStatus = rentalStatus;
+            //PropertyTypeId = propertyTypeId; //PropertyType = propertyType;
+            //RentalStatusId = rentalStatusId;//RentalStatus = rentalStatus;
         }
     }
 }

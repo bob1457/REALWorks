@@ -7,12 +7,13 @@ namespace REALWorks.AssetCore.Entities
 {
     public class PropertyOwner: Entity
     {
-        public PropertyOwner()
+        private PropertyOwner()
         {
             OwnerProperty = new HashSet<OwnerProperty>();
         }
 
-        public PropertyOwner(string userName, 
+        public PropertyOwner(
+            string userName, 
             string firstName, 
             string lastName, 
             string contactEmail, 
@@ -22,8 +23,8 @@ namespace REALWorks.AssetCore.Entities
             string userAvartaImgUrl, 
             bool? isActive, 
             int? roleId, 
-            string notes, 
-            ICollection<OwnerProperty> ownerProperty
+            string notes//, 
+            //ICollection<OwnerProperty> ownerProperty
             )
         {
             UserName = userName;
@@ -37,7 +38,7 @@ namespace REALWorks.AssetCore.Entities
             IsActive = isActive;
             RoleId = roleId;
             Notes = notes;
-            OwnerProperty = ownerProperty;
+            //OwnerProperty = ownerProperty;
         }
 
         public string UserName { get; private set; }

@@ -26,7 +26,7 @@ namespace REALWorks.AssetCore.Entities
             BeingProcessing
         }
 
-        private Property() {
+        private Property(string propertyName) {
             OwnerProperty = new HashSet<OwnerProperty>();
             PropertyImg = new HashSet<PropertyImg>();
         } // Required by EF Core
@@ -78,8 +78,8 @@ namespace REALWorks.AssetCore.Entities
             //int propertyId, 
             string propertyName,
             string propertyDesc,
-            //int propertyTypeId, 
-            //int? strataCouncilId, 
+            PropertyType propertyType,
+            //int? strataCouncilId,
             //int propertyAddressId,
             //int propertyFeatureId,
             //int propertyFacilityId,
@@ -92,7 +92,7 @@ namespace REALWorks.AssetCore.Entities
             bool isActive,
             bool isShared,
             //int? furnishingId, 
-            //int rentalStatusId, 
+            RentalStatus rentalStatus,
             bool isBasementSuite,
             //DateTime createdDate,
             //DateTime updateDate,
@@ -109,7 +109,7 @@ namespace REALWorks.AssetCore.Entities
             //PropertyId = propertyId;
             PropertyName = propertyName;
             PropertyDesc = propertyDesc;
-            //PropertyTypeId = propertyTypeId;
+            Type = propertyType;
             //StrataCouncilId = strataCouncilId;
             //PropertyAddressId = propertyAddressId;
             //PropertyFeatureId = propertyFeatureId;
@@ -123,7 +123,7 @@ namespace REALWorks.AssetCore.Entities
             IsActive = isActive;
             IsShared = isShared;
             //FurnishingId = furnishingId;
-            //RentalStatusId = rentalStatusId;
+            Status = rentalStatus;
             IsBasementSuite = isBasementSuite;
             //CreatedDate = createdDate;
             //UpdateDate = updateDate;
