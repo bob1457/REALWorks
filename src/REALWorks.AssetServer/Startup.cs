@@ -111,17 +111,17 @@ namespace REALWorks.AssetServer
             }
 
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
-
-            app.UseHttpsRedirection();
-            app.UseMvc();
-
+            //app.UseMvcWithDefaultRoute();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Asset Management API V1");
                 c.RoutePrefix = string.Empty;
             });
+            //app.UseHttpsRedirection();
+            app.UseMvc();
+
+           
         }
     }
 }
