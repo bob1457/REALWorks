@@ -50,8 +50,16 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             await _context.AddAsync(property);
 
+            
+
             if(request.PropertyOwnerId == 0)
             {
+
+                //property.AddOwner("NotSet", request.FirstName, request.LastName, request.ContactEmail,
+                //    request.ContactTelephone1, request.ContactTelephone2, request.OnlineAccessEnbaled, request.UserAvartaImgUrl,
+                //    request.IsActive, request.RoleId, request.Notes);
+
+
                 pOwner = new PropertyOwner(request.UserName, request.FirstName, request.LastName, request.ContactEmail, 
                     request.ContactTelephone1, request.ContactTelephone2, request.OnlineAccessEnbaled, request.UserAvartaImgUrl, 
                     request.IsActive, request.RoleId, request.Notes);

@@ -137,5 +137,29 @@ namespace REALWorks.AssetCore.Entities
             //RentalStatusId = rentalStatusId;//RentalStatus = rentalStatus;
         }
 
+        public void AddOwner(string userName, 
+            string firstName,
+            string lastName,
+            string contactEmail,
+            string contactTelephone1,
+            string contactTelephone2,
+            bool onlineAccess,
+            string userAvartaImgUrl,
+            bool? isActive,
+            int? roleId,
+            string notes)
+        {
+            var owner = new PropertyOwner(userName, firstName, lastName, contactEmail, contactTelephone1, contactTelephone2, false, userAvartaImgUrl, true, 2, "");           
+
+            //OwnerProperty.Add(owner);
+        }
+
+        public void AddImages(string propertyImgTitle, 
+            string propertyImgCaption, int propertyId)
+        {
+            var img = new PropertyImg(propertyImgTitle, propertyImgCaption, propertyId);
+
+            PropertyImg.Add(img);
+        }
     }
 }

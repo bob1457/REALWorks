@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\REALWorks.Asset.Api\REALWorks.Asset.Api.csproj" />
     <ProjectReference Include="..\REALWorks.AssetCore\REALWorks.AssetCore.csproj" />
   </ItemGroup>
 
