@@ -11,7 +11,7 @@ using static REALWorks.AssetCore.Entities.Property;
 
 namespace REALWorks.AssetServer.Commands
 {
-    public class CreatePropertyCommand: IRequest<CreatePropertyCommandResult> //   ICommand // input view model
+    public class CreatePropertyCommand: IRequest<bool>//<CreatePropertyCommandResult> //   ICommand // input view model
     {
         /// <summary>
         /// Property Baisc
@@ -125,8 +125,8 @@ namespace REALWorks.AssetServer.Commands
             //int? furnishingId, 
             RentalStatus rentalStatus,
             bool isBasementSuite,
-            //DateTime createdDate,
-            //DateTime updateDate,
+            DateTime createdDate,
+            DateTime updateDate,
             PropertyAddress propertyAddress,
             PropertyFacility propertyFacility,
             PropertyFeature propertyFeature//,
@@ -154,8 +154,8 @@ namespace REALWorks.AssetServer.Commands
             //FurnishingId = furnishingId;
             Status = rentalStatus;
             IsBasementSuite = isBasementSuite;
-            //CreatedDate = createdDate;
-            //UpdateDate = updateDate;
+            CreatedDate = createdDate;
+            UpdateDate = updateDate;
             PropertyAddress = propertyAddress;
             PropertyFacility = propertyFacility;
             PropertyFeature = propertyFeature;

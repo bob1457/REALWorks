@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DinkToPdf;
 using DinkToPdf.Contracts;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -86,6 +87,8 @@ namespace REALWorks.AssetServer
                                     .AllowCredentials());
             });
 
+            services.AddMediatR(typeof(Startup));
+
             // DI Implementation
             services.AddTransient<IPropertyService, PropertyService>();
             services.AddTransient<IImageHandler, ImageHandler>();
@@ -111,14 +114,14 @@ namespace REALWorks.AssetServer
             }
 
             app.UseStaticFiles();
-            //app.UseMvcWithDefaultRoute();
+            app.UseMvcWithDefaultRoute();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Asset Management API V1");
                 c.RoutePrefix = string.Empty;
             });
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseMvc();
 
            

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using REALWorks.AssetServer.Commands;
 using REALWorks.AssetServer.Infrastructure;
 using REALWorks.AssetServer.Models;
 //using REALWorks.AssetServer.Models;
@@ -20,11 +22,13 @@ namespace REALWorks.AssetServer.Controllers
     {
         private readonly IPropertyService _propertyService;
         //private readonly IImageHandler _imageHandler;
+        private readonly IMediator _mediator;
 
-        public PropertyController(IPropertyService propertyServic/*, IImageHandler imageHandler*/)
+        public PropertyController(IPropertyService propertyServic, IMediator mediator)
         {
             _propertyService = propertyServic;
             //_imageHandler = imageHandler;
+            _mediator = mediator;
         }
 
         [HttpPost]
@@ -41,6 +45,23 @@ namespace REALWorks.AssetServer.Controllers
             return Ok(ppt);
 
         }
+
+
+        [HttpPost]
+        [Route("asset")]
+        public async Task<IActionResult> AddAsset([FromBody] CreatePropertyCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(400);
+            }
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+
+        }
+
 
         [HttpGet]
         [Route("all")]

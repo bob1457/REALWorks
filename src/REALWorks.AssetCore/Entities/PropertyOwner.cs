@@ -23,7 +23,9 @@ namespace REALWorks.AssetCore.Entities
             string userAvartaImgUrl, 
             bool? isActive, 
             int? roleId, 
-            string notes//, 
+            string notes, 
+            DateTime createdOn,
+            DateTime updatedOn
             //ICollection<OwnerProperty> ownerProperty
             )
         {
@@ -38,6 +40,8 @@ namespace REALWorks.AssetCore.Entities
             IsActive = isActive;
             RoleId = roleId;
             Notes = notes;
+            Created = createdOn;
+            Modified = updatedOn;
             //OwnerProperty = ownerProperty;
         }
 

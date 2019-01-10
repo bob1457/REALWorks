@@ -94,8 +94,8 @@ namespace REALWorks.AssetCore.Entities
             //int? furnishingId, 
             RentalStatus rentalStatus,
             bool isBasementSuite,
-            //DateTime createdDate,
-            //DateTime updateDate,
+            DateTime createdDate,
+            DateTime updateDate,
 
 
             PropertyAddress propertyAddress,
@@ -125,8 +125,8 @@ namespace REALWorks.AssetCore.Entities
             //FurnishingId = furnishingId;
             Status = rentalStatus;
             IsBasementSuite = isBasementSuite;
-            //CreatedDate = createdDate;
-            //UpdateDate = updateDate;
+            Created = createdDate;
+            Modified = updateDate;
 
 
             Address = propertyAddress;
@@ -149,7 +149,7 @@ namespace REALWorks.AssetCore.Entities
             int? roleId,
             string notes)
         {
-            var owner = new PropertyOwner(userName, firstName, lastName, contactEmail, contactTelephone1, contactTelephone2, false, userAvartaImgUrl, true, 2, "");           
+            var owner = new PropertyOwner(userName, firstName, lastName, contactEmail, contactTelephone1, contactTelephone2, false, userAvartaImgUrl, true, 2, "", DateTime.Now, DateTime.Now);           
 
             //OwnerProperty.Add(owner);
         }
