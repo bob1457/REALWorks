@@ -22,7 +22,7 @@ namespace REALWorks.AssetServer.Commands
         public string PropertyName { get; set; }
         public string PropertyDesc { get; set; }
         public PropertyType Type { get; set; }
-        public int PropertyManagerId { get; set; }
+        public string PropertyManagerUserName { get; set; }
         public string PropertyLogoImgUrl { get; set; }
         public string PropertyVideoUrl { get; set; }
         public int PropertyBuildYear { get; set; }

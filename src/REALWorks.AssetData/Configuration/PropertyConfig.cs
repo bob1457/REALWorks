@@ -24,7 +24,7 @@ namespace REALWorks.AssetData.Configuration
 
             entity.Property(e => e.PropertyLogoImgUrl).HasMaxLength(100);
 
-            entity.Property(e => e.PropertyManagerId).HasDefaultValueSql("((0))");
+            entity.Property(e => e.PropertyManagerUserName);
 
             entity.Property(e => e.PropertyName)
                 .IsRequired()

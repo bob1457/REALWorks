@@ -43,7 +43,8 @@ namespace REALWorks.AssetCore.Entities
         //public int PropertyAddressId { get; private set; }
         //public int PropertyFeatureId { get; private set; }
         //public int PropertyFacilityId { get; private set; }
-        public int? PropertyManagerId { get; private set; }
+        //public int? PropertyManagerId { get; private set; }
+        public string PropertyManagerUserName { get; private set; }
         public string PropertyLogoImgUrl { get; private set; }
         public string PropertyVideoUrl { get; private set; }
         public int PropertyBuildYear { get; private set; }
