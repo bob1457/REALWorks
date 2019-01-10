@@ -10,6 +10,8 @@ using REALWorks.AuthServer.Models;
 using REALWorks.AuthServer.Models.ViewModels;
 using REALWorks.AuthServer.Helpers;
 using System.Security.Claims;
+using MediatR;
+using REALWorks.AuthServer.Commands;
 
 namespace REALWorks.AuthServer.Controllers
 {
@@ -17,22 +19,27 @@ namespace REALWorks.AuthServer.Controllers
     [Route("api/Account")]
     public class AccountController : Controller
     {
+        private readonly IMediator _mediator; // Only this one is required
+
         private readonly ApplicationDbContext _appDbContext;
+
+        // The following are not required
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
         //private readonly IMapper _mapper;
 
-        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,*/  ApplicationDbContext appDbContext)
+        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,*/  ApplicationDbContext appDbContext, IMediator mediator)
         {
           _userManager = userManager;
           _roleManager = roleManager;
           //_mapper = mapper;
           _appDbContext = appDbContext;
+            _mediator = mediator;
         }
 
         // account registration
         [HttpPost]
-        [Route("register")]
+        [Route("register1")]
         public async Task<IActionResult> Post([FromBody]RegistrationViewModel model)
         {
           if (!ModelState.IsValid)
@@ -52,10 +59,9 @@ namespace REALWorks.AuthServer.Controllers
             UserRole = model.UserRole
           };
 
-          
 
-          // Create the account
-          var result = await _userManager.CreateAsync(user, model.Password);
+        // Create the account
+        var result = await _userManager.CreateAsync(user, model.Password);
           
           // Add role to the new user
           var role_resuls = await _userManager.AddToRoleAsync(user, model.UserRole);
@@ -68,8 +74,26 @@ namespace REALWorks.AuthServer.Controllers
           return new OkObjectResult("Account: " + user.UserName + ", created");
         }
 
-        [Route("addrole")]
-        public async Task<IActionResult> AddRole([FromBody]ApplicationRoleModel model)
+
+
+        [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+
+
+        [Route("addrole1")]
+        public async Task<IActionResult> AddRole1([FromBody]ApplicationRoleModel model)
         {
             ApplicationRole role = new ApplicationRole();
             role.Name = model.Name;
@@ -83,6 +107,24 @@ namespace REALWorks.AuthServer.Controllers
 
             return new OkObjectResult("Application Role: " + role.Name + ", Added");
         }
+
+
+        [Route("addrole")]
+        public async Task<IActionResult> AddRole([FromBody]AddUserRoleCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+
+
+
 
         [HttpGet]
         [Route("user/{username}")]
