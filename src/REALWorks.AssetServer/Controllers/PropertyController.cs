@@ -141,7 +141,7 @@ namespace REALWorks.AssetServer.Controllers
 /**/
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<AssetCore.Entities.Property>> GetPropertyDetails(int id) //id: property id
+        public async Task<ActionResult<AssetCore.Entities.Property>> GetPropertyDetails(int id) //id: property id -- use MediatR
         {
             var getProperty = new PropertyDetailsQuery
             {
