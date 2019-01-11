@@ -114,14 +114,44 @@ namespace REALWorks.AssetServer.Controllers
                 }
 
         }
-*/
+
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<Property>> GetPropertyAndOnwers(int id) //id: property id
+        public async Task<ActionResult<AssetCore.Entities.Property>> GetPropertyAndOnwers(int id) //id: property id
         {            
             try
             {
-                Property property = await _propertyService.GetPropertyAndOwner(id);
+                AssetCore.Entities.Property property = await _propertyService.GetPropertyAndOwner(id);
+                if (property == null)
+                {
+                    return NotFound();
+                }
+
+                return new OkObjectResult(property); //  Ok(property);  //await _propertyService.GetPropertyById(id);
+                //return Json(property, options);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+*/
+/**/
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<AssetCore.Entities.Property>> GetPropertyDetails(int id) //id: property id
+        {
+            var getProperty = new PropertyDetailsQuery
+            {
+                Id = id
+            };
+
+            try
+            {
+                var property = await _mediator.Send(getProperty); //_propertyService.GetPropertyAndOwner(id);
+
                 if (property == null)
                 {
                     return NotFound();

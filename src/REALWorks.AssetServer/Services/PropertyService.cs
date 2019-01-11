@@ -10,19 +10,22 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using REALWorks.AssetServer.Infrastructure;
+using REALWorks.AssetData;
 
 namespace REALWorks.AssetServer.Services
 {
     public class PropertyService: IPropertyService, IService
     {
         private readonly REALAssetContext _context;
+        private readonly AppDataBaseContext _context2;
 
         private readonly IImageHandler _imageHandler;
 
-        public PropertyService(REALAssetContext context, IImageHandler imageHandler)
+        public PropertyService(REALAssetContext context, AppDataBaseContext context2, IImageHandler imageHandler)
         {
             _context = context;
             _imageHandler = imageHandler;
+            _context2 = context2; 
         }
 
 
@@ -625,7 +628,7 @@ namespace REALWorks.AssetServer.Services
 
 
 
-        public async Task<Property> GetPropertyAndOwner(int id) // ****** Get Property By Id ******************** Without view model (DTO), all attributes will be loaded!!!
+        public async Task<AssetCore.Entities.Property> GetPropertyAndOwner(int id) // ****** Get Property By Id ******************** Without view model (DTO), all attributes will be loaded!!!
         {
             //throw new NotImplementedException();
 
@@ -651,7 +654,7 @@ namespace REALWorks.AssetServer.Services
 
             //Eager Loading (NO VIEW MODEL - Load all attributes)
             //
-            var property = _context.Property
+            /*var property = _context.Property
                 .Include(c=>c.ManagementContract)
                 .Include(fe => fe.PropertyFeature)
                 .Include(fa => fa.PropertyFacility)
@@ -659,7 +662,21 @@ namespace REALWorks.AssetServer.Services
                 .Include(m => m.PropertyImg)
                 .Include(op => op.OwnerProperty)
                 .ThenInclude(po => po.PropertyOwner).ToList()                
-                .First(p => p.PropertyId == id);
+                .First(p => p.PropertyId == id);*/
+
+
+
+            var property = _context2.Property
+                //.Include(c => c.ManagementContract)
+                .Include(fe => fe.Feature)
+                .Include(fa => fa.Facility)
+                .Include(a => a.Address)
+                .Include(m => m.PropertyImg)
+                .Include(op => op.OwnerProperty)
+                .ThenInclude(po => po.PropertyOwner).ToList()
+                .First(p => p.Id == id);
+
+
 
             //_context.Entry(property)
             //    .Collection(m => m.PropertyImg).Load(); // Not necessary in this case (already loaded - eager load)

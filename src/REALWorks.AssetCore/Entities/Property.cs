@@ -26,7 +26,7 @@ namespace REALWorks.AssetCore.Entities
             BeingProcessing
         }
 
-        private Property(string propertyName) {
+        private Property(/*string propertyName*/) {
             OwnerProperty = new HashSet<OwnerProperty>();
             PropertyImg = new HashSet<PropertyImg>();
         } // Required by EF Core
