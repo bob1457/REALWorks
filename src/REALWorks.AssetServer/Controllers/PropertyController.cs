@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using REALWorks.AssetServer.Commands;
 using REALWorks.AssetServer.Infrastructure;
 using REALWorks.AssetServer.Models;
+using REALWorks.AssetServer.Queries;
 //using REALWorks.AssetServer.Models;
 using REALWorks.AssetServer.Services;
 using REALWorks.AssetServer.Services.ViewModels;
@@ -69,7 +70,9 @@ namespace REALWorks.AssetServer.Controllers
         {
             try
             {
-                var properties = await _propertyService.GetAllProperty();
+                //var properties = await _propertyService.GetAllProperty();
+
+                var properties = await _mediator.Send(new PropertyListQuery());
 
                 if (properties == null)
                 {
