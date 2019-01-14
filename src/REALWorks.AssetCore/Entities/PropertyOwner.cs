@@ -9,7 +9,7 @@ namespace REALWorks.AssetCore.Entities
     {
         private PropertyOwner()
         {
-            OwnerProperty = new HashSet<OwnerProperty>();
+            //OwnerProperty = new HashSet<OwnerProperty>();
         }
 
         public PropertyOwner(
@@ -57,6 +57,6 @@ namespace REALWorks.AssetCore.Entities
         public int? RoleId { get; private set; }
         public string Notes { get; private set; }
 
-        public ICollection<OwnerProperty> OwnerProperty { get; set; }
+        public List<OwnerProperty> OwnerProperty { get; set; } = new List<OwnerProperty>();
     }
 }

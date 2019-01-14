@@ -22,8 +22,8 @@ namespace REALWorks.AssetServer.CommandHandlers
 
         public async Task<bool> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
         {
-            object pOwner;
-            object ownerProperty;
+            //object pOwner;
+            //object ownerProperty;
 
             var address = new PropertyAddress(request.PropertySuiteNumber, 
                 request.PropertyNumber, request.PropertyStreet, 
@@ -58,35 +58,43 @@ namespace REALWorks.AssetServer.CommandHandlers
             if (request.PropertyOwnerId == 0)
             {
 
-                //property.AddOwner("NotSet", request.FirstName, request.LastName, request.ContactEmail,
-                //    request.ContactTelephone1, request.ContactTelephone2, request.OnlineAccessEnbaled, request.UserAvartaImgUrl,
-                //    request.IsActive, request.RoleId, request.Notes);
+                var owner = property.AddOwner("NotSet", request.FirstName, request.LastName, request.ContactEmail,
+                    request.ContactTelephone1, request.ContactTelephone2, request.OnlineAccessEnbaled, request.UserAvartaImgUrl,
+                    request.IsActive, request.RoleId, request.Notes);
 
 
-                pOwner = new PropertyOwner(request.UserName, request.FirstName, request.LastName, request.ContactEmail, 
-                    request.ContactTelephone1, request.ContactTelephone2, request.OnlineAccessEnbaled, request.UserAvartaImgUrl, 
-                    request.IsActive, request.RoleId, request.Notes, DateTime.Now, DateTime.Now);
+                //pOwner = new PropertyOwner(request.UserName, request.FirstName, request.LastName, request.ContactEmail, 
+                //    request.ContactTelephone1, request.ContactTelephone2, request.OnlineAccessEnbaled, request.UserAvartaImgUrl, 
+                //    request.IsActive, request.RoleId, request.Notes, DateTime.Now, DateTime.Now);
 
-                await _context.AddAsync(pOwner);
+                //await _context.AddAsync(pOwner);
+                await _context.AddAsync(owner);
 
-                ownerProperty = new OwnerProperty()
-                {
-                    Property = property,
-                    PropertyOwner = (PropertyOwner)pOwner                    
-                };
+                //ownerProperty = new OwnerProperty()
+                //{
+                //    Property = property,
+                //    PropertyOwner = (PropertyOwner)pOwner                    
+                //};
             }
             else
             {
-                ownerProperty = new OwnerProperty()
-                {
-                    Property = property,
-                    //PropertyOwner = pOwner
-                    //PropertyId = newProperty.PropertyId,
-                    PropertyOwnerId = request.PropertyOwnerId
-                };
+                //ownerProperty = new OwnerProperty()
+                //{
+                //    Property = property,
+                //    //PropertyOwner = pOwner
+                //    //PropertyId = newProperty.PropertyId,
+                //    PropertyOwnerId = request.PropertyOwnerId
+                //};
+
+                var owner = _context.PropertyOwner.FirstOrDefault(o => o.Id == request.PropertyOwnerId);
+
+                var ownerProperty = property.AddExsitingOwner(owner);
+
+                owner.OwnerProperty.Add(ownerProperty);
+
             }
 
-            await _context.AddAsync(ownerProperty);
+            //await _context.AddAsync(ownerProperty);
 
             try
             {

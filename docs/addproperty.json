@@ -12,6 +12,7 @@
     "furnishingId": null,
     "Status": "Rented",
     "isBasementSuite": true,
+    "propertyOwnerId": 1,
 
     
     "propertySuiteNumber": "",

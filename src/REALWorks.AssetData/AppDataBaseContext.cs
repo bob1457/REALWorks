@@ -25,6 +25,8 @@ namespace REALWorks.AssetData
         /// </summary>
         public virtual DbSet<Property> Property { get; set; }
         public virtual DbSet<PropertyAddress> PropertyAddress { get; set; }
+        public virtual DbSet<PropertyImg> PropertyImg { get; set; }
+        public virtual DbSet<PropertyOwner> PropertyOwner { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

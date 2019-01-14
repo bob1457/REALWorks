@@ -873,6 +873,55 @@ namespace REALWorks.AssetServer.Services
 
 
 
+
+
+
+
+
+
+
+
+
+        public async Task<ManagementContractDetailsViewModel> GetFullContract(int id)
+        {
+            var result = (from contract in _context.ManagementContract
+                          join property in _context.Property on contract.PropertyId equals property.PropertyId
+                          join address in _context.PropertyAddress on property.PropertyAddressId equals address.PropertyAddressId
+                          join ownerP in _context.OwnerProperty on property.PropertyId equals ownerP.PropertyId
+                          join pOwner in _context.PropertyOwner on ownerP.PropertyOwnerId equals pOwner.PropertyOwnerId
+                          where property.PropertyId == id && contract.IsActive == true
+                          select new ManagementContractDetailsViewModel
+                          {
+                              ManagementContractId = contract.ManagementContractId,
+                              ManagementContractTitile = contract.ManagementContractTitile,
+                              StartDate = contract.StartDate,
+                              EndDate = contract.EndDate,
+                              ContractSignDate = contract.ContractSignDate,
+
+                              PropertyName = property.PropertyName,
+
+                              PropertyNumber = address.PropertyNumber,
+                              PropertyStreet = address.PropertyStreet,
+                              PropertyCity = address.PropertyCity,
+                              PropertyStateProvince = address.PropertyStateProvince,
+                              PropertyZipPostCode = address.PropertyZipPostCode,
+                              PropertyCountry = address.PropertyCountry,
+
+                              FirstName = pOwner.FirstName,
+                              LastName = pOwner.LastName,
+                              ContactEmail = pOwner.ContactEmail,
+                              ContactTelephone1 = pOwner.ContactTelephone1
+                              
+                          }
+                          );
+
+            return result.FirstOrDefault();
+
+            //throw new NotImplementedException();
+        }
+
+
+
         #endregion
     }
 }

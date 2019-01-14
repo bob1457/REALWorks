@@ -27,7 +27,7 @@ namespace REALWorks.AssetCore.Entities
         }
 
         private Property(/*string propertyName*/) {
-            OwnerProperty = new HashSet<OwnerProperty>();
+            //OwnerProperty = new HashSet<OwnerProperty>();
             PropertyImg = new HashSet<PropertyImg>();
         } // Required by EF Core
 
@@ -66,9 +66,11 @@ namespace REALWorks.AssetCore.Entities
         //public PropertyType PropertyType { get; set; }
         //public RentalStatus RentalStatus { get; set; }
 
-        
-        public ICollection<OwnerProperty> OwnerProperty { get; set; }
+
+        //public ICollection<OwnerProperty> OwnerProperty { get; set; }
+        public List<OwnerProperty> OwnerProperty { get; set; } = new List<OwnerProperty>();
         public ICollection<PropertyImg> PropertyImg { get; set; }
+
 
 
         /// <summary>
@@ -138,7 +140,8 @@ namespace REALWorks.AssetCore.Entities
             //RentalStatusId = rentalStatusId;//RentalStatus = rentalStatus;
         }
 
-        public void AddOwner(string userName, 
+        public PropertyOwner AddOwner(
+            string userName, 
             string firstName,
             string lastName,
             string contactEmail,
@@ -150,9 +153,32 @@ namespace REALWorks.AssetCore.Entities
             int? roleId,
             string notes)
         {
-            var owner = new PropertyOwner(userName, firstName, lastName, contactEmail, contactTelephone1, contactTelephone2, false, userAvartaImgUrl, true, 2, "", DateTime.Now, DateTime.Now);           
+            var owner = new PropertyOwner(userName, firstName, lastName, contactEmail, 
+                contactTelephone1, contactTelephone2, false, userAvartaImgUrl, true, 2, "", 
+                DateTime.Now, DateTime.Now);
 
-            //OwnerProperty.Add(owner);
+            var ownerProperty = new OwnerProperty();
+
+            ownerProperty.Property = this;
+            ownerProperty.PropertyOwner = owner;
+
+            owner.OwnerProperty.Add(ownerProperty);
+
+            return owner;
+
+        }
+
+        public OwnerProperty AddExsitingOwner(PropertyOwner owner)
+        {
+            var ownerProperty = new OwnerProperty();
+
+            ownerProperty.Property =this;
+            ownerProperty.PropertyOwnerId = owner.Id;
+
+            owner.OwnerProperty.Add(ownerProperty);
+
+            return ownerProperty;
+
         }
 
         public void AddImages(string propertyImgTitle, 

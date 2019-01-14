@@ -220,6 +220,25 @@ namespace REALWorks.AssetServer.Controllers
             return Ok(ct);
         }
 
+
+        [HttpGet]
+        [Route("contract/{id}")]
+        public async Task<IActionResult> GetContractDetails(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(400);
+            }
+
+            var ct = _propertyService.GetFullContract(id);
+
+            return Ok(ct);
+        }
+
+
+
+
+
         [HttpPost]
         [Route("updateStatus/id/statusId")]
         public async Task<IActionResult> UpdateRentalStatus(int id, int statusId)

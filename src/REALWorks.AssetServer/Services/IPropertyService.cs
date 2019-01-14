@@ -25,6 +25,7 @@ namespace REALWorks.AssetServer.Services
         Task<IQueryable<PropertyListViewModel>> GetAllProperty(); // Task<List<PropertyListViewModel>> GetAllProperty();
         Task<IQueryable<PropertyOwner>> GetOwnerListByProperty(int id); // id: property id
         Task<AssetCore.Entities.Property> GetPropertyAndOwner(int id);
+        Task<ManagementContractDetailsViewModel> GetFullContract(int id); //id: property id
 
         /// <summary>
         /// Update Operations (U)
