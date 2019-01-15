@@ -16,10 +16,10 @@ namespace REALWorks.AssetCore.Entities
             PropertyId = propertyId;
         }
 
-        public string PropertyImgTitle { get; set; }
-        public string PropertyImgCaption { get; set; }
-        public int PropertyId { get; set; }        
+        public string PropertyImgTitle { get; private set; }
+        public string PropertyImgCaption { get; private set; }
+        public int PropertyId { get; private set; }        
 
-        public Property Property { get; set; }
+        public Property Property { get; private set; }
     }
 }

@@ -60,16 +60,16 @@ namespace REALWorks.AssetCore.Entities
         /// <summary>
         /// Navigation
         /// </summary>
-        public PropertyAddress Address { get; set; }
-        public PropertyFacility Facility { get; set; }
-        public PropertyFeature Feature { get; set; }
+        public PropertyAddress Address { get; private set; }
+        public PropertyFacility Facility { get; private set; }
+        public PropertyFeature Feature { get; private set; }
         //public PropertyType PropertyType { get; set; }
         //public RentalStatus RentalStatus { get; set; }
 
 
         //public ICollection<OwnerProperty> OwnerProperty { get; set; }
         public List<OwnerProperty> OwnerProperty { get; set; } = new List<OwnerProperty>();
-        public ICollection<PropertyImg> PropertyImg { get; set; }
+        public ICollection<PropertyImg> PropertyImg { get; private set; }
 
 
 
@@ -159,6 +159,7 @@ namespace REALWorks.AssetCore.Entities
 
             var ownerProperty = new OwnerProperty();
 
+
             ownerProperty.Property = this;
             ownerProperty.PropertyOwner = owner;
 
@@ -167,6 +168,61 @@ namespace REALWorks.AssetCore.Entities
             return owner;
 
         }
+
+
+        public Property Update(
+            Property property,
+            string propertyName,
+            string propertyDesc,
+            PropertyType propertyType,
+            int propertyBuildYear,
+            bool isActive,
+            bool isShared,
+            RentalStatus rentalStatus,
+            bool isBasementSuite,
+            //DateTime createDate,
+            DateTime updateDate,
+            PropertyAddress propertyAddress,
+            PropertyFacility propertyFacility,
+            PropertyFeature propertyFeature
+            )
+        {
+            property.PropertyName = propertyName;
+            property.PropertyDesc = propertyDesc;
+            property.Type = propertyType;
+            property.PropertyBuildYear = propertyBuildYear;
+            property.IsActive = isActive;
+            property.IsShared = isShared;
+            property.IsBasementSuite = isBasementSuite;
+            //property.Created = createDate;
+            property.Modified = updateDate;
+            property.Address = propertyAddress;
+            property.Facility = propertyFacility;
+            property.Feature = propertyFeature;
+
+            //property = new Property(
+
+            //propertyName,
+            //    ,
+            //    propertyType,
+            //    propertyBuildYear,
+            //    isActive,
+            //    isShared,
+            //    rentalStatus,
+            //    isBasementSuite,
+            //    createDate,
+            //    updateDate,
+            //    propertyAddress,
+            //    propertyFacility,
+            //    propertyFeature
+                //);
+
+
+            return property;
+            
+        }
+
+
 
         public OwnerProperty AddExsitingOwner(PropertyOwner owner)
         {

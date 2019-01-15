@@ -57,6 +57,6 @@ namespace REALWorks.AssetCore.Entities
         public int? RoleId { get; private set; }
         public string Notes { get; private set; }
 
-        public List<OwnerProperty> OwnerProperty { get; set; } = new List<OwnerProperty>();
+        public List<OwnerProperty> OwnerProperty { get; private set; } = new List<OwnerProperty>();
     }
 }

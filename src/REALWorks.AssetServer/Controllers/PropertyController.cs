@@ -230,7 +230,7 @@ namespace REALWorks.AssetServer.Controllers
                 return BadRequest(400);
             }
 
-            var ct = _propertyService.GetFullContract(id);
+            var ct = await _propertyService.GetFullContract(id);
 
             return Ok(ct);
         }
@@ -269,13 +269,32 @@ namespace REALWorks.AssetServer.Controllers
 
         [HttpPost]
         [Route("update")]
-        public async Task<IActionResult> UpdateProperty(PropertyUpdateViewModel property)
+        public async Task<IActionResult> UpdateProperty(UpdatePropertyCommand command)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(400);
+            }
 
-            await _propertyService.UpdateProperty(property);
+            await _mediator.Send(command);
 
             return Ok();
         }
+
+
+
+        //[HttpPost]
+        //[Route("update")]
+        //public async Task<IActionResult> UpdateProperty(PropertyUpdateViewModel property)
+        //{
+
+        //    await _propertyService.UpdateProperty(property);
+
+        //    return Ok();
+        //}
+
+
+
 
         [HttpPost]
         [Route("owner/update")]
