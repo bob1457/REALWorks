@@ -199,25 +199,7 @@ namespace REALWorks.AssetCore.Entities
             property.Address = propertyAddress;
             property.Facility = propertyFacility;
             property.Feature = propertyFeature;
-
-            //property = new Property(
-
-            //propertyName,
-            //    ,
-            //    propertyType,
-            //    propertyBuildYear,
-            //    isActive,
-            //    isShared,
-            //    rentalStatus,
-            //    isBasementSuite,
-            //    createDate,
-            //    updateDate,
-            //    propertyAddress,
-            //    propertyFacility,
-            //    propertyFeature
-                //);
-
-
+           
             return property;
             
         }
@@ -237,12 +219,20 @@ namespace REALWorks.AssetCore.Entities
 
         }
 
-        public void AddImages(string propertyImgTitle, 
-            string propertyImgCaption, int propertyId)
+        public PropertyImg AddImages(string propertyImgTitle, string propertyImgUrl, int propertyId)
         {
-            var img = new PropertyImg(propertyImgTitle, propertyImgCaption, propertyId);
+            var img = new PropertyImg(propertyImgTitle, propertyImgUrl, propertyId);
 
             PropertyImg.Add(img);
+
+            return img;
+        }
+
+        public Property StatusUpdate(Property property, RentalStatus status)
+        {
+            property.Status = status;
+
+            return property;
         }
     }
 }

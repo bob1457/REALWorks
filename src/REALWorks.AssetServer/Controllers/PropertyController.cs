@@ -253,18 +253,33 @@ namespace REALWorks.AssetServer.Controllers
             return Ok(status);
         }
 
+        //[HttpPost]
+        //[Route("status/state")]
+        //public async Task<IActionResult> UpdatePropertyStatus(int id, bool status)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(400);
+        //    }
+
+        //    var state = await _propertyService.UpdateProeprtyStatus(id, status);
+
+        //    return Ok(state);
+        //}
+
+
         [HttpPost]
         [Route("status/state")]
-        public async Task<IActionResult> UpdatePropertyStatus(int id, bool status)
+        public async Task<IActionResult> UpdatePropertyStatus(UpdatePropertyStatusCommand command)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(400);
             }
 
-            var state = await _propertyService.UpdateProeprtyStatus(id, status);
+            var result = await _mediator.Send(command);
 
-            return Ok(state);
+            return Ok(result);
         }
 
         [HttpPost]
@@ -276,9 +291,9 @@ namespace REALWorks.AssetServer.Controllers
                 return BadRequest(400);
             }
 
-            await _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-            return Ok();
+            return Ok(result);
         }
 
 
@@ -357,6 +372,25 @@ namespace REALWorks.AssetServer.Controllers
             var filename = await _propertyService.AddImage(file, image);
 
             return Content(filename +" uploaded");
+        }
+
+        [HttpPost]
+        [Route("img/add")]
+        public async Task<IActionResult> AddImage([FromForm(Name = "file")] AddImageToPropertyCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var f = Request.Form.Files;
+
+            if (command.PropertyImage == null || command.PropertyImage.Length == 0)
+                return Content("file not selected");
+
+            await _mediator.Send(command);
+
+            return Content("file not selected");
         }
     }
 }

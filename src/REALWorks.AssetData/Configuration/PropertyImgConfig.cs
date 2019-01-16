@@ -13,7 +13,7 @@ namespace REALWorks.AssetData.Configuration
         {
             //throw new NotImplementedException();
 
-            entity.Property(e => e.PropertyImgCaption).HasMaxLength(350);
+            entity.Property(e => e.PropertyImgUrl).HasMaxLength(350);
 
             entity.Property(e => e.PropertyImgTitle)
                 .IsRequired()
