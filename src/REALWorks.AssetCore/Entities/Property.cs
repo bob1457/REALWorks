@@ -223,6 +223,9 @@ namespace REALWorks.AssetCore.Entities
         {
             var img = new PropertyImg(propertyImgTitle, propertyImgUrl, propertyId);
 
+            img.Created = DateTime.Now;
+            img.Modified = DateTime.Now;
+
             PropertyImg.Add(img);
 
             return img;
@@ -231,6 +234,7 @@ namespace REALWorks.AssetCore.Entities
         public Property StatusUpdate(Property property, RentalStatus status)
         {
             property.Status = status;
+            property.Modified = DateTime.Now;
 
             return property;
         }

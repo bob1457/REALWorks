@@ -376,7 +376,7 @@ namespace REALWorks.AssetServer.Controllers
 
         [HttpPost]
         [Route("img/add")]
-        public async Task<IActionResult> AddImage([FromForm(Name = "file")] AddImageToPropertyCommand command)
+        public async Task<IActionResult> AddImage([FromForm] AddImageToPropertyCommand command)
         {
             if (!ModelState.IsValid)
             {
@@ -385,12 +385,14 @@ namespace REALWorks.AssetServer.Controllers
 
             var f = Request.Form.Files;
 
-            if (command.PropertyImage == null || command.PropertyImage.Length == 0)
-                return Content("file not selected");
+            command.PropertyImage = f[0];
+
+            //if (command.PropertyImage == null || command.PropertyImage.Length == 0)
+            //    return Content("file not selected");
 
             await _mediator.Send(command);
 
-            return Content("file not selected");
+            return Content("file uploaded successfully!");
         }
     }
 }
