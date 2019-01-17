@@ -32,20 +32,20 @@ namespace REALWorks.AssetServer.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        [Route("add")]
-        public async Task<IActionResult> AddProperty([FromBody] PropertyAddViewModel property)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(400);
-            }
+        //[HttpPost]
+        //[Route("add")]
+        //public async Task<IActionResult> AddProperty([FromBody] PropertyAddViewModel property)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(400);
+        //    }
 
-            var ppt = await _propertyService.AddProperty(property);
+        //    var ppt = await _propertyService.AddProperty(property);
 
-            return Ok(ppt);
+        //    return Ok(ppt);
 
-        }
+        //}
 
 
         [HttpPost]
@@ -192,16 +192,30 @@ namespace REALWorks.AssetServer.Controllers
 
 
 
+        //[HttpPost]
+        //[Route("addOwner")] 
+        //public async Task<IActionResult> AddPropertyOwner([FromBody] OwnerAddViewModel owner)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(400);
+        //    }
+
+        //    await _propertyService.AddOwnerToProperty(owner);
+
+        //    return Ok();
+        //}
+
         [HttpPost]
-        [Route("addOwner")] 
-        public async Task<IActionResult> AddPropertyOwner([FromBody] OwnerAddViewModel owner)
+        [Route("addOwner")]
+        public async Task<IActionResult> AddPropertyOwner([FromBody] AddOwnerToExistingPropertyCommand command)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(400);
             }
 
-            await _propertyService.AddOwnerToProperty(owner);
+            await _mediator.Send(command);
 
             return Ok();
         }
@@ -239,19 +253,19 @@ namespace REALWorks.AssetServer.Controllers
 
 
 
-        [HttpPost]
-        [Route("updateStatus/id/statusId")]
-        public async Task<IActionResult> UpdateRentalStatus(int id, int statusId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(400);
-            }
+        //[HttpPost]
+        //[Route("updateStatus/id/statusId")]
+        //public async Task<IActionResult> UpdateRentalStatus(int id, int statusId)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(400);
+        //    }
 
-            var status = await _propertyService.UpdateRentalStatus(id, statusId);
+        //    var status = await _propertyService.UpdateRentalStatus(id, statusId);
 
-            return Ok(status);
-        }
+        //    return Ok(status);
+        //}
 
         //[HttpPost]
         //[Route("status/state")]
@@ -270,7 +284,7 @@ namespace REALWorks.AssetServer.Controllers
 
         [HttpPost]
         [Route("status/state")]
-        public async Task<IActionResult> UpdatePropertyStatus(UpdatePropertyStatusCommand command)
+        public async Task<IActionResult> UpdatePropertyStatus(UpdatePropertyStatusCommand command) // Update property rental status
         {
             if (!ModelState.IsValid)
             {
@@ -330,49 +344,49 @@ namespace REALWorks.AssetServer.Controllers
         }
 
 
-        [HttpPost]
-        [Route("img/upload")]
-        public async Task<IActionResult> UploadImage(/**/[FromForm]PropertyImg image, [FromForm]IFormFile file)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpPost]
+        //[Route("img/upload")]
+        //public async Task<IActionResult> UploadImage(/**/[FromForm]PropertyImg image, [FromForm]IFormFile file)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            //using(var memoryStream = new MemoryStream())
-            //{
-            //    await image.PropertyImage.CopyToAsync(memoryStream);
-            //}
+        //    //using(var memoryStream = new MemoryStream())
+        //    //{
+        //    //    await image.PropertyImage.CopyToAsync(memoryStream);
+        //    //}
 
-            //var file = image.PropertyImage;
+        //    //var file = image.PropertyImage;
 
-            if (file == null || file.Length == 0)
-                return Content("file not selected");
+        //    if (file == null || file.Length == 0)
+        //        return Content("file not selected");
 
-            //string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
-            //using (var fs = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
-            //{
-            //    await file.CopyToAsync(fs);
+        //    //string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
+        //    //using (var fs = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
+        //    //{
+        //    //    await file.CopyToAsync(fs);
 
-            //    // Add image path to DB
+        //    //    // Add image path to DB
 
                 
-            //    //{
-            //    //    var imgUpload = new PropertyImg()
-            //    //    {
-            //    //        PropertyImgTitle = image.PropertyImgTitle,
-            //    //        PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
-            //    //        PropertyId = image.PropertyId, // "62541",
-            //    //        CreatedOn = DateTime.Now
-            //    //    };
-            //    //    //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
+        //    //    //{
+        //    //    //    var imgUpload = new PropertyImg()
+        //    //    //    {
+        //    //    //        PropertyImgTitle = image.PropertyImgTitle,
+        //    //    //        PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
+        //    //    //        PropertyId = image.PropertyId, // "62541",
+        //    //    //        CreatedOn = DateTime.Now
+        //    //    //    };
+        //    //    //    //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
                     
-            //    //};
-            //}
-            var filename = await _propertyService.AddImage(file, image);
+        //    //    //};
+        //    //}
+        //    var filename = await _propertyService.AddImage(file, image);
 
-            return Content(filename +" uploaded");
-        }
+        //    return Content(filename +" uploaded");
+        //}
 
         [HttpPost]
         [Route("img/add")]
@@ -387,8 +401,8 @@ namespace REALWorks.AssetServer.Controllers
 
             command.PropertyImage = f[0];
 
-            //if (command.PropertyImage == null || command.PropertyImage.Length == 0)
-            //    return Content("file not selected");
+            if (command.PropertyImage == null || command.PropertyImage.Length == 0)
+                return Content("file not selected");
 
             await _mediator.Send(command);
 

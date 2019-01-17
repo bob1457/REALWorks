@@ -169,6 +169,9 @@ namespace REALWorks.AssetCore.Entities
 
         }
 
+/// <summary>
+/// Domain behaviours - methods/operations
+/// </summary>
 
         public Property Update(
             Property property,
@@ -210,13 +213,42 @@ namespace REALWorks.AssetCore.Entities
         {
             var ownerProperty = new OwnerProperty();
 
-            ownerProperty.Property =this;
+            ownerProperty.Property = this;
             ownerProperty.PropertyOwnerId = owner.Id;
 
             owner.OwnerProperty.Add(ownerProperty);
 
             return ownerProperty;
 
+        }
+
+        public PropertyOwner AddNewOwnerToProperty(int propertyId, string userName, string firstName, 
+            string lastName, string email, string telephone1, string telephone2, bool onlineAccess, 
+            string avatarUrl, bool isActive, int roleId, string notes)
+        {
+            var owner = new PropertyOwner(userName, firstName, lastName, email, telephone1, 
+                telephone2, onlineAccess, avatarUrl, isActive, roleId, notes, DateTime.Now, DateTime.Now);
+
+            var ownerProperty = new OwnerProperty(propertyId, owner);
+
+            //ownerProperty.PropertyId = propertyId;
+            //ownerProperty.PropertyOwner = owner;
+
+            owner.OwnerProperty.Add(ownerProperty);
+
+            return owner;
+        }
+
+        public OwnerProperty AddExistingOwnerToProperty(PropertyOwner owner, int propertyId)
+        {
+            var ownerProperty = new OwnerProperty(propertyId, owner.Id);
+
+            //ownerProperty.PropertyId = propertyId;
+            //ownerProperty.PropertyOwnerId = propertyOwnerId;
+
+            owner.OwnerProperty.Add(ownerProperty);
+
+            return ownerProperty;
         }
 
         public PropertyImg AddImages(string propertyImgTitle, string propertyImgUrl, int propertyId)

@@ -6,15 +6,29 @@ namespace REALWorks.AssetCore.Entities
 {
     public class OwnerProperty
     {
-        //public OwnerProperty() { }
+        public OwnerProperty() { }
 
-        //public OwnerProperty(int propertyId, int propertyOwnerId, Property property, PropertyOwner propertyOwner)
-        //{
-        //    PropertyId = propertyId;
-        //    PropertyOwnerId = propertyOwnerId;
-        //    Property = property;
-        //    PropertyOwner = propertyOwner;
-        //}
+        public OwnerProperty(int propertyId, int propertyOwnerId)
+        {
+            PropertyId = propertyId;
+            PropertyOwnerId = propertyOwnerId;
+            //Property = property;
+            //PropertyOwner = propertyOwner;
+        }
+
+        public OwnerProperty(Property property, PropertyOwner propertyOwner)
+        {            
+            Property = property;
+            PropertyOwner = propertyOwner;
+        }
+
+        public OwnerProperty(int propertyId, PropertyOwner propertyOwner)
+        {
+            PropertyId = propertyId;
+            //PropertyOwnerId = propertyOwnerId;
+            //Property = property;
+            PropertyOwner = propertyOwner;
+        }
 
         public int PropertyId { get; /*private*/ set; }
         public int PropertyOwnerId { get; /*private*/ set; }

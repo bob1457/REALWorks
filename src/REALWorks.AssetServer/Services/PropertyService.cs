@@ -752,80 +752,81 @@ namespace REALWorks.AssetServer.Services
             return contractUpdate;
         }
 
-        public async Task<AddImageViewModel> AddImgToProperty(AddImageViewModel img)
-        {
-            //throw new NotImplementedException();
-            var file = img.PropertyImage;
-            /*
-                        string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
+        //public async Task<AddImageViewModel> AddImgToProperty(AddImageViewModel img)
+        //{
+        //    //throw new NotImplementedException();
+        //    var file = img.PropertyImage;
+        //    /*
+        //                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
 
-                        using (var fs = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
-                        {
-                            await file.CopyToAsync(fs);
+        //                using (var fs = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
+        //                {
+        //                    await file.CopyToAsync(fs);
 
-                            // Add image path to DB
+        //                    // Add image path to DB
 
 
-                            {
-                                var imgUpload = new PropertyImg()
-                                {
-                                    PropertyImgTitle = img.PropertyImgTitle,
-                                    PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
-                                    PropertyId = img.PropertyId, // "62541",
-                                    CreatedOn = DateTime.Now
-                                };
-                                //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
+        //                    {
+        //                        var imgUpload = new PropertyImg()
+        //                        {
+        //                            PropertyImgTitle = img.PropertyImgTitle,
+        //                            PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
+        //                            PropertyId = img.PropertyId, // "62541",
+        //                            CreatedOn = DateTime.Now
+        //                        };
+        //                        //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
 
-                                await _context.AddAsync(img);
+        //                        await _context.AddAsync(img);
 
-                                try
-                                {
-                                    await _context.SaveChangesAsync();
-                                }
-                                catch (Exception ex)
-                                {
-                                    throw;
-                                }
-                            };
-                        }
-            */
-            try
-            {
-                //Upload image file
-                //
-                await _imageHandler.UploadImage(file);
+        //                        try
+        //                        {
+        //                            await _context.SaveChangesAsync();
+        //                        }
+        //                        catch (Exception ex)
+        //                        {
+        //                            throw;
+        //                        }
+        //                    };
+        //                }
+        //    */
+        //    try
+        //    {
+        //        //Upload image file
+        //        //
+        //        await _imageHandler.UploadImage(file);
 
-                // Create DB entry
-                //
-                var imgUpload = new PropertyImg()
-                {
-                    PropertyImgTitle = img.PropertyImgTitle,
-                    PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
-                    PropertyId = img.PropertyId, // "62541",
-                    CreatedOn = DateTime.Now
-                };
-                //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
+        //        // Create DB entry
+        //        //
+        //        var imgUpload = new PropertyImg()
+        //        {
+        //            PropertyImgTitle = img.PropertyImgTitle,
+        //            PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
+        //            PropertyId = img.PropertyId, // "62541",
+        //            CreatedOn = DateTime.Now
+        //        };
+        //        //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
 
-                await _context.AddAsync(img);
+        //        await _context.AddAsync(img);
 
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
-            }
-            catch (Exception)
-            {
+        //        try
+        //        {
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            throw;
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
+        //        throw;
+        //    }
 
-            return img;
-        }
+        //    return img;
+        //}
 
+ /*
         public async Task<string> AddImage(IFormFile file, PropertyImg propertyImg)
         {
             //throw new NotImplementedException();
@@ -872,7 +873,7 @@ namespace REALWorks.AssetServer.Services
         }
 
 
-
+*/
 
 
 
