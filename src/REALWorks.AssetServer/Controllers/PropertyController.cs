@@ -325,13 +325,22 @@ namespace REALWorks.AssetServer.Controllers
 
 
 
+        //[HttpPost]
+        //[Route("owner/update")]
+        //public async Task<IActionResult> UpdateOwner(PropertyOwner owner)
+        //{
+        //    await _propertyService.UpdatePropertyOwner(owner);
+
+        //    return Ok(owner);
+        //}
+
         [HttpPost]
         [Route("owner/update")]
-        public async Task<IActionResult> UpdateOwner(PropertyOwner owner)
+        public async Task<IActionResult> UpdateOwner(UpdatePropertyOwnerCommand command)
         {
-            await _propertyService.UpdatePropertyOwner(owner);
+            await _mediator.Send(command);
 
-            return Ok(owner);
+            return Ok();
         }
 
         [HttpPost]

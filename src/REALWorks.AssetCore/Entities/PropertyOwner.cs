@@ -5,7 +5,7 @@ using System.Text;
 
 namespace REALWorks.AssetCore.Entities
 {
-    public class PropertyOwner: Entity
+    public class PropertyOwner: Entity, IAggeregate
     {
         private PropertyOwner()
         {
@@ -21,8 +21,8 @@ namespace REALWorks.AssetCore.Entities
             string contactTelephone2, 
             bool onlineAccess, 
             string userAvartaImgUrl, 
-            bool? isActive, 
-            int? roleId, 
+            bool isActive, 
+            int roleId, 
             string notes, 
             DateTime createdOn,
             DateTime updatedOn
@@ -53,10 +53,28 @@ namespace REALWorks.AssetCore.Entities
         public string ContactTelephone2 { get; private set; }
         public bool OnlineAccess { get; private set; }
         public string UserAvartaImgUrl { get; private set; }
-        public bool? IsActive { get; private set; }
-        public int? RoleId { get; private set; }
+        public bool IsActive { get; private set; }
+        public int RoleId { get; private set; }
         public string Notes { get; private set; }
 
         public List<OwnerProperty> OwnerProperty { get; private set; } = new List<OwnerProperty>();
+
+
+        public PropertyOwner Update(PropertyOwner owner, string firstName, string lastName, string email, 
+            string telephone1, string telephone2, string avatarUrl, bool isActive, 
+            string notes)
+        {
+            owner.FirstName = firstName;
+            owner.LastName = lastName;
+            owner.ContactEmail = email;
+            owner.ContactTelephone1 = telephone1;
+            owner.ContactTelephone2 = telephone2;            
+            owner.UserAvartaImgUrl = avatarUrl;
+            owner.IsActive = isActive;
+            owner.Notes = notes;
+            owner.Modified = DateTime.Now;
+
+            return owner;
+        }
     }
 }

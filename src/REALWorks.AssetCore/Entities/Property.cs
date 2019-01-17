@@ -6,7 +6,7 @@ using System.Text;
 
 namespace REALWorks.AssetCore.Entities
 {
-    public class Property: Entity
+    public class Property: Entity, IAggeregate
     {
         public enum PropertyType
         {
@@ -263,6 +263,7 @@ namespace REALWorks.AssetCore.Entities
             return img;
         }
 
+        
         public Property StatusUpdate(Property property, RentalStatus status)
         {
             property.Status = status;
