@@ -209,9 +209,12 @@ namespace REALWorks.AssetCore.Entities
             
         }
 
-        public void PropertyStatus() // Configure isActive attribute
+        public void Delete( Property property) // Soft delete/de-active
         {
             // TO DO
+            property.IsActive = false;
+            property.Modified = DateTime.Now;
+
         }
 
 
@@ -243,6 +246,17 @@ namespace REALWorks.AssetCore.Entities
             owner.OwnerProperty.Add(ownerProperty);
 
             return owner;
+        }
+
+        public PropertyOwner UpdateOwner(PropertyOwner owner, string firstName, string lastName, string email,
+            string telephone1, string telephone2, string avatarUrl, bool isActive,
+            string notes)
+        {
+            owner.Update(firstName, lastName, email, telephone1, telephone2, avatarUrl, isActive, notes);
+
+            return owner;
+
+            //throw new NotImplementedException();
         }
 
         public OwnerProperty AddExistingOwnerToProperty(PropertyOwner owner, int propertyId)
@@ -288,6 +302,14 @@ namespace REALWorks.AssetCore.Entities
 
             //contract.Created = DateTime.Now;
             //contract.Modified = DateTime.Now;
+
+            return contract;
+        }
+
+        public ManagementContract UpdateContract(ManagementContract contract, string title, DateTime startDate, DateTime endDate,
+            string placementFeeScale, string managementFeeScale, string notes)
+        {
+            contract.Update(title, startDate, endDate, placementFeeScale, managementFeeScale, notes);
 
             return contract;
         }

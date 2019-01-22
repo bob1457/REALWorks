@@ -41,7 +41,7 @@ namespace REALWorks.AssetServer
             services.AddDbContext<REALAssetContext>(options =>
                                                                 options.UseSqlServer(Configuration.GetConnectionString("AppDbConnection")));
 
-            string dbConnectionString = Configuration.GetConnectionString("AppDbConnection2");
+            string dbConnectionString = Configuration.GetConnectionString("AppDbConnection3");
 
             services.AddDbContext<AppDataBaseContext>(options =>
                      options.UseSqlServer(dbConnectionString, builder => builder.MigrationsAssembly("REALWorks.AssetData"))); // Specify the migration assembly (project name)

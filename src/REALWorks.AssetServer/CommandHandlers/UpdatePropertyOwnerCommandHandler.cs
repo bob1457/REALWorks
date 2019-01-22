@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
 using System;
@@ -20,10 +21,17 @@ namespace REALWorks.AssetServer.CommandHandlers
 
         public async Task<bool> Handle(UpdatePropertyOwnerCommand request, CancellationToken cancellationToken)
         {
-            var owner = _context.PropertyOwner.FirstOrDefault(o => o.Id == request.PropertyOwnerId);
+            var owner = _context.PropertyOwner.Include(op => op.OwnerProperty).ThenInclude(p => p.Property)
+                .FirstOrDefault(o => o.Id == request.PropertyOwnerId);
 
-            var updated = owner.Update(owner, request.FirstName, request.LastName, request.ContactEmail, request.ContactTelephone1, 
+            var property = owner.OwnerProperty.FirstOrDefault().Property;
+
+            var updated = property.UpdateOwner(owner, request.FirstName, request.LastName, request.ContactEmail, request.ContactTelephone1,
                 request.ContactTelephone2, request.UserAvartaImgUrl, request.IsActive, request.Notes);
+
+            //var updated = owner.Update(owner, request.FirstName, request.LastName, request.ContactEmail, request.ContactTelephone1, 
+            //    request.ContactTelephone2, request.UserAvartaImgUrl, request.IsActive, request.Notes);
+
 
             _context.Update(updated);
 

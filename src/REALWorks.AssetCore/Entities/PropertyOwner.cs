@@ -60,21 +60,21 @@ namespace REALWorks.AssetCore.Entities
         public List<OwnerProperty> OwnerProperty { get; private set; } = new List<OwnerProperty>();
 
 
-        public PropertyOwner Update(PropertyOwner owner, string firstName, string lastName, string email, 
+        public void Update(/*PropertyOwner owner,*/ string firstName, string lastName, string email, 
             string telephone1, string telephone2, string avatarUrl, bool isActive, 
             string notes)
         {
-            owner.FirstName = firstName;
-            owner.LastName = lastName;
-            owner.ContactEmail = email;
-            owner.ContactTelephone1 = telephone1;
-            owner.ContactTelephone2 = telephone2;            
-            owner.UserAvartaImgUrl = avatarUrl;
-            owner.IsActive = isActive;
-            owner.Notes = notes;
-            owner.Modified = DateTime.Now;
+            FirstName = firstName;
+            LastName = lastName;
+            ContactEmail = email;
+            ContactTelephone1 = telephone1;
+            ContactTelephone2 = telephone2;            
+            UserAvartaImgUrl = avatarUrl;
+            IsActive = isActive;
+            Notes = notes;
+            Modified = DateTime.Now;
 
-            return owner;
+            //return owner;
         }
 
         public void Deactivate() // Deactivate/soft delete owner

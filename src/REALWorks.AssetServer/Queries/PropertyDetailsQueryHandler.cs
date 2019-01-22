@@ -23,7 +23,7 @@ namespace REALWorks.AssetServer.Queries
         {
 
             var property = _context.Property
-                //.Include(c => c.ManagementContract)
+                .Include(c => c.ManagementContract)
                 .Include(fe => fe.Feature)
                 .Include(fa => fa.Facility)
                 .Include(a => a.Address)
