@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using REALWorks.AssetData;
 
 namespace REALWorks.AssetData.Migrations
 {
     [DbContext(typeof(AppDataBaseContext))]
-    partial class AppDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20190121173736_new4")]
+    partial class new4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,31 +35,21 @@ namespace REALWorks.AssetData.Migrations
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<string>("ManagementContractDocUrl")
-                        .HasMaxLength(150);
+                    b.Property<string>("ManagementContractDocUrl");
 
-                    b.Property<string>("ManagementContractTitle")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<string>("ManagementContractTitile");
 
-                    b.Property<string>("ManagementFeeScale")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<string>("ManagementFeeScale");
 
                     b.Property<DateTime>("Modified");
 
                     b.Property<string>("Notes");
 
-                    b.Property<string>("PlacementFeeScale")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<string>("PlacementFeeScale");
 
                     b.Property<int>("PropertyId");
 
                     b.Property<DateTime>("StartDate");
-
-                    b.Property<string>("Type")
-                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -211,10 +203,10 @@ namespace REALWorks.AssetData.Migrations
 
             modelBuilder.Entity("REALWorks.AssetCore.Entities.ManagementContract", b =>
                 {
-                    b.HasOne("REALWorks.AssetCore.Entities.Property", "Property")
+                    b.HasOne("REALWorks.AssetCore.Entities.Property")
                         .WithMany("ManagementContract")
                         .HasForeignKey("PropertyId")
-                        .HasConstraintName("FK_ManagementContract_Property");
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("REALWorks.AssetCore.Entities.OwnerProperty", b =>

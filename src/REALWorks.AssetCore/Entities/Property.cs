@@ -3,6 +3,7 @@ using REALWorks.AssetCore.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static REALWorks.AssetCore.Entities.ManagementContract;
 
 namespace REALWorks.AssetCore.Entities
 {
@@ -70,6 +71,7 @@ namespace REALWorks.AssetCore.Entities
         //public ICollection<OwnerProperty> OwnerProperty { get; set; }
         public List<OwnerProperty> OwnerProperty { get; set; } = new List<OwnerProperty>();
         public ICollection<PropertyImg> PropertyImg { get; private set; }
+        public ICollection<ManagementContract> ManagementContract { get; set; }
 
 
 
@@ -207,6 +209,10 @@ namespace REALWorks.AssetCore.Entities
             
         }
 
+        public void PropertyStatus() // Configure isActive attribute
+        {
+            // TO DO
+        }
 
 
         public OwnerProperty AddExsitingOwner(PropertyOwner owner)
@@ -270,6 +276,20 @@ namespace REALWorks.AssetCore.Entities
             property.Modified = DateTime.Now;
 
             return property;
+        }
+
+
+        public ManagementContract AddManabgementContract(int propertyId, string title, ContractType type,
+            DateTime startDate, DateTime endDate, string placementFeeScale, string managementFeeScale, 
+            DateTime signDate, bool isActive, string notes)
+        {
+            var contract = new ManagementContract(title, type, startDate, endDate, placementFeeScale, managementFeeScale, 
+                signDate, propertyId, isActive, notes, DateTime.Now, DateTime.Now);
+
+            //contract.Created = DateTime.Now;
+            //contract.Modified = DateTime.Now;
+
+            return contract;
         }
     }
 }

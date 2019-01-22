@@ -27,6 +27,7 @@ namespace REALWorks.AssetData
         public virtual DbSet<PropertyAddress> PropertyAddress { get; set; }
         public virtual DbSet<PropertyImg> PropertyImg { get; set; }
         public virtual DbSet<PropertyOwner> PropertyOwner { get; set; }
+        public virtual DbSet<ManagementContract> ManagementContract { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -48,7 +49,34 @@ namespace REALWorks.AssetData
             modelBuilder.ApplyConfiguration(new PropertyConfig());
             modelBuilder.ApplyConfiguration(new OwnerConfig());
             modelBuilder.ApplyConfiguration(new OwnerPropertyConfig());
+            modelBuilder.ApplyConfiguration(new ManagementCaontactConfig());
 
+            //modelBuilder.Entity<ManagementContract>(entity =>
+            //{
+            //    entity.Property(e => e.ManagementContractDocUrl).HasMaxLength(150);
+
+
+
+            //    entity.Property(e => e.ManagementContractDocUrl).HasMaxLength(150);
+
+            //    entity.Property(e => e.ManagementContractTitle)
+            //        .IsRequired()
+            //        .HasMaxLength(50);
+
+            //    entity.Property(e => e.ManagementFeeScale)
+            //        .IsRequired()
+            //        .HasMaxLength(50);
+
+            //    entity.Property(e => e.PlacementFeeScale)
+            //        .IsRequired()
+            //        .HasMaxLength(50);
+
+            //    entity.HasOne(d => d.Property)
+            //        .WithMany(p => p.ManagementContract)
+            //        .HasForeignKey(d => d.PropertyId)
+            //        .OnDelete(DeleteBehavior.ClientSetNull)
+            //        .HasConstraintName("FK_ManagementContract_Property");
+            //});
 
             /*
             modelBuilder.Entity<Property>(entity =>

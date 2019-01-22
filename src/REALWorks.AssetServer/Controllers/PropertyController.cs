@@ -220,16 +220,31 @@ namespace REALWorks.AssetServer.Controllers
             return Ok();
         }
 
+        //[HttpPost]
+        //[Route("addContract")] 
+        //public async Task<IActionResult> AddManagementContract([FromBody] ManagementContractAddViewModel contract)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(400);
+        //    }
+
+        //    var ct = await _propertyService.AddManagementContract(contract);
+
+        //    return Ok(ct);
+        //}
+
+
         [HttpPost]
-        [Route("addContract")] 
-        public async Task<IActionResult> AddManagementContract([FromBody] ManagementContractAddViewModel contract)
+        [Route("addContract")]
+        public async Task<IActionResult> AddManagementContract([FromBody] AddManagementContractCommand command)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(400);
             }
 
-            var ct = await _propertyService.AddManagementContract(contract);
+            var ct = await _mediator.Send(command);
 
             return Ok(ct);
         }
@@ -417,5 +432,7 @@ namespace REALWorks.AssetServer.Controllers
 
             return Content("file uploaded successfully!");
         }
+
+
     }
 }

@@ -76,5 +76,17 @@ namespace REALWorks.AssetCore.Entities
 
             return owner;
         }
+
+        public void Deactivate() // Deactivate/soft delete owner
+        {
+            // TO DO
+
+        }
+
+        public void ConfigOnlineAccess() // Enable/disable online owner access
+        {
+            // TO DO
+
+        }
     }
 }
