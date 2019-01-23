@@ -33,6 +33,8 @@ namespace REALWorks.AssetCore.Entities
             //ManagementContractDocUrl = managementContractDocUrl;
             IsActive = isActive;
             Notes = notes;
+            Created = DateTime.Now;
+            Modified = DateTime.Now;
         }
 
         public string ManagementContractTitle { get; private set; }
@@ -59,6 +61,11 @@ namespace REALWorks.AssetCore.Entities
             ManagementFeeScale = managementFeeScale;
             Notes = notes;
             Modified = DateTime.Now;
+        }
+
+        public void SetStatus(bool status)
+        {
+            IsActive = status;
         }
     }
 }

@@ -159,11 +159,11 @@ namespace REALWorks.AssetCore.Entities
                 contactTelephone1, contactTelephone2, false, userAvartaImgUrl, true, 2, "", 
                 DateTime.Now, DateTime.Now);
 
-            var ownerProperty = new OwnerProperty();
+            var ownerProperty = new OwnerProperty(this, owner);
 
 
-            ownerProperty.Property = this;
-            ownerProperty.PropertyOwner = owner;
+            //ownerProperty.Property = this;
+            //ownerProperty.PropertyOwner = owner;
 
             owner.OwnerProperty.Add(ownerProperty);
 
@@ -220,14 +220,16 @@ namespace REALWorks.AssetCore.Entities
 
         public OwnerProperty AddExsitingOwner(PropertyOwner owner)
         {
-            var ownerProperty = new OwnerProperty();
+            //var ownerProperty = new OwnerProperty();
 
-            ownerProperty.Property = this;
-            ownerProperty.PropertyOwnerId = owner.Id;
+            var op = new OwnerProperty(this, owner.Id);
 
-            owner.OwnerProperty.Add(ownerProperty);
+            //ownerProperty.Property = this;
+            //ownerProperty.PropertyOwnerId = owner.Id;
 
-            return ownerProperty;
+            owner.OwnerProperty.Add(op);
+
+            return op; // ownerProperty;
 
         }
 
@@ -271,6 +273,11 @@ namespace REALWorks.AssetCore.Entities
             return ownerProperty;
         }
 
+        public void RemoveOwnerFromProperty()
+        {
+
+        }
+
         public PropertyImg AddImages(string propertyImgTitle, string propertyImgUrl, int propertyId)
         {
             var img = new PropertyImg(propertyImgTitle, propertyImgUrl, propertyId);
@@ -312,6 +319,11 @@ namespace REALWorks.AssetCore.Entities
             contract.Update(title, startDate, endDate, placementFeeScale, managementFeeScale, notes);
 
             return contract;
+        }
+
+        public void UpdateManagementContractStatus(ManagementContract contract, bool status)
+        {
+            contract.SetStatus(status);
         }
     }
 }

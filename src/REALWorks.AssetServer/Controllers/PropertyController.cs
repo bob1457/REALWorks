@@ -312,6 +312,20 @@ namespace REALWorks.AssetServer.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("owner/remove")]
+        public async Task<IActionResult> RemoveOwnerFromProperty(RemoveOwnerFromPropertyCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(400);
+            }
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
         #endregion
 
 
@@ -383,12 +397,7 @@ namespace REALWorks.AssetServer.Controllers
         [HttpGet]
         [Route("contract/{id}")]
         public async Task<IActionResult> GetContractDetails(int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(400);
-            }
-
+        {            
             var getContract = new ManagementContractQuery
             {
                 Id = id
@@ -399,7 +408,21 @@ namespace REALWorks.AssetServer.Controllers
             return Ok(ct);
         }
 
+        [HttpGet]
+        [Route("contracts/{id}")] // get all contracts for property, id:propertyId
+        public async Task<IActionResult> GetContractsByProoperty(int id)
+        {
+            var getContractList = new ManagementContractListQuery
+            {
+                Id = id
+            };
 
+            var list = await _mediator.Send(getContractList);
+
+            return Ok(list);
+
+            
+        }
 
         //[HttpPost]
         //[Route("updateStatus/id/statusId")]
