@@ -25,24 +25,23 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             if (numOfgOwners >= 2)
             {
-                var ownerToRemove =await _context.OwnerProperty.FirstAsync(o => o.PropertyOwnerId == request.PropertyOwnerId);
+                var ownerToRemove = await _context.OwnerProperty.FirstAsync(o => o.PropertyOwnerId == request.PropertyOwnerId);
 
                 _context.OwnerProperty.Remove(ownerToRemove);
-                
-            }
 
-            try
-            {
-                await _context.SaveChangesAsync();
+                 try
+                {
+                    await _context.SaveChangesAsync();
 
-                return "Onwer has been removed from the property";
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                    return "Onwer has been removed from the property";
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }           
 
-            //return "Onwer cannot be removed from the property";
+            return "Onwer cannot be removed from the property";
 
             //throw new NotImplementedException();
         }
