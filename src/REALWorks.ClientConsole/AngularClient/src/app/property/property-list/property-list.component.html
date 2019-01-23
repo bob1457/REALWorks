@@ -1,0 +1,38 @@
+<!--<p>
+  property-list works!
+</p>-->
+
+<mat-grid-list [cols]="breakpoint" rowHeight="100px"  (window:resize)="onResize($event)"> <!-- [style.background]="'lightblue'" -->
+  <mat-grid-tile>
+    <mat-card class="list-card">
+      <mat-card-header style ="margin: 0;margin-top: -15px; margin-left: -15px;">
+        <mat-card-title>
+          <span >#129573</span>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content  class="list-card-content">
+        <div>Description of the property</div>
+    </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card class="list-card">
+      <mat-card-header style ="margin: 0;margin-top: -15px; margin-left: -15px;">
+        <mat-card-title>
+          <span >#129573</span>
+        </mat-card-title>
+      </mat-card-header>
+      <img mat-card-image src="http://placehold.it/150x100" alt="Photo of a Shiba Inu">
+      <mat-card-content  class="list-card-content">
+        
+    </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile>Three</mat-grid-tile>
+  <mat-grid-tile>Four</mat-grid-tile>
+  <mat-grid-tile>Five</mat-grid-tile>
+  <mat-grid-tile>Six</mat-grid-tile>
+  <mat-grid-tile>Seven</mat-grid-tile>
+  <mat-grid-tile>Eight</mat-grid-tile>
+  <mat-grid-tile>Nine</mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,90 @@
+<section class="material-half-bg">
+  <div class="cover"></div>
+</section>
+<!--<section class="login-content">
+  <div class="logo" style="margin-top: 45px; margin-bottom: 30px;">
+    
+    <img src="../../../assets/images/R.png" width="59" height="50" >
+  </div>
+  <div class="login-box" style="background: #61615f;">
+    <div style="width: 280px; margin-left: auto; margin-right: auto;">
+      <div class="login-header">
+        <div class="login-title" >
+           <h3> <i class="fas fa-arrow-circle-right" style="vertical-align: bottom; color:orangered;"></i>&nbsp; LOGIN</h3>
+        </div>
+      </div>
+      <form style="margin-bottom: -35px;" #loginForm="ngForm" (ngSubmit)="OnSubmit(UserName.value,Password.value)" >
+        <mat-form-field style="width: 100%;" class="form-field">
+          <input style="color: white;" #UserName ngModel name="UserName" matInput placeholder="Username">
+        </mat-form-field>
+        <mat-form-field style="width: 100%;margin-top: 0;margin-bottom: 20px;" class="form-field">
+            <input style="color: white;" #Password ngModel name="Password" matInput type="password" placeholder="Password">
+          </mat-form-field>
+
+        <mat-checkbox style="color:yellow; font-size: .85em;">Remember me!</mat-checkbox>
+        <div class="button-row" style="float: right;margin-top: 15px;">
+            <button mat-raised-button color="accent" style="width: 280px; background-color: #bdbbb3;" flex><i class="material-icons" style="font-weight:bold;">check</i> LOGIN &nbsp; </button>
+        </div>
+
+      </form>
+      <span style=""><ng4-loading-spinner> </ng4-loading-spinner></span>
+      <div class="login-footer" style="background: #9e9e9e; position: relative;bottom: -120px">
+          <div class="login-title" >
+            <div><h4 class="login-bottom-text" style="margin-bottom: 0;">Social Media Login</h4></div>
+             <h3> <i class="fab fa-facebook-square" style="vertical-align: top;margin-top: -55px; color: #353535;"></i> </h3>
+          </div>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+-->
+<section class="loginbox">
+  <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="15px" style="margin-top: 30px; margin-bottom: 55px;">
+  <div fxFlex="20%"></div>
+  <div class="" fxFlex="40%" style="margin-top: 30px;">
+    <mat-card class="signup-card" style="margin-left: 10px;margin-right: 10px;">
+      <mat-card-header>
+        <div mat-card-avatar class="signup-header-image">
+            <img src="../../../assets/images/login.png">
+        </div>
+        <mat-card-title style="margin-left: 25px;">Account Login</mat-card-title>
+        <mat-card-subtitle style="margin-left: 25px;">Login to your account</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="signup-form">
+        <mat-form-field class="signup-full-width">
+            <input type="text" matInput placeholder="Your username" #UserName ngModel name="username" #emailInput="ngModel" required autofocus>
+            <!--email-->
+            <mat-hint>Enter your username</mat-hint>
+            <!--<mat-hint>Use your email to login</mat-hint>
+            <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>-->
+
+        </mat-form-field>
+
+        <mat-form-field class="signup-full-width">
+            <input type="password" matInput placeholder="Your password" #Password ngModel name="password" required>
+
+        </mat-form-field>
+
+
+        <button [disabled]="loading" type="submit" mat-raised-button color="primary" [disabled]="loginForm.invalid">LOGIN</button>
+        <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+    </form>
+    <div *ngIf="errMsg" class="err">
+        {{errMsg}}
+    </div>
+    <div>
+        <a style="cursor:pointer" (click)="openDialog()">Forgot password?</a>
+    </div>
+    <div *ngIf="email" style="text-align:center; color:blue; margin-top: 20px;">
+        An email has been sent to: {{email}}!
+    </div>
+    </mat-card-content>
+    </mat-card>
+    </div>
+    <div fxFlex="20%"></div>
+  </div>
+</section>
