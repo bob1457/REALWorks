@@ -22,21 +22,28 @@ namespace REALWorks.AssetServer.CommandHandlers
         {
             var image = _context.PropertyImg.FirstOrDefault(i => i.Id == request.Id);
 
+            int start = image.PropertyImgUrl.LastIndexOf("/");
+
+            string fileName = image.PropertyImgUrl.Substring(start + 1);
+
             _context.PropertyImg.Remove(image);
 
             try
             {
                 await _context.SaveChangesAsync();
-
-                // Remove the image file from file system
-
-
-                return true;
+               
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+
+            // Remove the image file from file system
+
+            string fileToBeDeleted = 
+                
+            return true;
+
 
             //throw new NotImplementedException();
         }
