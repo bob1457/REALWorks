@@ -249,6 +249,15 @@ namespace REALWorks.AssetServer.Controllers
             return Content("file uploaded successfully!");
         }
 
+        [HttpPost]
+        [Route("img/delete")]
+        public async Task<IActionResult> DeleteImage([FromBody] DeleteImageFromPropertyCommand command)
+        {
+            await _mediator.Send(command);
+
+            return Ok();
+        }
+
         #endregion
 
 

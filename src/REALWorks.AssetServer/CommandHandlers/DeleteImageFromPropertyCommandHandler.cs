@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
 using System;
@@ -12,14 +13,18 @@ namespace REALWorks.AssetServer.CommandHandlers
     public class DeleteImageFromPropertyCommandHandler : IRequestHandler<DeleteImageFromPropertyCommand, bool>
     {
         private readonly AppDataBaseContext _context; // Inject db context for persisitence
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public DeleteImageFromPropertyCommandHandler(AppDataBaseContext context)
+        public DeleteImageFromPropertyCommandHandler(AppDataBaseContext context, IHostingEnvironment hostingEnvironment )
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public async Task<bool> Handle(DeleteImageFromPropertyCommand request, CancellationToken cancellationToken)
         {
+            string filePath = _hostingEnvironment.WebRootPath + "\\images";
+
             var image = _context.PropertyImg.FirstOrDefault(i => i.Id == request.Id);
 
             int start = image.PropertyImgUrl.LastIndexOf("/");
@@ -38,10 +43,12 @@ namespace REALWorks.AssetServer.CommandHandlers
                 throw ex;
             }
 
-            // Remove the image file from file system
+             //Remove the image file from file system
 
-            string fileToBeDeleted = 
-                
+            string fileToBeDeleted = filePath + "\\" + fileName;
+
+            System.IO.File.Delete(fileToBeDeleted);
+                 
             return true;
 
 
