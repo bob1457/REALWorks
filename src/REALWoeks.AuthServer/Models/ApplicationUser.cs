@@ -13,8 +13,8 @@ namespace REALWorks.AuthServer.Models
         public string UserRole { get; set; }
         public int CustomId { get; set; }
         public string AvatarImgUrl { get; set; }       
-        public string Telepone1 { get; set; }
-        public string Telepone2 { get; set; }
+        public string Telephone1 { get; set; }
+        public string Telephone2 { get; set; }
         public string SocialMediaContact1 { get; set; }
         public string SocialMediaContact2 { get; set; }
         public DateTime JoinDate { get; set; }

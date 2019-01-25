@@ -47,8 +47,24 @@ namespace REALWorks.AuthServer.Controllers
 
         [HttpPost]
         [Route("update")]
-        public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserProfileCommand command)
+        public async Task<IActionResult> UpdateUserProfile([FromForm] UpdateUserProfileCommand command)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var f = Request.Form.Files;
+
+            if (f.Count > 0)
+            {
+                command.AvatarImage = f[0];
+            }
+                        
+
+            //if (command.AvatarImage == null || command.AvatarImage.Length == 0)
+            //    return Content("file not selected");
+
             var result = await _mediator.Send(command);
 
             return Ok(result);
