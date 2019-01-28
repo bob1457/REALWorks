@@ -299,6 +299,13 @@ namespace REALWorks.AssetCore.Entities
             return property;
         }
 
+        public Property AsssignPropertyManager(Property property, string pmUserName)
+        {
+            property.PropertyManagerUserName = pmUserName;
+
+            return property;
+        }
+
 
         public ManagementContract AddManabgementContract(int propertyId, string title, ContractType type,
             DateTime startDate, DateTime endDate, string placementFeeScale, string managementFeeScale, 

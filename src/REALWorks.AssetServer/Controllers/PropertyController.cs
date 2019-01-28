@@ -228,6 +228,22 @@ namespace REALWorks.AssetServer.Controllers
             return Ok(result);
         }
 
+
+        [HttpPost]
+        [Route("pm/assign")]
+        public async Task<IActionResult> AssignPmToProperty([FromBody] AssignPMtoPropertyCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+
+        }
+
         [HttpPost]
         [Route("img/add")]
         public async Task<IActionResult> AddImage([FromForm] AddImageToPropertyCommand command)
