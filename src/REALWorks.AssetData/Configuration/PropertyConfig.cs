@@ -12,10 +12,6 @@ namespace REALWorks.AssetData.Configuration
     {
         public void Configure(EntityTypeBuilder<Property> entity)
         {
-            //throw new NotImplementedException();
-
-            //entity.Property(e => e.FurnishingId).HasDefaultValueSql("((0))");
-
             entity.Property(e => e.IsActive)
                 .IsRequired()
                 .HasDefaultValueSql("((1))");
@@ -34,7 +30,6 @@ namespace REALWorks.AssetData.Configuration
 
             entity.Property(e => e.StrataCouncilId).HasDefaultValueSql("((0))");
             
-            // Value conversion for Enum type
             entity.Property(e => e.Type) 
                 .HasConversion(
                     v => v.ToString(),

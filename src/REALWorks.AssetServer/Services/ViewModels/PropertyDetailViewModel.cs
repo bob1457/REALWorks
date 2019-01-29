@@ -1,8 +1,6 @@
-﻿using REALWorks.AssetServer.Models;
+﻿using REALWorks.AssetCore.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace REALWorks.AssetServer.Services.ViewModels
 {
@@ -39,17 +37,6 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public string GpslongitudeValue { get; set; }
         public string GpslatitudeValue { get; set; }
 
-        //public string FirstName { get; set; }
-        //public string LastName { get; set; }
-        //public string ContactEmail { get; set; }
-        //public string ContactTelephone1 { get; set; }
-        //public string ContactTelephone2 { get; set; }
-        //public bool OnlineAccessEnbaled { get; set; }
-        //public string UserAvartaImgUrl { get; set; }
-        //public bool? OwnerIsActive { get; set; }        
-        //public DateTime OwnerCreationDate { get; set; }
-        //public DateTime OwnerUpdateDate { get; set; }
-
         /// <summary>
         /// Features
         /// </summary>
@@ -59,7 +46,6 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public int NumberOfParking { get; set; }
         public bool BasementAvailable { get; set; }
         public int TotalLivingArea { get; set; }
-        //public bool IsShared { get; set; }
         public string FeatureNotes { get; set; }
 
         /// <summary>
@@ -84,7 +70,6 @@ namespace REALWorks.AssetServer.Services.ViewModels
         /// Owners
         /// </summary>
         public ICollection<PropertyOwner> OwnerList { get; set; }
-        //public ICollection<OwnerProperty> OP { get; set; }
         public ICollection<OwnerProperty> OwnerProperty { get; set; }
         public ICollection<ManagementContract> CotnractList { get; set; }
 

@@ -7,7 +7,7 @@ namespace REALWorks.AssetCore.Entities
 {
     public class PropertyImg: Entity
     {
-        private PropertyImg() { } // Required by EF Core
+        private PropertyImg() { }     
 
         public PropertyImg(string propertyImgTitle, string propertyImgUrl, int propertyId)
         {

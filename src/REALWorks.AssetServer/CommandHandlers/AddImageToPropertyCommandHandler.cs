@@ -22,8 +22,6 @@ namespace REALWorks.AssetServer.CommandHandlers
 
         public async Task<bool> Handle(AddImageToPropertyCommand request, CancellationToken cancellationToken)
         {
-            //var image = new PropertyImg(request.PropertyImgTitle, request.PropertyImgUrl, request.PropertyId);
-
             var file = request.PropertyImage;
 
             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
@@ -65,7 +63,6 @@ namespace REALWorks.AssetServer.CommandHandlers
             return true;
 
 
-            //throw new NotImplementedException();
         }
     }
 }

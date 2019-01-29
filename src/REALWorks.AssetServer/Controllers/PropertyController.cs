@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using REALWorks.AssetServer.Commands;
-using REALWorks.AssetServer.Infrastructure;
-using REALWorks.AssetServer.Models;
 using REALWorks.AssetServer.Queries;
-//using REALWorks.AssetServer.Models;
-using REALWorks.AssetServer.Services;
-using REALWorks.AssetServer.Services.ViewModels;
+
 
 namespace REALWorks.AssetServer.Controllers
 {
@@ -21,31 +12,12 @@ namespace REALWorks.AssetServer.Controllers
     [ApiController]
     public class PropertyController : ControllerBase
     {
-        private readonly IPropertyService _propertyService;
-        //private readonly IImageHandler _imageHandler;
         private readonly IMediator _mediator;
 
-        public PropertyController(IPropertyService propertyServic, IMediator mediator)
+        public PropertyController(  IMediator mediator)
         {
-            _propertyService = propertyServic;
-            //_imageHandler = imageHandler;
-            _mediator = mediator;
+           _mediator = mediator;
         }
-
-        //[HttpPost]
-        //[Route("add")]
-        //public async Task<IActionResult> AddProperty([FromBody] PropertyAddViewModel property)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(400);
-        //    }
-
-        //    var ppt = await _propertyService.AddProperty(property);
-
-        //    return Ok(ppt);
-
-        //}
 
 
         #region Properties Management
@@ -72,8 +44,6 @@ namespace REALWorks.AssetServer.Controllers
         {
             try
             {
-                //var properties = await _propertyService.GetAllProperty();
-
                 var properties = await _mediator.Send(new PropertyListQuery());
 
                 if (properties == null)
@@ -85,65 +55,14 @@ namespace REALWorks.AssetServer.Controllers
             }
             catch (Exception ex)
             {
-                throw ex; // For testing
-                //return BadRequest(); // For production
+                throw ex;   
+                
             }
-        }
-/*
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<ActionResult<PropertyDetailViewModel>> GetPropertyById(int id)
-        {
-            var options = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            };
-
-            try
-              {
-                PropertyDetailViewModel property = await _propertyService.GetPropertyById(id);
-                if (property == null)
-                {
-                    return NotFound();
-                }
-
-                return new OkObjectResult(property); //  Ok(property);  //await _propertyService.GetPropertyById(id);
-                //return Json(property, options);
-
-            }
-            catch (Exception ex) {
-                    throw ex;
-                }
-
         }
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<AssetCore.Entities.Property>> GetPropertyAndOnwers(int id) //id: property id
-        {            
-            try
-            {
-                AssetCore.Entities.Property property = await _propertyService.GetPropertyAndOwner(id);
-                if (property == null)
-                {
-                    return NotFound();
-                }
-
-                return new OkObjectResult(property); //  Ok(property);  //await _propertyService.GetPropertyById(id);
-                //return Json(property, options);
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-        }
-*/
-/**/
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<ActionResult<AssetCore.Entities.Property>> GetPropertyDetails(int id) //id: property id -- use MediatR
+        public async Task<ActionResult<AssetCore.Entities.Property>> GetPropertyDetails(int id)      
         {
             var getProperty = new PropertyDetailsQuery
             {
@@ -152,16 +71,14 @@ namespace REALWorks.AssetServer.Controllers
 
             try
             {
-                var property = await _mediator.Send(getProperty); //_propertyService.GetPropertyAndOwner(id);
+                var property = await _mediator.Send(getProperty); 
 
                 if (property == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(property);  //await _propertyService.GetPropertyById(id);new OkObjectResult(property); 
-                //return Json(property, options);
-
+                return Ok(property);     
             }
             catch (Exception ex)
             {
@@ -170,26 +87,6 @@ namespace REALWorks.AssetServer.Controllers
 
         }
 
-        //[HttpGet]
-        //[Route("owners/{id}")]
-        //public async Task<IActionResult> GetOwnersByProperty(int id)
-        //{
-        //    try
-        //    {
-        //        var owners = await _propertyService.GetOwnerListByProperty(id);
-
-        //        if (owners == null)
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        return Ok(owners);
-
-        //    } catch(Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
 
         [HttpPost]
         [Route("remove")]
@@ -202,7 +99,7 @@ namespace REALWorks.AssetServer.Controllers
 
         [HttpPost]
         [Route("status/state")]
-        public async Task<IActionResult> UpdatePropertyStatus(UpdatePropertyStatusCommand command) // Update property rental status
+        public async Task<IActionResult> UpdatePropertyStatus(UpdatePropertyStatusCommand command)     
         {
             if (!ModelState.IsValid)
             {
@@ -277,21 +174,6 @@ namespace REALWorks.AssetServer.Controllers
         #endregion
 
 
-
-        //[HttpPost]
-        //[Route("addOwner")] 
-        //public async Task<IActionResult> AddPropertyOwner([FromBody] OwnerAddViewModel owner)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(400);
-        //    }
-
-        //    await _propertyService.AddOwnerToProperty(owner);
-
-        //    return Ok();
-        //}
-
         #region Property Owner Management
 
         [HttpPost]
@@ -307,20 +189,6 @@ namespace REALWorks.AssetServer.Controllers
 
             return Ok();
         }
-
-        //[HttpPost]
-        //[Route("addContract")] 
-        //public async Task<IActionResult> AddManagementContract([FromBody] ManagementContractAddViewModel contract)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(400);
-        //    }
-
-        //    var ct = await _propertyService.AddManagementContract(contract);
-
-        //    return Ok(ct);
-        //}
 
 
         [HttpPost]
@@ -368,22 +236,7 @@ namespace REALWorks.AssetServer.Controllers
 
             return Ok(ct);
         }
-
-
-        //[HttpPost]
-        //[Route("updateContract")]
-        //public async Task<IActionResult> UpdateManagementContract([FromBody] UpdateManagementContractCommand command)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(400);
-        //    }
-
-        //    var ct = await _mediator.Send(command);
-
-        //    return Ok(ct);
-        //}
-
+        
 
         [HttpPost]
         [Route("contract/update")]
@@ -404,21 +257,7 @@ namespace REALWorks.AssetServer.Controllers
             return Ok(ct);
         }
 
-
-        //[HttpGet]
-        //[Route("contract/{id}")]
-        //public async Task<IActionResult> GetContractDetails(int id)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(400);
-        //    }
-
-        //    var ct = await _propertyService.GetFullContract(id);
-
-        //    return Ok(ct);
-        //}
-
+        
         [HttpGet]
         [Route("contract/{id}")]
         public async Task<IActionResult> GetContractDetails(int id)
@@ -434,7 +273,7 @@ namespace REALWorks.AssetServer.Controllers
         }
 
         [HttpGet]
-        [Route("contracts/{id}")] // get all contracts for property, id:propertyId
+        [Route("contracts/{id}")]       
         public async Task<IActionResult> GetContractsByProoperty(int id)
         {
             var getContractList = new ManagementContractListQuery
@@ -448,120 +287,6 @@ namespace REALWorks.AssetServer.Controllers
 
             
         }
-
-        //[HttpPost]
-        //[Route("updateStatus/id/statusId")]
-        //public async Task<IActionResult> UpdateRentalStatus(int id, int statusId)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(400);
-        //    }
-
-        //    var status = await _propertyService.UpdateRentalStatus(id, statusId);
-
-        //    return Ok(status);
-        //}
-
-        //[HttpPost]
-        //[Route("status/state")]
-        //public async Task<IActionResult> UpdatePropertyStatus(int id, bool status)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(400);
-        //    }
-
-        //    var state = await _propertyService.UpdateProeprtyStatus(id, status);
-
-        //    return Ok(state);
-        //}
-
-
-
-
-
-
-        //[HttpPost]
-        //[Route("update")]
-        //public async Task<IActionResult> UpdateProperty(PropertyUpdateViewModel property)
-        //{
-
-        //    await _propertyService.UpdateProperty(property);
-
-        //    return Ok();
-        //}
-
-
-
-
-        //[HttpPost]
-        //[Route("owner/update")]
-        //public async Task<IActionResult> UpdateOwner(PropertyOwner owner)
-        //{
-        //    await _propertyService.UpdatePropertyOwner(owner);
-
-        //    return Ok(owner);
-        //}
-
-
-
-        //[HttpPost]
-        //[Route("contract/update")]
-        //public async Task<IActionResult> UpdateContract(ManagementContract contract)
-        //{
-        //    await _propertyService.UpdateContract(contract);
-
-        //    return Ok(contract);
-        //}
-
-
-        //[HttpPost]
-        //[Route("img/upload")]
-        //public async Task<IActionResult> UploadImage(/**/[FromForm]PropertyImg image, [FromForm]IFormFile file)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-        //    //using(var memoryStream = new MemoryStream())
-        //    //{
-        //    //    await image.PropertyImage.CopyToAsync(memoryStream);
-        //    //}
-
-        //    //var file = image.PropertyImage;
-
-        //    if (file == null || file.Length == 0)
-        //        return Content("file not selected");
-
-        //    //string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
-        //    //using (var fs = new FileStream(Path.Combine(path, file.FileName), FileMode.Create))
-        //    //{
-        //    //    await file.CopyToAsync(fs);
-
-        //    //    // Add image path to DB
-
-
-        //    //    //{
-        //    //    //    var imgUpload = new PropertyImg()
-        //    //    //    {
-        //    //    //        PropertyImgTitle = image.PropertyImgTitle,
-        //    //    //        PropertyImgCaption = "images/" + file.FileName, // This field used as the image URL                    
-        //    //    //        PropertyId = image.PropertyId, // "62541",
-        //    //    //        CreatedOn = DateTime.Now
-        //    //    //    };
-        //    //    //    //Url = "~/Contents/" + file.FileName, // Path.Combine(path, file.FileName),
-
-        //    //    //};
-        //    //}
-        //    var filename = await _propertyService.AddImage(file, image);
-
-        //    return Content(filename +" uploaded");
-        //}
-
-
-
 
     }
 }

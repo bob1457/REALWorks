@@ -12,7 +12,7 @@ namespace REALWorks.AssetServer.CommandHandlers
 {
     public class RemoveOwnerFromPropertyCommandHandler : IRequestHandler<RemoveOwnerFromPropertyCommand, string>
     {
-        private readonly AppDataBaseContext _context; // Inject db context for persisitence
+        private readonly AppDataBaseContext _context;      
 
         public RemoveOwnerFromPropertyCommandHandler(AppDataBaseContext context)
         {
@@ -21,7 +21,7 @@ namespace REALWorks.AssetServer.CommandHandlers
 
         public async Task<string> Handle(RemoveOwnerFromPropertyCommand request, CancellationToken cancellationToken)
         {
-            var numOfgOwners = _context.OwnerProperty.Where(p => p.PropertyId == request.PropertyId).Count();   // PropertyOwner.Include(op => op.OwnerProperty).FirstOrDefault(p => p.Id ==  request.PropertyId);
+            var numOfgOwners = _context.OwnerProperty.Where(p => p.PropertyId == request.PropertyId).Count();           
 
             if (numOfgOwners >= 2)
             {
@@ -43,7 +43,6 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             return "Onwer cannot be removed from the property";
 
-            //throw new NotImplementedException();
         }
     }
 }

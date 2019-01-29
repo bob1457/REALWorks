@@ -37,7 +37,6 @@ namespace REALWorks.AssetServer.CommandHandlers
             return true;
 
 
-            //throw new NotImplementedException();
         }
     }
 }

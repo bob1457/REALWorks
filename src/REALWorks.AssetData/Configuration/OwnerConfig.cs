@@ -11,8 +11,6 @@ namespace REALWorks.AssetData.Configuration
     {
         public void Configure(EntityTypeBuilder<PropertyOwner> entity)
         {
-            //throw new NotImplementedException();
-
             entity.Property(e => e.ContactEmail)
                     .IsRequired()
                     .HasMaxLength(100);

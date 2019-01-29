@@ -10,12 +10,8 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public int PropertyId { get; set; }
         public string PropertyName { get; set; }        
         public string PropertyLogoImgUrl { get; set; }
-        //public string PropertyVideoUrl { get; set; }
-        //public int PropertyId { get; set; }
         public bool? IsActive { get; set; }
         public bool IsShared { get; set; }
-        //public int? FurnishingId { get; set; }
-        //public int RentalStatusId { get; set; }
         public bool IsBasementSuite { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdateDate { get; set; }

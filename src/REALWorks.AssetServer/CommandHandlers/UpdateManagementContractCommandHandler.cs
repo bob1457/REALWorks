@@ -22,7 +22,7 @@ namespace REALWorks.AssetServer.CommandHandlers
         public async Task<bool> Handle(UpdateManagementContractCommand request, CancellationToken cancellationToken)
         {
 
-            var contract = _context.ManagementContract.Include(p => p.Property).FirstOrDefault(c => c.Id == request.ManagementContractId); //get the record to be updated
+            var contract = _context.ManagementContract.Include(p => p.Property).FirstOrDefault(c => c.Id == request.ManagementContractId);      
 
             var newContract = contract.Property.UpdateContract(contract, request.ManagementContractTitle, request.StartDate, request.EndDate, 
                 request.PlacementFeeScale, request.ManagementContractTitle, request.Notes);
@@ -41,7 +41,6 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             return true;
 
-            //throw new NotImplementedException();
         }
     }
 }

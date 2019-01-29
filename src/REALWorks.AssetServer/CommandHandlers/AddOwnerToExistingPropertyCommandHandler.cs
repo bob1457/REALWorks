@@ -50,9 +50,6 @@ namespace REALWorks.AssetServer.CommandHandlers
                 throw ex;
             }
 
-            //return true;
-
-            //throw new NotImplementedException();
         }
 
 

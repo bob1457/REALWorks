@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using AutoMapper;
 using DinkToPdf;
 using DinkToPdf.Contracts;
@@ -10,18 +6,12 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using REALWorks.AssetData;
-using REALWorks.AssetServer.Data;
 using REALWorks.AssetServer.Infrastructure;
-using REALWorks.AssetServer.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace REALWorks.AssetServer
@@ -35,18 +25,13 @@ namespace REALWorks.AssetServer
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<REALAssetContext>(options =>
-                                                                options.UseSqlServer(Configuration.GetConnectionString("AppDbConnection")));
-
             string dbConnectionString = Configuration.GetConnectionString("AppDbConnection3");
 
             services.AddDbContext<AppDataBaseContext>(options =>
-                     options.UseSqlServer(dbConnectionString, builder => builder.MigrationsAssembly("REALWorks.AssetData"))); // Specify the migration assembly (project name)
+                     options.UseSqlServer(dbConnectionString, builder => builder.MigrationsAssembly("REALWorks.AssetData")));       
 
-            // For token validation: make sure the Issuer, Audience and SigningKey match those of the AuthServer or validation will fail!!
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddCookie()
             .AddJwtBearer(jwtBearerOptions =>
@@ -64,7 +49,6 @@ namespace REALWorks.AssetServer
             });
 
 
-            // Swagger configuration
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info
@@ -77,8 +61,6 @@ namespace REALWorks.AssetServer
                 });
             });
 
-            // CORS
-            // Add service and create Policy with options 
             services.AddCors(options => {
                 options.AddPolicy("CorsPolicy",
                   b => b.AllowAnyOrigin()
@@ -89,19 +71,16 @@ namespace REALWorks.AssetServer
 
             services.AddMediatR(typeof(Startup));
 
-            // DI Implementation
-            services.AddTransient<IPropertyService, PropertyService>();
             services.AddTransient<IImageHandler, ImageHandler>();
             services.AddTransient<IImageWriter, ImageWriter>();
 
             services.AddAutoMapper();
             services.AddMvc()
-                .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); //.SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddXmlSerializerFormatters();
+                .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); 
 
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

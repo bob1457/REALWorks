@@ -8,7 +8,7 @@ namespace REALWorks.AssetCore.ValueObjects
 {
     public class PropertyAddress: ValueObject
     {
-        private PropertyAddress() { } // Required by EF Core
+        private PropertyAddress() { }     
 
         public PropertyAddress(string propertySuiteNumber, 
             string propertyNumber, 
@@ -16,8 +16,7 @@ namespace REALWorks.AssetCore.ValueObjects
             string propertyCity, 
             string propertyStateProvince, 
             string propertyCountry, 
-            string propertyZipPostCode//, 
-            //Property property
+            string propertyZipPostCode 
             )
         {
             PropertySuiteNumber = propertySuiteNumber;
@@ -27,7 +26,6 @@ namespace REALWorks.AssetCore.ValueObjects
             PropertyStateProvince = propertyStateProvince;
             PropertyCountry = propertyCountry;
             PropertyZipPostCode = propertyZipPostCode;
-            //PropertyId = property.Id;
         }
 
 
@@ -54,6 +52,5 @@ namespace REALWorks.AssetCore.ValueObjects
         /// <summary>
         /// Relations - Navigation
         /// </summary>
-        //public ICollection<Property> Property { get; set; }
     }
 }

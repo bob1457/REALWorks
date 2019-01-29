@@ -12,7 +12,7 @@ namespace REALWorks.AssetServer.CommandHandlers
 {
     public class DeleteImageFromPropertyCommandHandler : IRequestHandler<DeleteImageFromPropertyCommand, bool>
     {
-        private readonly AppDataBaseContext _context; // Inject db context for persisitence
+        private readonly AppDataBaseContext _context;      
         private readonly IHostingEnvironment _hostingEnvironment;
 
         public DeleteImageFromPropertyCommandHandler(AppDataBaseContext context, IHostingEnvironment hostingEnvironment )
@@ -43,8 +43,6 @@ namespace REALWorks.AssetServer.CommandHandlers
                 throw ex;
             }
 
-             //Remove the image file from file system
-
             string fileToBeDeleted = filePath + "\\" + fileName;
 
             System.IO.File.Delete(fileToBeDeleted);
@@ -52,7 +50,6 @@ namespace REALWorks.AssetServer.CommandHandlers
             return true;
 
 
-            //throw new NotImplementedException();
         }
     }
 }

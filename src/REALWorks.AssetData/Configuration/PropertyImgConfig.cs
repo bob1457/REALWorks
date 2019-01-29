@@ -11,8 +11,6 @@ namespace REALWorks.AssetData.Configuration
     {
         public void Configure(EntityTypeBuilder<PropertyImg> entity)
         {
-            //throw new NotImplementedException();
-
             entity.Property(e => e.PropertyImgUrl).HasMaxLength(350);
 
             entity.Property(e => e.PropertyImgTitle)

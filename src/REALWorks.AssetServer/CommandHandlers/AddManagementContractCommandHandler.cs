@@ -25,7 +25,6 @@ namespace REALWorks.AssetServer.CommandHandlers
             if(request.ManagementContractType.ToString() == "Renewal")
             {
                 var existingContract = _context.ManagementContract.FirstOrDefault(a => a.IsActive == true);
-                //disable the exisitng contract
                 property.UpdateManagementContractStatus(existingContract, false);
             }
 
@@ -47,7 +46,6 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             return true;
 
-            //throw new NotImplementedException();
         }
     }
 }

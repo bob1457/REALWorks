@@ -22,7 +22,6 @@ namespace REALWorks.AssetServer.CommandHandlers
 
         public async Task<bool> Handle(UpdatePropertyCommand request, CancellationToken cancellationToken)
         {
-            //Get the property to be updated
             var ppt = _context.Property.FirstOrDefault(p => p.Id == request.PropertyId);
 
 
@@ -44,17 +43,11 @@ namespace REALWorks.AssetServer.CommandHandlers
 
 
 
-            //var property = new Property(request.PropertyName, request.PropertyDesc, request.Type,
-            //    request.PropertyBuildYear, request.IsActive, request.IsShared, request.Status,
-            //    request.BasementAvailable, DateTime.Now, DateTime.Now, address, facility, feature);
-
             var updated = ppt.Update(ppt, request.PropertyName, request.PropertyDesc, request.Type, request.PropertyBuildYear,
-                request.IsActive, request.IsShared, request.Status, request.BasementAvailable, /*request.CreatedDate, */DateTime.Now,
+                request.IsActive, request.IsShared, request.Status, request.BasementAvailable,  DateTime.Now,
                 address, facility, feature);
 
             _context.Property.Update(updated);           
-            //_context.PropertyAddress.Update(address);
-
 
             try
             {
@@ -66,7 +59,6 @@ namespace REALWorks.AssetServer.CommandHandlers
             }
 
             return true;
-            //throw new NotImplementedException();
         }
     }
 }

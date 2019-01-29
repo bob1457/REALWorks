@@ -19,7 +19,7 @@ namespace REALWorks.AssetCore.Entities
 
         public ManagementContract(string managementContractTitle, ContractType contractType, DateTime startDate, 
             DateTime endDate, string placementFeeScale, string managementFeeScale, 
-            DateTime contractSignDate, int propertyId, /*string managementContractDocUrl,*/ 
+            DateTime contractSignDate, int propertyId,   
             bool isActive, string notes, DateTime created, DateTime updated)
         {
             ManagementContractTitle = managementContractTitle;
@@ -30,7 +30,6 @@ namespace REALWorks.AssetCore.Entities
             ManagementFeeScale = managementFeeScale;
             ContractSignDate = contractSignDate;
             PropertyId = propertyId;
-            //ManagementContractDocUrl = managementContractDocUrl;
             IsActive = isActive;
             Notes = notes;
             Created = DateTime.Now;

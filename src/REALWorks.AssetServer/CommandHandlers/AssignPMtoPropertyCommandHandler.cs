@@ -35,7 +35,6 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             return "Property manager assigned!";
 
-            //throw new NotImplementedException();
         }
     }
 }
