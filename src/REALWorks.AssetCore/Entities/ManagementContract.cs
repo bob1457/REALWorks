@@ -62,9 +62,11 @@ namespace REALWorks.AssetCore.Entities
             Modified = DateTime.Now;
         }
 
-        public void SetStatus(bool status)
+        public ManagementContract SetStatus(ManagementContract contract, bool status)
         {
-            IsActive = status;
+             contract.IsActive = status;
+
+            return contract;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace REALWorks.AssetServer.CommandHandlers
 {
     public class CreatePropertyCommandHandler : IRequestHandler<CreatePropertyCommand, bool>
     {
-        private readonly AppDataBaseContext _context; // Inject db context for persisitence
+        private readonly AppDataBaseContext _context;      
 
         public CreatePropertyCommandHandler(AppDataBaseContext context)
         {
@@ -22,9 +22,6 @@ namespace REALWorks.AssetServer.CommandHandlers
 
         public async Task<bool> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
         {
-            //object pOwner;
-            //object ownerProperty;
-
             var address = new PropertyAddress(request.PropertySuiteNumber, 
                 request.PropertyNumber, request.PropertyStreet, 
                 request.PropertyCity, request.PropertyStateProvince, request.PropertyZipPostCode, 
@@ -43,16 +40,12 @@ namespace REALWorks.AssetServer.CommandHandlers
 
 
 
-            var property = new Property(request.PropertyName, request.PropertyDesc, request.Type, 
+            var property = new Property(request.PropertyName, request.PropertyDesc,  request.Type, request.PropertyManagerUserName,
                 request.PropertyBuildYear, request.IsActive, request.IsShared, request.Status, 
                 request.BasementAvailable, DateTime.Now, DateTime.Now, address, facility, feature);
 
 
             await _context.AddAsync(property);
-            //await _context.AddAsync(address);
-            //await _context.AddAsync(facility);
-            //await _context.AddAsync(feature);
-
 
 
             if (request.PropertyOwnerId == 0)
@@ -63,29 +56,11 @@ namespace REALWorks.AssetServer.CommandHandlers
                     request.IsActive, request.RoleId, request.Notes);
 
 
-                //pOwner = new PropertyOwner(request.UserName, request.FirstName, request.LastName, request.ContactEmail, 
-                //    request.ContactTelephone1, request.ContactTelephone2, request.OnlineAccessEnbaled, request.UserAvartaImgUrl, 
-                //    request.IsActive, request.RoleId, request.Notes, DateTime.Now, DateTime.Now);
-
-                //await _context.AddAsync(pOwner);
                 await _context.AddAsync(owner);
 
-                //ownerProperty = new OwnerProperty()
-                //{
-                //    Property = property,
-                //    PropertyOwner = (PropertyOwner)pOwner                    
-                //};
             }
             else
             {
-                //ownerProperty = new OwnerProperty()
-                //{
-                //    Property = property,
-                //    //PropertyOwner = pOwner
-                //    //PropertyId = newProperty.PropertyId,
-                //    PropertyOwnerId = request.PropertyOwnerId
-                //};
-
                 var owner = _context.PropertyOwner.FirstOrDefault(o => o.Id == request.PropertyOwnerId);
 
                 var ownerProperty = property.AddExsitingOwner(owner);
@@ -94,15 +69,12 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             }
 
-            //await _context.AddAsync(ownerProperty);
-
             try
             {
                 await _context.SaveChangesAsync();
 
                 int propertyId = property.Id;
 
-                //Update the view model to be returned
                 request.PropertyId = property.Id;
                 request.CreatedDate = property.Created;
                 request.UpdateDate = property.Modified;
@@ -113,9 +85,7 @@ namespace REALWorks.AssetServer.CommandHandlers
                 throw ex;
             }
 
-            return true; // new CreatePropertyCommandResult();
-
-            //throw new NotImplementedException();
+            return true;   
 
         }
 

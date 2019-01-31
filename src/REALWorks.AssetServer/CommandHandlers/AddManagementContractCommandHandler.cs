@@ -25,7 +25,8 @@ namespace REALWorks.AssetServer.CommandHandlers
             if(request.ManagementContractType.ToString() == "Renewal")
             {
                 var existingContract = _context.ManagementContract.FirstOrDefault(a => a.IsActive == true);
-                property.UpdateManagementContractStatus(existingContract, false);
+                var updatedContract = property.UpdateManagementContractStatus(existingContract, false);
+                _context.Update(updatedContract);
             }
 
             var contract = property.AddManabgementContract(request.PropertyId, request.ManagementContractTitle, request.ManagementContractType,  

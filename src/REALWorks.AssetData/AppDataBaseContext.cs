@@ -35,112 +35,19 @@ namespace REALWorks.AssetData
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                //optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=REALAsset;UID=real;PWD=1234567;");
                 optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["AppDbConnection2"].ConnectionString);
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //**********************************************
-            // Entity for mapping DDD entities
-            //**********************************************
-
             modelBuilder.ApplyConfiguration(new PropertyConfig());
             modelBuilder.ApplyConfiguration(new OwnerConfig());
             modelBuilder.ApplyConfiguration(new OwnerPropertyConfig());
             modelBuilder.ApplyConfiguration(new ManagementCaontactConfig());
 
-            //modelBuilder.Entity<ManagementContract>(entity =>
-            //{
-            //    entity.Property(e => e.ManagementContractDocUrl).HasMaxLength(150);
 
 
-
-            //    entity.Property(e => e.ManagementContractDocUrl).HasMaxLength(150);
-
-            //    entity.Property(e => e.ManagementContractTitle)
-            //        .IsRequired()
-            //        .HasMaxLength(50);
-
-            //    entity.Property(e => e.ManagementFeeScale)
-            //        .IsRequired()
-            //        .HasMaxLength(50);
-
-            //    entity.Property(e => e.PlacementFeeScale)
-            //        .IsRequired()
-            //        .HasMaxLength(50);
-
-            //    entity.HasOne(d => d.Property)
-            //        .WithMany(p => p.ManagementContract)
-            //        .HasForeignKey(d => d.PropertyId)
-            //        .OnDelete(DeleteBehavior.ClientSetNull)
-            //        .HasConstraintName("FK_ManagementContract_Property");
-            //});
-
-            /*
-            modelBuilder.Entity<Property>(entity =>
-            {
-                //entity.Property(e => e.FurnishingId).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.IsActive)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.PropertyDesc).HasMaxLength(250);
-
-                entity.Property(e => e.PropertyLogoImgUrl).HasMaxLength(100);
-
-                entity.Property(e => e.PropertyManagerId).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.PropertyName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.PropertyVideoUrl).HasMaxLength(100);
-
-                entity.Property(e => e.StrataCouncilId).HasDefaultValueSql("((0))");
-
-                //entity.HasOne(d => d.PropertyAddress)
-                //    .WithMany(p => p.Property)
-                //    .HasForeignKey(d => d.PropertyAddressId)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK_Property_PropertyAddress");
-
-                //entity.HasOne(d => d.PropertyFacility)
-                //    .WithMany(p => p.Property)
-                //    .HasForeignKey(d => d.PropertyFacilityId)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK_Property_PropertyFacility");
-
-                //entity.HasOne(d => d.PropertyFeature)
-                //    .WithMany(p => p.Property)
-                //    .HasForeignKey(d => d.PropertyFeatureId)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK_Property_PropertyFeature");
-
-                //entity.HasOne(d => d.PropertyType)
-                //    .WithMany(p => p.Property)
-                //    .HasForeignKey(d => d.PropertyTypeId)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK_Property_PropertyType");
-
-                //entity.HasOne(d => d.RentalStatus)
-                //    .WithMany(p => p.Property)
-                //    .HasForeignKey(d => d.RentalStatusId)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK_Property_RentalStatus");
-            });
-*/
-
-            //**********************************************
-            // Owned Entity for mapping DDD value objects
-            //**********************************************
-
-            //modelBuilder.Entity<Property>().OwnsOne(typeof(PropertyAddress), "Address"); // this operation will put the onwed entity in the principal entity (one table)
-
-            //The following mapping will put the owned entity in a separate table (with a foreign key pointing to the principal entity
             modelBuilder.Entity<Property>().OwnsOne(
                 a => a.Address,
                 sa =>
@@ -165,43 +72,6 @@ namespace REALWorks.AssetData
                 }
             );
 
-
-            /*
-            modelBuilder.Entity<PropertyOwner>(entity =>
-            {
-                entity.Property(e => e.ContactEmail)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.ContactTelephone1)
-                    .IsRequired()
-                    .HasMaxLength(25);
-
-                entity.Property(e => e.ContactTelephone2).HasMaxLength(25);
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.IsActive)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.UserAvartaImgUrl)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasDefaultValueSql("('default')");
-
-                entity.Property(e => e.UserName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasDefaultValueSql("('tba')");
-            });
-*/
 
         }
 

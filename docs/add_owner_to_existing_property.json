@@ -1,0 +1,16 @@
+{
+	"propertyOwnerId": 5,
+    "userName": "notset",
+    "firstName": "Sophia",
+    "lastName": "Yuan",
+    "contactEmail": "sophia@instgram.com",
+    "contactTelephone1": "604-301-7800",
+    "contactTelephone2": "",
+    "onlineAccessEnbaled": false,
+    "userAvartaImgUrl": "",
+    "isActive": true,
+    "roleId": 2,
+    "notes": "New Onwer",
+    "propertyId": 2
+
+}

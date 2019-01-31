@@ -12,8 +12,6 @@ namespace REALWorks.AssetData.Configuration
     {
         public void Configure(EntityTypeBuilder<ManagementContract> entity)
         {
-            //throw new NotImplementedException();
-
             entity.Property(e => e.ManagementContractDocUrl).HasMaxLength(150);
            
 

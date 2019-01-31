@@ -67,6 +67,7 @@ namespace REALWorks.AssetCore.Entities
             string propertyName,
             string propertyDesc,
             PropertyType propertyType,
+            string propertyManagerUserName,
             int propertyBuildYear,
             bool isActive,
             bool isShared,
@@ -83,8 +84,9 @@ namespace REALWorks.AssetCore.Entities
             )
         {
             PropertyName = propertyName;
-            PropertyDesc = propertyDesc;
+            PropertyDesc = propertyDesc;            
             Type = propertyType;
+            PropertyManagerUserName = propertyManagerUserName;
             PropertyBuildYear = propertyBuildYear;
             IsActive = isActive;
             IsShared = isShared;
@@ -265,9 +267,11 @@ namespace REALWorks.AssetCore.Entities
             return contract;
         }
 
-        public void UpdateManagementContractStatus(ManagementContract contract, bool status)
+        public ManagementContract UpdateManagementContractStatus(ManagementContract contract, bool status)
         {
-            contract.SetStatus(status);
+            var oldContract =  contract.SetStatus(contract, status);
+
+            return oldContract;
         }
     }
 }
