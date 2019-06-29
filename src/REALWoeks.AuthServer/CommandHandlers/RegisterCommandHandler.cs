@@ -48,7 +48,8 @@ namespace REALWorks.AuthServer.CommandHandlers
                 JoinDate = DateTime.Now,
                 EmailConfirmed = true,
                 UserRole = request.UserRole,
-                CustomId = 0
+                CustomId = 0,
+                IsDisabled = false
             };
 
             try
@@ -62,7 +63,7 @@ namespace REALWorks.AuthServer.CommandHandlers
                 //if (!result.Succeeded /*&& !role_resuls.Succeeded*/) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
                 //await _appDbContext.Customers.AddAsync(new Customer { IdentityId = userIdentity.Id, Location = model.Location });
-                await _appDbContext.SaveChangesAsync();
+                await _appDbContext.SaveChangesAsync(); // commented out for testing ONLY
             }
             catch (Exception ex)
             {

@@ -83,7 +83,7 @@ namespace REALWorks.AssetServer.Commands
         public string FeatureNotes { get; set; }
 
         /// <summary>
-        /// Property Owner
+        /// Property Owner Basic
         /// </summary>
         /// 
         public string UserName { get; set; }
@@ -97,9 +97,25 @@ namespace REALWorks.AssetServer.Commands
         public int? RoleId { get; set; }
         public string Notes { get; set; }
 
+        /// <summary>
+        /// Property Owner Address
+        /// </summary>
+        public string OwnerStreetNumber { get; set; }
+        public string OwnerCity { get; set; }
+        public string OwnerStateProv { get; set; }
+        public string OwnerZipPostCode { get; set; }
+        public string OwnerCountry { get; set; }
+
+        public bool IsSameAddress { get; set; } // OwnerAddressTheSameAsPropertyAddress
+
+        public OwnerAddress OwnerAddress { get; set; }
+
         public PropertyAddress PropertyAddress { get; set; }
         public PropertyFacility PropertyFacility { get; set; }
         public PropertyFeature PropertyFeature { get; set; }
+
+
+        
 
         /// <summary>
         /// Constructor - for creating new instance with all required parameters (enforced)

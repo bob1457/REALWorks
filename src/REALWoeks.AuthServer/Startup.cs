@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MediatR;
+using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace REALWorks.AuthServer
 {
@@ -22,7 +24,12 @@ namespace REALWorks.AuthServer
     {
         public Startup(IConfiguration configuration)
         {
-          Configuration = configuration;
+            // Init Serilog configuration
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                //.WriteTo.Seq("http://localhost:5341") // temporarily disabled so that the logs written to log files in E:\Temp\real --- by default
+                .CreateLogger();
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -34,9 +41,15 @@ namespace REALWorks.AuthServer
             services.AddDbContext<ApplicationDbContext>(options =>
                                                                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-                                                                .AddEntityFrameworkStores<ApplicationDbContext>()
-                                                                .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, ApplicationRole>( config =>
+                    {
+                        config.SignIn.RequireConfirmedEmail = true;
+                        config.User.RequireUniqueEmail = true;
+                    }                
+                )
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddCookie()
@@ -66,12 +79,23 @@ namespace REALWorks.AuthServer
 
         services.AddMediatR(typeof(Startup));
 
+            //services.AddSingleton<RabbitListener>();
+
         services.AddMvc();
 
     }
 
+
+
+
+
+
+
+
+
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -89,6 +113,8 @@ namespace REALWorks.AuthServer
             app.UseDefaultFiles();
 
             app.UseCors("CorsPolicy");
+
+            loggerFactory.AddSerilog();
 
             app.UseMvc();
 

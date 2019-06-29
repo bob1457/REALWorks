@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using REALWorks.AssetCore.ValueObjects;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
 using System;
@@ -24,8 +25,10 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             if(request.PropertyOwnerId == 0)
             {
+                var ownerAddress = new OwnerAddress(request.StreetNumber, request.City, request.StateProv, request.ZipPostCode, request.Country);
+
                 var owner  = property.AddNewOwnerToProperty(request.PropertyId, request.UserName, request.FirstName, request.LastName, request.ContactEmail,
-                    request.ContactTelephone1, request.ContactTelephone2, false, request.UserAvartaImgUrl, request.IsActive, 2, request.Notes);
+                    request.ContactTelephone1, request.ContactTelephone2, false, request.UserAvartaImgUrl, request.IsActive, 2, request.Notes, ownerAddress);
 
                 _context.Add(owner);
             }

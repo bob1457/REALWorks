@@ -17,7 +17,7 @@ export class UserService {
   public token: string;
   user: User;
 
-  readonly baseUrl = environment.authServerUrl; // 'http://localhost:58088';
+  readonly baseUrl = environment.authServerUrl; // 'http://192.168.99.100:58088';
 
   constructor( private http: HttpClient, private _http: Http ) { }
 
@@ -63,7 +63,7 @@ export class UserService {
 
   getUserProfile(username: string): Observable<User> {
     debugger;
-    return  this.http.get<User>(this.baseUrl + '/api/Account/user/' + username);
+    return  this.http.get<User>(this.baseUrl + '/api/Profile/user/' + username);
   }
 
   public get currentUserToken() {

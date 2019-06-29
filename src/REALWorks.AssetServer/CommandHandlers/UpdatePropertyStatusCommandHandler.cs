@@ -24,7 +24,8 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             var property = _context.Property.FirstOrDefault(p => p.Id == request.Id);
 
-            property.StatusUpdate(property, request.Status);
+            //property.StatusUpdate(property, request.Status);
+            property.StatusUpdate(request.Status);
 
             try
             {

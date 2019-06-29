@@ -91,7 +91,7 @@ namespace REALWorks.AuthServer.Controllers
         }
 
 
-
+        [HttpPost]
         [Route("addrole1")]
         public async Task<IActionResult> AddRole1([FromBody]ApplicationRoleModel model)
         {
@@ -108,7 +108,7 @@ namespace REALWorks.AuthServer.Controllers
             return new OkObjectResult("Application Role: " + role.Name + ", Added");
         }
 
-
+        [HttpPost]
         [Route("addrole")]
         public async Task<IActionResult> AddRole([FromBody]AddUserRoleCommand command)
         {

@@ -26,25 +26,24 @@ namespace REALWorks.AuthServer.Controllers
         private readonly IMediator _mediator; // Only this one is required
 
         // The DI below will NOT be required as MediatR is implemented, will be retired
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly IConfiguration _configuration;
-        //private readonly ILogger<AuthController> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IConfiguration _configuration;
+        private readonly ILogger<AuthController> _logger;
 
         public AuthController(IMediator mediator, 
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
-        IConfiguration configuration//,
-        //ILogger<AuthController> logger
-            )
-    {
+        IConfiguration configuration,
+        ILogger<AuthController> logger)
+        {
             _mediator = mediator;// Only this one is required
 
             _userManager = userManager;
-      _signInManager = signInManager;
-      _configuration = configuration;
-            //_logger = logger;      
-    }
+            _signInManager = signInManager;
+            _configuration = configuration;
+            _logger = logger;
+        }
 
     [HttpPost]
     [Route("login")]
@@ -65,20 +64,29 @@ namespace REALWorks.AuthServer.Controllers
 
             var userToVerify = await _userManager.CheckPasswordAsync(user, model.Password);
 
-      //if (user == null)
-      //{
-      //  return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
-      //}
+          //if (user == null)
+          //{
+          //  return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
+          //}
 
-      if (await _userManager.CheckPasswordAsync(user, model.Password) == false)
-       {
+          if (await _userManager.CheckPasswordAsync(user, model.Password) == false)
+           {
+                _logger.LogInformation("User: " + model.UserName + " failed to login.");
+                return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
+           }
+
+            //Check if the user account is disabled
+            //
+            if (user.IsDisabled == true)
+            {
+                _logger.LogInformation("Disabled user: " + model.UserName + " tried to login.");
                 return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
             }
 
-      // Add update user logon date
-      //
+            // Add update user logon date
+            //
 
-      var claims = new[]
+            var claims = new[]
                     {
                         new Claim(JwtRegisteredClaimNames.Sub, model.UserName),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
@@ -125,6 +133,9 @@ namespace REALWorks.AuthServer.Controllers
                 email = jwtToken.Claims.FirstOrDefault(i => i.Type == "email").Value
             };
             */
+
+            _logger.LogInformation("User: " + model.UserName + " successfully logged in.");
+
             return Json(encodedToken);
             //return Json(response);
 

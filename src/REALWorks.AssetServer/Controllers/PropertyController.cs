@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using REALWorks.AssetServer.Commands;
+using REALWorks.AssetServer.Events;
 using REALWorks.AssetServer.Queries;
-
+using REALWorks.MessagingServer.Messages;
 
 namespace REALWorks.AssetServer.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class PropertyController : ControllerBase
     {
         private readonly IMediator _mediator;
+        IMessagePublisher _messagePublisher;
 
-        public PropertyController(  IMediator mediator)
+        public PropertyController(IMediator mediator, IMessagePublisher messagePublisher)
         {
            _mediator = mediator;
+           _messagePublisher = messagePublisher;
+
         }
 
 
@@ -219,9 +226,57 @@ namespace REALWorks.AssetServer.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("owner/{id}")]
+        public async Task<IActionResult> GetOwnerDetails(int id) //id: propertyId
+        {
+            var getPropertyOwner = new OwnerDetailsQuery
+            {
+                Id = id
+            };
+
+            var result = await _mediator.Send(getPropertyOwner);
+
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("owners/{id}")]
+        public async Task<IActionResult> GetOwnerListByProperty(int id) //id: propertyId
+        {
+            var getPropertyOwners = new OwnerListByPropertyQuery
+            {
+                Id = id
+            };
+
+            var result = await _mediator.Send(getPropertyOwners);
+
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("user/online")]
+        public async Task<IActionResult> EnableONlineAccess([FromBody] EnableOnlineAccessCommand request)  // id: user(owner, tenant, etc.) id
+        {
+            bool success = await _mediator.Send(request);
+
+            //if (success)
+            //{
+            //    EnableOnlineAccessEvent e = new EnableOnlineAccessEvent(Guid.NewGuid(), request.Email, request.Password,
+            //            request.FirstName, request.LastName, request.UserName, request.UserRole, request.Enable);
+
+            //    await _messagePublisher.PublishMessageAsync(e.MessageType, e, "real");
+            //}
+
+
+
+            return Ok(success/*"successful!"*/);
+        }
+
+
         #endregion
 
-
+        #region Contract Management
 
         [HttpPost]
         [Route("contract/add")]
@@ -257,7 +312,28 @@ namespace REALWorks.AssetServer.Controllers
             return Ok(ct);
         }
 
-        
+        [HttpPost]
+        [Route("fee/add")]
+        public async Task<IActionResult> AddFeePayment([FromBody] AddFeePaymentCommand command)
+        {
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(400);
+            }
+
+            await _mediator.Send(command);
+
+            return Ok();
+
+            //throw new NotImplementedException();
+        }
+
+
         [HttpGet]
         [Route("contract/{id}")]
         public async Task<IActionResult> GetContractDetails(int id)
@@ -287,6 +363,37 @@ namespace REALWorks.AssetServer.Controllers
 
             
         }
+
+
+        [HttpGet]
+        [Route("feehistory/{id}/{oid}")]
+        public async Task<IActionResult> GetFeePaymentHistoryByContract(int id, int oid) //id: contract id, oid: owner id
+        {
+            var getFeeHistory = new FeePaymentHistoryQuery
+            {
+                ManagementContractId = id,
+                InChargeOwnerId = oid
+            };
+
+            try
+            {
+                var feePayment = await _mediator.Send(getFeeHistory);
+
+                if (feePayment == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(feePayment);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
+        #endregion
 
     }
 }

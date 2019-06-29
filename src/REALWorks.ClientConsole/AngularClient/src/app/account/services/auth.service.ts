@@ -15,8 +15,8 @@ export class AuthService {
 
   login(user): Observable<any> {
     console.log(user);
-    // return this.http.post<any>(`${this.baseUrl}/api/auth/login`, user) // ;
-    return this.http.post<any>(`${this.baseUrl}/api/auth/signin`, user) // ;
+    return this.http.post<any>(`${this.baseUrl}/api/auth/login`, user) // ;
+    // return this.http.post<any>(`${this.baseUrl}/api/auth/signin`, user) // ;
     /**/.pipe(
       map(res => {
         if (res) {

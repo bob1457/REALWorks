@@ -22,15 +22,15 @@ namespace REALWorks.AuthServer.CommandHandlers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
-        //private readonly ILogger _logger;
+        private readonly ILogger<LoginCommandHandler> _logger;
 
         //constructor
-        public LoginCommandHandler(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration/*,ILogger logger*/)
+        public LoginCommandHandler(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, ILogger<LoginCommandHandler> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
-            //_logger = logger;
+            _logger = logger;
         }
 
         public async Task<LoginCommandResult> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -38,19 +38,37 @@ namespace REALWorks.AuthServer.CommandHandlers
             //throw new NotImplementedException();
 
             // check if there's an user with the given username
-            var user = await _userManager.FindByNameAsync(request.UserName);
+            ApplicationUser user = await _userManager.FindByNameAsync(request.UserName);
             // fallback to support e-mail address instead of username
             if (user == null && request.UserName.Contains("@"))
+            {
                 user = await _userManager.FindByEmailAsync(request.UserName);
+            }
 
             // var user = await _userManager.FindByNameAsync(model.UserName);
 
             var userToVerify = await _userManager.CheckPasswordAsync(user, request.Password);
 
-            //if (await _userManager.CheckPasswordAsync(user, request.Password) == false)
-            //{
-            //    return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
-            //}
+            if (await _userManager.CheckPasswordAsync(user, request.Password) == false)
+            {
+                //return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
+                //throw new HttpException(401, "Unauthorized access");
+                _logger.LogInformation("User: " + request.UserName + " failed to login.");
+                //return new LoginCommandResult() { token = null, user = null, errorMessage = "Login failed!" };
+                //return new LoginCommandResult();
+                return null;
+            }
+
+            //Check if the user account is disabled
+            //
+            if(user.IsDisabled == true)
+            {
+                _logger.LogInformation("Disabled user: " + request.UserName + " tried to login.");
+                return new LoginCommandResult();
+            }
+
+
+
 
             var claims = new[]
                     {
@@ -79,8 +97,10 @@ namespace REALWorks.AuthServer.CommandHandlers
 
 
             var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
+            _logger.LogInformation("User: " + request.UserName + " logged in.");
 
-            return new LoginCommandResult() { token = encodedToken };
+            
+            return new LoginCommandResult() { token = encodedToken, user = user };
 
         }
     }

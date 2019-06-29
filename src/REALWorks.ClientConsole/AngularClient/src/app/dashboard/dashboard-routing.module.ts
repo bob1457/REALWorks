@@ -41,7 +41,7 @@ const routes: Routes = [
     children: [ // for side bar navigation path/routing
       { path: '', redirectTo: 'dash_ui', pathMatch: 'full'},
       { path: 'dash_ui', component: DashUiComponent, canActivate: [AuthGuard]},
-      { path: 'profile', component: ProfileComponent },
+      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
 
       { path: 'property', component: PropertyComponent},
       { path: 'property_list', component: PropertyListComponent},

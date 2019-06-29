@@ -49,6 +49,11 @@ namespace REALWorks.AssetCore.Entities
         public string Notes { get; private set; }
 
         public Property Property { get; set; }
+        public ICollection<FeePayment> FeePayment { get; private set; }
+
+
+
+
 
         public void Update(string title, DateTime startDate, DateTime endDate, 
             string placementFeeScale, string managementFeeScale, string notes)

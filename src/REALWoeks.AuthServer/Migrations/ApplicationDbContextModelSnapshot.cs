@@ -151,6 +151,8 @@ namespace REALWorks.AuthServer.Migrations
 
                     b.Property<string>("FirstName");
 
+                    b.Property<bool>("IsDisabled");
+
                     b.Property<DateTime>("JoinDate");
 
                     b.Property<DateTime>("LastLogOn");

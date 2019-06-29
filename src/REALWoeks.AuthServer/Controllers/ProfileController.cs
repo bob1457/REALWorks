@@ -69,5 +69,13 @@ namespace REALWorks.AuthServer.Controllers
 
             return Ok(result);
         }
+
+
+        [HttpPost]
+        [Route("disable")]
+        public async Task<IActionResult> DisableUserAccount()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

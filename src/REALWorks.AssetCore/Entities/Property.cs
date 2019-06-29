@@ -7,7 +7,7 @@ using static REALWorks.AssetCore.Entities.ManagementContract;
 
 namespace REALWorks.AssetCore.Entities
 {
-    public class Property: Entity, IAggeregate
+    public class Property: Entity, IAggeregateRoot
     {
         public enum PropertyType
         {
@@ -22,9 +22,9 @@ namespace REALWorks.AssetCore.Entities
         {
             UnSet,
             Rented,
-            Vacant,
-            Pending,
-            BeingProcessing
+            Vacant, // listed for rent
+            Pending, // application pending/screening
+            Other
         }
 
         private Property( ) {
@@ -49,6 +49,7 @@ namespace REALWorks.AssetCore.Entities
         /// <summary>
         /// Navigation
         /// </summary>
+        //public OwnerAddress OAddress { get; private set; }
         public PropertyAddress Address { get; private set; }
         public PropertyFacility Facility { get; private set; }
         public PropertyFeature Feature { get; private set; }
@@ -76,6 +77,7 @@ namespace REALWorks.AssetCore.Entities
             DateTime createdDate,
             DateTime updateDate,
 
+            //OwnerAddress ownerAddress,
 
             PropertyAddress propertyAddress,
             PropertyFacility propertyFacility,
@@ -95,7 +97,7 @@ namespace REALWorks.AssetCore.Entities
             Created = createdDate;
             Modified = updateDate;
 
-
+            //OAddress = ownerAddress;
             Address = propertyAddress;
             Facility = propertyFacility;
             Feature = propertyFeature;
@@ -113,11 +115,12 @@ namespace REALWorks.AssetCore.Entities
             string userAvartaImgUrl,
             bool? isActive,
             int? roleId,
-            string notes)
+            string notes,
+            OwnerAddress address)
         {
             var owner = new PropertyOwner(userName, firstName, lastName, contactEmail, 
                 contactTelephone1, contactTelephone2, false, userAvartaImgUrl, true, 2, "", 
-                DateTime.Now, DateTime.Now);
+                address, DateTime.Now, DateTime.Now);
 
             var ownerProperty = new OwnerProperty(this, owner);
 
@@ -128,9 +131,11 @@ namespace REALWorks.AssetCore.Entities
 
         }
 
-/// <summary>
-/// Domain behaviours - methods/operations
-/// </summary>
+        /// <summary>
+        /// Domain behaviours - methods/operations
+        /// </summary>
+
+        #region Domain behaviours - methods/operations
 
         public Property Update(
             Property property,
@@ -184,10 +189,10 @@ namespace REALWorks.AssetCore.Entities
 
         public PropertyOwner AddNewOwnerToProperty(int propertyId, string userName, string firstName, 
             string lastName, string email, string telephone1, string telephone2, bool onlineAccess, 
-            string avatarUrl, bool isActive, int roleId, string notes)
+            string avatarUrl, bool isActive, int roleId, string notes, OwnerAddress address)
         {
             var owner = new PropertyOwner(userName, firstName, lastName, email, telephone1, 
-                telephone2, onlineAccess, avatarUrl, isActive, roleId, notes, DateTime.Now, DateTime.Now);
+                telephone2, onlineAccess, avatarUrl, isActive, roleId, notes, address, DateTime.Now, DateTime.Now);
 
             var ownerProperty = new OwnerProperty(propertyId, owner);
 
@@ -227,18 +232,26 @@ namespace REALWorks.AssetCore.Entities
             img.Created = DateTime.Now;
             img.Modified = DateTime.Now;
 
-            PropertyImg.Add(img);
+            //PropertyImg.Add(img);
 
             return img;
         }
 
-        
-        public Property StatusUpdate(Property property, RentalStatus status)
-        {
-            property.Status = status;
-            property.Modified = DateTime.Now;
 
-            return property;
+        //public Property StatusUpdate(Property property, RentalStatus status) // for further review, needs to be re-tested
+        //{
+        //    property.Status = status;
+        //    property.Modified = DateTime.Now;
+
+        //    return property;
+        //}
+
+        public Property StatusUpdate(RentalStatus status)
+        {
+            Status = status;
+            Modified = DateTime.Now;
+
+            return this;
         }
 
         public Property AsssignPropertyManager(Property property, string pmUserName)
@@ -273,5 +286,7 @@ namespace REALWorks.AssetCore.Entities
 
             return oldContract;
         }
+
+        #endregion
     }
 }

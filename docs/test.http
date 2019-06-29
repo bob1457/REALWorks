@@ -1,0 +1,459 @@
+POST http://localhost:63899//api/RentalApplication/approve HTTP/1.1
+content-type: application/json
+
+{
+  "applicationId": 2,
+  "appStatus": 2,
+  "userName": "NotSet",
+  "firstName": "Arnold",
+  "lastName": "Kim",
+  "contactEmail": "rk111@gamil.com",
+  "contactTelephone1": "604-985-5214",
+  "contactTelephone2": "",
+  "contactOthers": ""
+}
+
+
+
+###
+
+POST http://localhost:63533/api/Lease/create HTTP/1.1
+content-type: application/json
+
+{
+  "leaseTitle": "South Surrey",
+  "leaseDesc": "Rental Agreement",
+  "rentalPropertyId": 1,
+  "leaseStartDate": "2019-05-01T22:47:40.768Z",
+  "leaseEndDate": "2020-04-30T22:47:40.768Z",
+  "term": 1,
+  "rentFrequency": "Monthly",
+  "rentAmount": 1850,
+  "rentDueOn": "1st Day of the Month",
+  "damageDepositAmount": 925,
+  "petDepositAmount": 0,
+  "leaseSignDate": "2019-04-15T22:47:40.768Z",
+  "leaseAgreementDocUrl": "",
+  "isActive": true,
+  "isAddendumAvailable": false,
+  "leaseEndCode": 4,
+  "renewTerm": "",
+  "notes": "",
+  "newTenantId": 3,
+  "onlineAccessEnbaled": false,
+  "userAvartaImgUrl": "",
+  "roleId": 3,
+  "agentFirstName": "Michelle",
+  "agentLastName": "Lu",
+  "agentContactEmail": "rental@gmail.com",
+  "contatTel": "778-863-0550",
+  "agentContactOthers": "",
+  "isPropertyManager": true,
+  "addressStreetNumber": "15686 107 Avenue",
+  "addressCity": "surrey",
+  "addressStateProv": "BC",
+  "addressZipPostCode": "V4N 3H8",
+  "addressCountry": "Canada",
+  "propertyName": "333 Metrotown",
+  "propertyType": "string",
+  "streetNum": "string",
+  "city": "string",
+  "stateProvince": "string",
+  "country": "string",
+  "zipPostCode": "string",
+  "water": true,
+  "cablevison": false,
+  "electricity": false,
+  "internet": true,
+  "heat": true,
+  "naturalGas": true,
+  "sewageDisposal": true,
+  "snowRemoval": true,
+  "storage": true,
+  "recreationFacility": true,
+  "garbageCollection": true,
+  "recycleServices": true,
+  "kitchenScrapCollection": true,
+  "laundry": true,
+  "freeLaundry": true,
+  "regfrigerator": true,
+  "dishwasher": true,
+  "stoveOven": true,
+  "windowCovering": true,
+  "furniture": false,
+  "carpets": true,
+  "parkingStall": 1,
+  "other": "Hydro not included."
+}
+
+###
+
+###
+
+POST http://localhost:63533/api/Lease/addTenant HTTP/1.1
+content-type: application/json
+
+{
+  "newTenantId": 0,
+  "userName": "NotSet",
+  "firstName": "Alice",
+  "lastName": "Johnson",
+  "contactEmail": "alicej@gamil.com",
+  "contactTelephone1": "604-854-2571",
+  "contactTelephone2": "",
+  "contactOthers": "",
+  "onlineAccessEnbaled": false,
+  "userAvartaImgUrl": "",
+  "roleId": 3,
+  "leaseId": 2
+}
+
+###
+
+
+###
+GET http://localhost:63533/api/Lease/all HTTP/1.1
+content-type: application/json
+
+###
+
+###
+GET http://localhost:63533/api/Lease/2 HTTP/1.1
+content-type: application/json
+
+###
+
+###
+
+POST http://localhost:63533/api/Lease/update HTTP/1.1
+content-type: application/json
+
+{
+  "leaseId": 2,
+  "leaseTitle": "Metrotown Lease - Updated",
+  "leaseDesc": "New lease",
+  "rentalPropertyId": 0,
+  "leaseStartDate": "2019-05-01T22:26:35.377Z",
+  "leaseEndDate": "2020-04-30T22:26:35.377Z",
+  "term": 0,
+  "rentFrequency": "Monthly",
+  "rentAmount": 1900,
+  "rentDueOn": "string",
+  "damageDepositAmount": 950,
+  "petDepositAmount": 0,
+  "leaseSignDate": "2019-04-18T22:26:35.377Z",
+  "leaseAgreementDocUrl": "",
+  "isActive": true,
+  "isAddendumAvailable": true,
+  "leaseEndCode": 5,
+  "renewTerm": "2",
+  "notes": "updated lease"
+}
+###
+
+
+###
+
+POST http://localhost:63533/api/Lease/tenant/update HTTP/1.1
+content-type: application/json
+
+{
+  "leaseId": 2,
+  "tenantId": 1,
+  "firstName": "Arnold II",
+  "lastName": "Kim",
+  "contactEmail": "rk111@gamil.com",
+  "contactTelephone1": "604-985-5214",
+  "contactTelephone2": "778-334-8761",
+  "contactOthers": "",
+  "onlineAccessEnbaled": false,
+  "userAvartaImgUrl": ""
+}
+###
+
+
+###
+POST http://localhost:63533/api/Lease/finalize HTTP/1.1
+content-type: application/json
+
+{
+  "leaseId": 2,
+  "leaseSignDate": "2019-04-25T20:47:18.219Z"
+}
+
+######
+POST https://localhost:44336/api/Auth/login HTTP/1.1
+content-type: application/json
+
+{
+  "password": "Bob@123456",
+"username": "bob"
+}
+###
+
+
+###
+POST http://localhost:63533/api/Lease/finalize HTTP/1.1
+content-type: application/json
+
+{
+  "leaseId": 2,
+  "leaseSignDate": "2019-04-25T20:47:18.219Z"
+}
+
+######
+POST https://localhost:44336/api/Auth/signin HTTP/1.1
+content-type: application/json
+
+{
+  "password": "Bob@123456",
+"username": "bob"
+}
+###
+
+
+###
+
+
+###
+
+####
+POST http://localhost:63899/api/Listing/add HTTP/1.1
+content-type: application/json
+
+{
+  "title": "FOOL'S Listing 2",
+  "rentalPropertyId": 1036,
+  "listingDesc": "New large...FOOL",
+  "contactName": "Michelle Lu",
+  "contactTel": "778-863-0550",
+  "contactEmail": "rent@gmail.com",
+  "contactSMS": "778-863-0550",
+  "contactOthers": ""
+}
+
+####
+
+###
+
+GET http://localhost:63899/api/Listing/4 HTTP/1.1
+content-type: application/json
+###
+
+
+###
+
+POST http://localhost:63533/api/Lease/rent/add HTTP/1.1
+content-type: application/json
+
+{
+  "leaseId": 3,
+  "scheduledPaymentAmt": 1500.00,
+  "actualPaymentAmt": 15000.00,
+  "payMethod": 2,
+  "paymentDueDate": "2019-05-01T22:20:37.924Z",
+  "paymentReceivedDate": "2019-04-30T22:20:37.924Z",
+  "balance": 0,
+  "isOnTime": true,
+  "inChargeTenantId": 3,
+  "note": "new payment",
+  "rentalForMonth": "May",
+  "rentalForYear": "2019"
+}
+###
+GET http://localhost:63533/api/RentalPayment/renthistory/3/3 HTTP/1.1
+content-type: application/json
+###
+
+###
+POST http://localhost:63533/api/Lease/rent/update HTTP/1.1
+content-type: application/json
+
+{
+  "id": 1,
+  "isOnTime": true,
+  "rentAmount": 1500,
+  "paymentReceivedDate": "2019-05-02T15:41:37.269Z",
+  "note": "Late received...due to special reason,keep it on time."
+}
+
+###
+
+
+###
+
+POST http://localhost:63533/api/Lease/vendor/add HTTP/1.1
+content-type: application/json
+
+{
+  "userName": "string",
+  "vendorBusinessName": "Creative Plumbing",
+  "firstName": "Jack",
+  "lastName": "Wu",
+  "vendorDesc": "Plumbing",
+  "vendorSpecialty": "Plumbing",
+  "vendorContactTelephone1": "604-825-8410",
+  "vendorContactOthers": "",
+  "vendorContactEmail": "wu@gmail.com",
+  "isActive": true,
+  "roleId": 4,
+  "onlineAccessEnbaled": false,
+  "userAvartaImgUrl": ""
+}
+
+###
+
+###
+GET http://localhost:63533/api/WorkOrder/rental/1 HTTP/1.1
+content-type: application/json
+###
+
+###
+
+POST http://localhost:19807/api/Property/fee/add HTTP/1.1
+content-type: application/json
+
+{
+  "managementContractId": 1,
+  "scheduledPaymentAmt": 750.00,
+  "actualPaymentAmt": 750.00,
+  "payMethod": 2,
+  "mangementFeeType": 1,
+  "paymentDueDate": "2019-04-01T22:20:37.924Z",
+  "paymentReceivedDate": "2019-04-01T22:20:37.924Z",  
+  "isOnTime": true,
+  "inChargeOwnerId": 1,
+  "note": "new payment",
+  "feeForMonth": "",
+  "feeForYear": "2019"
+}
+###
+
+
+###
+GET http://localhost:19807/api/Property/feehistory/1/1 HTTP/1.1
+content-type: application/json
+###
+
+
+###
+POST http://localhost:63533/api/WorkOrder/request/add HTTP/1.1
+content-type: application/json
+
+{
+  "requestSubject": "Toilet leaking",
+  "serviceCategory": "Plumbing",
+  "requestDetails": "The water cannot be turned off in toilet ",
+  "urgent": 2,
+  "status": 1,
+  "leaseId": 2,
+  "requestorId": 1,
+  "workOrderId": 0,
+  "notes": "That needs to be fixed, althouth not that urgent."
+}
+
+###
+
+
+###
+GET http://localhost:63533/api/Lease/requests/2 HTTP/1.1
+content-type: application/json
+###
+
+
+###
+POST http://localhost:63533/api/WorkOrder/add HTTP/1.1
+content-type: application/json
+
+{
+  "workOrderName": "Fix Sink Leak",
+  "workOrderDetails": "Fixing the leaking kitchen sink",
+  "workOrderCategory": "Repair",
+  "rentalPropertyId": 2,
+  "vendorId": 1,
+  "workOrderType": "string",
+  "startDate": "2019-05-22T22:05:13.693Z",
+  "endDate": "2019-05-24T22:05:13.693Z",
+  "isOwnerAuthorized": true,
+  "isEmergency": false,
+  "workOrderStatus": "New",
+  "note": "new work order",
+  "serviceRequestId": 1
+}
+
+###
+
+
+###
+
+POST http://localhost:19807/api/Property/asset HTTP/1.1
+content-type: application/json
+
+{
+    "propertyName": "PNE Old Timer 3",
+    "propertyDesc": "Single two layer family home in PNE area3",
+    "Type": "Apartment",
+    "strataCouncilId": 0,    
+    "propertyManagerUserName": "bob",
+    "propertyLogoImgUrl": "",
+    "propertyVideoUrl": "",
+    "propertyBuildYear": 1909,
+    "isActive": true,
+    "isShared": true,
+    "furnishingId": null,
+    "Status": "Rented",
+    "isBasementSuite": true,
+    "propertyOwnerId": 2,
+    "ownerStreetNumber": "15686 107 Avenue",
+    "ownerCity": "Surrey",
+	"ownerSateProv": "BC",
+	"ownerZipPostCode": "V4N 3H8",
+	"ownerCountry": "Canada",
+	"isSameAddress": false,
+    
+    "propertySuiteNumber": "",
+    "propertyNumber": "124563",
+    "propertyStreet": "Oxford Street",
+    "propertyCity": "Vancouver",
+    "propertyStateProvince": "BC",
+    "propertyCountry": "Canada",
+    "propertyZipPostCode": "V4N 3J2",
+
+    "stove": true,
+    "refrigerator": true,
+    "dishwasher": false,
+    "airConditioner": false,
+    "laundry": true,
+    "blindsCurtain": true,
+    "furniture": false,
+    "tvinternet": false,
+    "commonFacility": false,
+    "securitySystem": true,
+    "utilityIncluded": false,
+    "fireAlarmSystem": true,
+    "others": null,
+    "facilityNotes": "N/A",
+
+    "numberOfBedrooms": 4,
+    "numberOfBathrooms": 2,
+    "numberOfLayers": 2,
+    "numberOfParking": 2,
+    "basementAvailable": false,
+    "totalLivingArea": 2450,
+    "isShared": true,
+    "featureNotes": "N/A",
+
+    "userName": "notset",
+    "firstName": "Edward",
+    "lastName": "Yuan",
+    "contactEmail": "edy2021@gmail.com",
+    "contactTelephone1": "613-547-7878",
+    "contactTelephone2": "",
+    "onlineAccessEnbaled": false,
+    "userAvartaImgUrl": "",
+    "isActive": true,
+    "roleId": 2,
+    "notes": ""
+}
+
+###

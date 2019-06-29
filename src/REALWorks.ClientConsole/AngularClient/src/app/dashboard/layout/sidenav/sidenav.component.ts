@@ -23,7 +23,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
 
   OpenButtonDisplay: string = 'none';
 
-  sidenavWidth = 15; // side nav width when started (default: full-width side nav)
+  sidenavWidth = 17.5; // side nav width when started (default: full-width side nav)
 
   serverUrl = 'http://localhost:58088/';
   //imgUrl = 'Images/Avatars/default.png';
@@ -99,7 +99,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
   }
 
   increase() {
-    this.sidenavWidth = 15;
+    this.sidenavWidth = 17.5;
     console.log('increase sidenav width');
   }
   decrease(){
@@ -109,11 +109,11 @@ export class SidenavComponent implements OnInit, AfterViewInit {
 
   changeSideNav() {
 
-    if (this.sidenavWidth === 15) {
+    if (this.sidenavWidth === 17.5) {
       this.sidenavWidth = 4; // mini side nav
       // this.ToggleButtonDisplay = '';
     } else {
-      this.sidenavWidth = 15; // full width side nav
+      this.sidenavWidth = 17.5; // full width side nav
       // this.ToggleButtonDisplay = 'none';
     }
     console.log('side nav width changed to ' + this.sidenavWidth);

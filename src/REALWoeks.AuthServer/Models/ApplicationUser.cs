@@ -12,6 +12,7 @@ namespace REALWorks.AuthServer.Models
         public string LastName { get; set; }
         public string UserRole { get; set; }
         public int CustomId { get; set; }
+        public bool IsDisabled { get; set; }
         public string AvatarImgUrl { get; set; }       
         public string Telephone1 { get; set; }
         public string Telephone2 { get; set; }

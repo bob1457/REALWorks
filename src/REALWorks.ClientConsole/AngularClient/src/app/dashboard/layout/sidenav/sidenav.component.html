@@ -18,11 +18,11 @@
             <!--<img src="http://placehold.it/45x45" > http://localhost:58088/Contents/Images/Avatars/default.png        -->
         </div>
 
-        <main class="side" >
+        <main class="side">
             <!-- Side Menu -->
             <mat-nav-list>
                 <mat-list-item>
-                    <mat-icon [routerLink]="['/manage/dash_ui']" [routerLinkActive]="['active']" matListIcon>palette</mat-icon>
+                    <mat-icon style="color: aqua;" [routerLink]="['/manage/dash_ui']" [routerLinkActive]="['active']" matListIcon>palette</mat-icon>
                     <!--<div><i class="fas fa-tachometer-alt" style="float: left;"></i></div>-->
                     <a matLine [routerLink]="['/manage/dash_ui']" [routerLinkActive]="['active']">Dashboard</a>
                     <button mat-icon-button (click)="showInfo(link)">
@@ -31,7 +31,7 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-list-item style="margin-left: -22px;">
-                            <mat-icon matListIcon>layers</mat-icon>
+                            <mat-icon style="color:brown;" matListIcon>layers</mat-icon>
                             <a matLine [routerLinkActive]="['active']">Properties</a>
                             <button mat-icon-button (click)="showInfo(link)">
                         <!--<mat-icon>info</mat-icon>-->
@@ -41,21 +41,21 @@
                     <mat-list>
                         <mat-list-item>
                             <!---->
-                            <mat-icon [routerLink]="['/manage/property']" [routerLinkActive]="['active']" matListIcon>list_alt</mat-icon>
+                            <mat-icon style="color: rgb(72, 173, 219)" [routerLink]="['/manage/property']" [routerLinkActive]="['active']" matListIcon>list_alt</mat-icon>
                             <a matLine [routerLink]="['/manage/property']" [routerLinkActive]="['active']">All List</a>
                             <button mat-icon-button (click)="showInfo(link)">
                     <!--<mat-icon>info</mat-icon>  -->
                 </button>
                         </mat-list-item>
                         <mat-list-item>
-                            <mat-icon [routerLink]="['/manage/property_owner']" [routerLinkActive]="['active']" matListIcon>person</mat-icon>
+                            <mat-icon style="color: rgb(58, 212, 66);" [routerLink]="['/manage/property_owner']" [routerLinkActive]="['active']" matListIcon>person</mat-icon>
                             <a matLine [routerLink]="['/manage/property_owner']" [routerLinkActive]="['active']">Landlords</a>
                             <button mat-icon-button (click)="showInfo(link)">
                     <!--<mat-icon>info</mat-icon>-->
                 </button>
                         </mat-list-item>
                         <mat-list-item>
-                            <mat-icon [routerLink]="['/manage/property_tenant']" [routerLinkActive]="['active']" matListIcon>people</mat-icon>
+                            <mat-icon style="color: rgb(189, 219, 20);" [routerLink]="['/manage/property_tenant']" [routerLinkActive]="['active']" matListIcon>people</mat-icon>
                             <a matLine [routerLink]="['/manage/property_tenant']" [routerLinkActive]="['active']">Tenants</a>
                             <button mat-icon-button (click)="showInfo(link)">
                   <!--<mat-icon>info</mat-icon>--></button>
@@ -64,7 +64,7 @@
                 </mat-expansion-panel>
 
                 <mat-list-item>
-                    <mat-icon [routerLink]="['/manage/lease_rental']" [routerLinkActive]="['active']" matListIcon>library_books</mat-icon>
+                    <mat-icon style="color:yellow;" [routerLink]="['/manage/lease_rental']" [routerLinkActive]="['active']" matListIcon>library_books</mat-icon>
                     <a matLine [routerLink]="['/manage/lease_rental']" [routerLinkActive]="['active']">Lease/Rental</a>
                     <button mat-icon-button (click)="showInfo(link)"></button>
                 </mat-list-item>
@@ -78,7 +78,7 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-list-item style="margin-left: -22px;">
-                            <mat-icon matListIcon>send</mat-icon>
+                            <mat-icon style="color:rgb(231, 21, 21);" matListIcon>send</mat-icon>
                             <a matLine [routerLinkActive]="['active']">Marketing</a>
                             <button mat-icon-button (click)="showInfo(link)">
                     <!--<mat-icon>info</mat-icon>--></button>
@@ -87,19 +87,19 @@
                     <mat-list>
                         <mat-list-item>
                             <!---->
-                            <mat-icon [routerLink]="['/manage/marketing']" [routerLinkActive]="['active']" matListIcon>list_alt</mat-icon>
+                            <mat-icon style="color: rgb(72, 173, 219)" [routerLink]="['/manage/marketing']" [routerLinkActive]="['active']" matListIcon>list_alt</mat-icon>
                             <a matLine [routerLink]="['/manage/marketing']" [routerLinkActive]="['active']">Listing</a>
                             <button mat-icon-button (click)="showInfo(link)"></button>
                         </mat-list-item>
                         <mat-list-item>
                             <!---->
-                            <mat-icon [routerLink]="['/manage/applications']" [routerLinkActive]="['active']" matListIcon>open_in_browser</mat-icon>
+                            <mat-icon style="color: rgb(58, 212, 66);" [routerLink]="['/manage/applications']" [routerLinkActive]="['active']" matListIcon>open_in_browser</mat-icon>
                             <a matLine [routerLink]="['/manage/applications']" [routerLinkActive]="['active']">Applications</a>
                             <button mat-icon-button (click)="showInfo(link)"></button>
                         </mat-list-item>
                         <mat-list-item>
                             <!---->
-                            <mat-icon [routerLink]="['/manage/screening']" [routerLinkActive]="['active']" matListIcon>open_with</mat-icon>
+                            <mat-icon style="color: rgb(189, 219, 20);" [routerLink]="['/manage/screening']" [routerLinkActive]="['active']" matListIcon>open_with</mat-icon>
                             <a matLine [routerLink]="['/manage/screening']" [routerLinkActive]="['active']">Screening</a>
                             <button mat-icon-button (click)="showInfo(link)"></button>
                         </mat-list-item>
@@ -121,7 +121,7 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-list-item style="margin-left: -22px;">
-                            <mat-icon matListIcon>widgets</mat-icon>
+                            <mat-icon style="color: rgb(27, 214, 27);" matListIcon>widgets</mat-icon>
                             <a matLine [routerLinkActive]="['active']">Management</a>
                             <button mat-icon-button (click)="showInfo(link)">
                         <!--<mat-icon>info</mat-icon>-->
@@ -130,7 +130,7 @@
                     </mat-expansion-panel-header>
                     <mat-list>
                         <mat-list-item>
-                            <mat-icon [routerLink]="['/manage/task_list']" [routerLinkActive]="['active']" matListIcon>dialpad</mat-icon>
+                            <mat-icon style="color: rgb(72, 173, 219)" [routerLink]="['/manage/task_list']" [routerLinkActive]="['active']" matListIcon>dialpad</mat-icon>
                             <a matLine [routerLink]="['/manage/task_list']" [routerLinkActive]="['active']">Task List</a>
                             <button mat-icon-button (click)="showInfo(link)">
                     <!--<mat-icon>info</mat-icon>-->
@@ -138,14 +138,14 @@
                         </mat-list-item>
                         <mat-list-item>
                             <!---->
-                            <mat-icon [routerLink]="['/manage/calendar']" [routerLinkActive]="['active']" matListIcon>event</mat-icon>
+                            <mat-icon style="color: rgb(58, 212, 66);" [routerLink]="['/manage/calendar']" [routerLinkActive]="['active']" matListIcon>event</mat-icon>
                             <a matLine [routerLink]="['/manage/calendar']" [routerLinkActive]="['active']">Calendar</a>
                             <button mat-icon-button (click)="showInfo(link)">
                     <!--<mat-icon>info</mat-icon>  -->
                 </button>
                         </mat-list-item>
                         <mat-list-item>
-                            <mat-icon [routerLink]="['/manage/messages']" [routerLinkActive]="['active']" matListIcon>email</mat-icon>
+                            <mat-icon style="color: rgb(189, 219, 20);" [routerLink]="['/manage/messages']" [routerLinkActive]="['active']" matListIcon>email</mat-icon>
                             <a matLine [routerLink]="['/manage/messages']" [routerLinkActive]="['active']">Mail Inbox</a>
                             <!--<button mat-icon-button (click)="showInfo(link)">
                     <mat-icon>info</mat-icon>
@@ -169,14 +169,14 @@
           </button>
         </mat-list-item>-->
                 <mat-list-item>
-                    <mat-icon [routerLink]="['/manage/legal_cases']" [routerLinkActive]="['active']" matListIcon>blur_circular</mat-icon>
+                    <mat-icon style="color: rgb(134, 140, 226)" [routerLink]="['/manage/legal_cases']" [routerLinkActive]="['active']" matListIcon>blur_circular</mat-icon>
                     <a matLine [routerLink]="['/manage/legal_cases']" [routerLinkActive]="['active']">Legal Cases</a>
                     <button mat-icon-button (click)="showInfo(link)">
                         <!--<mat-icon>info</mat-icon>-->
                     </button>
                 </mat-list-item>
                 <mat-list-item>
-                    <mat-icon [routerLink]="['/manage/documentation']" [routerLinkActive]="['active']" matListIcon>import_contacts</mat-icon>
+                    <mat-icon style="color: greenyellow" [routerLink]="['/manage/documentation']" [routerLinkActive]="['active']" matListIcon>import_contacts</mat-icon>
                     <a matLine [routerLink]="['/manage/documentation']" [routerLinkActive]="['active']">Documentation</a>
                     <button mat-icon-button (click)="showInfo(link)">
               <!--<mat-icon>info</mat-icon>-->
@@ -189,7 +189,7 @@
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
                         <mat-list-item style="margin-left: -22px;">
-                            <mat-icon matListIcon>line_style</mat-icon>
+                            <mat-icon style="color: rgb(100, 15, 15)" matListIcon>line_style</mat-icon>
                             <a matLine [routerLinkActive]="['active']">Analytics</a>
                             <button mat-icon-button (click)="showInfo(link)">
                           <!--<mat-icon>info</mat-icon>-->
@@ -198,14 +198,14 @@
                     </mat-expansion-panel-header>
                     <mat-list>
                         <mat-list-item>
-                            <mat-icon [routerLink]="['/manage/overview']" [routerLinkActive]="['active']" matListIcon>dvr</mat-icon>
+                            <mat-icon style="color: rgb(58, 212, 66);" [routerLink]="['/manage/overview']" [routerLinkActive]="['active']" matListIcon>dvr</mat-icon>
                             <a matLine [routerLink]="['/manage/overview']" [routerLinkActive]="['active']">Overview</a>
                             <button mat-icon-button (click)="showInfo(link)">
                       <!--<mat-icon>info</mat-icon>-->
                   </button>
                         </mat-list-item>
                         <mat-list-item>
-                            <mat-icon [routerLink]="['/manage/reporting']" [routerLinkActive]="['active']" matListIcon>insert_chart</mat-icon>
+                            <mat-icon style="color: rgb(189, 219, 20);" [routerLink]="['/manage/reporting']" [routerLinkActive]="['active']" matListIcon>insert_chart</mat-icon>
                             <a matLine [routerLink]="['/manage/reporting']" [routerLinkActive]="['active']">Reporting</a>
                             <!--<button mat-icon-button (click)="showInfo(link)">
                       <mat-icon>info</mat-icon>
@@ -225,7 +225,7 @@
                 </mat-list-item>
 
             </mat-nav-list>
-            
+
         </main>
 
         <div class="navigation-footer">

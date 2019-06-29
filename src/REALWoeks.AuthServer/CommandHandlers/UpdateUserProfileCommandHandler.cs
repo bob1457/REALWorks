@@ -49,7 +49,7 @@ namespace REALWorks.AuthServer.CommandHandlers
                     }
                     catch (Exception ex)
                     {
-                        throw;
+                        throw ex;
                     }
 
                 }

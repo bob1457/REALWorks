@@ -15,9 +15,58 @@ namespace REALWorks.AssetData.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("REALWorks.AssetCore.Entities.FeePayment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("ActualPaymentAmt")
+                        .HasColumnType("decimal(18, 0)");
+
+                    b.Property<decimal?>("Balance")
+                        .HasColumnType("decimal(18, 0)");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("FeeForMonth");
+
+                    b.Property<string>("FeeForYear");
+
+                    b.Property<int>("InChargeOwnerId");
+
+                    b.Property<bool>("IsOnTime");
+
+                    b.Property<int>("ManagementContractId");
+
+                    b.Property<string>("MangementFeeType")
+                        .IsRequired();
+
+                    b.Property<DateTime>("Modified");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(450);
+
+                    b.Property<string>("PayMethod")
+                        .IsRequired();
+
+                    b.Property<DateTime?>("PaymentDueDate");
+
+                    b.Property<DateTime?>("PaymentReceivedDate");
+
+                    b.Property<decimal>("ScheduledPaymentAmt")
+                        .HasColumnType("decimal(18, 0)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManagementContractId");
+
+                    b.ToTable("FeePayment");
+                });
 
             modelBuilder.Entity("REALWorks.AssetCore.Entities.ManagementContract", b =>
                 {
@@ -209,6 +258,14 @@ namespace REALWorks.AssetData.Migrations
                     b.ToTable("PropertyOwner");
                 });
 
+            modelBuilder.Entity("REALWorks.AssetCore.Entities.FeePayment", b =>
+                {
+                    b.HasOne("REALWorks.AssetCore.Entities.ManagementContract", "Contract")
+                        .WithMany("FeePayment")
+                        .HasForeignKey("ManagementContractId")
+                        .HasConstraintName("FK_FeePayment_ManagementContract");
+                });
+
             modelBuilder.Entity("REALWorks.AssetCore.Entities.ManagementContract", b =>
                 {
                     b.HasOne("REALWorks.AssetCore.Entities.Property", "Property")
@@ -234,7 +291,7 @@ namespace REALWorks.AssetData.Migrations
                 {
                     b.OwnsOne("REALWorks.AssetCore.ValueObjects.PropertyAddress", "Address", b1 =>
                         {
-                            b1.Property<int?>("PropertyId");
+                            b1.Property<int>("PropertyId");
 
                             b1.Property<string>("GpslatitudeValue");
 
@@ -254,6 +311,8 @@ namespace REALWorks.AssetData.Migrations
 
                             b1.Property<string>("PropertyZipPostCode");
 
+                            b1.HasKey("PropertyId");
+
                             b1.ToTable("PropertyAddress");
 
                             b1.HasOne("REALWorks.AssetCore.Entities.Property")
@@ -264,7 +323,7 @@ namespace REALWorks.AssetData.Migrations
 
                     b.OwnsOne("REALWorks.AssetCore.ValueObjects.PropertyFacility", "Facility", b1 =>
                         {
-                            b1.Property<int?>("PropertyId");
+                            b1.Property<int>("PropertyId");
 
                             b1.Property<bool>("AirConditioner");
 
@@ -294,6 +353,8 @@ namespace REALWorks.AssetData.Migrations
 
                             b1.Property<bool>("UtilityIncluded");
 
+                            b1.HasKey("PropertyId");
+
                             b1.ToTable("PropertyFacility");
 
                             b1.HasOne("REALWorks.AssetCore.Entities.Property")
@@ -304,7 +365,7 @@ namespace REALWorks.AssetData.Migrations
 
                     b.OwnsOne("REALWorks.AssetCore.ValueObjects.PropertyFeature", "Feature", b1 =>
                         {
-                            b1.Property<int?>("PropertyId");
+                            b1.Property<int>("PropertyId");
 
                             b1.Property<bool>("BasementAvailable");
 
@@ -322,6 +383,8 @@ namespace REALWorks.AssetData.Migrations
 
                             b1.Property<int>("TotalLivingArea");
 
+                            b1.HasKey("PropertyId");
+
                             b1.ToTable("PropertyFeature");
 
                             b1.HasOne("REALWorks.AssetCore.Entities.Property")
@@ -337,6 +400,33 @@ namespace REALWorks.AssetData.Migrations
                         .WithMany("PropertyImg")
                         .HasForeignKey("PropertyId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("REALWorks.AssetCore.Entities.PropertyOwner", b =>
+                {
+                    b.OwnsOne("REALWorks.AssetCore.ValueObjects.OwnerAddress", "Address", b1 =>
+                        {
+                            b1.Property<int>("PropertyOwnerId");
+
+                            b1.Property<string>("City");
+
+                            b1.Property<string>("Country");
+
+                            b1.Property<string>("StateProvince");
+
+                            b1.Property<string>("StreetNumber");
+
+                            b1.Property<string>("ZipPostCode");
+
+                            b1.HasKey("PropertyOwnerId");
+
+                            b1.ToTable("OwnerAddress");
+
+                            b1.HasOne("REALWorks.AssetCore.Entities.PropertyOwner")
+                                .WithOne("Address")
+                                .HasForeignKey("REALWorks.AssetCore.ValueObjects.OwnerAddress", "PropertyOwnerId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 #pragma warning restore 612, 618
         }

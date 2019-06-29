@@ -1,0 +1,85 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/Property/all",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 19807
+        }
+      ],
+      "UpstreamPathTemplate": "/properties",
+      "UpstreamHttpMethod": []
+
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 19807
+        }
+      ],
+      "UpstreamPathTemplate": "/property/{id}",
+      "UpstreamHttpMethod": [] // authentication is set on resources server side, i.e. web api level
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "TestKey",
+      //  "AllowedScopes": []
+      //}
+
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/status/state",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 19807
+        }
+      ],
+      "UpstreamPathTemplate": "/property/status/state",
+      "UpstreamHttpMethod": ["POST"]
+
+    },
+
+
+
+
+
+
+
+    {
+      "DownstreamPathTemplate": "/api/Listing/all",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 63899
+        }
+      ],
+      "UpstreamPathTemplate": "/listings",
+      "UpstreamHttpMethod": []
+
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 63899
+        }
+      ],
+      "UpstreamPathTemplate": "/listing/{id}",
+      "UpstreamHttpMethod": []
+
+    }
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "AdministrationPath": "/administration"
+  }
+
+}

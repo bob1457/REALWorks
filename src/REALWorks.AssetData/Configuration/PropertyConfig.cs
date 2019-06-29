@@ -12,6 +12,8 @@ namespace REALWorks.AssetData.Configuration
     {
         public void Configure(EntityTypeBuilder<Property> entity)
         {
+            //entity.Property(e => e.Id);
+
             entity.Property(e => e.IsActive)
                 .IsRequired()
                 .HasDefaultValueSql("((1))");
