@@ -12,7 +12,7 @@ using REALWorks.MessagingServer.Messages;
 namespace REALWorks.AssetServer.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class PropertyController : ControllerBase
     {

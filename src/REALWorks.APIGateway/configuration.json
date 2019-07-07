@@ -13,11 +13,11 @@
         }
       ],
       "UpstreamPathTemplate": "/properties",
-      "UpstreamHttpMethod": []//,
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "TestKey",
-      //  "AllowedScopes": []
-      //}
+      "UpstreamHttpMethod": [],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
 
     },
     {
@@ -30,11 +30,11 @@
         }
       ],
       "UpstreamPathTemplate": "/property/{id}",
-      "UpstreamHttpMethod": []//, // authentication is set on resources server side, i.e. web api level
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "TestKey",
-      //  "AllowedScopes": []
-      //}
+      "UpstreamHttpMethod": [], // authentication DOES NOT to be set on resources server side, i.e. web api level
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
 
     },
     {

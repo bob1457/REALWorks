@@ -28,6 +28,7 @@ namespace REALWorks.APIGateway
             var builder = new ConfigurationBuilder();
             builder.SetBasePath(env.ContentRootPath)
                    .AddJsonFile("configuration.json", optional: false, reloadOnChange: true)
+                   .AddJsonFile("appsettings.json")
                    .AddEnvironmentVariables();
 
             // Init Serilog configuration
@@ -46,19 +47,32 @@ namespace REALWorks.APIGateway
         {
             var authenticationProviderKey = "TestKey";
 
+            //var jwtBearerOptionParameters = new TokenValidationParameters()
+            //{
+            //    ValidateActor = false,
+            //    ValidateAudience = true,
+            //    ValidateLifetime = true,
+            //    ValidateIssuerSigningKey = true,
+            //    ValidIssuer = Configuration["Token:Issuer"],
+            //    ValidAudience = Configuration["Token:Audience"],
+            //    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
+            //};
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddCookie()
             .AddJwtBearer(authenticationProviderKey, jwtBearerOptions =>
             {
                 jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
                 {
+                    ValidateIssuer = true,
                     ValidateActor = false,
                     ValidateAudience = true,
                     ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["Token:Issuer"],
-                    ValidAudience = Configuration["Token:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
+                    ValidIssuer = Configuration["Token:Issuer"], //"issuer",
+                    ValidAudience = Configuration["Token:Audience"],// "audience",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"])) //"2746EF6C-9858-4C8D-935E-20CC6EBB80A2"
                 };
             });
 
@@ -114,6 +128,8 @@ namespace REALWorks.APIGateway
             
 
             loggerFactory.AddSerilog();
+
+            app.UseAuthentication();
 
             app.UseMvc();
             app.UseOcelot().Wait();
