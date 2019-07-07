@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Serilog;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace REALWorks.APIGateway
 {
@@ -47,7 +48,7 @@ namespace REALWorks.APIGateway
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddCookie()
-            .AddJwtBearer(/*authenticationProviderKey, */jwtBearerOptions =>
+            .AddJwtBearer(authenticationProviderKey, jwtBearerOptions =>
             {
                 jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
                 {
@@ -61,6 +62,18 @@ namespace REALWorks.APIGateway
                 };
             });
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "API Gateway",
+                    Description = "API Gateway",
+                    TermsOfService = "None",
+                    Contact = new Contact() { Name = "Talking Dotnet", Email = "contact@talkingdotnet.com", Url = "www.talkingdotnet.com" }
+                });
+            });
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
@@ -70,6 +83,8 @@ namespace REALWorks.APIGateway
                     .SetIsOriginAllowed((host) => true)
                     .AllowCredentials());
             });
+
+            services.AddMvc();
 
             services.AddOcelot(Configuration);
         }
@@ -82,10 +97,25 @@ namespace REALWorks.APIGateway
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
+            //app.UseAuthentication();
+            //app.UseDefaultFiles();
+            app.UseDefaultFiles();
+
             app.UseCors("CorsPolicy");
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Marketing Management API V1");
+                c.RoutePrefix = string.Empty;
+            });
+            
 
             loggerFactory.AddSerilog();
 
+            app.UseMvc();
             app.UseOcelot().Wait();
 
             //app.Run(async (context) =>

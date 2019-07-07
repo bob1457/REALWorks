@@ -17,6 +17,7 @@ using System.Text;
 using MediatR;
 using Serilog;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace REALWorks.AuthServer
 {
@@ -68,9 +69,21 @@ namespace REALWorks.AuthServer
                 };
              });
 
-        // CORS
-        // Add service and create Policy with options 
-        services.AddCors(options => {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "Authentication",
+                    Description = "Authentication Web API",
+                    TermsOfService = "None",
+                    Contact = new Contact() { Name = "Talking Dotnet", Email = "contact@talkingdotnet.com", Url = "www.talkingdotnet.com" }
+                });
+            });
+
+            // CORS
+            // Add service and create Policy with options 
+            services.AddCors(options => {
           options.AddPolicy("CorsPolicy",
             b => b.AllowAnyOrigin()
                               .AllowAnyMethod()
@@ -85,15 +98,6 @@ namespace REALWorks.AuthServer
         services.AddMvc();
 
     }
-
-
-
-
-
-
-
-
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -113,9 +117,18 @@ namespace REALWorks.AuthServer
             app.UseDefaultFiles();
             app.UseDefaultFiles();
 
-            app.UseCors("CorsPolicy");
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Marketing Management API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             loggerFactory.AddSerilog();
+
+            app.UseCors("CorsPolicy");
+
+            //loggerFactory.AddSerilog();
 
             app.UseMvc();
 
