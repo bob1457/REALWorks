@@ -27,6 +27,7 @@ namespace REALWorks.AuthServer
             // Init Serilog configuration
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
+                .Enrich.WithProperty("Application", "Authentication Service")
                 //.WriteTo.Seq("http://localhost:5341") // temporarily disabled so that the logs written to log files in E:\Temp\real --- by default
                 .CreateLogger();
             Configuration = configuration;

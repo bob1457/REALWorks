@@ -32,7 +32,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             {
                 await _context.SaveChangesAsync(); // comment out for testing message sending ONLY
 
-                Log.Information("Then vendor  {VendorName} has been added successfully", vendor.VendorBusinessName);
+                Log.Information("The vendor  {VendorName} has been added successfully", vendor.VendorBusinessName);
             }
             catch (Exception ex)
             {

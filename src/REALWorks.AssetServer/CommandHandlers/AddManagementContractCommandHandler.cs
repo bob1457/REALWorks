@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,10 +40,15 @@ namespace REALWorks.AssetServer.CommandHandlers
             {
                 await _context.SaveChangesAsync();
 
+                // logging
+                Log.Information("A management contract for the property {PorpertyName} has been added successfully", property.PropertyName);
+
+                // Send messages if necessary
             }
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
+                Log.Error(ex, "Error occured while adding management contract to the property {PropertyName}.", property.PropertyName);
             }
 
             return true;

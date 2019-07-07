@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,10 +34,16 @@ namespace REALWorks.AssetServer.CommandHandlers
             try
             {
                 await _context.SaveChangesAsync();
+
+                // logging
+                Log.Information("The management contract for the property {PorpertyName} has been updated successfully", contract.Property.PropertyName);
+
+                // Send messages if necessary
             }
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
+                Log.Error(ex, "Error occured while updating the management contract for the property {PropertyName}.", contract.Property.PropertyName);
             }
 
             return true;

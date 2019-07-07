@@ -53,7 +53,7 @@ namespace REALWorks.AuthServer.CommandHandlers
             {
                 //return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
                 //throw new HttpException(401, "Unauthorized access");
-                _logger.LogInformation("User: " + request.UserName + " failed to login.");
+                _logger.LogInformation("User " + request.UserName + " failed to login.");
                 //return new LoginCommandResult() { token = null, user = null, errorMessage = "Login failed!" };
                 //return new LoginCommandResult();
                 return null;
@@ -63,7 +63,7 @@ namespace REALWorks.AuthServer.CommandHandlers
             //
             if(user.IsDisabled == true)
             {
-                _logger.LogInformation("Disabled user: " + request.UserName + " tried to login.");
+                _logger.LogInformation("Disabled user " + request.UserName + " tried to login.");
                 return new LoginCommandResult();
             }
 
@@ -97,7 +97,7 @@ namespace REALWorks.AuthServer.CommandHandlers
 
 
             var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
-            _logger.LogInformation("User: " + request.UserName + " logged in.");
+            _logger.LogInformation("User " + request.UserName + " logged in.");
 
             
             return new LoginCommandResult() { token = encodedToken, user = user };

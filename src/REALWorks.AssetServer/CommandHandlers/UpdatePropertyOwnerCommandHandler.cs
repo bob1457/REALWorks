@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,10 +39,17 @@ namespace REALWorks.AssetServer.CommandHandlers
             try
             {
                 await _context.SaveChangesAsync();
+
+                // logging
+                Log.Information("The owner {OwnerName} for the property {PorpertyName} has been updated successfully", owner.FirstName + " " + owner.LastName, property.PropertyName);
+
+                // Send messages if necessary
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
+                Log.Error(ex, "Error occured while updating the owner for the property {PropertyName}.", property.PropertyName);
             }
 
             return true;

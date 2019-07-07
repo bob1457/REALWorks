@@ -2,6 +2,7 @@
 using REALWorks.AssetCore.Entities;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -52,12 +53,18 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             try
             {
-                await _context.SaveChangesAsync();               
+                await _context.SaveChangesAsync();
+
+                // logging
+                Log.Information("An image for the property {PorpertyName} has been added successfully", property.PropertyName);
+
+                // Send messages if necessary
 
             }
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
+                Log.Error(ex, "Error occured while adding image to the property {PropertyName}.", property.PropertyName);
             }
 
             return true;

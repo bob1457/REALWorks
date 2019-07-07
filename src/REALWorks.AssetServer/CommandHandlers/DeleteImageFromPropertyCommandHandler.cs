@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,11 +37,17 @@ namespace REALWorks.AssetServer.CommandHandlers
             try
             {
                 await _context.SaveChangesAsync();
-               
+
+                // logging
+                Log.Information("The image for the property {PorpertyName} has been deleted/ successfully", image.Property.PropertyName);
+
+                // Send messages if necessary
+
             }
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
+                Log.Error(ex, "Error occured while deleting the image for the property {PropertyName}.", image.Property.PropertyName);
             }
 
             string fileToBeDeleted = filePath + "\\" + fileName;

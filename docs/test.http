@@ -236,10 +236,19 @@ content-type: application/json
 
 ###
 
-GET http://localhost:63899/api/Listing/4 HTTP/1.1
-content-type: application/json
+GET http://localhost:21799/Listing/4 HTTP/1.1
+content-type: application/json]
+
+Authorization: Bearer "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI3MTg3YjBhOS1iZjFiLTRkNTAtODRhZS05NGYxYjhiNDQ3YmUiLCJuYmYiOjE1NjIzNTU4OTcsImV4cCI6MTU2NzUzOTg5NywiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.OSmGjgUbdnSNYmVlS5Fcz_fzZ7ZeiqpeQRRN0TDntv8"
 ###
 
+
+
+###
+GET http://localhost:21799/properties HTTP/1.1
+content-type: application/json
+
+###
 
 ###
 

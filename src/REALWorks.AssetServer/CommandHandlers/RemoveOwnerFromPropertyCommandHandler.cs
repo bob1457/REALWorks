@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,8 @@ namespace REALWorks.AssetServer.CommandHandlers
 
         public async Task<string> Handle(RemoveOwnerFromPropertyCommand request, CancellationToken cancellationToken)
         {
-            var numOfgOwners = _context.OwnerProperty.Where(p => p.PropertyId == request.PropertyId).Count();           
+            var numOfgOwners = _context.OwnerProperty.Where(p => p.PropertyId == request.PropertyId).Count();
+            var property = _context.Property.FirstOrDefault(i => i.Id == request.PropertyId);
 
             if (numOfgOwners >= 2)
             {
@@ -33,11 +35,18 @@ namespace REALWorks.AssetServer.CommandHandlers
                 {
                     await _context.SaveChangesAsync();
 
-                    return "Onwer has been removed from the property";
+                    //return "Onwer has been removed from the property";
+
+                    // logging
+                    Log.Information("The owner {OwnerName} has been removed from the property {PorpertyName} has been added successfully", 
+                        ownerToRemove.PropertyOwner.FirstName + " " + ownerToRemove.PropertyOwner.LastName, property.PropertyName);
+
+                    // Send messages if necessary
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    //throw ex;
+                    Log.Error(ex, "Error occured while deleting the owner for the property {PropertyName}.", property.PropertyName);
                 }
             }           
 

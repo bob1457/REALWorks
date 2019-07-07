@@ -109,7 +109,7 @@ namespace REALWorks.AssetServer.CommandHandlers
                 request.CreatedDate = property.Created;
                 request.UpdateDate = property.Modified;
 
-                Log.Information("Property with id {PropertyId} has been successfully created.", property.Id + ": " + property.PropertyName );
+                Log.Information("Property with id {PropertyName} has been successfully created.", property.PropertyName );
 
                
                 // Publish Domain Event (MediatR pattern)
@@ -141,7 +141,7 @@ namespace REALWorks.AssetServer.CommandHandlers
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Error while handling {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
+                    Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
                 }
                 
 

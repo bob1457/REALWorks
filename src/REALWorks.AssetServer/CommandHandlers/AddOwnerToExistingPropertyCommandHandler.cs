@@ -2,6 +2,7 @@
 using REALWorks.AssetCore.ValueObjects;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,13 +47,20 @@ namespace REALWorks.AssetServer.CommandHandlers
             {
                 await _context.SaveChangesAsync();
 
-                return true;
+                // logging
+                Log.Information("The new owner {OwnerName} has been added to the property {PorpertyName} successfully", request.FirstName + " " + request.LastName, property.PropertyName);
+
+                // Send messages if necessary
+
+               
             }
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
+                Log.Error(ex, "Error occured while adding the new owner {OwnerName} to the property {PropertyName}.", request.FirstName + " " + request.LastName, property.PropertyName);
             }
 
+            return true;
         }
 
 

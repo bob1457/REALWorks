@@ -1,6 +1,9 @@
 {
   "ReRoutes": [
+    // Asset management services
+    //
     {
+
       "DownstreamPathTemplate": "/api/Property/all",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -31,6 +34,42 @@
 
     },
     {
+      "DownstreamPathTemplate": "/api/Property/asset",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 19807
+        }
+      ],
+      "UpstreamPathTemplate": "/property/asset",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/remove",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 19807
+        }
+      ],
+      "UpstreamPathTemplate": "/property/remove",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/update",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 19807
+        }
+      ],
+      "UpstreamPathTemplate": "/property/update",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Property/status/state",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -40,8 +79,7 @@
         }
       ],
       "UpstreamPathTemplate": "/property/status/state",
-      "UpstreamHttpMethod": ["POST"]
-
+      "UpstreamHttpMethod": [ "POST" ]
     },
 
 
@@ -49,7 +87,8 @@
 
 
 
-
+    // Marketing management services
+    //
     {
       "DownstreamPathTemplate": "/api/Listing/all",
       "DownstreamScheme": "http",

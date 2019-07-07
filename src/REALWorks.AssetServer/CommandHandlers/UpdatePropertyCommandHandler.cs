@@ -3,6 +3,7 @@ using REALWorks.AssetCore.Entities;
 using REALWorks.AssetCore.ValueObjects;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,11 +52,17 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             try
             {
-                await _context.SaveChangesAsync();                
+                await _context.SaveChangesAsync();
+
+                // logging
+                Log.Information("The property {PorpertyName} has been updated successfully", ppt.PropertyName);
+
+                // Send messages if necessary
             }
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
+                Log.Error(ex, "Error occured while deleting the image for the property {PropertyName}.", ppt.PropertyName);
             }
 
             return true;

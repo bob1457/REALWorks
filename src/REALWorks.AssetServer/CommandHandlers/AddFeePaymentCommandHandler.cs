@@ -2,6 +2,7 @@
 using REALWorks.AssetCore.Entities;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,13 +33,15 @@ namespace REALWorks.AssetServer.CommandHandlers
                 await _context.SaveChangesAsync();
 
                 // logging
+                Log.Information("Fee payment on contract {ContractId} has been added successfully", fee.ManagementContractId);
 
                 // Send messages if necessary
 
             }
             catch (Exception ex)
             {
-                throw ex;
+                //throw ex;
+                Log.Error(ex, "Error occured while adding fee payment on contract {ContractId}.", fee.ManagementContractId);
             }
 
             return await Unit.Task;
