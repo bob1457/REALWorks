@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using REALWorks.InfrastructureServer.ServiceDiscovery;
 using REALWorks.MarketingData;
 using REALWorks.MessagingServer.Messages;
 using Serilog;
@@ -70,7 +71,7 @@ namespace REALWorks.MarketingService
                 };
             });
 
-
+            ConfigureConsul(services);
 
 
             services.AddSwaggerGen(c =>
@@ -99,6 +100,30 @@ namespace REALWorks.MarketingService
 
             services.AddMvc()
                 .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+        }
+
+        // Register Consul Service
+        //
+        private void ConfigureConsul(IServiceCollection services)
+        {
+            //throw new NotImplementedException();
+
+            //var serviceConfig = Configuration.GetServiceConfig();
+
+            var serviceConfig = new ServiceConfig
+            {
+                ServiceDiscoveryAddress = Configuration.GetValue<Uri>("ServiceConfig:serviceDiscoveryAddress"),
+                ServiceAddress = Configuration.GetValue<Uri>("ServiceConfig:serviceAddress"),
+                ServiceName = Configuration.GetValue<string>("ServiceConfig:serviceName"),
+                ServiceId = Configuration.GetValue<string>("ServiceConfig:serviceId")
+            };
+
+            //serviceConfig.ServiceDiscoveryAddress = (Uri)Configuration.GetSection("serviceDiscoveryAddress");
+            //serviceConfig.ServiceAddress = (Uri)Configuration.GetSection("serviceAddress");
+            //serviceConfig.ServiceId = Configuration.GetSection("serviceId").ToString();
+            //serviceConfig.ServiceName = Configuration.GetSection("serviceName").ToString();
+
+            services.RegisterConsulServices(serviceConfig);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Consul;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -27,8 +28,8 @@ namespace REALWorks.APIGateway
         {
             var builder = new ConfigurationBuilder();
             builder.SetBasePath(env.ContentRootPath)
-                   .AddJsonFile("configuration.json", optional: false, reloadOnChange: true)
-                   .AddJsonFile("appsettings.json")
+                   //.AddJsonFile("configuration.json", optional: false, reloadOnChange: true)
+                   .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                    .AddEnvironmentVariables();
 
             // Init Serilog configuration
@@ -70,9 +71,9 @@ namespace REALWorks.APIGateway
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["Token:Issuer"], //"issuer",
-                    ValidAudience = Configuration["Token:Audience"],// "audience",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"])) //"2746EF6C-9858-4C8D-935E-20CC6EBB80A2"
+                    ValidIssuer =  Configuration["Token:Issuer"], //"issuer",
+                    ValidAudience =  Configuration["Token:Audience"],// "audience",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"])) //"2746EF6C-9858-4C8D-935E-20CC6EBB80A2" 
                 };
             });
 
@@ -100,7 +101,10 @@ namespace REALWorks.APIGateway
 
             services.AddMvc();
 
-            services.AddOcelot(Configuration);
+            services
+                //.AddOcelot(Configuration)
+                .AddOcelot()
+                .AddConsul();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

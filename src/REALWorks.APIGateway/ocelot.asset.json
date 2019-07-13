@@ -1,9 +1,6 @@
 {
   "ReRoutes": [
-    // Asset management services
-    //
     {
-
       //"DownstreamPathTemplate": "/api/Property/all",
       //"DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
@@ -119,56 +116,7 @@
         "AuthenticationProviderKey": "TestKey",
         "AllowedScopes": []
       }
-    },
-
-
-
-
-
-
-    // Marketing management services
-    //
-    {
-      "DownstreamPathTemplate": "/api/Listing/all",
-      "DownstreamScheme": "http",
-      //"DownstreamHostAndPorts": [
-      //  {
-      //    "Host": "localhost",
-      //    "Port": 63899
-      //  }
-      //],
-      //"UpstreamPathTemplate": "/listings",
-      //"UpstreamHttpMethod": []
-      "ServiceName": "MarketingManager",
-      "UpstreamPathTemplate": "/listings",
-      "UpstreamHttpMethod": [ "Get" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "TestKey",
-        "AllowedScopes": []
-      }
-    },
-    {
-      "DownstreamPathTemplate": "/api/Listing/{id}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 63899
-        }
-      ],
-      "UpstreamPathTemplate": "/listing/{id}",
-      "UpstreamHttpMethod": []
-
     }
-  ],
-  "GlobalConfiguration": {
-    "RequestIdKey": "OcRequestId",
-    "AdministrationPath": "/administration",
-    "ServiceDiscoveryProvider": {
-      "Host": "localhost",
-      "Port": 8500,
-      "Type": "Consul"
-    }
-  }
+  ]
 
 }

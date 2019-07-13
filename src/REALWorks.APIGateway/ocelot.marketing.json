@@ -1,0 +1,25 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/Listing/all",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listings",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    }
+  ]
+ 
+
+}

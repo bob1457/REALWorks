@@ -12,8 +12,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="2.2.3" />
+    <PackageReference Include="AspNetCore.HealthChecks.Publisher.Seq" Version="2.2.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="2.2.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="2.2.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.System" Version="2.2.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="2.2.32" />
     <PackageReference Include="Autofac" Version="4.9.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Consul" Version="0.7.2.6" />
     <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="MediatR" Version="6.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="6.0.1" />
@@ -35,6 +42,7 @@
     <ProjectReference Include="..\REALWoeks.AuthServer\REALWorks.AuthServer.csproj" />
     <ProjectReference Include="..\REALWorks.AssetCore\REALWorks.AssetCore.csproj" />
     <ProjectReference Include="..\REALWorks.AssetData\REALWorks.AssetData.csproj" />
+    <ProjectReference Include="..\REALWorks.InfrastructureServer\REALWorks.InfrastructureServer.csproj" />
     <ProjectReference Include="..\REALWorks.MessagingServer\REALWorks.MessagingServer.csproj" />
   </ItemGroup>
 

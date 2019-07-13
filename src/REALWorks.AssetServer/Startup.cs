@@ -25,6 +25,8 @@ using REALWorks.MessagingServer.EventBusRabbitMQ;
 using REALWorks.MessagingServer.Messages;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
+using Consul;
+using REALWorks.InfrastructureServer.ServiceDiscovery;
 
 namespace REALWorks.AssetServer
 {
@@ -82,8 +84,19 @@ namespace REALWorks.AssetServer
                 };
             });
 
+            //services.Configure<ConsulConfig>(Configuration.GetSection("Consul"));
+            //services.AddSingleton<IConsulClient, ConsulClient>(p =>
+            //{
+            //    var address = Configuration["Consul:Adress"];
+            //    Con 
+            //});
+
+            ConfigureConsul(services);
+
             services.AddTransient<IMessageLoggingService, MessageLoggingService>();
             services.AddTransient<IMessageContext, MessageContext>();
+
+            services.AddHealthChecks(); // Registers health check services
 
             /*
 
@@ -149,6 +162,31 @@ namespace REALWorks.AssetServer
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
         }
 
+        // Register Consul Service
+        //
+        private void ConfigureConsul(IServiceCollection services)
+        {
+            //throw new NotImplementedException();
+
+            //var serviceConfig = Configuration.GetServiceConfig();
+
+            var serviceConfig = new ServiceConfig
+            {
+                ServiceDiscoveryAddress = Configuration.GetValue<Uri>("ServiceConfig:serviceDiscoveryAddress"),
+                ServiceAddress = Configuration.GetValue<Uri>("ServiceConfig:serviceAddress"),
+                ServiceName = Configuration.GetValue<string>("ServiceConfig:serviceName"),
+                ServiceId = Configuration.GetValue<string>("ServiceConfig:serviceId")
+            };
+
+            //serviceConfig.ServiceDiscoveryAddress = (Uri)Configuration.GetSection("serviceDiscoveryAddress");
+            //serviceConfig.ServiceAddress = (Uri)Configuration.GetSection("serviceAddress");
+            //serviceConfig.ServiceId = Configuration.GetSection("serviceId").ToString();
+            //serviceConfig.ServiceName = Configuration.GetSection("serviceName").ToString();
+
+            services.RegisterConsulServices(serviceConfig);
+            
+        }
+
         #region TO DO MORE INVESTIGATION
         /*
         private void RegisterEventBus(IServiceCollection services)
@@ -211,10 +249,17 @@ namespace REALWorks.AssetServer
 
             loggerFactory.AddSerilog();
 
+            app.UseHealthChecks("/hc");
+
             app.UseMvc();
 
            
         }
+
+
+        // Custom health check
+
+
 
         #region TO DO MORE INVESTIGATION
         /*

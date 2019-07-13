@@ -207,7 +207,7 @@ content-type: application/json
 
 {
   "password": "Bob@123456",
-"username": "bob"
+  "username": "bob"
 }
 ###
 
@@ -237,17 +237,17 @@ content-type: application/json
 ###
 
 GET http://localhost:21799/Listing/4 HTTP/1.1
-content-type: application/json]
-
-Authorization: Bearer "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI3MTg3YjBhOS1iZjFiLTRkNTAtODRhZS05NGYxYjhiNDQ3YmUiLCJuYmYiOjE1NjIzNTU4OTcsImV4cCI6MTU2NzUzOTg5NywiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.OSmGjgUbdnSNYmVlS5Fcz_fzZ7ZeiqpeQRRN0TDntv8"
-###
-
-
-
-###
-GET http://localhost:21799/properties HTTP/1.1
 content-type: application/json
 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI3MTg3YjBhOS1iZjFiLTRkNTAtODRhZS05NGYxYjhiNDQ3YmUiLCJuYmYiOjE1NjIzNTU4OTcsImV4cCI6MTU2NzUzOTg5NywiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.OSmGjgUbdnSNYmVlS5Fcz_fzZ7ZeiqpeQRRN0TDntv8
+###
+
+
+
+###
+GET http://localhost:21799/property/all HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiJjNWU3OTNiMC1lNmI3LTQ0MjMtYWJlMC1jNDk5OTNmYzc5MmUiLCJuYmYiOjE1NjI5OTQ5MDgsImV4cCI6MTU2ODE3ODkwOCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.e2djV3c0zaoFd-G4TlIgGwTb2OFf6ytpeAJleoJ-Tkc
 ###
 
 ###
