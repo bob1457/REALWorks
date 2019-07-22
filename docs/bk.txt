@@ -1,0 +1,15 @@
+Infrastructure Ref:
+
+1. Consul
+
+command line to c:/consul, run (./)consul agent dev
+
+2. RabbitMQ:
+
+container: 
+
+4. Seq
+
+contianer:
+
+docker run -d -e ACCEPT_EULA=Y -v /path/to/seq/data:/data -p 8001:80 -p 5341:5341 datalust/seq:latest

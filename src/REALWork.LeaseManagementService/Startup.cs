@@ -140,7 +140,7 @@ namespace REALWork.LeaseManagementService
             services.AddMvc()//.SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddOptions();
+            services.AddOptions();            
 
             var container = new ContainerBuilder();
             container.Populate(services);
@@ -196,6 +196,8 @@ namespace REALWork.LeaseManagementService
             app.UseHttpsRedirection();
 
             loggerFactory.AddSerilog();
+
+            app.UseCors("CorsPolicy");
 
             app.UseMvc();
 

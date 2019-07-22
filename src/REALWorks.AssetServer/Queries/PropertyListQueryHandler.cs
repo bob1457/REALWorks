@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Services.ViewModels;
 using System;
@@ -21,7 +22,8 @@ namespace REALWorks.AssetServer.Queries
         public async Task<IQueryable<PropertyListViewModel>> Handle(PropertyListQuery request, CancellationToken cancellationToken)
         {
 
-            var propertyList = (from p in _context.Property                            
+            var propertyList = (from p in _context.Property.Include(a => a.Address) 
+                                
                                 
                                 select new PropertyListViewModel
                                 {
@@ -32,6 +34,13 @@ namespace REALWorks.AssetServer.Queries
                                     IsShared = p.IsShared,
                                     Status = p.Status.ToString(),
                                     PropertyType1 = p.Type.ToString(),
+                                    PropertySuiteNumber = p.Address.PropertySuiteNumber,
+                                    PropertyNumber = p.Address.PropertyNumber,
+                                    PropertyStreet = p.Address.PropertyStreet,
+                                    PropertyCity = p.Address.PropertyCity,
+                                    PropertyStateProvince = p.Address.PropertyStateProvince,
+                                    PropertyZipPostCode = p.Address.PropertyZipPostCode,
+                                    PropertyCountry = p.Address.PropertyCountry,
                                     CreatedDate = p.Created,
                                     UpdateDate = p.Modified
 

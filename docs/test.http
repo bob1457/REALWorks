@@ -109,6 +109,18 @@ content-type: application/json
 }
 
 ###
+POST http://localhost:21799/Property/status/state HTTP/1.1
+content-type: application/json
+
+{
+  "id": 1,
+  "status": 2
+}
+###
+
+###
+
+
 
 
 ###
@@ -207,7 +219,7 @@ content-type: application/json
 
 {
   "password": "Bob@123456",
-  "username": "bob"
+"username": "bob"
 }
 ###
 
@@ -236,19 +248,10 @@ content-type: application/json
 
 ###
 
-GET http://localhost:21799/Listing/4 HTTP/1.1
+GET http://localhost:63899/api/Listing/4 HTTP/1.1
 content-type: application/json
-
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI3MTg3YjBhOS1iZjFiLTRkNTAtODRhZS05NGYxYjhiNDQ3YmUiLCJuYmYiOjE1NjIzNTU4OTcsImV4cCI6MTU2NzUzOTg5NywiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.OSmGjgUbdnSNYmVlS5Fcz_fzZ7ZeiqpeQRRN0TDntv8
 ###
 
-
-
-###
-GET http://localhost:21799/property/all HTTP/1.1
-content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiJjNWU3OTNiMC1lNmI3LTQ0MjMtYWJlMC1jNDk5OTNmYzc5MmUiLCJuYmYiOjE1NjI5OTQ5MDgsImV4cCI6MTU2ODE3ODkwOCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.e2djV3c0zaoFd-G4TlIgGwTb2OFf6ytpeAJleoJ-Tkc
-###
 
 ###
 
@@ -342,6 +345,28 @@ content-type: application/json
 ###
 GET http://localhost:19807/api/Property/feehistory/1/1 HTTP/1.1
 content-type: application/json
+###
+
+
+###
+GET http://localhost:21799/property/all HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiJiZjVmZTc0ZC02ZTZiLTQxNmEtOGQyNS02NzFhMmIwY2FiNzEiLCJuYmYiOjE1NjI5NTQ4MjUsImV4cCI6MTU2ODEzODgyNSwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ._Bt-yqfJGNyeKC2FrzefeobQj-_tsT2Z8hqBONn_rrg
+###
+
+
+###
+GET http://localhost:21799/listings HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiIyNjI5MTU0Yi1jM2JmLTQzNzYtOWI3MS03NDBhYzJjMjAzOTYiLCJuYmYiOjE1NjIwODMzMTgsImV4cCI6MTU2NzI2NzMxOCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.diBUTZlzJPNzh8hAJf2v0rugE-0WrioYcLn3TgWFXUg
+###
+
+
+
+###
+GET http://localhost:21799/property/all HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiIyNjI5MTU0Yi1jM2JmLTQzNzYtOWI3MS03NDBhYzJjMjAzOTYiLCJuYmYiOjE1NjIwODMzMTgsImV4cCI6MTU2NzI2NzMxOCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.diBUTZlzJPNzh8hAJf2v0rugE-0WrioYcLn3TgWFXUg
 ###
 
 

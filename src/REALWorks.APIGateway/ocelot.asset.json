@@ -34,8 +34,8 @@
       //],
       "ServiceName": "AssetManager",
       "UpstreamPathTemplate": "/property/{id}",
-      "UpstreamHttpMethod": ["Get"], 
-      "AuthenticationOptions": {          // authentication DOES NOT to be set on resources server side, i.e. web api level
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
         "AuthenticationProviderKey": "TestKey",
         "AllowedScopes": []
       }
@@ -112,6 +112,197 @@
       "ServiceName": "AssetManager",
       "UpstreamPathTemplate": "/property/status/state",
       "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/pm/assign",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/pm/assign",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/owner/update",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/owner/update",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/owner/remove",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/owner/remove",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/owners/{id}", // Get owner list for the property
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/owners/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/contract/add", // Get owner list for the property
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/contract/add",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/contract/update", // Get owner list for the property
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/contract/update",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Property/fee/add", // Get owner list for the property
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/fee/add",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/feehistory/{id}/{oid}", 
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/feehistory/{id}/{oid}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/contract/{id}", 
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/contract/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Property/contracts/{id}", 
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/contracts/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
       "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
         "AuthenticationProviderKey": "TestKey",
         "AllowedScopes": []

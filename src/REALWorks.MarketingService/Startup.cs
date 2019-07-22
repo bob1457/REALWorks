@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Consul;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -71,7 +72,7 @@ namespace REALWorks.MarketingService
                 };
             });
 
-            ConfigureConsul(services);
+            //ConfigureConsul(services);
 
 
             services.AddSwaggerGen(c =>
@@ -127,8 +128,14 @@ namespace REALWorks.MarketingService
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime applicationLifetime)
         {
+
+            var consulConfigSection = Configuration.GetSection("ServiceConfig");
+            string serviceName = consulConfigSection["serviceName"];
+            string serviceId = consulConfigSection["serviceId"];
+            string serviceAddress = consulConfigSection["serviceDiscoveryAddress"];
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -145,7 +152,45 @@ namespace REALWorks.MarketingService
 
             loggerFactory.AddSerilog();
 
+            app.UseCors("CorsPolicy");
+
             app.UseMvc();
+
+            using (var client = new ConsulClient(ConsulConfig))
+            {
+                client.Agent.ServiceRegister(new AgentServiceRegistration()
+                {
+                    ID = serviceId,
+                    Name = serviceName //,
+                    //Check = new AgentServiceCheck
+                    //{
+                    //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5)
+                    //    // Health Check
+                    //}
+                }).Wait();
+            }
+
+            applicationLifetime.ApplicationStopping.Register(() =>
+            {
+                using (var client = new ConsulClient(ConsulConfig))
+                {
+                    client.Agent.ServiceDeregister(Configuration.GetValue<string>("ServiceConfig:serviceId")).Wait(); /*serviceId*/
+                }
+            });
+        }
+
+        private void ServiceConfig(ConsulClientConfiguration c)
+        {
+            //throw new NotImplementedException();
+            c.Address = Configuration.GetValue<Uri>("ServiceConfig:serviceDiscoveryAddress");
+
+        }
+
+        private void ConsulConfig(ConsulClientConfiguration config)
+        {
+            //throw new NotImplementedException();
+            config.Address = new Uri("http://localhost:8500");
+            config.Datacenter = "dc1";
         }
     }
 }

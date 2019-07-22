@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using REALWorks.MarketingData;
 
 namespace REALWorks.MarketingData.Migrations
 {
     [DbContext(typeof(AppMarketingDbDataContext))]
-    partial class AppMarketingDbDataContextModelSnapshot : ModelSnapshot
+    [Migration("20190719224823_update19")]
+    partial class update19
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

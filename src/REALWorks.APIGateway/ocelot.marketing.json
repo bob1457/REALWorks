@@ -18,6 +18,158 @@
         "AuthenticationProviderKey": "TestKey",
         "AllowedScopes": []
       }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/{id}",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/add",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/add",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/status",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/status",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/update",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/update",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/addimg",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/addimg",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/property/{id}",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/property/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/addopenhouse",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/addopenhouse",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/openhouse/addviewer",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/openhouse/addviewer",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
     }
   ]
  

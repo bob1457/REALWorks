@@ -38,7 +38,7 @@ namespace REALWorks.AssetServer
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
                 .Enrich.WithProperty("Application", "Asset Managemenr Service")
-                //.WriteTo.Seq("http://localhost:5341") // temporarily disabled so that the logs written to log files in E:\Temp\real --- by default
+                .WriteTo.Seq("http://localhost:5341") // temporarily disabled so that the logs written to log files in E:\Temp\real --- by default
                 .CreateLogger();
             Configuration = configuration;
         }
@@ -58,6 +58,11 @@ namespace REALWorks.AssetServer
             string userName = configSection["UserName"];
             string password = configSection["Password"];
             string exchange = configSection["Exchange"];
+
+            //var consulConfigSection = Configuration.GetSection("ServiceConfig");
+            //string serviceName = consulConfigSection["ServiceConfig:serviceName"];
+            //string serviceId = consulConfigSection["serviceId"];
+            //string serviceAddress = consulConfigSection["serviceDiscoveryAddress"];
 
             services.AddTransient<IMessagePublisher>((sp) => new RabbitMQMessagePublisher(host, userName, password, exchange)); // "realworks"));
 
@@ -91,7 +96,9 @@ namespace REALWorks.AssetServer
             //    Con 
             //});
 
-            ConfigureConsul(services);
+
+
+            //ConfigureConsul(services);
 
             services.AddTransient<IMessageLoggingService, MessageLoggingService>();
             services.AddTransient<IMessageContext, MessageContext>();
@@ -162,6 +169,13 @@ namespace REALWorks.AssetServer
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
         }
 
+        private void ConsulConfig(ConsulClientConfiguration config)
+        {
+            //throw new NotImplementedException();
+            config.Address = new Uri("http://localhost:8500");
+            config.Datacenter = "dc1";
+        }
+
         // Register Consul Service
         //
         private void ConfigureConsul(IServiceCollection services)
@@ -184,7 +198,7 @@ namespace REALWorks.AssetServer
             //serviceConfig.ServiceName = Configuration.GetSection("serviceName").ToString();
 
             services.RegisterConsulServices(serviceConfig);
-            
+
         }
 
         #region TO DO MORE INVESTIGATION
@@ -223,8 +237,14 @@ namespace REALWorks.AssetServer
         */
         #endregion
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime applicationLifetime)
         {
+
+            var consulConfigSection = Configuration.GetSection("ServiceConfig");
+            string serviceName = consulConfigSection["serviceName"];
+            string serviceId = consulConfigSection["serviceId"];
+            string serviceAddress = consulConfigSection["serviceDiscoveryAddress"];
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -243,17 +263,61 @@ namespace REALWorks.AssetServer
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Asset Management API V1");
                 c.RoutePrefix = string.Empty;
             });
+
+            //var serviceConfig = new ServiceConfig
+            //{
+            //    ServiceDiscoveryAddress = Configuration.GetValue<Uri>("ServiceConfig:serviceDiscoveryAddress"),
+            //    ServiceAddress = Configuration.GetValue<Uri>("ServiceConfig:serviceAddress"),
+            //    ServiceName = Configuration.GetValue<string>("ServiceConfig:serviceName"),
+            //    ServiceId = Configuration.GetValue<string>("ServiceConfig:serviceId")
+            //};
+
+            
+
+
             app.UseHttpsRedirection();
 
             //ConfigureEventBus(app); // diasbled for further investigation
 
             loggerFactory.AddSerilog();
 
+            app.UseCors("CorsPolicy");
+
             app.UseHealthChecks("/hc");
 
             app.UseMvc();
 
-           
+/**/
+            using (var client = new ConsulClient(ConsulConfig))
+            {
+                client.Agent.ServiceRegister(new AgentServiceRegistration()
+                {
+                    ID = serviceId,
+                    Name = serviceName //,
+                    //Check = new AgentServiceCheck
+                    //{
+                    //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5)
+                    //    // Health Check
+                    //}
+                }).Wait();
+            }
+
+            applicationLifetime.ApplicationStopping.Register(() =>
+                {
+                    using(var client = new ConsulClient(ConsulConfig))
+                    {
+                        client.Agent.ServiceDeregister(Configuration.GetValue<string>("ServiceConfig:serviceId")).Wait(); /*serviceId*/
+                    }
+                }
+            );
+
+        }
+
+        private void ServiceConfig(ConsulClientConfiguration c)
+        {
+            //throw new NotImplementedException();
+            c.Address = Configuration.GetValue<Uri>("ServiceConfig:serviceDiscoveryAddress");
+            
         }
 
 
