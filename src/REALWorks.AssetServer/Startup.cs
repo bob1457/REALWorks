@@ -27,6 +27,12 @@ using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 using Consul;
 using REALWorks.InfrastructureServer.ServiceDiscovery;
+using System.Reflection;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
+using HealthChecks.RabbitMQ;
 
 namespace REALWorks.AssetServer
 {
@@ -38,7 +44,7 @@ namespace REALWorks.AssetServer
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
                 .Enrich.WithProperty("Application", "Asset Managemenr Service")
-                .WriteTo.Seq("http://localhost:5341") // temporarily disabled so that the logs written to log files in E:\Temp\real --- by default
+                //.WriteTo.Seq("http://localhost:5341") // temporarily disabled so that the logs written to log files in E:\Temp\real --- by default
                 .CreateLogger();
             Configuration = configuration;
         }
@@ -56,6 +62,7 @@ namespace REALWorks.AssetServer
             var configSection = Configuration.GetSection("RabbitMQ");
             string host = configSection["Host"];
             string userName = configSection["UserName"];
+            string port = configSection["Port"];
             string password = configSection["Password"];
             string exchange = configSection["Exchange"];
 
@@ -98,12 +105,23 @@ namespace REALWorks.AssetServer
 
 
 
-            //ConfigureConsul(services);
+            ConfigureConsul(services);
 
             services.AddTransient<IMessageLoggingService, MessageLoggingService>();
             services.AddTransient<IMessageContext, MessageContext>();
 
-            services.AddHealthChecks(); // Registers health check services
+            // Registers health check services
+            services.AddHealthChecks()
+                .AddRabbitMQ(
+                    $"amqp://{userName}:{password}@{host}:{port}",                   // {Configuration["RabbitMQ"]
+                    name: "Asset service message queue",
+                    tags: new string[] { "rabbitmqbus" }
+                )
+                .AddCheck("Database", new SqlConnectionHealthCheck(Configuration["ConnectionStrings:AppDbConnection3"]))
+                //.AddCheck("Message Queue", new RabbitMQHealthCheck("host=localhost; username = guest; password = guest"))
+                ;
+           
+            services.AddHealthChecksUI();
 
             /*
 
@@ -172,7 +190,7 @@ namespace REALWorks.AssetServer
         private void ConsulConfig(ConsulClientConfiguration config)
         {
             //throw new NotImplementedException();
-            config.Address = new Uri("http://localhost:8500");
+            config.Address = new Uri("http://localhost:8500"); //63899
             config.Datacenter = "dc1";
         }
 
@@ -283,24 +301,33 @@ namespace REALWorks.AssetServer
 
             app.UseCors("CorsPolicy");
 
-            app.UseHealthChecks("/hc");
+            app.UseHealthChecks("/hc", new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+
+            app.UseHealthChecksUI(config => config.UIPath = "/hc-ui");
 
             app.UseMvc();
+        
+            /**/
+            #region Consul Registration/Deregistration
 
-/**/
-            using (var client = new ConsulClient(ConsulConfig))
-            {
-                client.Agent.ServiceRegister(new AgentServiceRegistration()
-                {
-                    ID = serviceId,
-                    Name = serviceName //,
-                    //Check = new AgentServiceCheck
-                    //{
-                    //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5)
-                    //    // Health Check
-                    //}
-                }).Wait();
-            }
+            //using (var client = new ConsulClient(ConsulConfig))
+            //{
+            //    client.Agent.ServiceRegister(new AgentServiceRegistration()
+            //    {
+            //        ID = serviceId,
+            //        Address = serviceAddress,
+            //        Name = serviceName //,
+            //        //Check = new AgentServiceCheck
+            //        //{
+            //        //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5)
+            //        //    // Health Check
+            //        //}
+            //    }).Wait();
+            //}
 
             applicationLifetime.ApplicationStopping.Register(() =>
                 {
@@ -320,9 +347,50 @@ namespace REALWorks.AssetServer
             
         }
 
+        #endregion  
+
 
         // Custom health check
 
+        public static IServiceCollection AddCustomHealthCheck(IServiceCollection services, IConfiguration configuration)
+        {
+            var hcBuilder = services.AddHealthChecks();
+
+            hcBuilder
+                .AddCheck("self", () => HealthCheckResult.Healthy())
+                .AddSqlServer(
+                    configuration["AppDbConnection3"],
+                    name: "AssetDB-check",
+                    tags: new string[] { "assetDb" });
+
+            hcBuilder.AddRabbitMQ(
+                $"amqp://{configuration["RabbitMQ"]}",
+                name: "Asset service message-queue check",
+                tags: new string[] {"rabbitmq"});
+
+
+
+
+            //services.AddDbContext<CatalogContext>(options =>
+            //{
+            //    options.UseSqlServer(configuration["ConnectionString"],
+            //                         sqlServerOptionsAction: sqlOptions =>
+            //                         {
+            //                             sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+            //                             //Configuring Connection Resiliency: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency 
+            //                             sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+            //                         });
+
+            //    // Changing default behavior when client evaluation occurs to throw. 
+            //    // Default in EF Core would be to log a warning when client evaluation is performed.
+            //    options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+            //    //Check Client vs. Server evaluation: https://docs.microsoft.com/en-us/ef/core/querying/client-eval
+            //});
+
+
+
+            return services;
+        }
 
 
         #region TO DO MORE INVESTIGATION
@@ -339,4 +407,4 @@ namespace REALWorks.AssetServer
         #endregion
 
     }
-}
+    }

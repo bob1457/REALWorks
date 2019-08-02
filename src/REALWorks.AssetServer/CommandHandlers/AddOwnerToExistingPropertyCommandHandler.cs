@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.AssetServer.CommandHandlers
 {
-    public class AddOwnerToExistingPropertyCommandHandler : IRequestHandler<AddOwnerToExistingPropertyCommand, bool>
+    public class AddOwnerToExistingPropertyCommandHandler : IRequestHandler<AddOwnerToExistingPropertyCommand, AddOwnerToExistingPropertyCommandResult>
     {
         private readonly AppDataBaseContext _context;
 
@@ -20,11 +20,16 @@ namespace REALWorks.AssetServer.CommandHandlers
             _context = context;
         }
 
-        public async Task<bool> Handle(AddOwnerToExistingPropertyCommand request, CancellationToken cancellationToken)
+        public async Task<AddOwnerToExistingPropertyCommandResult> Handle(AddOwnerToExistingPropertyCommand request, CancellationToken cancellationToken)
         {
             var property = _context.Property.FirstOrDefault(p => p.Id == request.PropertyId);
 
-            if(request.PropertyOwnerId == 0)
+            var addedOwner = new AddOwnerToExistingPropertyCommandResult();
+
+            // populate the addedOnwer
+
+
+            if (request.PropertyOwnerId == 0)
             {
                 var ownerAddress = new OwnerAddress(request.StreetNumber, request.City, request.StateProv, request.ZipPostCode, request.Country);
 
@@ -60,7 +65,7 @@ namespace REALWorks.AssetServer.CommandHandlers
                 Log.Error(ex, "Error occured while adding the new owner {OwnerName} to the property {PropertyName}.", request.FirstName + " " + request.LastName, property.PropertyName);
             }
 
-            return true;
+            return addedOwner;
         }
 
 

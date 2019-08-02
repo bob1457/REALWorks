@@ -18,7 +18,7 @@ using Message = REALWorks.InfrastructureServer.MessageLog.Message;
 
 namespace REALWorks.AssetServer.CommandHandlers
 {
-    public class CreatePropertyCommandHandler : IRequestHandler<CreatePropertyCommand, bool>
+    public class CreatePropertyCommandHandler : IRequestHandler<CreatePropertyCommand, CreatePropertyCommandResult>
     {
         private readonly AppDataBaseContext _context;
         private readonly IMessageLoggingService _loggingService;
@@ -34,9 +34,11 @@ namespace REALWorks.AssetServer.CommandHandlers
             _mediator = mediator;
         }
 
-        public async Task<bool> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
+        public async Task<CreatePropertyCommandResult> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
         {
             #region Create property aggregate root
+
+            var createdProperty = new CreatePropertyCommandResult();
 
             var address = new PropertyAddress(request.PropertySuiteNumber, 
                 request.PropertyNumber, request.PropertyStreet, 
@@ -103,13 +105,34 @@ namespace REALWorks.AssetServer.CommandHandlers
             {
                 await _context.SaveChangesAsync(); // comment out for testing message sending ONLY
 
-                int propertyId = property.Id;
+                int PropertyId = property.Id;
 
                 request.PropertyId = property.Id;
                 request.CreatedDate = property.Created;
                 request.UpdateDate = property.Modified;
 
+                //Populate return result
+                //
+                createdProperty.PropertyId = PropertyId;
+                createdProperty.PropertyName = request.PropertyName;
+                createdProperty.Type = request.Type;
+                createdProperty.PropertyLogoImgUrl = request.PropertyLogoImgUrl;
+                createdProperty.IsShared = request.IsShared;
+                createdProperty.IsActive = request.IsActive;
+                createdProperty.IsBasementSuite = request.IsBasementSuite;
+                createdProperty.CreatedDate = DateTime.Now;
+                createdProperty.UpdateDate = DateTime.Now;
+                createdProperty.PropertySuiteNumber = request.PropertySuiteNumber;
+                createdProperty.PropertyStreet = request.PropertyStreet;
+                createdProperty.PropertyCity = request.PropertyCity;
+                createdProperty.PropertyStateProvince = request.PropertyStateProvince;
+                createdProperty.PropertyZipPostCode = request.PropertyZipPostCode;
+                createdProperty.PropertyCountry = request.PropertyCountry;
+
+
                 Log.Information("Property with id {PropertyName} has been successfully created.", property.PropertyName );
+
+
 
                
                 // Publish Domain Event (MediatR pattern)
@@ -167,7 +190,8 @@ namespace REALWorks.AssetServer.CommandHandlers
                 Log.Error(ex, "Error while creating property, {PropertyName} has not been created.", request.PropertyName);
             }
 
-            return true;   
+            return createdProperty;
+            //return new CreatePropertyCommandResult() { };
 
         }
 

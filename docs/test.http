@@ -424,7 +424,7 @@ POST http://localhost:19807/api/Property/asset HTTP/1.1
 content-type: application/json
 
 {
-    "propertyName": "PNE Old Timer 3",
+    "propertyName": "PNE Old Timer 4",
     "propertyDesc": "Single two layer family home in PNE area3",
     "Type": "Apartment",
     "strataCouncilId": 0,    
@@ -487,7 +487,7 @@ content-type: application/json
     "userAvartaImgUrl": "",
     "isActive": true,
     "roleId": 2,
-    "notes": ""
+    "notes": "newly added"
 }
 
 ###

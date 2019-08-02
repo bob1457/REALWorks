@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.AssetServer.CommandHandlers
 {
-    public class UpdatePropertyStatusCommandHandler : IRequestHandler<UpdatePropertyStatusCommand, bool>
+    public class UpdatePropertyStatusCommandHandler : IRequestHandler<UpdatePropertyStatusCommand, UpdatePropertyStatusCommandResult>
     {
         private readonly AppDataBaseContext _context;
 
@@ -20,10 +20,15 @@ namespace REALWorks.AssetServer.CommandHandlers
         }
 
 
-        public async Task<bool> Handle(UpdatePropertyStatusCommand request, CancellationToken cancellationToken)
+        public async Task<UpdatePropertyStatusCommandResult> Handle(UpdatePropertyStatusCommand request, CancellationToken cancellationToken)
         {
 
             var property = _context.Property.FirstOrDefault(p => p.Id == request.Id);
+
+            var updatedStatus = new UpdatePropertyStatusCommandResult();
+
+            updatedStatus.Id = request.Id;
+            updatedStatus.Status = request.Status;
 
             //property.StatusUpdate(property, request.Status);
             property.StatusUpdate(request.Status);
@@ -42,7 +47,7 @@ namespace REALWorks.AssetServer.CommandHandlers
                 throw ex;
             }
 
-            return true;
+            return updatedStatus;
 
         }
     }

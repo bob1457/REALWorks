@@ -72,7 +72,7 @@ namespace REALWorks.MarketingService
                 };
             });
 
-            //ConfigureConsul(services);
+            ConfigureConsul(services);
 
 
             services.AddSwaggerGen(c =>
@@ -156,19 +156,23 @@ namespace REALWorks.MarketingService
 
             app.UseMvc();
 
-            using (var client = new ConsulClient(ConsulConfig))
-            {
-                client.Agent.ServiceRegister(new AgentServiceRegistration()
-                {
-                    ID = serviceId,
-                    Name = serviceName //,
-                    //Check = new AgentServiceCheck
-                    //{
-                    //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5)
-                    //    // Health Check
-                    //}
-                }).Wait();
-            }
+            #region Consul Registration/Deregistration
+
+            //using (var client = new ConsulClient(ConsulConfig))
+            //{
+            //    client.Agent.ServiceRegister(new AgentServiceRegistration()
+            //    {
+            //        ID = serviceId,
+            //        Address = "http://localhost",  //serviceAddress,
+            //        Port = 63899,
+            //        Name = serviceName //,
+            //        //Check = new AgentServiceCheck
+            //        //{
+            //        //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5)
+            //        //    // Health Check
+            //        //}
+            //    }).Wait();
+            //}
 
             applicationLifetime.ApplicationStopping.Register(() =>
             {
@@ -192,5 +196,7 @@ namespace REALWorks.MarketingService
             config.Address = new Uri("http://localhost:8500");
             config.Datacenter = "dc1";
         }
+
+        #endregion
     }
 }

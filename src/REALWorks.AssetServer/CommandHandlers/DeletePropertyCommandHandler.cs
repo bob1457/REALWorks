@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.AssetServer.CommandHandlers
 {
-    public class DeletePropertyCommandHandler : IRequestHandler<DeletePropertyCommand, bool>
+    public class DeletePropertyCommandHandler : IRequestHandler<DeletePropertyCommand, DeletePropertyCommandResult>
     {
         private readonly AppDataBaseContext _context;
 
@@ -20,9 +20,13 @@ namespace REALWorks.AssetServer.CommandHandlers
         }
 
 
-        public async Task<bool> Handle(DeletePropertyCommand request, CancellationToken cancellationToken)
+        public async Task<DeletePropertyCommandResult> Handle(DeletePropertyCommand request, CancellationToken cancellationToken)
         {
             var property = _context.Property.FirstOrDefault(p => p.Id == request.PropertyId);
+
+            var deleted = new DeletePropertyCommandResult();
+            deleted.PropertyId = request.PropertyId;
+            deleted.IsActive = request.IsActive;
 
             property.Delete(property);
 
@@ -40,7 +44,8 @@ namespace REALWorks.AssetServer.CommandHandlers
                 throw ex;
             }
 
-            return true;
+            //return request.PropertyId;
+            return deleted;
 
 
         }

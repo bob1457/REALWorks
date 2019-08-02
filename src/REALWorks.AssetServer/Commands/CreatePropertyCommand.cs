@@ -11,7 +11,7 @@ using static REALWorks.AssetCore.Entities.Property;
 
 namespace REALWorks.AssetServer.Commands
 {
-    public class CreatePropertyCommand: IRequest<bool>//<CreatePropertyCommandResult> //   ICommand // input view model
+    public class CreatePropertyCommand: IRequest<CreatePropertyCommandResult> //<CreatePropertyCommandResult> //   ICommand // input view model
     {
         /// <summary>
         /// Property Baisc

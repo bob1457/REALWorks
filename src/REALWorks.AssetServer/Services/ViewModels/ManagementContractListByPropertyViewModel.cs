@@ -16,8 +16,11 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public string ManagementFeeScale { get; set; }
         public DateTime ContractSignDate { get; set; }
         public int PropertyId { get; set; }
+        public string PropertyName { get; set; }
         public string ManagementContractDocUrl { get; set; }
         public ContractType ManagementContractType { get; set; }
+        public string OwnerFirstName { get; set; }
+        public string OnwerLastName { get; set; }
         public bool IsActive { get; set; }
         public string Notes { get; set; }
         public DateTime Created { get; set; }

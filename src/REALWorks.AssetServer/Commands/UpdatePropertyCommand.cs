@@ -7,7 +7,7 @@ using static REALWorks.AssetCore.Entities.Property;
 
 namespace REALWorks.AssetServer.Commands
 {
-    public class UpdatePropertyCommand : IRequest<bool>
+    public class UpdatePropertyCommand : IRequest<UpdatePropertyCommandResult>
     {
         public int PropertyId { get; set; }
         public string PropertyName { get; set; }

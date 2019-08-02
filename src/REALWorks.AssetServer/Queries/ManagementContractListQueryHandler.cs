@@ -23,6 +23,10 @@ namespace REALWorks.AssetServer.Queries
         public async Task<IQueryable<ManagementContractListByPropertyViewModel>> Handle(ManagementContractListQuery request, CancellationToken cancellationToken)
         {
             var contractList = from c in _context.ManagementContract
+                               join p in _context.Property on c.PropertyId equals p.Id
+                               join o in _context.OwnerProperty on p.Id equals o.PropertyId
+                               join po in _context.PropertyOwner on o.PropertyOwnerId equals po.Id
+
                                where c.PropertyId == request.Id
                                select new ManagementContractListByPropertyViewModel
                                {
@@ -35,6 +39,9 @@ namespace REALWorks.AssetServer.Queries
                                    ManagementContractDocUrl = c.ManagementContractDocUrl,
                                    ManagementFeeScale = c.ManagementFeeScale,
                                    ManagementContractType = c.Type,
+                                   OwnerFirstName = po.FirstName,
+                                   OnwerLastName = po.LastName,
+                                   PropertyName = p.PropertyName,
                                    Notes = c.Notes,
                                    IsActive = c.IsActive,
                                    Created = c.Created,

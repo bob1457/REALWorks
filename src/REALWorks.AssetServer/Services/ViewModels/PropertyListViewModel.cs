@@ -7,7 +7,7 @@ namespace REALWorks.AssetServer.Services.ViewModels
 {
     public class PropertyListViewModel
     {
-        public int PropertyId { get; set; }
+        public int Id { get; set; }
         public string PropertyName { get; set; }        
         public string PropertyLogoImgUrl { get; set; }
         public bool? IsActive { get; set; }

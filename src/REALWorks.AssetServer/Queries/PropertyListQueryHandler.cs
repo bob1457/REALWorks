@@ -22,12 +22,12 @@ namespace REALWorks.AssetServer.Queries
         public async Task<IQueryable<PropertyListViewModel>> Handle(PropertyListQuery request, CancellationToken cancellationToken)
         {
 
-            var propertyList = (from p in _context.Property.Include(a => a.Address) 
-                                
-                                
+            var propertyList = (from p in _context.Property.Include(a => a.Address)
+                                .Where(s => s.IsActive == true)
+
                                 select new PropertyListViewModel
                                 {
-                                    PropertyId = p.Id,
+                                    Id = p.Id,
                                     PropertyName = p.PropertyName,
                                     PropertyLogoImgUrl = p.PropertyLogoImgUrl,
                                     IsActive = p.IsActive,
