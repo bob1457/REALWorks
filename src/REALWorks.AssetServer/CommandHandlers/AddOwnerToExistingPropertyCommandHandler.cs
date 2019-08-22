@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using REALWorks.AssetCore.Entities;
 using REALWorks.AssetCore.ValueObjects;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
@@ -24,23 +25,41 @@ namespace REALWorks.AssetServer.CommandHandlers
         {
             var property = _context.Property.FirstOrDefault(p => p.Id == request.PropertyId);
 
+            PropertyOwner owner = null;
+
             var addedOwner = new AddOwnerToExistingPropertyCommandResult();
 
             // populate the addedOnwer
+            addedOwner.UserAvartaImgUrl = request.UserAvartaImgUrl;
+            addedOwner.FirstName = request.FirstName;
+            addedOwner.LastName = request.LastName;
+            addedOwner.UserName = request.UserName;
+            addedOwner.ContactEmail = request.ContactEmail;
+            addedOwner.ContactTelephone1 = request.ContactTelephone1;
+            addedOwner.ContactTelephone2 = request.ContactTelephone2;
+            addedOwner.OnlineAccessEnbaled = request.OnlineAccessEnbaled;
+            addedOwner.IsActive = request.IsActive;
+            addedOwner.RoleId = request.RoleId;
+            addedOwner.Notes = request.Notes;
+            addedOwner.StreetNumber = request.StreetNumber;
+            addedOwner.City = request.City;
+            addedOwner.StateProv = request.StateProv;
+            addedOwner.ZipPostCode = request.ZipPostCode;
+            addedOwner.Country = request.Country;
 
 
             if (request.PropertyOwnerId == 0)
             {
-                var ownerAddress = new OwnerAddress(request.StreetNumber, request.City, request.StateProv, request.ZipPostCode, request.Country);
+                var ownerAddress = new OwnerAddress(request.StreetNumber, request.City, request.StateProv, request.Country,request. ZipPostCode);
 
-                var owner  = property.AddNewOwnerToProperty(request.PropertyId, request.UserName, request.FirstName, request.LastName, request.ContactEmail,
+                owner  = property.AddNewOwnerToProperty(request.PropertyId, request.UserName, request.FirstName, request.LastName, request.ContactEmail,
                     request.ContactTelephone1, request.ContactTelephone2, false, request.UserAvartaImgUrl, request.IsActive, 2, request.Notes, ownerAddress);
 
                 _context.Add(owner);
             }
             else
             {
-                var owner = _context.PropertyOwner.FirstOrDefault(o => o.Id == request.PropertyOwnerId);
+                owner = _context.PropertyOwner.FirstOrDefault(o => o.Id == request.PropertyOwnerId);
 
                 var ownerProperty = property.AddExistingOwnerToProperty(owner, request.PropertyId);
 
@@ -51,6 +70,9 @@ namespace REALWorks.AssetServer.CommandHandlers
             try
             {
                 await _context.SaveChangesAsync();
+
+                addedOwner.PropertyOwnerId = owner.Id;
+
 
                 // logging
                 Log.Information("The new owner {OwnerName} has been added to the property {PorpertyName} successfully", request.FirstName + " " + request.LastName, property.PropertyName);

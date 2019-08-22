@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +22,9 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public DateTime CreationDate { get; set; }
         public DateTime UpdateDate { get; set; }
 
-        public string PropertyName { get; set; }
-        public string PropertyDesc { get; set; }
+        public ICollection<Property> OwnedPropertyList { get; set; }
+
+        //public string PropertyName { get; set; }
+        //public string PropertyDesc { get; set; }
     }
 }

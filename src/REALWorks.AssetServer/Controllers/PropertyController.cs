@@ -99,9 +99,9 @@ namespace REALWorks.AssetServer.Controllers
         [Route("remove")]
         public async Task<IActionResult> RemoveProperty(DeletePropertyCommand command)
         {
-            await _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-            return Ok();
+            return Ok(result);
         }
 
         [HttpPost]
@@ -192,9 +192,9 @@ namespace REALWorks.AssetServer.Controllers
                 return BadRequest(400);
             }
 
-            await _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-            return Ok();
+            return Ok(result);
         }
 
 
@@ -252,6 +252,21 @@ namespace REALWorks.AssetServer.Controllers
             var result = await _mediator.Send(getPropertyOwners);
 
             return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("owners")]
+        public async Task<IActionResult> GetAllOwnerList() 
+        {
+            var owners = await _mediator.Send(new AllOwnerListQuery());
+
+            if (owners == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(owners);
+
         }
 
         [HttpPost]

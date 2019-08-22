@@ -29,6 +29,19 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             updatedStatus.Id = request.Id;
             updatedStatus.Status = request.Status;
+            updatedStatus.PropertyName = property.PropertyName;
+            updatedStatus.PropertyLogoImgUrl = property.PropertyLogoImgUrl;
+            updatedStatus.IsActive = property.IsActive;
+            updatedStatus.IsBasementSuite = property.IsBasementSuite;
+            updatedStatus.CreatedDate = property.Created;
+            updatedStatus.UpdateDate = DateTime.Now;
+            updatedStatus.PropertyType1 = property.Type.ToString();
+            updatedStatus.PropertySuiteNumber = property.Address.PropertySuiteNumber;
+            updatedStatus.PropertyNumber = property.Address.PropertyNumber;
+            updatedStatus.PropertyStreet = property.Address.PropertyStreet;
+            updatedStatus.PropertyCity = property.Address.PropertyCity;
+            updatedStatus.PropertyZipPostCode = property.Address.PropertyZipPostCode;
+            updatedStatus.PropertyCountry = property.Address.PropertyCountry;
 
             //property.StatusUpdate(property, request.Status);
             property.StatusUpdate(request.Status);

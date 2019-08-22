@@ -155,6 +155,27 @@
         "AllowedScopes": []
       }
     },
+
+    {
+      "DownstreamPathTemplate": "/api/Property/addOwner",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/addOwner",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api levelowner/{id}
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+
     {
       "DownstreamPathTemplate": "/api/Property/owner/remove",
       "DownstreamScheme": "http",
@@ -193,6 +214,48 @@
         "AllowedScopes": []
       }
     },
+
+
+    {
+      "DownstreamPathTemplate": "/api/Property/owner/{id}", // Get owner list for the property
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/owner/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Property/owners", // Get all owner list 
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/owners",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+
     {
       "DownstreamPathTemplate": "/api/Property/contract/add", // Get owner list for the property
       "DownstreamScheme": "http",
@@ -252,7 +315,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/Property/feehistory/{id}/{oid}", 
+      "DownstreamPathTemplate": "/api/Property/feehistory/{id}/{oid}",
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -271,7 +334,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/Property/contract/{id}", 
+      "DownstreamPathTemplate": "/api/Property/contract/{id}",
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -290,7 +353,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/Property/contracts/{id}", 
+      "DownstreamPathTemplate": "/api/Property/contracts/{id}",
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {

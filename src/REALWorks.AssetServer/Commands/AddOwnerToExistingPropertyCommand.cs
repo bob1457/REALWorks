@@ -30,9 +30,9 @@ namespace REALWorks.AssetServer.Commands
         public string Country { get; set; }
 
 
-        public OwnerAddress Address {get; set;}
+        //public OwnerAddress Address {get; set;}
 
-        public DateTime CreationDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+        //public DateTime CreationDate { get; set; }
+        //public DateTime UpdateDate { get; set; }
     }
 }

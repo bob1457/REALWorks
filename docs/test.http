@@ -111,10 +111,11 @@ content-type: application/json
 ###
 POST http://localhost:21799/Property/status/state HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiIyNjI5MTU0Yi1jM2JmLTQzNzYtOWI3MS03NDBhYzJjMjAzOTYiLCJuYmYiOjE1NjIwODMzMTgsImV4cCI6MTU2NzI2NzMxOCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.diBUTZlzJPNzh8hAJf2v0rugE-0WrioYcLn3TgWFXUg
 
 {
   "id": 1,
-  "status": 2
+  "status": 1
 }
 ###
 
@@ -361,6 +362,12 @@ content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiIyNjI5MTU0Yi1jM2JmLTQzNzYtOWI3MS03NDBhYzJjMjAzOTYiLCJuYmYiOjE1NjIwODMzMTgsImV4cCI6MTU2NzI2NzMxOCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.diBUTZlzJPNzh8hAJf2v0rugE-0WrioYcLn3TgWFXUg
 ###
 
+###
+GET http://localhost:21799/property/contract/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiIyNjI5MTU0Yi1jM2JmLTQzNzYtOWI3MS03NDBhYzJjMjAzOTYiLCJuYmYiOjE1NjIwODMzMTgsImV4cCI6MTU2NzI2NzMxOCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.diBUTZlzJPNzh8hAJf2v0rugE-0WrioYcLn3TgWFXUg
+###
+
 
 
 ###
@@ -424,7 +431,7 @@ POST http://localhost:19807/api/Property/asset HTTP/1.1
 content-type: application/json
 
 {
-    "propertyName": "PNE Old Timer 4",
+    "propertyName": "PNE Old Timer 3",
     "propertyDesc": "Single two layer family home in PNE area3",
     "Type": "Apartment",
     "strataCouncilId": 0,    
@@ -487,7 +494,7 @@ content-type: application/json
     "userAvartaImgUrl": "",
     "isActive": true,
     "roleId": 2,
-    "notes": "newly added"
+    "notes": ""
 }
 
 ###

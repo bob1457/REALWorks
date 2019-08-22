@@ -25,9 +25,11 @@ namespace REALWorks.AssetServer.CommandHandlers
             var numOfgOwners = _context.OwnerProperty.Where(p => p.PropertyId == request.PropertyId).Count();
             var property = _context.Property.FirstOrDefault(i => i.Id == request.PropertyId);
 
+            var ownerToRemove = await _context.OwnerProperty.FirstAsync(o => o.PropertyOwnerId == request.PropertyOwnerId);
+
             if (numOfgOwners >= 2)
             {
-                var ownerToRemove = await _context.OwnerProperty.FirstAsync(o => o.PropertyOwnerId == request.PropertyOwnerId);
+                //var ownerToRemove = await _context.OwnerProperty.FirstAsync(o => o.PropertyOwnerId == request.PropertyOwnerId);
 
                 _context.OwnerProperty.Remove(ownerToRemove);
 
@@ -48,9 +50,15 @@ namespace REALWorks.AssetServer.CommandHandlers
                     //throw ex;
                     Log.Error(ex, "Error occured while deleting the owner for the property {PropertyName}.", property.PropertyName);
                 }
-            }           
 
-            return "Onwer cannot be removed from the property";
+                return "Owner has been removed from the proeprty specified!";
+            }
+
+
+            Log.Information("The owner {OwnerName} cannot removed from the property {PorpertyName} because this is the only owner",
+                        ownerToRemove.PropertyOwner.FirstName + " " + ownerToRemove.PropertyOwner.LastName, property.PropertyName);
+
+            return "Onwer cannot be removed from the property!";
 
         }
     }
