@@ -22,15 +22,17 @@ namespace REALWorks.AssetServer.Queries
 
         public async Task<IQueryable<PropertyOwner>> Handle(AllOwnerListQuery request, CancellationToken cancellationToken)
         {
-            var allOwners = (from o in _context.PropertyOwner
-                             join op in _context.OwnerProperty on o.Id equals op.PropertyOwnerId
-                             join p in _context.Property on op.PropertyId equals p.Id
-                             select  new {
-                             }
-                );
+            //var allOwners = (from o in _context.PropertyOwner
+            //                 join op in _context.OwnerProperty on o.Id equals op.PropertyOwnerId
+            //                 join p in _context.Property on op.PropertyId equals p.Id
+            //                 select  new {
+            //                 }
+            //    );
 
 
-            var owners = _context.PropertyOwner.ToList();
+            var owners = _context.PropertyOwner
+                .Include(a => a.Address)
+                .ToList();
 
             foreach(var owner in owners)
             {

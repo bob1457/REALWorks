@@ -28,7 +28,8 @@ namespace REALWorks.AssetServer.CommandHandlers
             var property = owner.OwnerProperty.FirstOrDefault().Property;
 
             var updated = property.UpdateOwner(owner, request.FirstName, request.LastName, request.ContactEmail, request.ContactTelephone1,
-                request.ContactTelephone2, request.UserAvartaImgUrl, request.IsActive, request.Notes);
+                request.ContactTelephone2, request.UserAvartaImgUrl, request.IsActive, request.Notes, request.StreetNumber, request.City, request.StateProvince, 
+                request.ZipPostCode, request.Country);
 
             //var updated = owner.Update(owner, request.FirstName, request.LastName, request.ContactEmail, request.ContactTelephone1, 
             //    request.ContactTelephone2, request.UserAvartaImgUrl, request.IsActive, request.Notes);

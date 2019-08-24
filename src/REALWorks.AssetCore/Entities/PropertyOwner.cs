@@ -25,6 +25,11 @@ namespace REALWorks.AssetCore.Entities
             bool isActive,
             int roleId,
             string notes,
+            //string streetNumber,
+            //string city,
+            //string stateProv,
+            //string zipPostCode,
+            //string country,
             OwnerAddress address,
             DateTime createdOn,
             DateTime updatedOn
@@ -42,6 +47,7 @@ namespace REALWorks.AssetCore.Entities
             IsActive = isActive;
             RoleId = roleId;
             Notes = notes;
+            
             Address = address;
             Created = createdOn;
             Modified = updatedOn;
@@ -80,7 +86,7 @@ namespace REALWorks.AssetCore.Entities
 
         public void Update(/*PropertyOwner owner,*/ string firstName, string lastName, string email, 
             string telephone1, string telephone2, string avatarUrl, bool isActive, 
-            string notes)
+            string notes, OwnerAddress address)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -90,6 +96,7 @@ namespace REALWorks.AssetCore.Entities
             UserAvartaImgUrl = avatarUrl;
             IsActive = isActive;
             Notes = notes;
+            Address = address;
             Modified = DateTime.Now;
 
             //return owner;

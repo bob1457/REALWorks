@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using REALWorks.AssetServer.Services.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using static REALWorks.AssetCore.Entities.ManagementContract;
 
 namespace REALWorks.AssetServer.Commands
 {
-    public class AddManagementContractCommand: IRequest<bool>
+    public class AddManagementContractCommand: IRequest<ManagementContractDetailsViewModel>
     {
         public string ManagementContractTitle { get; set; }
         public DateTime StartDate { get; set; }

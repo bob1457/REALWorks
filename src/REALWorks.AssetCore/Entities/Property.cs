@@ -203,9 +203,13 @@ namespace REALWorks.AssetCore.Entities
 
         public PropertyOwner UpdateOwner(PropertyOwner owner, string firstName, string lastName, string email,
             string telephone1, string telephone2, string avatarUrl, bool isActive,
-            string notes)
+            string notes, string streetNumber, string city, string stateProv, string postZipCode, string country)
         {
-            owner.Update(firstName, lastName, email, telephone1, telephone2, avatarUrl, isActive, notes);
+            OwnerAddress updatedAddress = new OwnerAddress(
+                streetNumber, city, stateProv, postZipCode, country
+                );
+
+            owner.Update(firstName, lastName, email, telephone1, telephone2, avatarUrl, isActive, notes,  updatedAddress);
 
             return owner;
 

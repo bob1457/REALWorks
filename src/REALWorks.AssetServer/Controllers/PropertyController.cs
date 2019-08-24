@@ -379,6 +379,22 @@ namespace REALWorks.AssetServer.Controllers
             
         }
 
+        [HttpGet]
+        [Route("contracts")]
+        public async Task<IActionResult> GetAllContracts()
+        {
+            var list = await _mediator.Send(new AllManagementContractListQuery());
+
+            if (list == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(list);
+
+
+        }
+
 
         [HttpGet]
         [Route("feehistory/{id}/{oid}")]

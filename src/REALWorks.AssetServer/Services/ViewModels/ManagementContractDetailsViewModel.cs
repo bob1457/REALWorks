@@ -36,10 +36,10 @@ namespace REALWorks.AssetServer.Services.ViewModels
         /// <summary>
         /// Owner 
         /// </summary>
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string ContactEmail { get; set; }
-        public string ContactTelephone1 { get; set; }
+        //public string FirstName { get; set; }
+        //public string LastName { get; set; }
+        //public string ContactEmail { get; set; }
+        //public string ContactTelephone1 { get; set; }
 
         //public string ManagementFeeType1 { get; set; }
         //public decimal ManagementFeeAmount { get; set; }
@@ -47,5 +47,7 @@ namespace REALWorks.AssetServer.Services.ViewModels
         //public string ManagementFeeType2 { get; set; }
         //public decimal PlacementFeeAmount { get; set; }
         public string ManagemetnFeeNotes { get; set; }
+
+        //public DateTime Updated { get; set; }
     }
 }

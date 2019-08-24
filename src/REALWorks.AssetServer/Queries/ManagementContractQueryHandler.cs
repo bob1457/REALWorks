@@ -29,7 +29,7 @@ namespace REALWorks.AssetServer.Queries
 
             return contract.FirstOrDefault(c => c.Id == request.Id);
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

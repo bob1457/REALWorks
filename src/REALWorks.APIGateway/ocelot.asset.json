@@ -237,7 +237,7 @@
     },
 
     {
-      "DownstreamPathTemplate": "/api/Property/owners", // Get all owner list 
+      "DownstreamPathTemplate": "/api/Property/owners", // Get all owner list
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -352,6 +352,29 @@
         "AllowedScopes": []
       }
     },
+
+
+    {
+      "DownstreamPathTemplate": "/api/Property/contracts",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/status/state",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/property/contracts",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+
+
     {
       "DownstreamPathTemplate": "/api/Property/contracts/{id}",
       "DownstreamScheme": "http",

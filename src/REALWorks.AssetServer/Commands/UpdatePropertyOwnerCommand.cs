@@ -21,6 +21,13 @@ namespace REALWorks.AssetServer.Commands
         public bool IsActive { get; set; }
         //public int RoleId { get; set; }
         public string Notes { get; set; }
+
+        public string StreetNumber { get; private set; }
+        public string City { get; private set; }
+        public string StateProvince { get; private set; }
+        public string Country { get; private set; }
+        public string ZipPostCode { get; private set; }
+
         //public DateTime CreationDate { get; set; }
         public DateTime UpdateDate { get; set; }
     }
