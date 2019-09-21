@@ -207,9 +207,9 @@ namespace REALWorks.AssetServer.Controllers
                 return BadRequest(400);
             }
 
-            await _mediator.Send(command);
+            var updated = await _mediator.Send(command);
 
-            return Ok();
+            return Ok(updated);
         }
 
         [HttpPost]

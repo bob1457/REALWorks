@@ -8,7 +8,7 @@ namespace REALWorks.AssetServer.Services.ViewModels
 {
     public class ManagementContractListByPropertyViewModel
     {
-        public int ManagementContractId { get; set; }
+        public int Id { get; set; }
         public string ManagementContractTitle { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -19,8 +19,8 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public string PropertyName { get; set; }
         public string ManagementContractDocUrl { get; set; }
         public ContractType ManagementContractType { get; set; }
-        public string OwnerFirstName { get; set; }
-        public string OnwerLastName { get; set; }
+        //public string OwnerFirstName { get; set; }
+        //public string OnwerLastName { get; set; }
         public bool IsActive { get; set; }
         public string Notes { get; set; }
         public DateTime Created { get; set; }

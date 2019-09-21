@@ -30,7 +30,7 @@ namespace REALWorks.AssetServer.Queries
                                where c.PropertyId == request.Id
                                select new ManagementContractListByPropertyViewModel
                                {
-                                   ManagementContractId = c.Id,
+                                   Id = c.Id,
                                    ManagementContractTitle = c.ManagementContractTitle,
                                    StartDate = c.StartDate,
                                    EndDate = c.EndDate,

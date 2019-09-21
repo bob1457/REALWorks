@@ -43,7 +43,7 @@ namespace REALWorks.MarketingService.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetAllApplicationDetails(int id) // application id
+        public async Task<IActionResult> GetApplicationDetails(int id) // application id
         {
             var getApplication = new ApplicationDetailsQuery()
             {

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace REALWorks.AssetServer.Commands
 {
-    public class UpdateManagementContractCommand: IRequest<ManagementContractDetailsViewModel>
+    public class UpdateManagementContractCommand: IRequest<ManagementContractListByPropertyViewModel>
     {
-        public int ManagementContractId { get; set; }
+        public int Id { get; set; }
         public string ManagementContractTitle { get; set; }        
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

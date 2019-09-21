@@ -125,14 +125,31 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqd
 
 
 ###
-GET http://localhost:63533/api/Lease/all HTTP/1.1
+GET http://localhost:21799/leases HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI2ZGJlYzUxNy1iOWFlLTRiMTEtYTE4Ny05YWY3YWI4OWEzOTciLCJuYmYiOjE1Njc1Mjc0MTAsImV4cCI6MTU3MjcxMTQxMCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.dIQh_MbSXb9kH7Csa3faB7Hrc58a9MBXvxDu7Z_MCXU
+
+###
+
+###
+GET http://localhost:21799/lease/2 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI2ZGJlYzUxNy1iOWFlLTRiMTEtYTE4Ny05YWY3YWI4OWEzOTciLCJuYmYiOjE1Njc1Mjc0MTAsImV4cCI6MTU3MjcxMTQxMCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.dIQh_MbSXb9kH7Csa3faB7Hrc58a9MBXvxDu7Z_MCXU
+
+###
+
+
+###
+GET http://localhost:21799/tenants HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI2ZGJlYzUxNy1iOWFlLTRiMTEtYTE4Ny05YWY3YWI4OWEzOTciLCJuYmYiOjE1Njc1Mjc0MTAsImV4cCI6MTU3MjcxMTQxMCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.dIQh_MbSXb9kH7Csa3faB7Hrc58a9MBXvxDu7Z_MCXU
 
 ###
 
 ###
 GET http://localhost:63533/api/Lease/2 HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI2ZGJlYzUxNy1iOWFlLTRiMTEtYTE4Ny05YWY3YWI4OWEzOTciLCJuYmYiOjE1Njc1Mjc0MTAsImV4cCI6MTU3MjcxMTQxMCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.dIQh_MbSXb9kH7Csa3faB7Hrc58a9MBXvxDu7Z_MCXU
 
 ###
 
@@ -350,22 +367,27 @@ content-type: application/json
 
 
 ###
-GET http://localhost:21799/property/all HTTP/1.1
+GET http://localhost:21799/property/10 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiIzZDI5NWY2Zi1jNTY0LTRmNWEtYmEwZi0xNTZhMjJjYTI5ZTQiLCJuYmYiOjE1Njc1MzMyOTgsImV4cCI6MTU3MjcxNzI5OCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.md40YexSF-O_7bZpRzNW1Kw0gCJ4nRPZLmfcLLSjjwE
+###
+
+###
+GET http://localhost:21799/property/owners HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiJiZjVmZTc0ZC02ZTZiLTQxNmEtOGQyNS02NzFhMmIwY2FiNzEiLCJuYmYiOjE1NjI5NTQ4MjUsImV4cCI6MTU2ODEzODgyNSwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ._Bt-yqfJGNyeKC2FrzefeobQj-_tsT2Z8hqBONn_rrg
 ###
 
-
 ###
 GET http://localhost:21799/listings HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiIyNjI5MTU0Yi1jM2JmLTQzNzYtOWI3MS03NDBhYzJjMjAzOTYiLCJuYmYiOjE1NjIwODMzMTgsImV4cCI6MTU2NzI2NzMxOCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.diBUTZlzJPNzh8hAJf2v0rugE-0WrioYcLn3TgWFXUg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI2ZGJlYzUxNy1iOWFlLTRiMTEtYTE4Ny05YWY3YWI4OWEzOTciLCJuYmYiOjE1Njc1Mjc0MTAsImV4cCI6MTU3MjcxMTQxMCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.dIQh_MbSXb9kH7Csa3faB7Hrc58a9MBXvxDu7Z_MCXU
 ###
 
 ###
-GET http://localhost:21799/property/contract/1 HTTP/1.1
+GET http://localhost:21799/property/contracts/1 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiIyNjI5MTU0Yi1jM2JmLTQzNzYtOWI3MS03NDBhYzJjMjAzOTYiLCJuYmYiOjE1NjIwODMzMTgsImV4cCI6MTU2NzI2NzMxOCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.diBUTZlzJPNzh8hAJf2v0rugE-0WrioYcLn3TgWFXUg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI2ZGJlYzUxNy1iOWFlLTRiMTEtYTE4Ny05YWY3YWI4OWEzOTciLCJuYmYiOjE1Njc1Mjc0MTAsImV4cCI6MTU3MjcxMTQxMCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.dIQh_MbSXb9kH7Csa3faB7Hrc58a9MBXvxDu7Z_MCXU
 ###
 
 
@@ -374,6 +396,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqd
 GET http://localhost:21799/property/all HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiIyNjI5MTU0Yi1jM2JmLTQzNzYtOWI3MS03NDBhYzJjMjAzOTYiLCJuYmYiOjE1NjIwODMzMTgsImV4cCI6MTU2NzI2NzMxOCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.diBUTZlzJPNzh8hAJf2v0rugE-0WrioYcLn3TgWFXUg
+###
+
+###
+GET http://localhost:21799/property/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI2ZGJlYzUxNy1iOWFlLTRiMTEtYTE4Ny05YWY3YWI4OWEzOTciLCJuYmYiOjE1Njc1Mjc0MTAsImV4cCI6MTU3MjcxMTQxMCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.dIQh_MbSXb9kH7Csa3faB7Hrc58a9MBXvxDu7Z_MCXU
 ###
 
 

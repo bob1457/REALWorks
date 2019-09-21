@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using REALWorks.MarketingService.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.MarketingService.Commands
 {
-    public class CreatePropertyListingCommand: IRequest<bool>
+    public class CreatePropertyListingCommand: IRequest<PropertyListingListViewModel>
     {
         public string Title { get; set; }
         public int RentalPropertyId { get; set; }

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\REALWork.LeaseManagementData\REALWork.LeaseManagementData.csproj" />
+    <ProjectReference Include="..\REALWorks.InfrastructureServer\REALWorks.InfrastructureServer.csproj" />
     <ProjectReference Include="..\REALWorks.MessagingServer\REALWorks.MessagingServer.csproj" />
   </ItemGroup>
 

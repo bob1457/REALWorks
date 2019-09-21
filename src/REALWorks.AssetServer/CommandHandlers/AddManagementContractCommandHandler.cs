@@ -24,26 +24,48 @@ namespace REALWorks.AssetServer.CommandHandlers
         {
             var property = _context.Property.FirstOrDefault(p => p.Id == request.PropertyId);
 
-            if(request.ManagementContractType.ToString() == "Renewal")
+            var existingContract = _context.ManagementContract.FirstOrDefault(a => a.IsActive == true);
+            
+
+            if (request.ManagementContractType.ToString() == "Renewal")
             {
-                var existingContract = _context.ManagementContract.FirstOrDefault(a => a.IsActive == true);
+                //var existingContract = _context.ManagementContract.FirstOrDefault(a => a.IsActive == true);
                 var updatedContract = property.UpdateManagementContractStatus(existingContract, false);
                 _context.Update(updatedContract);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch(Exception ex)
+                {
+                    //throw ex;
+                    Log.Error(ex, "Error occured while renewing management contract to the property {PropertyName}.", property.PropertyName);
+                }
+
+                return new ManagementContractDetailsViewModel() { };
+
             }
+
 
             var contract = property.AddManabgementContract(request.PropertyId, request.ManagementContractTitle, request.ManagementContractType,  
                 request.StartDate, request.EndDate, request.PlacementFeeScale, request.ManagementFeeScale, 
-                request.ContractSignDate, request.IsActive, request.Notes);
+                request.ContractSignDate, request.IsActive, request.Notes);            
 
             _context.Add(contract);
 
             var newContract = new ManagementContractDetailsViewModel();
+
+           
 
 
             try
             {
                 await _context.SaveChangesAsync();
 
+                property.UpdateManagementContractStatus(existingContract, false); // disable the previous contract, use case: ownership change
+
+                // map the return view model
                 newContract.ManagementContractId = contract.Id;
                 newContract.ManagementContractTitile = request.ManagementContractTitle;
                 newContract.StartDate = request.StartDate;

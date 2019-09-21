@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using REALWork.LeaseManagementData;
 using REALWork.LeaseManagementService.Commands;
+using REALWork.LeaseManagementService.ViewModels;
 using REALWorks.MessagingServer.Messages;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace REALWork.LeaseManagementService.CommandHandlers
 {
-    public class UpdateLeaseCommandHandler : IRequestHandler<UpdateLeaseCommand, Unit>
+    public class UpdateLeaseCommandHandler : IRequestHandler<UpdateLeaseCommand, AddLeaseAgreementViewModel>
     {
         private readonly AppLeaseManagementDbContext _context;
 
@@ -22,7 +23,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             _messagePublisher = messagePublisher;
         }
 
-        public async Task<Unit> Handle(UpdateLeaseCommand request, CancellationToken cancellationToken)
+        public async Task<AddLeaseAgreementViewModel> Handle(UpdateLeaseCommand request, CancellationToken cancellationToken)
         {
             var lease = _context.Lease.FirstOrDefault(l => l.Id == request.LeaseId);
 
@@ -31,6 +32,25 @@ namespace REALWork.LeaseManagementService.CommandHandlers
                 request.LeaseSignDate, request.IsActive, request.IsAddendumAvailable, request.LeaseEndCode, request.RenewTerm);
 
             _context.Lease.Update(lease);
+
+            var updatedLease = new AddLeaseAgreementViewModel();
+
+            updatedLease.LeaseTitle = request.LeaseTitle;
+            updatedLease.LeaseDesc = request.LeaseDesc;
+            updatedLease.LeaseStartDate = request.LeaseStartDate;
+            updatedLease.LeaseId = request.LeaseId;
+            updatedLease.LeaseEndDate = request.LeaseEndDate;
+            updatedLease.RentAmount = request.RentAmount;
+            updatedLease.DamageDepositAmount = request.DamageDepositAmount;
+            updatedLease.PetDepositAmount = request.PetDepositAmount;
+            updatedLease.Term = request.Term;
+            updatedLease.RenewTerm = request.RenewTerm;
+            updatedLease.LeaseSignDate = request.LeaseSignDate;
+            updatedLease.IsActive = request.IsActive;
+            updatedLease.IsAddendumAvailable = request.IsAddendumAvailable;
+            updatedLease.EndLeaseCode = request.LeaseEndCode;
+            updatedLease.Notes = request.Notes;
+            updatedLease.Updated = DateTime.Now;
 
             try
             {
@@ -43,7 +63,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
             //throw new NotImplementedException();
 
-            return await Unit.Task;
+            return updatedLease;
         }
     }
 }

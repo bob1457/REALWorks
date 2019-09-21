@@ -46,7 +46,7 @@ namespace REALWorks.AssetServer.Queries
 
 
             var prop = _context.Property
-                .Include(c => c.ManagementContract)
+                //.Include(c => c.ManagementContract)
                 .Include(fe => fe.Feature)
                 .Include(fa => fa.Facility)
                 .Include(a => a.Address)
@@ -57,7 +57,9 @@ namespace REALWorks.AssetServer.Queries
                 .Select(op => new PropertyDetailViewModel
                 {
                     PropertyName = op.PropertyName,
-                    OwnerList = op.OwnerProperty.Select(o => o.PropertyOwner).ToList()
+                    PropertyId = op.Id,
+                    OwnerList = op.OwnerProperty.Select(o => o.PropertyOwner).ToList(),
+                    ContractList = op.ManagementContract/*.Where(c =>c.IsActive == true)*/.ToList()
                 });
                 //.FirstOrDefault(op => op.PropertyId == request.Id);
 
@@ -94,7 +96,7 @@ namespace REALWorks.AssetServer.Queries
 
             //return property.FirstOrDefault(p => p.Id == request.Id);
 
-            return prop.FirstOrDefault();
+            return prop.FirstOrDefault(p => p.PropertyId == request.Id);
 
 
             //throw new NotImplementedException();

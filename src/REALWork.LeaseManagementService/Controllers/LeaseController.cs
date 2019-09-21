@@ -29,9 +29,9 @@ namespace REALWork.LeaseManagementService.Controllers
         [Route("create")]
         public async Task<IActionResult> AddLease([FromBody] AddLeaseCommand command)
         {
-            await _mediator.Send(command);
+            var newLease = await _mediator.Send(command);
 
-            return Ok("Lease Created!");
+            return Ok(newLease);
         }
 
         [HttpPost]
@@ -65,6 +65,57 @@ namespace REALWork.LeaseManagementService.Controllers
 
             }
         }
+
+        [HttpGet]
+        [Route("tenants")]
+        public async Task<IActionResult> GetAllTenants()
+        {
+            try
+            {
+                var tenants = await _mediator.Send(new AllTenantListQuery());
+
+                if (tenants == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(tenants);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
+
+        [HttpGet]
+        [Route("tenant/{id}")]
+        public async Task<IActionResult> GetTenantDetails(int id)
+        {
+            var getTenant = new TenantDetailsQuery
+                {
+                    Id = id
+                };
+            
+            try
+            {
+                var tenant = await _mediator.Send(getTenant);
+
+                if (tenant == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(tenant);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
 
         [HttpGet]
         [Route("{id}")]

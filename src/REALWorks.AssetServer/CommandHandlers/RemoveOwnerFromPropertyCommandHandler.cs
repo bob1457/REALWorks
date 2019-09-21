@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.AssetServer.CommandHandlers
 {
-    public class RemoveOwnerFromPropertyCommandHandler : IRequestHandler<RemoveOwnerFromPropertyCommand, string>
+    public class RemoveOwnerFromPropertyCommandHandler : IRequestHandler<RemoveOwnerFromPropertyCommand, RemovePropertyOwnerCommandResult>
     {
         private readonly AppDataBaseContext _context;      
 
@@ -20,7 +20,7 @@ namespace REALWorks.AssetServer.CommandHandlers
             _context = context;
         }
 
-        public async Task<string> Handle(RemoveOwnerFromPropertyCommand request, CancellationToken cancellationToken)
+        public async Task<RemovePropertyOwnerCommandResult> Handle(RemoveOwnerFromPropertyCommand request, CancellationToken cancellationToken)
         {
             var numOfgOwners = _context.OwnerProperty.Where(p => p.PropertyId == request.PropertyId).Count();
             var property = _context.Property.FirstOrDefault(i => i.Id == request.PropertyId);
@@ -33,9 +33,14 @@ namespace REALWorks.AssetServer.CommandHandlers
 
                 _context.OwnerProperty.Remove(ownerToRemove);
 
+                var removed = new RemovePropertyOwnerCommandResult();
+
                  try
                 {
                     await _context.SaveChangesAsync();
+
+                    removed.PropertyId = property.Id;
+                    removed.PropertyOwnerId = request.PropertyOwnerId;
 
                     //return "Onwer has been removed from the property";
 
@@ -51,14 +56,16 @@ namespace REALWorks.AssetServer.CommandHandlers
                     Log.Error(ex, "Error occured while deleting the owner for the property {PropertyName}.", property.PropertyName);
                 }
 
-                return "Owner has been removed from the proeprty specified!";
+                //return "Owner has been removed from the proeprty specified!";
+                return removed;
             }
 
 
             Log.Information("The owner {OwnerName} cannot removed from the property {PorpertyName} because this is the only owner",
                         ownerToRemove.PropertyOwner.FirstName + " " + ownerToRemove.PropertyOwner.LastName, property.PropertyName);
 
-            return "Onwer cannot be removed from the property!";
+            //return "Onwer cannot be removed from the property!";
+            return new RemovePropertyOwnerCommandResult() {};
 
         }
     }

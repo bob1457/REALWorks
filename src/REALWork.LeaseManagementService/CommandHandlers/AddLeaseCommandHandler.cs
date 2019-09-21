@@ -3,6 +3,7 @@ using REALWork.LeaseManagementCore.Entities;
 using REALWork.LeaseManagementCore.ValueObjects;
 using REALWork.LeaseManagementData;
 using REALWork.LeaseManagementService.Commands;
+using REALWork.LeaseManagementService.ViewModels;
 using REALWorks.MessagingServer.Messages;
 using Serilog;
 using System;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace REALWork.LeaseManagementService.CommandHandlers
 {
-    public class AddLeaseCommandHandler : IRequestHandler<AddLeaseCommand, Unit>
+    public class AddLeaseCommandHandler : IRequestHandler<AddLeaseCommand, AddLeaseAgreementViewModel>
     {
         private readonly AppLeaseManagementDbContext _context;
 
@@ -26,7 +27,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
         }
 
 
-        public async Task<Unit> Handle(AddLeaseCommand request, CancellationToken cancellationToken)
+        public async Task<AddLeaseAgreementViewModel> Handle(AddLeaseCommand request, CancellationToken cancellationToken)
         {
             // Teant data is in the entity NewTeant, Rental Property and Address data is in the Entity RentalProperty based on RentalPropertyId in Lease entity
 
@@ -55,9 +56,33 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
             _context.Add(lease);
 
+            var addedLease = new AddLeaseAgreementViewModel();
+
+            addedLease.LeaseTitle = request.LeaseTitle;
+            addedLease.LeaseDesc = request.LeaseDesc;
+            addedLease.LeaseStartDate = request.LeaseStartDate;
+            //...
+            addedLease.LeaseEndDate = request.LeaseEndDate;
+            addedLease.RentAmount = request.RentAmount;
+            addedLease.DamageDepositAmount = request.DamageDepositAmount;
+            addedLease.PetDepositAmount = request.PetDepositAmount;
+            addedLease.Term = request.Term;
+            addedLease.RenewTerm = request.RenewTerm;
+            addedLease.LeaseSignDate = request.LeaseSignDate;
+            addedLease.IsActive = request.IsActive;
+            addedLease.IsAddendumAvailable = request.IsAddendumAvailable;
+            addedLease.EndLeaseCode = request.LeaseEndCode;
+            addedLease.Notes = request.Notes;
+            addedLease.Created = DateTime.Now;
+            addedLease.Updated = DateTime.Now;
+
+
+
             try
             {
                 await _context.SaveChangesAsync(); // comment out for testing message sending ONLY
+
+                addedLease.LeaseId = lease.Id;
 
 
                 // Send message to MQ if needed
@@ -73,7 +98,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
                 Log.Error(ex, "Error while creating lease {LeaseTile}.", lease.LeaseTitle);
             }
 
-            return await Unit.Task;
+            return addedLease;
         }
     }
 }

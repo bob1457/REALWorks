@@ -23,7 +23,7 @@ namespace REALWorks.AssetServer.CommandHandlers
         public async Task<UpdatePropertyOwnerCommandResult> Handle(UpdatePropertyOwnerCommand request, CancellationToken cancellationToken)
         {
             var owner = _context.PropertyOwner.Include(op => op.OwnerProperty).ThenInclude(p => p.Property)
-                .FirstOrDefault(o => o.Id == request.PropertyOwnerId);
+                .FirstOrDefault(o => o.Id == request.Id);
 
             var property = owner.OwnerProperty.FirstOrDefault().Property;
 
@@ -37,6 +37,7 @@ namespace REALWorks.AssetServer.CommandHandlers
             var updatedOwner = new UpdatePropertyOwnerCommandResult();
 
             //populate the updated owner
+            updatedOwner.Id = request.Id;
             updatedOwner.FirstName = request.FirstName;
             updatedOwner.LastName = request.LastName;
             updatedOwner.ContactEmail = request.ContactEmail;

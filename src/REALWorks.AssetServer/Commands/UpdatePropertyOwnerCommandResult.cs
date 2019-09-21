@@ -7,7 +7,7 @@ namespace REALWorks.AssetServer.Commands
 {
     public class UpdatePropertyOwnerCommandResult
     {
-        public int PropertyOwnerId { get; set; }
+        public int Id { get; set; }
         //public int PropertyId { get; set; }
         //public string UserName { get; set; }
         public string FirstName { get; set; }

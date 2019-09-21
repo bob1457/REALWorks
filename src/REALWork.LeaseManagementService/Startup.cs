@@ -21,6 +21,7 @@ using RabbitMQ.Client;
 using REALWork.LeaseManagementData;
 using REALWork.LeaseManagementService.EventHandlers;
 using REALWork.LeaseManagementService.Events;
+using REALWorks.InfrastructureServer.ServiceDiscovery;
 using REALWorks.MessagingServer.EventBus;
 using REALWorks.MessagingServer.EventBusRabbitMQ;
 using REALWorks.MessagingServer.Messages;
@@ -75,6 +76,8 @@ namespace REALWork.LeaseManagementService
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
                 };
             });
+
+            ConfigureConsul(services); // Consul service discovery
 
             services.AddSwaggerGen(c =>
             {
@@ -172,6 +175,32 @@ namespace REALWork.LeaseManagementService
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
         }
+        #endregion
+
+        // Register Consul Service
+        //
+        private void ConfigureConsul(IServiceCollection services)
+        {
+            //throw new NotImplementedException();
+
+            //var serviceConfig = Configuration.GetServiceConfig();
+
+            var serviceConfig = new ServiceConfig
+            {
+                ServiceDiscoveryAddress = Configuration.GetValue<Uri>("ServiceConfig:serviceDiscoveryAddress"),
+                ServiceAddress = Configuration.GetValue<Uri>("ServiceConfig:serviceAddress"),
+                ServiceName = Configuration.GetValue<string>("ServiceConfig:serviceName"),
+                ServiceId = Configuration.GetValue<string>("ServiceConfig:serviceId")
+            };
+
+            //serviceConfig.ServiceDiscoveryAddress = (Uri)Configuration.GetSection("serviceDiscoveryAddress");
+            //serviceConfig.ServiceAddress = (Uri)Configuration.GetSection("serviceAddress");
+            //serviceConfig.ServiceId = Configuration.GetSection("serviceId").ToString();
+            //serviceConfig.ServiceName = Configuration.GetSection("serviceName").ToString();
+
+            services.RegisterConsulServices(serviceConfig);
+
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -203,7 +232,7 @@ namespace REALWork.LeaseManagementService
 
             //ConfigureEventBus(app); // FOR FUTURE IMPLEMENTATION
         }
-        #endregion
+        
 
         // *************FOR FUTURE IMPLEMENTATION ***********************
         //

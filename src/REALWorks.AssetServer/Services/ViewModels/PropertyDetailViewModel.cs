@@ -71,22 +71,22 @@ namespace REALWorks.AssetServer.Services.ViewModels
         /// </summary>
         public ICollection<PropertyOwner> OwnerList { get; set; }
         public ICollection<OwnerProperty> OwnerProperty { get; set; }
-        public ICollection<ManagementContract> CotnractList { get; set; }
+        public ICollection<ManagementContract> ContractList { get; set; }
 
         /// <summary>
         /// Management Contract
         /// </summary>
         /// 
-        public string ManagementContractTitile { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public string PlacementFeeScale { get; set; }
-        public string ManagementFeeScale { get; set; }        
-        public string ManagementContractDocUrl { get; set; }
-        public bool ContractIsActive { get; set; }
-        public DateTime ContractSignDate { get; set; }
-        public DateTime ContractCreationDate { get; set; }
-        public DateTime ContractUpdateDate { get; set; }
+        //public string ManagementContractTitile { get; set; }
+        //public DateTime StartDate { get; set; }
+        //public DateTime EndDate { get; set; }
+        //public string PlacementFeeScale { get; set; }
+        //public string ManagementFeeScale { get; set; }        
+        //public string ManagementContractDocUrl { get; set; }
+        //public bool ContractIsActive { get; set; }
+        //public DateTime ContractSignDate { get; set; }
+        //public DateTime ContractCreationDate { get; set; }
+        //public DateTime ContractUpdateDate { get; set; }
 
         
     }

@@ -27,7 +27,7 @@ namespace REALWorks.AssetServer.Queries
 
                                select new ManagementContractListByPropertyViewModel
                                {
-                                   ManagementContractId = c.Id,
+                                   Id = c.Id,
                                    ManagementContractTitle = c.ManagementContractTitle,
                                    StartDate = c.StartDate,
                                    EndDate = c.EndDate,

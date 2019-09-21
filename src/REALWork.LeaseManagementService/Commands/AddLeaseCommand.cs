@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using REALWork.LeaseManagementService.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using static REALWork.LeaseManagementCore.Entities.Lease;
 
 namespace REALWork.LeaseManagementService.Commands
 {
-    public class AddLeaseCommand: IRequest<Unit>
+    public class AddLeaseCommand: IRequest<AddLeaseAgreementViewModel>
     {
         /// <summary>
         /// Lease - Main
