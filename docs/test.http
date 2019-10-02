@@ -4,14 +4,14 @@ POST http://localhost:63899//api/RentalApplication/approve HTTP/1.1
 content-type: application/json
 
 {
-  "applicationId": 2,
+  "applicationId": 1,
   "appStatus": 2,
   "userName": "NotSet",
-  "firstName": "Arnold",
-  "lastName": "Kim",
-  "contactEmail": "rk111@gamil.com",
-  "contactTelephone1": "604-985-5214",
-  "contactTelephone2": "",
+  "firstName": "Terasa",
+  "lastName": "Hubbin",
+  "contactEmail": "tereaa@yahoo.ca",
+  "contactTelephone1": "123-456-7890",
+  "contactTelephone2": "123-698-7623",
   "contactOthers": ""
 }
 

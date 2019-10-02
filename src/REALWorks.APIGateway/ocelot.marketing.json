@@ -1,7 +1,7 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/api/Listing/all",
+      "DownstreamPathTemplate": "/api/Listing/all", // Get all listing
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -20,7 +20,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/Listing/{id}",
+      "DownstreamPathTemplate": "/api/Listing/{id}", // Get listing details
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -39,7 +39,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/Listing/add",
+      "DownstreamPathTemplate": "/api/Listing/add", // Add new listing
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -58,7 +58,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/RentalApplication/all",
+      "DownstreamPathTemplate": "/api/RentalApplication/all", // Get all rental applications
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -77,7 +77,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/RentalApplication/{id}",
+      "DownstreamPathTemplate": "/api/RentalApplication/{id}", // Get rental application details
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -95,12 +95,30 @@
         "AllowedScopes": []
       }
     },
-
+    {
+      "DownstreamPathTemplate": "/api/RentalApplication/approve", // Approve rental application
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/application/approve",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
 
 
 
     {
-      "DownstreamPathTemplate": "/api/Listing/status",
+      "DownstreamPathTemplate": "/api/Listing/status", // Change listed property status
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -119,7 +137,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/Listing/update",
+      "DownstreamPathTemplate": "/api/Listing/update", // Update property listing
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -138,7 +156,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/Listing/addimg",
+      "DownstreamPathTemplate": "/api/Listing/addimg", // Add images to the isting
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -157,7 +175,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/property/{id}",
+      "DownstreamPathTemplate": "/api/Listing/removeimg", // Remove images to the isting
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -168,15 +186,34 @@
       //"UpstreamPathTemplate": "/listings",
       //"UpstreamHttpMethod": []
       "ServiceName": "MarketingManager",
-      "UpstreamPathTemplate": "/property/{id}",
-      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamPathTemplate": "/listing/removeimg",
+      "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "TestKey",
         "AllowedScopes": []
       }
     },
+    //{
+    //  "DownstreamPathTemplate": "/api/property/{id}",
+    //  "DownstreamScheme": "http",
+    //  //"DownstreamHostAndPorts": [
+    //  //  {
+    //  //    "Host": "localhost",
+    //  //    "Port": 63899
+    //  //  }
+    //  //],
+    //  //"UpstreamPathTemplate": "/listings",
+    //  //"UpstreamHttpMethod": []
+    //  "ServiceName": "MarketingManager",
+    //  "UpstreamPathTemplate": "/property/{id}",
+    //  "UpstreamHttpMethod": [ "Get" ],
+    //  "AuthenticationOptions": {
+    //    "AuthenticationProviderKey": "TestKey",
+    //    "AllowedScopes": []
+    //  }
+    //},
     {
-      "DownstreamPathTemplate": "/api/Listing/addopenhouse",
+      "DownstreamPathTemplate": "/api/Listing/addopenhouse", // Add open house
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {
@@ -195,7 +232,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/api/Listing/openhouse/addviewer",
+      "DownstreamPathTemplate": "/api/Listing/openhouse/addviewer", // Add new open house viewers
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
       //  {

@@ -101,7 +101,21 @@ namespace REALWorks.MarketingService.Controllers
 
             await _mediator.Send(command);
 
-            return Content("file uploaded successfully!");
+            return Content("Image uploaded successfully!");
+        }
+
+        [HttpPost]
+        [Route("removeimg")]
+        public async Task<IActionResult> RemoveImageToRentalProperty([FromForm] RemoveImageToPropertyCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _mediator.Send(command);
+
+            return Content("Image removed successfully!");
         }
 
 
