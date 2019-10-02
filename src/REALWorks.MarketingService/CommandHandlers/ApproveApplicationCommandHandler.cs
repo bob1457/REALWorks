@@ -30,15 +30,20 @@ namespace REALWorks.MarketingService.CommandHandlers
         {
             //throw new NotImplementedException();
 
-            var application = _context.RentalApplication.FirstOrDefault(a => a.Id == request.ApplicationId);
+            var application = _context.RentalApplication
+                .Include(p => p.RentalProperty)
+                //.ThenInclude(l => l.PropertyListing)
+                .FirstOrDefault(a => a.Id == request.ApplicationId);
+
+            //application.StatusUpdate(application, request.AppStatus);
+
+            //var rentalProperty = _context.RentalProperty.Include(l => l.PropertyListing).FirstOrDefault(p => p.Id == application.RentalPropertyId); // Get related rental property
+            //var rentalProperty = application.RentalProperty;                       
+
+            ////Get the related listing for this rental property
+            //var listing = _context.PropertyListing.FirstAsync(l => l.RentalPropertyId == rentalProperty.Id);
 
             application.StatusUpdate(application, request.AppStatus);
-
-            var rentalProperty = _context.RentalProperty.FirstOrDefault(p => p.Id == application.RentalPropertyId); // Get related rental property
-
-            //Get the related listing for this rental property
-            var listing = _context.PropertyListing.FirstAsync(l => l.RentalPropertyId == rentalProperty.Id);
-
 
             _context.RentalApplication.Update(application);
 
@@ -50,6 +55,13 @@ namespace REALWorks.MarketingService.CommandHandlers
             {
                 throw ex;
             }
+
+
+            var rentalProperty = application.RentalProperty;
+
+            //Get the related listing for this rental property
+            var listing = _context.PropertyListing.FirstAsync(l => l.RentalPropertyId == rentalProperty.Id);
+
 
             // Send message to message queue on conditions
             //

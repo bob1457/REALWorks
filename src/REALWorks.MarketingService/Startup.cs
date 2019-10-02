@@ -42,6 +42,7 @@ namespace REALWorks.MarketingService
         {
             string dbConnectionString = Configuration.GetConnectionString("AppDbConnection");
 
+            //services.AddDbContext<AppMarketingDbDataContext>(ServiceLifetime.Transient);
             services.AddDbContext<AppMarketingDbDataContext>(options =>
                      options.UseSqlServer(dbConnectionString, builder => builder.MigrationsAssembly("REALWorks.MarketingData")));
 

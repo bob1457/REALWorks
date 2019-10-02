@@ -25,21 +25,50 @@ namespace REALWorks.MarketingService.Controllers
 
         }
 
-
         [HttpGet]
-        [Route("all/{id}")]
-        public async Task<IActionResult> GetAllApplicationsByProperty(int id) // all applications for property (on rental property id)
+        [Route("all")]
+        public async Task<IActionResult> GetAllApplicationList() // all applications 
         {
-            var getProperty = new ApplicationiListQuery()
-            {
-                Id = id
-            };
+            //var getAllApplications = new ApplicationiListQuery()
+            //{
+            //    Id = id
+            //};
 
-            var applications = await _mediator.Send(getProperty);
+            var applications = await _mediator.Send(new ApplicationiListQuery());
 
 
             return Ok(applications);
         }
+
+        //[HttpGet]
+        //[Route("all")]
+        //public async Task<IActionResult> GetAllApplicationList(int id) // all applications for property (on rental property id)
+        //{
+        //    var getAllApplications = new ApplicationiListQuery()
+        //    {
+        //        Id = id
+        //    };
+
+        //    var applications = await _mediator.Send(getAllApplications);
+
+
+        //    return Ok(applications);
+        //}
+
+        //[HttpGet]
+        //[Route("all/{id}")]
+        //public async Task<IActionResult> GetAllApplicationsByProperty(int id) // all applications for property (on rental property id)
+        //{
+        //    var getApplicationByProperty = new ApplicationiListQuery()
+        //    {
+        //        Id = id
+        //    };
+
+        //    var applications = await _mediator.Send(getApplicationByProperty);
+
+
+        //    return Ok(applications);
+        //}
 
         [HttpGet]
         [Route("{id}")]

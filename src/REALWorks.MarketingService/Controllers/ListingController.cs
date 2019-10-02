@@ -114,6 +114,9 @@ namespace REALWorks.MarketingService.Controllers
             return Ok(result);
         }
 
+        #region Open House
+
+
         [HttpGet]
         [Route("property/id")]
         public async Task<IActionResult> GetRentalPropertyDetails(int id)
@@ -145,6 +148,8 @@ namespace REALWorks.MarketingService.Controllers
 
             return Ok(result);
         }
+
+        #endregion
 
 
     }

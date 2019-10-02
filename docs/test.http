@@ -1,3 +1,5 @@
+###
+
 POST http://localhost:63899//api/RentalApplication/approve HTTP/1.1
 content-type: application/json
 
@@ -13,7 +15,7 @@ content-type: application/json
   "contactOthers": ""
 }
 
-
+###
 
 ###
 
@@ -126,6 +128,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqd
 
 ###
 GET http://localhost:21799/leases HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI2ZGJlYzUxNy1iOWFlLTRiMTEtYTE4Ny05YWY3YWI4OWEzOTciLCJuYmYiOjE1Njc1Mjc0MTAsImV4cCI6MTU3MjcxMTQxMCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.dIQh_MbSXb9kH7Csa3faB7Hrc58a9MBXvxDu7Z_MCXU
+
+###
+
+
+###
+GET http://localhost:21799/applications HTTP/1.1
+# http://localhost:63899/api/RentalApplication/4
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI2ZGJlYzUxNy1iOWFlLTRiMTEtYTE4Ny05YWY3YWI4OWEzOTciLCJuYmYiOjE1Njc1Mjc0MTAsImV4cCI6MTU3MjcxMTQxMCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.dIQh_MbSXb9kH7Csa3faB7Hrc58a9MBXvxDu7Z_MCXU
+
+###
+
+###
+GET http://localhost:21799/application/4 HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI2ZGJlYzUxNy1iOWFlLTRiMTEtYTE4Ny05YWY3YWI4OWEzOTciLCJuYmYiOjE1Njc1Mjc0MTAsImV4cCI6MTU3MjcxMTQxMCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.dIQh_MbSXb9kH7Csa3faB7Hrc58a9MBXvxDu7Z_MCXU
 
