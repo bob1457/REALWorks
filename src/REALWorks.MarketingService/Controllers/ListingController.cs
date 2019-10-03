@@ -118,10 +118,28 @@ namespace REALWorks.MarketingService.Controllers
             return Content("Image removed successfully!");
         }
 
-
+        /// <summary>
+        /// Listing status update involves related rental property status change
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("update")]
         public async Task<IActionResult> UpdateListing([FromBody] UpdatePropertyListingCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// This endpoint simply remove/de-activate the listing without affecting rental property status, e.g cancel the lisitng
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("remove")]
+        public async Task<IActionResult> RemoveListing([FromBody] RemovePropertyListingCommand command)
         {
             var result = await _mediator.Send(command);
 

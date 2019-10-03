@@ -51,7 +51,7 @@ namespace REALWorks.MarketingService.QueryHandlers
                                    select new ApplicationListViewModel
                                    {
                                        RentalApplicationId = a.Id,
-
+                                       RentalApplicationStatus = a.Status,
                                        PropertyName = a.RentalProperty.PropertyName,
                                        ApplicatnFirstName = a.RentalApplicant.FirstName,
                                        ApplicatnLastName = a.RentalApplicant.LastName,

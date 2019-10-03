@@ -156,6 +156,25 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/api/Listing/remove", // Update property listing
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/remove",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/Listing/addimg", // Add images to the isting
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [

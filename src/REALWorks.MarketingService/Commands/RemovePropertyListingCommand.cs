@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace REALWorks.MarketingService.Commands
 {
-    public class RemoveImageToPropertyCommand : IRequest<Unit>
+    public class RemovePropertyListingCommand : IRequest<Unit>
     {
-        public int Id { get; set; } // Image Id
+        public int Id { get; set; }
     }
 }

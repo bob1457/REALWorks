@@ -64,5 +64,11 @@ namespace REALWorks.MarketingCore.Entities
             listing.IsActive = status;
             listing.Modified = DateTime.Now;
         }
+
+        public void DeActivate(PropertyListing listing)
+        {
+            listing.IsActive = false;
+            listing.Modified = DateTime.Now;
+        }
     }
 }
