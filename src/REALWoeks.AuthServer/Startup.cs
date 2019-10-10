@@ -18,6 +18,7 @@ using MediatR;
 using Serilog;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
+using REALWorks.AuthServer.Services;
 
 namespace REALWorks.AuthServer
 {
@@ -53,21 +54,24 @@ namespace REALWorks.AuthServer
                 .AddDefaultTokenProviders();
 
 
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddCookie()
-            .AddJwtBearer(jwtBearerOptions =>
-            {
-                jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
+                .AddJwtBearer(jwtBearerOptions =>
                 {
-                  ValidateActor = false,
-                  ValidateAudience = false,
-                  ValidateLifetime = true,
-                  ValidateIssuerSigningKey = true,
-                  ValidIssuer = Configuration["Token:Issuer"],
-                  ValidAudience = Configuration["Token:Audience"],
-                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
-                };
-             });
+                    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                      ValidateActor = false,
+                      ValidateAudience = false,
+                      ValidateLifetime = true,
+                      ValidateIssuerSigningKey = true,
+                      ValidIssuer = Configuration["Token:Issuer"],
+                      ValidAudience = Configuration["Token:Audience"],
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
+                    };
+                }
+             );
+
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
             services.AddSwaggerGen(c =>
             {
@@ -90,8 +94,10 @@ namespace REALWorks.AuthServer
                               .AllowAnyHeader()
                               .AllowCredentials());
         });
-
+        
         services.AddMediatR(typeof(Startup));
+
+        services.AddSingleton<IEmailSender, EmailSender>();
 
             //services.AddSingleton<RabbitListener>();
 
