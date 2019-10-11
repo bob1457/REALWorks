@@ -7,14 +7,49 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using REALWorks.MessagingServer.Messages;
+using REALWorks.NotificationService.Services.EmailService;
 
 namespace REALWorks.NotificationService
 {
     public class Program
     {
+        public static IConfigurationRoot Config { get; private set; }
+        static Program()
+        {
+            Config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                //.AddJsonFile($"appsettings.{_env}.json", optional: false)
+                .Build();
+        }
+
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
+        }
+
+        private static void Startup()
+        {
+            // setup RabbitMQ
+            var configSection = Config.GetSection("RabbitMQ");
+            string host = configSection["Host"];
+            string userName = configSection["UserName"];
+            string password = configSection["Password"];
+            string exchange = configSection["Exchange"];
+            string connName = configSection["ConnectionName"];
+
+            //var emailSender = new EmailSender();
+
+
+            // setup messagehandler
+            RabbitMQMessageHandler messageHandler = new RabbitMQMessageHandler(host, userName, password, exchange, connName, "notification", "notification.#");
+            // ABOVE: subscribe/listen to queue - queue name to be updated
+
+            EventHandlers.EventHandler eventHandler = new EventHandlers.EventHandler(messageHandler, null); //, dbContext);
+            eventHandler.Start();
+
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

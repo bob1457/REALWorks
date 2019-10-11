@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using REALWorks.AuthServer.Commands;
 using REALWorks.AuthServer.Data;
+using REALWorks.AuthServer.Events;
 using REALWorks.AuthServer.Helpers;
 using REALWorks.AuthServer.Models;
+using REALWorks.MessagingServer.Messages;
+using Serilog;
 using System;
 
 using System.Collections.Generic;
@@ -20,13 +23,16 @@ namespace REALWorks.AuthServer.CommandHandlers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
 
+        IMessagePublisher _messagePublisher;
 
-        public RegisterCommandHandler(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,*/  ApplicationDbContext appDbContext)
+
+        public RegisterCommandHandler(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,*/  ApplicationDbContext appDbContext, IMessagePublisher messagePublisher)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             //_mapper = mapper;
             _appDbContext = appDbContext;
+            _messagePublisher = messagePublisher;
         }
 
         
@@ -64,6 +70,23 @@ namespace REALWorks.AuthServer.CommandHandlers
 
                 //await _appDbContext.Customers.AddAsync(new Customer { IdentityId = userIdentity.Id, Location = model.Location });
                 await _appDbContext.SaveChangesAsync(); // commented out for testing ONLY
+
+                string subject = "";
+                string body = "";
+
+                // Send message to message queue (notificaiton)
+                RegisterAccountEvent e = new RegisterAccountEvent(Guid.NewGuid(), user.Email, user.UserName, "", body, subject);
+
+                try
+                {
+                    await _messagePublisher.PublishMessageAsync(e.MessageType, e, "notification");
+                    Log.Information("Message  {MessageType} with Id {MessageId} has been published successfully", e.MessageType, e.MessageId);
+                }
+                catch(Exception ex)
+                {
+                    //throw ex;
+                    Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
+                }
             }
             catch (Exception ex)
             {
