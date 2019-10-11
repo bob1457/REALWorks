@@ -6,6 +6,7 @@ using REALWorks.AuthServer.Data;
 using REALWorks.AuthServer.Events;
 using REALWorks.AuthServer.Helpers;
 using REALWorks.AuthServer.Models;
+using REALWorks.AuthServer.Models.DomainEvents;
 using REALWorks.MessagingServer.Messages;
 using Serilog;
 using System;
@@ -25,14 +26,18 @@ namespace REALWorks.AuthServer.CommandHandlers
 
         IMessagePublisher _messagePublisher;
 
+        private IMediator _mediator;
 
-        public RegisterCommandHandler(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,*/  ApplicationDbContext appDbContext, IMessagePublisher messagePublisher)
+
+        public RegisterCommandHandler(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,*/  
+            ApplicationDbContext appDbContext, IMessagePublisher messagePublisher, IMediator mediator)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             //_mapper = mapper;
             _appDbContext = appDbContext;
             _messagePublisher = messagePublisher;
+            _mediator = mediator;
         }
 
         
@@ -71,10 +76,18 @@ namespace REALWorks.AuthServer.CommandHandlers
                 //await _appDbContext.Customers.AddAsync(new Customer { IdentityId = userIdentity.Id, Location = model.Location });
                 await _appDbContext.SaveChangesAsync(); // commented out for testing ONLY
 
+                // Raise domain event for email notificaiton or directly invoke email sending
+
                 string subject = "";
                 string body = "";
 
-                // Send message to message queue (notificaiton)
+                AccountRegistrationEvent accountRegistrationEvent = new AccountRegistrationEvent(user.Email, user.UserName, "", subject, body);
+
+                await _mediator.Publish(accountRegistrationEvent);
+
+
+                // Send message to message queue (notificaiton) - integratin event
+                /*
                 RegisterAccountEvent e = new RegisterAccountEvent(Guid.NewGuid(), user.Email, user.UserName, "", body, subject);
 
                 try
@@ -87,6 +100,7 @@ namespace REALWorks.AuthServer.CommandHandlers
                     //throw ex;
                     Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
                 }
+                */
             }
             catch (Exception ex)
             {
