@@ -92,7 +92,7 @@ namespace REALWorks.NotificationService.EventHandlers
             }
             
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }
