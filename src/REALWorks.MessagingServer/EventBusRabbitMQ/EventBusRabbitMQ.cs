@@ -77,7 +77,7 @@ namespace REALWorks.MessagingServer.EventBusRabbitMQ
             var channel = _persistentConnection.CreateModel();
 
             channel.ExchangeDeclare(exchange: BROKER_NAME,
-                                 type: "direct");
+                                 type: "topic");
 
             channel.QueueDeclare(queue: _queueName,
                                  durable: true,

@@ -29,7 +29,7 @@ namespace REALWorks.AuthServer.Models.DomainEventHandlers
             }
             catch(Exception ex)
             {
-                Log.Error(ex, "Error while sending notification to {Recipient}", notification.EmailRecipient);
+                Log.Error(ex, "Error while sending account registration notification to {Recipient}", notification.EmailRecipient);
             }
              
 

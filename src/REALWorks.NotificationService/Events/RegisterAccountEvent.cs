@@ -1,4 +1,5 @@
-﻿using REALWorks.MessagingServer.Events;
+﻿using REALWorks.MessagingServer.EventBus;
+using REALWorks.MessagingServer.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace REALWorks.NotificationService.Events
 {
-    public class RegisterAccountEvent: Event
+    public class RegisterAccountEvent: IntegrationEvent
     {
-        public RegisterAccountEvent(Guid messageId, string emailRecipient, string userName, string emailSender, string emailBody, string subject) : base(messageId)
+        public RegisterAccountEvent(Guid messageId, string emailRecipient, string userName, string emailSender, string emailBody, string subject) 
         {
             EmailRecipient = emailRecipient;
             UserName = userName;

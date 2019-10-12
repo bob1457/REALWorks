@@ -27,6 +27,7 @@ namespace REALWorks.NotificationService
 
         public static void Main(string[] args)
         {
+            Startup();
             CreateWebHostBuilder(args).Build().Run();
         }
 
@@ -41,13 +42,14 @@ namespace REALWorks.NotificationService
             string connName = configSection["ConnectionName"];
 
             //var emailSender = new EmailSender();
-
+            var emailSettings = new EmailSettings();
 
             // setup messagehandler
             RabbitMQMessageHandler messageHandler = new RabbitMQMessageHandler(host, userName, password, exchange, connName, "notification", "notification.#");
             // ABOVE: subscribe/listen to queue - queue name to be updated
 
-            EventHandlers.EventHandler eventHandler = new EventHandlers.EventHandler(messageHandler, null); //, dbContext);
+            IEmailSender emailSender = null;
+            EventHandlers.EventHandler eventHandler = new EventHandlers.EventHandler(messageHandler, emailSender); //, dbContext);
             eventHandler.Start();
 
         }

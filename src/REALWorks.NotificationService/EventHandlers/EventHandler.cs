@@ -77,11 +77,13 @@ namespace REALWorks.NotificationService.EventHandlers
             throw new NotImplementedException();
         }
 
-        private Task HandleAsync(RegisterAccountEvent @event)
+        private async Task HandleAsync(RegisterAccountEvent @event)
         {
+            //EmailSettings settings;
+            //var emailSender = new EmailSender();
             try
             {
-                _emailSender.SendEmailAsync(@event.EmailRecipient, @event.EmailSubject, @event.EmailBody);
+                await _emailSender.SendEmailAsync(@event.EmailRecipient, @event.EmailSubject, @event.EmailBody);
             }
             catch(Exception ex)
             {
