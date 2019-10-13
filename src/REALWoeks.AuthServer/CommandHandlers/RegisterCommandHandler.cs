@@ -78,17 +78,19 @@ namespace REALWorks.AuthServer.CommandHandlers
 
                 // Raise domain event for email notificaiton or directly invoke email sending
 
-                string subject = "";
-                string body = "";
+                string subject = "Account Registration";
 
-                AccountRegistrationEvent accountRegistrationEvent = new AccountRegistrationEvent(user.Email, user.UserName, "", subject, body);
+                // Imporve the follwing with string buidler in C#
+                string body = "Dear " + user.FirstName + " " + user.LastName + ":" + "\n" + "Your account registration has completed successfully, you can login now.";
+ /*\n
+                AccountRegistrationEvent e = new AccountRegistrationEvent(user.Email, user.UserName, "", subject, body);
 
-                await _mediator.Publish(accountRegistrationEvent);
+                await _mediator.Publish(e);
 
 
                 // Send message to message queue (notificaiton) - integratin event
-                /*
-                RegisterAccountEvent e = new RegisterAccountEvent(Guid.NewGuid(), user.Email, user.UserName, "", body, subject);
+               */
+                RegisterAccountEvent e = new RegisterAccountEvent(Guid.NewGuid(), user.Email, "ml477344@telus.net", user.UserName,  body, subject);
 
                 try
                 {
@@ -100,7 +102,7 @@ namespace REALWorks.AuthServer.CommandHandlers
                     //throw ex;
                     Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
                 }
-                */
+                
             }
             catch (Exception ex)
             {

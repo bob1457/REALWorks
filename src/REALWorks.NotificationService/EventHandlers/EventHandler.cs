@@ -74,7 +74,7 @@ namespace REALWorks.NotificationService.EventHandlers
             // always akcnowledge message - any errors need to be dealt with locally.
             return true;
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private async Task HandleAsync(RegisterAccountEvent @event)

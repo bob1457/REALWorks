@@ -19,6 +19,7 @@ using Serilog;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using REALWorks.AuthServer.Services;
+using REALWorks.MessagingServer.Messages;
 
 namespace REALWorks.AuthServer
 {
@@ -44,6 +45,16 @@ namespace REALWorks.AuthServer
             services.AddDbContext<ApplicationDbContext>(options =>
                                                                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            // add messagepublisher classes
+            var configSection = Configuration.GetSection("RabbitMQ");
+            string host = configSection["Host"];
+            string userName = configSection["UserName"];
+            string password = configSection["Password"];
+            string exchange = configSection["Exchange"]; // Exchange1: publishing exchagne
+
+            services.AddTransient<IMessagePublisher>((sp) => new RabbitMQMessagePublisher(host, userName, password, exchange));
+
+            // Add asp.net identity
             services.AddIdentity<ApplicationUser, ApplicationRole>( config =>
                     {
                         config.SignIn.RequireConfirmedEmail = true;

@@ -121,7 +121,7 @@ namespace REALWorks.NotificationService
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
-            eventBus.Subscribe<RegisterAccountEvent, RegisterAccountEventHandler>();
+            //eventBus.Subscribe<RegisterAccountEvent, RegisterAccountEventHandler>();
 
         }
     }

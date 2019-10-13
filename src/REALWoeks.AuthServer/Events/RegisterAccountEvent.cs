@@ -8,7 +8,7 @@ namespace REALWorks.AuthServer.Events
 {
     public class RegisterAccountEvent : Event
     {
-        public RegisterAccountEvent(Guid messageId, string emailRecipient, string userName, string emailSender, string emailBody, string subject) : base(messageId)
+        public RegisterAccountEvent(Guid messageId, string emailRecipient, string emailSender, string userName, string emailBody, string subject) : base(messageId)
         {
             EmailRecipient = emailRecipient;
             UserName = userName;

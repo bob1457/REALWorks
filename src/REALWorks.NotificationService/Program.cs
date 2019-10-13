@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using REALWorks.MessagingServer.Messages;
 using REALWorks.NotificationService.Services.EmailService;
 using REALWorks.NotificationService.EventHandlers;
+using EventHandler = REALWorks.NotificationService.EventHandlers.EventHandler;
 
 namespace REALWorks.NotificationService
 {
@@ -51,7 +52,9 @@ namespace REALWorks.NotificationService
             string mailUserName = mailConfigSection["Sender"];
             string mailSenderName = mailConfigSection["SenderName"];
             string mailPassword = mailConfigSection["Password"];
-            ISMTPMailSender smtpMailServer = new SMTPMailSender(mailHost, mailPort, mailUserName, mailPassword, mailSenderName);
+            //ISMTPMailSender smtpMailServer = new SMTPMailSender(mailHost, mailPort, mailUserName, mailPassword, mailSenderName);
+            EmailSettings settings = new EmailSettings(mailHost, mailPort, mailSenderName, mailUserName, mailPassword );
+            IEmailSender smtpMailServer = new EmailSender(settings);
 
             //var emailSender = new EmailSender();
             //var emailSettings = new EmailSettings();
@@ -62,8 +65,8 @@ namespace REALWorks.NotificationService
 
             //IEmailSender emailSender = null;
             //EventHandlers.EventHandler eventHandler = new EventHandlers.EventHandler(messageHandler, smtpMailServer); //, dbContext);
-            NotificationEventHandler eventHander = new NotificationEventHandler(messageHandler, smtpMailServer);
-            eventHander.Start();
+            EventHandler eventHandler = new EventHandler(messageHandler, smtpMailServer);
+            eventHandler.Start();
 
         }
 

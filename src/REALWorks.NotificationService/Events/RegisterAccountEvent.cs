@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace REALWorks.NotificationService.Events
 {
-    public class RegisterAccountEvent: IntegrationEvent
+    public class RegisterAccountEvent: Event
     {
-        public RegisterAccountEvent(Guid messageId, string emailRecipient, string userName, string emailSender, string emailBody, string subject) 
+        public RegisterAccountEvent(Guid messageId, string emailRecipient, string emailSender, string userName,  string emailBody, string subject) : base(messageId)
         {
             EmailRecipient = emailRecipient;
             UserName = userName;

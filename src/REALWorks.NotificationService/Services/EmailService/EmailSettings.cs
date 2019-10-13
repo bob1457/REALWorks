@@ -7,6 +7,15 @@ namespace REALWorks.NotificationService.Services.EmailService
 {
     public class EmailSettings
     {
+        public EmailSettings(string mailServer, int mailPort, string senderName, string sender, string password)
+        {
+            MailServer = mailServer;
+            MailPort = mailPort;
+            SenderName = senderName;
+            Sender = sender;
+            Password = password;
+        }
+
         public string MailServer { get; set; }
         public int MailPort { get; set; }
         public string SenderName { get; set; }
