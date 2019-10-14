@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,8 @@ namespace REALWorks.NotificationService.Services.EmailService
                     }
                     catch (Exception ex)
                     {
-                        throw ex;
+                        //throw ex;
+                        Log.Error(ex, "Error while sending mail. Error:  {Error} ", ex.Message);
                     }
 
                 }
