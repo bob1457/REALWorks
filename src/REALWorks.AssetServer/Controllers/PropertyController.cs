@@ -288,6 +288,19 @@ namespace REALWorks.AssetServer.Controllers
             return Ok(success/*"successful!"*/);
         }
 
+        [HttpGet]
+        [Route("user/{useremail}")]
+        public async Task<IActionResult> GetUserOnlineStatus(string useremail)
+        {
+            var getUser = new GetUserOnlineStatusCommand
+            {
+                Email = useremail
+            };
+
+            var result = await _mediator.Send(getUser);
+
+            return  Ok(result);
+        }
 
         #endregion
 

@@ -6,6 +6,7 @@ using REALWorks.AssetServer.Commands;
 using REALWorks.AssetServer.Events;
 using REALWorks.AuthServer.Events;
 using REALWorks.MessagingServer.Messages;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,31 +35,45 @@ namespace REALWorks.AssetServer.CommandHandlers
         {
             var roleId = request.UserRole;
 
-            
+            //var user = _context.PropertyOwner.FirstOrDefault(e => e.ContactEmail == request.Email);
+
+            //PropertyOwner user = null;
 
             switch (roleId)
             {
                 case "owner":
                     var user = _context.PropertyOwner.FirstOrDefault(i => i.Id == request.Id);
 
-                    request.FirstName = user.FirstName;
-                    request.LastName = user.LastName;
-                    request.Email = user.ContactEmail;
-                    
-                    
-                    if (!request.Enable)
+                    try
                     {
-                        request.UserName = "NotSet";                       
+                        //var user = _context.PropertyOwner.FirstOrDefault(e => e.ContactEmail == request.Email);
+
+                        if (!user.OnlineAccess)
+                        {
+                            user.ConfigOnlineAccess(request.Enable, "Notset");
+                        }
+
+                        string subject = "Online Access Enabled";
+                        string body = "Dear " + user.FirstName + ": \n Your online access privilage has been enabled, please go to this link to register your account! \n Thanks.";
+
+                        AuthServer.Events.EnableOnlineAccessEvent e = new AuthServer.Events.EnableOnlineAccessEvent(new Guid(), user.ContactEmail, subject, body);
+
+                        // send message to notificaiotn queue
+                        try
+                        {
+                            await _messagePublisher.PublishMessageAsync(e.MessageType, e, "notification");
+                            Log.Information("Message  {MessageType} with Id {MessageId} has been published successfully", e.MessageType, e.MessageId);
+                        }
+                        catch (Exception ex)
+                        {
+                            //throw ex;
+                            Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
+                        }
                     }
-
-                    user.ConfigOnlineAccess(request.Enable, request.UserName);
-
-                    //var content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8);
-
-                    //var client = _httpClientFactory.CreateClient();
-                    //client.BaseAddress = new Uri("");
-                    //var result = await client.PostAsync("", content);
-
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
 
                     break;
                 case "tenant":
@@ -69,39 +84,46 @@ namespace REALWorks.AssetServer.CommandHandlers
                     break;
             }
 
+            
 
-            try
-            {
-                // Persist data
-                //
-                //await _context.SaveChangesAsync(); // comment out for testing ONLY
+            /*
+                        try
+                        {
+                            // Persist data
+                            //
+                            //await _context.SaveChangesAsync(); // comment out for testing ONLY
 
-                // Call auth API to create user account
-                //
-                var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
-
-                //var client = _httpClientFactory.CreateClient();
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:58088/api/Account/register");
-                var result = await client.PostAsync("http://localhost:58088/api/Account/register", content);
-
-                // Send message to MQ
-                //
-                //Events.EnableOnlineAccessEvent e = new Events.EnableOnlineAccessEvent(Guid.NewGuid(), request.Email, request.Password,
-                //    request.FirstName, request.LastName, request.UserName, request.UserRole, request.Enable);
-                
-
-                //await _messagePublisher.PublishMessageAsync(e.MessageType, e, "real");
+                            // Call auth API to create user account
+                            //
 
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                            var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
-            //var returnedUser = 
+                            //var client = _httpClientFactory.CreateClient();
+                            HttpClient client = new HttpClient();
+                            client.BaseAddress = new Uri("http://localhost:58088/api/Account/register");
+                            var result = await client.PostAsync("http://localhost:58088/api/Account/register", content);
 
+
+                            // Send message to MQ
+                            //
+                            //Events.EnableOnlineAccessEvent e = new Events.EnableOnlineAccessEvent(Guid.NewGuid(), request.Email, request.Password,
+                            //    request.FirstName, request.LastName, request.UserName, request.UserRole, request.Enable);
+
+
+                            //await _messagePublisher.PublishMessageAsync(e.MessageType, e, "real");
+
+
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+
+                        //var returnedUser = 
+            */
             return true;
 
             //throw new NotImplementedException();

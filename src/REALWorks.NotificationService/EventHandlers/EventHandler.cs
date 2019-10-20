@@ -57,9 +57,9 @@ namespace REALWorks.NotificationService.EventHandlers
                     case "RentalPropertyStatusChangeEvent":
                         //await HandleAsync(messageObject.ToObject<RentalPropertyStatusChangeEvent>());
                         break;
-                    //case "MaintenanceJobFinished":
-                    //    await HandleAsync(messageObject.ToObject<MaintenanceJobFinished>());
-                    //    break;
+                    case "EnableOnlineAccessEvent":
+                        await HandleAsync(messageObject.ToObject<EnableOnlineAccessEvent>());
+                        break;
                     default:
                         Console.WriteLine("Default case");
                         break;
@@ -74,6 +74,20 @@ namespace REALWorks.NotificationService.EventHandlers
             // always akcnowledge message - any errors need to be dealt with locally.
             return true;
 
+            //throw new NotImplementedException();
+        }
+
+        private async Task HandleAsync(EnableOnlineAccessEvent @event)
+        {
+            try
+            {
+                await _emailSender.SendEmailAsync(@event.Email, @event.Subject, @event.Body);
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                Log.Error(ex, "Error while sending notification message {user}.", @event.Email);
+            }
             //throw new NotImplementedException();
         }
 

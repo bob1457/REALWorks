@@ -43,7 +43,7 @@ namespace REALWorks.AuthServer.EventHandlers
             _messageHandler.Stop();
         }
 
-        
+
 
         public async Task<bool> HandleMessageAsync(string messageType, string message)
         {
@@ -82,42 +82,42 @@ namespace REALWorks.AuthServer.EventHandlers
 
         private async Task<bool> HandleAsync(EnableOnlineAccessEvent onlineAccessEnabledEvent)//, [FromServices]UserManager<ApplicationUser> _userManager)
         {
-            
-            var user = new ApplicationUser
-            {
-                UserName = onlineAccessEnabledEvent.UserName,
-                Email = onlineAccessEnabledEvent.Email,
-                AvatarImgUrl = "Images/Avatars/default.png",
-                FirstName = onlineAccessEnabledEvent.FirstName,
-                LastName = onlineAccessEnabledEvent.LastName,
-                JoinDate = DateTime.Now,
-                EmailConfirmed = true,
-                UserRole = onlineAccessEnabledEvent.UserRole
-            };
 
-            try
-            {
-                var result = await _userManager.CreateAsync(user, onlineAccessEnabledEvent.Password);
+            //var user = new ApplicationUser
+            //{
+            //    UserName = onlineAccessEnabledEvent.UserName,
+            //    Email = onlineAccessEnabledEvent.Email,
+            //    AvatarImgUrl = "Images/Avatars/default.png",
+            //    FirstName = onlineAccessEnabledEvent.FirstName,
+            //    LastName = onlineAccessEnabledEvent.LastName,
+            //    JoinDate = DateTime.Now,
+            //    EmailConfirmed = true,
+            //    UserRole = onlineAccessEnabledEvent.UserRole
+            //};
 
-                var role_resuls = await _userManager.AddToRoleAsync(user, onlineAccessEnabledEvent.UserRole);
+            //try
+            //{
+            //    var result = await _userManager.CreateAsync(user, onlineAccessEnabledEvent.Password);
 
-                if (!result.Succeeded /*&& !role_resuls.Succeeded*/) return false; // BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
+            //    var role_resuls = await _userManager.AddToRoleAsync(user, onlineAccessEnabledEvent.UserRole);
 
-                //await _appDbContext.Customers.AddAsync(new Customer { IdentityId = userIdentity.Id, Location = model.Location });
-                await _appDbContext.SaveChangesAsync();
+            //    if (!result.Succeeded /*&& !role_resuls.Succeeded*/) return false; // BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+            //    //await _appDbContext.Customers.AddAsync(new Customer { IdentityId = userIdentity.Id, Location = model.Location });
+            //    await _appDbContext.SaveChangesAsync();
 
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+
+            //}
 
             return true;
 
             //throw new NotImplementedException();
         }
 
-        
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using REALWorks.AuthServer.Commands;
 using REALWorks.AuthServer.Data;
 using REALWorks.AuthServer.Events;
@@ -13,6 +14,8 @@ using System;
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -65,8 +68,24 @@ namespace REALWorks.AuthServer.CommandHandlers
 
             try
             {
-                // Create the account
-                var result = await _userManager.CreateAsync(user, request.Password);
+                // Verify the eligibility of registration
+                
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:19807/api/Property");
+                var status = await client.GetAsync(client.BaseAddress + "/user/" + user.Email);
+
+                status.EnsureSuccessStatusCode();
+                string responseBody = await status.Content.ReadAsStringAsync();
+
+
+                if (responseBody == "false")
+                {
+                    return "Not eligible for self-registration";
+                }
+
+
+                    // Create the account
+                    var result = await _userManager.CreateAsync(user, request.Password);
 
                 // Add role to the new user
                 var role_resuls = await _userManager.AddToRoleAsync(user, request.UserRole);
@@ -74,7 +93,7 @@ namespace REALWorks.AuthServer.CommandHandlers
                 //if (!result.Succeeded /*&& !role_resuls.Succeeded*/) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
                 //await _appDbContext.Customers.AddAsync(new Customer { IdentityId = userIdentity.Id, Location = model.Location });
-                await _appDbContext.SaveChangesAsync(); // commented out for testing ONLY
+                //await _appDbContext.SaveChangesAsync(); // commented out for testing ONLY
 
                 // Raise domain event for email notificaiton or directly invoke email sending
 
@@ -82,14 +101,14 @@ namespace REALWorks.AuthServer.CommandHandlers
 
                 // Imporve the follwing with string buidler in C#
                 string body = "Dear " + user.FirstName + " " + user.LastName + ":" + "\n" + "Your account registration has completed successfully, you can login now.";
- /*\n
-                AccountRegistrationEvent e = new AccountRegistrationEvent(user.Email, user.UserName, "", subject, body);
+                /*
+                               AccountRegistrationEvent e = new AccountRegistrationEvent(user.Email, user.UserName, "", subject, body);
 
-                await _mediator.Publish(e);
+                               await _mediator.Publish(e);
 
+                */
+                //Send message to message queue(notificaiton) - integratin event
 
-                // Send message to message queue (notificaiton) - integratin event
-               */
                 RegisterAccountEvent e = new RegisterAccountEvent(Guid.NewGuid(), user.Email, "ml477344@telus.net", user.UserName,  body, subject);
 
                 try
@@ -102,7 +121,7 @@ namespace REALWorks.AuthServer.CommandHandlers
                     //throw ex;
                     Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
                 }
-                
+               
             }
             catch (Exception ex)
             {
