@@ -40,7 +40,7 @@ namespace REALWorks.NotificationService.EventHandlers
         }
 
 
-        public async Task<bool> HandleMessageAsync(string messageType, string message)
+        public async Task<bool> HandleMessageAsync(string messageType, string message)  // MEssage type can be refactored so that there is only one type of message, e.g NotificaiotnMessage
         {
             JObject messageObject = MessageSerializer.Deserialize(message);
 
