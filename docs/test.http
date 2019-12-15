@@ -44,7 +44,7 @@ content-type: application/json
   "leaseEndCode": 4,
   "renewTerm": "",
   "notes": "",
-  "newTenantId": 3,
+  "newTenantId": 1,
   "onlineAccessEnbaled": false,
   "userAvartaImgUrl": "",
   "roleId": 3,
@@ -94,12 +94,23 @@ content-type: application/json
 ###
 
 ###
+POST http://localhost:44336/api/Value/api/sendmail HTTP/1.1
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiJmOGE3ZTBmZi0wMGE0LTQ2MTEtYmJkMC0zNjgzZDkxNGVjNDgiLCJuYmYiOjE1NzAzMjM1MzcsImV4cCI6MTU3NTUwNzUzNywiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.xqxAhuI8S8ZxRstNyV4b1JfvfBkvgIkGVjhffciKM9g
+{
+  "value":"string"
+}
+###
+
+
+
+###
 
 POST http://localhost:63533/api/Lease/addTenant HTTP/1.1
 content-type: application/json
 
 {
-  "newTenantId": 0,
+  "newTenantId": 1,
   "userName": "NotSet",
   "firstName": "Alice",
   "lastName": "Johnson",

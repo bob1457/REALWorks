@@ -99,7 +99,11 @@ namespace REALWorks.AuthServer.CommandHandlers
             var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
             _logger.LogInformation("User " + request.UserName + " logged in.");
 
-            
+            // Update last logged in date
+            var loggedinUser = await _userManager.FindByNameAsync(request.UserName);
+            loggedinUser.LastLogOn = DateTime.Now;
+            await _userManager.UpdateAsync(loggedinUser);
+
             return new LoginCommandResult() { token = encodedToken, user = user };
 
         }

@@ -12,6 +12,9 @@ using REALWorks.AuthServer.Helpers;
 using System.Security.Claims;
 using MediatR;
 using REALWorks.AuthServer.Commands;
+using REALWorks.AuthServer.Events;
+using Serilog;
+using REALWorks.MessagingServer.Messages;
 
 namespace REALWorks.AuthServer.Controllers
 {
@@ -28,13 +31,16 @@ namespace REALWorks.AuthServer.Controllers
         private readonly RoleManager<ApplicationRole> _roleManager;
         //private readonly IMapper _mapper;
 
-        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,*/  ApplicationDbContext appDbContext, IMediator mediator)
+        IMessagePublisher _messagePublisher;
+
+        public AccountController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,*/IMessagePublisher messagePublisher,  ApplicationDbContext appDbContext, IMediator mediator)
         {
           _userManager = userManager;
           _roleManager = roleManager;
           //_mapper = mapper;
+          _messagePublisher = messagePublisher;
           _appDbContext = appDbContext;
-            _mediator = mediator;
+          _mediator = mediator;
         }
 
         // account registration
@@ -123,6 +129,94 @@ namespace REALWorks.AuthServer.Controllers
         }
 
 
+        [HttpPost]
+        [Route("resetpass")]
+        public async Task<IActionResult> ResetPassword(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            var restToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var resetLink = Url.Action("ResetPassword",
+                    "Account", new { token = restToken },
+                     protocol: HttpContext.Request.Scheme);
+
+            // Send email - Send message to message queue(notificaiton) - integration event
+
+            var emailBody = "";
+
+            EmailNotificationEvent e = new EmailNotificationEvent(email, "Password Reset", emailBody);
+
+            try
+            {
+                await _messagePublisher.PublishMessageAsync(e.MessageType, e, "notification");
+                Log.Information("Message  {MessageType} with Id {MessageId} has been published successfully", e.MessageType, e.MessageId);
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
+            }
+
+
+            return Ok(resetLink);
+        }
+
+        //[HttpPost]
+        //[Route("resetpass")]
+        //public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordCommand command)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    var result = await _mediator.Send(command);
+
+        //    return Ok(result);
+        //}
+
+
+        //[HttpPost]
+        //[Route("changepss")]
+        //public async Task<IActionResult> ChangePassword(string newpass, string username)
+        //{
+        //    var user = await _userManager.FindByNameAsync(username);
+
+        //    var newPassword = _userManager.PasswordHasher.HashPassword(user, newpass);
+
+        //    user.PasswordHash = newPassword;
+
+        //    var result = await _userManager.UpdateAsync(user);
+
+        //    if (result.Succeeded)
+        //    {
+        //        return Ok("Password changed successfully!");
+        //    }
+
+        //    //return StatusCode(500);  //OkObjectResult("Error changing passowrd, please try again!");
+        //    return Ok("Password change failed");
+
+
+        //    //return Ok(resetLink);
+        //}
+
+        [HttpPost]
+        [Route("changepss")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+
+
+            //return Ok(resetLink);
+        }
 
 
 

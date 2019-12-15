@@ -9,4 +9,6 @@ code first: dotnet ef migrations add <xxxxx>
 
 2. Ref: https://www.codeproject.com/Articles/1259484/CRUD-Operation-in-ASP-NET-Core-Web-API-with-Entity
 
-When testing file upload with Postman, KEY field of file upload control must be EMPTY!!! Also, make sure the in the controller, input data must [FromForm]!!!
+When testing file upload with Postman, KEY field of file upload control must be EMPTY!!!and NO CONTENT-TYPE!!! Also, make sure the in the controller, input data must [FromForm]!!!
+
+3. Angular file upload: https://code-maze.com/upload-files-dot-net-core-angular/

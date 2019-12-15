@@ -22,7 +22,7 @@ namespace REALWorks.MarketingService.CommandHandlers
         {
             var file = request.PropertyImage;
 
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\Avatars\\");
             string url = "images/" + file.FileName;
 
             if (file.Length > 0)

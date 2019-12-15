@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using REALWorks.AuthServer.Commands;
 using REALWorks.AuthServer.Data;
+using REALWorks.AuthServer.Events;
 using REALWorks.AuthServer.Models;
+using REALWorks.MessagingServer.Messages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,18 +20,22 @@ namespace REALWorks.AuthServer.CommandHandlers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
 
+        IMessagePublisher _messagePublisher;
 
-        public UpdateUserProfileCommandHandler(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,*/  ApplicationDbContext appDbContext)
+
+        public UpdateUserProfileCommandHandler(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,*/ IMessagePublisher messagePublisher,  ApplicationDbContext appDbContext)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             //_mapper = mapper;
+            _messagePublisher = messagePublisher;
             _appDbContext = appDbContext;
         }
 
 
         public async Task<string> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
         {
+            /*
             // Get the attached file
             var file = request.AvatarImage;
 
@@ -74,7 +80,7 @@ namespace REALWorks.AuthServer.CommandHandlers
 
             }
 
-            //Rename the file
+ */           //Rename the file
 
             //int location = file.FileName.IndexOf(".");
 
@@ -93,30 +99,53 @@ namespace REALWorks.AuthServer.CommandHandlers
             user.LastName = request.LastName;
             user.Telephone1 = request.Telephone1;
             user.Telephone2 = request.Telephone2;
+            user.AvatarImgUrl = user.AvatarImgUrl;
             user.SocialMediaContact1 = request.SocialMediaContact1;
             user.SocialMediaContact2 = request.SocialMediaContact2;
             user.Email = request.Email;
-            if(url == "")
-            {
-                user.AvatarImgUrl = request.AvatarImgUrl;
-            }
-            else
-            {
-                user.AvatarImgUrl = url;
-            }
-            
+            user.IsDisabled = user.IsDisabled;
+            user.UserRole = user.UserRole;
+            user.JoinDate = user.JoinDate;
+            user.LastLogOn = user.LastLogOn;
+            user.LastUpdated = DateTime.Now;
 
-            try
-            {
-                await _userManager.UpdateAsync(user);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            
+            //if(url == "")
+            //{
+            //    user.AvatarImgUrl = request.AvatarImgUrl;
+            //}
+            //else
+            //{
+            //    user.AvatarImgUrl = url;
+            //}
 
-            return "User profile has been successfully updated.";
+            //_appDbContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            
+            IdentityResult result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                UserProfileUpdateEvent e = new UserProfileUpdateEvent(Guid.NewGuid(), request.UserName, request.FirstName, request.LastName,
+                request.Email, 0, request.Telephone1, request.Telephone2, request.SocialMediaContact1,
+                request.SocialMediaContact2, request.AddressStreet, request.AddressCity, request.AddressProvState, request.AddressPostZipCode, request.AddressCountry);
+
+                try
+                {                
+                    // send message to message bus so that the tenant/owner can update data
+                
+                return "User profile has been successfully updated.";
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+
+
+            return "Error occured when updating user profile";
+
+            
 
             //throw new NotImplementedException();
         }

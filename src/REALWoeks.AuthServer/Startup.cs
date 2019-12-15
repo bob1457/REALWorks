@@ -20,6 +20,7 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using REALWorks.AuthServer.Services;
 using REALWorks.MessagingServer.Messages;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace REALWorks.AuthServer
 {
@@ -94,6 +95,17 @@ namespace REALWorks.AuthServer
                     TermsOfService = "None",
                     Contact = new Contact() { Name = "Talking Dotnet", Email = "contact@talkingdotnet.com", Url = "www.talkingdotnet.com" }
                 });
+
+                c.AddSecurityDefinition("oauth2", new ApiKeyScheme
+                {
+                    Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+                    In = "header",
+                    Name = "Authorization",
+                    Type = "apiKey"
+                });
+
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
+
             });
 
             // CORS

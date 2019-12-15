@@ -36,6 +36,7 @@
     <PackageReference Include="Serilog.Sinks.Seq" Version="4.0.0" />
     <PackageReference Include="SerilogEnricherCollection" Version="1.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="4.5.5" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
   </ItemGroup>
 
@@ -45,10 +46,6 @@
     <ProjectReference Include="..\REALWorks.AssetData\REALWorks.AssetData.csproj" />
     <ProjectReference Include="..\REALWorks.InfrastructureServer\REALWorks.InfrastructureServer.csproj" />
     <ProjectReference Include="..\REALWorks.MessagingServer\REALWorks.MessagingServer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
