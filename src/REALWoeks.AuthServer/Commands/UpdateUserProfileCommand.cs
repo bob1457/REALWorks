@@ -15,7 +15,7 @@ namespace REALWorks.AuthServer.Commands
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public int CustomId { get; set; }
+        //public int CustomId { get; set; }
         //public string AvatarImgUrl { get; set; }
         public string Telephone1 { get; set; }
         public string Telephone2 { get; set; }

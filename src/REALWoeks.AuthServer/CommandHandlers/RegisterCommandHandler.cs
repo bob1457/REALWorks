@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using REALWorks.AuthServer.Commands;
 using REALWorks.AuthServer.Data;
 using REALWorks.AuthServer.Events;
 using REALWorks.AuthServer.Helpers;
 using REALWorks.AuthServer.Models;
 using REALWorks.AuthServer.Models.DomainEvents;
+using REALWorks.AuthServer.Models.ViewModels;
 using REALWorks.MessagingServer.Messages;
 using Serilog;
 using System;
@@ -30,9 +32,9 @@ namespace REALWorks.AuthServer.CommandHandlers
         IMessagePublisher _messagePublisher;
 
         private IMediator _mediator;
+        //private readonly HttpClient _httpClient;
 
-
-        public RegisterCommandHandler(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,*/  
+        public RegisterCommandHandler(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,, HttpClient httpClient*/  
             ApplicationDbContext appDbContext, IMessagePublisher messagePublisher, IMediator mediator)
         {
             _userManager = userManager;
@@ -41,6 +43,7 @@ namespace REALWorks.AuthServer.CommandHandlers
             _appDbContext = appDbContext;
             _messagePublisher = messagePublisher;
             _mediator = mediator;
+            //_httpClient = httpClient;
         }
 
         
@@ -57,25 +60,33 @@ namespace REALWorks.AuthServer.CommandHandlers
                 UserName = request.UserName,
                 Email = request.Email,
                 AvatarImgUrl = "Images/Avatars/default.png",
-                FirstName = request.FirstName,
-                LastName = request.LastName,
+                //FirstName = request.FirstName,
+                //LastName = request.LastName,
                 JoinDate = DateTime.Now,
                 EmailConfirmed = true,
                 UserRole = request.UserRole,
                 CustomId = 0,
-                IsDisabled = false
+                IsDisabled = false,
+                // The following are not required here
+                Telephone1 = request.Telephone1,
+                Telephone2 = request.Telephone2,
+                AddressStreet = request.AddressStreet,
+                AddressCity = request.AddressCity,
+                AddressStateProv = request.AddressProvState,
+                AddressZipPostCode = request.AddressPostZipCode,
+                AddressCountry = request.AddressCountry
             };
 
             try
             {
-                // Verify the eligibility of registration
-                
+                // Verify the eligibility of registration ***********************************
+
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("http://localhost:19807/api/Property");
                 var status = await client.GetAsync(client.BaseAddress + "/user/" + user.Email);
 
                 status.EnsureSuccessStatusCode();
-                string responseBody = await status.Content.ReadAsStringAsync();
+                string responseBody = await status.Content.ReadAsStringAsync(); //.;CopyToAsync()
 
 
                 if (responseBody == "false")
@@ -84,13 +95,44 @@ namespace REALWorks.AuthServer.CommandHandlers
                 }
 
 
-                    // Create the account
-                    var result = await _userManager.CreateAsync(user, request.Password);
+                // New code *******************************************************************
+
+                var queryString = "http://localhost:19807/api/Property/userInfo/" + request.Email;
+                var response = await client.GetAsync(queryString);
+
+                var content = response.Content.ReadAsStringAsync();
+
+                JObject json = JObject.Parse(content.Result);
+
+                bool online = json.SelectToken("onlineEnabled").Value<bool>();
+
+                if (!online) return "Not eligible for self-registration";
+
+
+                user.Email = json.SelectToken("email").Value<string>();
+                user.FirstName = json.SelectToken("firstName").Value<string>();
+                user.LastName = json.SelectToken("lastName").Value<string>();
+                user.Telephone1 = json.SelectToken("telephone1").Value<string>();
+                user.Telephone2 = json.SelectToken("telephone2").Value<string>();
+                user.LastName = json.SelectToken("lastName").Value<string>();
+                user.SocialMediaContact1 = json.SelectToken("socialMediaContact1").Value<string>();
+                user.SocialMediaContact2 = json.SelectToken("socialMediaContact2").Value<string>();
+                user.AddressStreet = json.SelectToken("addressStreet").Value<string>();
+                user.AddressCity = json.SelectToken("addressCity").Value<string>();
+                user.AddressStateProv = json.SelectToken("addressProvState").Value<string>();
+                user.AddressZipPostCode = json.SelectToken("addressPostZipCode").Value<string>();
+                user.AddressCountry = json.SelectToken("addressCountry").Value<string>();
+
+
+
+
+                // Create the account
+                var result = await _userManager.CreateAsync(user, request.Password);
 
                 // Add role to the new user
                 var role_resuls = await _userManager.AddToRoleAsync(user, request.UserRole);
 
-                //if (!result.Succeeded /*&& !role_resuls.Succeeded*/) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
+                if (!result.Succeeded /*&& !role_resuls.Succeeded*/) return "Registration failed";  //new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
                 //await _appDbContext.Customers.AddAsync(new Customer { IdentityId = userIdentity.Id, Location = model.Location });
                 //await _appDbContext.SaveChangesAsync(); // commented out for testing ONLY
@@ -108,8 +150,12 @@ namespace REALWorks.AuthServer.CommandHandlers
 
                 */
                 //Send message to message queue(notificaiton) - integratin event
+                EmailNotificationEvent e = new EmailNotificationEvent(Guid.NewGuid(), user.Email, body, subject);
 
-                RegisterAccountEvent e = new RegisterAccountEvent(Guid.NewGuid(), user.Email, "ml477344@telus.net", user.UserName,  body, subject);
+                // Send message to message queue for other service
+                //RegisterAccountEvent e = new RegisterAccountEvent(Guid.NewGuid(), user.Email, "ml477344@telus.net", user.UserName,  body, subject); // This event will be re-defined
+
+                // Send message to message queue for other services, e.g.lease service if the roleId is other type, e.g. tenant, vendor, etc.
 
                 try
                 {

@@ -99,14 +99,20 @@ namespace REALWorks.AuthServer.CommandHandlers
             user.LastName = request.LastName;
             user.Telephone1 = request.Telephone1;
             user.Telephone2 = request.Telephone2;
-            user.AvatarImgUrl = user.AvatarImgUrl;
+            //user.AvatarImgUrl = user.AvatarImgUrl;
             user.SocialMediaContact1 = request.SocialMediaContact1;
             user.SocialMediaContact2 = request.SocialMediaContact2;
             user.Email = request.Email;
-            user.IsDisabled = user.IsDisabled;
-            user.UserRole = user.UserRole;
-            user.JoinDate = user.JoinDate;
-            user.LastLogOn = user.LastLogOn;
+            //user.IsDisabled = user.IsDisabled;
+            //user.UserRole = user.UserRole;
+            //user.JoinDate = user.JoinDate;
+            //user.LastLogOn = user.LastLogOn;
+            user.AddressStreet = request.AddressStreet;
+            user.AddressCity = request.AddressCity;
+            user.AddressStateProv = request.AddressProvState;
+            user.AddressZipPostCode = request.AddressProvState;
+            user.AddressCountry = request.AddressCountry;
+
             user.LastUpdated = DateTime.Now;
 
             //if(url == "")

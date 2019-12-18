@@ -558,3 +558,43 @@ content-type: application/json
 }
 
 ###
+POST http://localhost:19807/api/Property/user/online HTTP/1.1
+content-type: application/json
+
+{
+  "id": 5,
+  "userName": "string",
+  "password": "string",
+  "userRole": "owner",
+  "enable": true,
+  "email": "string",
+  "firstName": "string",
+  "lastName": "string"
+}
+
+###\\###
+
+
+###
+POST https://localhost:44336/api/Account/register HTTP/1.1
+content-type: application/json
+
+{
+  "email": "string",
+  "password": "Jac@123456",
+  "firstName": "string",
+  "lastName": "string",
+  "userName": "jack",
+  "userRole": "owner",
+  "telephone1": "string",
+  "telephone2": "string",
+  "socialMediaContact1": "string",
+  "socialMediaContact2": "string",
+  "addressStreet": "string",
+  "addressCity": "string",
+  "addressProvState": "string",
+  "addressPostZipCode": "string",
+  "addressCountry": "string"
+}
+
+###\\###

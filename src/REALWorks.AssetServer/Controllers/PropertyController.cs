@@ -302,6 +302,22 @@ namespace REALWorks.AssetServer.Controllers
             return  Ok(result);
         }
 
+
+        [HttpGet]
+        [Route("userInfo/{useremail}")]
+        public async Task<IActionResult> GetUserRegisterInfo(string useremail)
+        {
+            var getUser = new GetUserRegisterInfoCommand
+            {
+                Email = useremail
+            };
+
+            var result = await _mediator.Send(getUser);
+
+            return Ok(result);
+        }
+
+
         #endregion
 
         #region Contract Management

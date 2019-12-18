@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.AssetServer.Commands
 {
-    public class GetUserOnlineStatusCommand : IRequest<bool> /*GetUserOnlineStatusCommandResult*/
+    public class GetUserRegisterInfoCommand : IRequest<GetUserRegisterInfoCommandResult>
     {
         public string Email { get; set; }
     }

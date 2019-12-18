@@ -18,6 +18,11 @@ namespace REALWorks.AuthServer.Models
         public string Telephone2 { get; set; }
         public string SocialMediaContact1 { get; set; }
         public string SocialMediaContact2 { get; set; }
+        public string AddressStreet { get; set; }
+        public string AddressCity { get; set; }
+        public string AddressStateProv { get; set; }
+        public string AddressZipPostCode { get; set; }
+        public string AddressCountry { get; set; }
         public DateTime JoinDate { get; set; }
         public DateTime LastLogOn { get; set; }
         public DateTime LastUpdated { get; set; }

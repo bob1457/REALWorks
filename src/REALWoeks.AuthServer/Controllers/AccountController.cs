@@ -42,7 +42,7 @@ namespace REALWorks.AuthServer.Controllers
           _appDbContext = appDbContext;
           _mediator = mediator;
         }
-
+/*
         // account registration
         [HttpPost]
         [Route("register1")]
@@ -72,7 +72,7 @@ namespace REALWorks.AuthServer.Controllers
           // Add role to the new user
           var role_resuls = await _userManager.AddToRoleAsync(user, model.UserRole);
 
-          if (!result.Succeeded /*&& !role_resuls.Succeeded*/) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
+          if (!result.Succeeded ) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
           //await _appDbContext.Customers.AddAsync(new Customer { IdentityId = userIdentity.Id, Location = model.Location });
           await _appDbContext.SaveChangesAsync();
@@ -80,7 +80,7 @@ namespace REALWorks.AuthServer.Controllers
           return new OkObjectResult("Account: " + user.UserName + ", created");
         }
 
-
+*//*&& !role_resuls.Succeeded*/
 
         [HttpPost]
         [Route("register")]
@@ -96,7 +96,7 @@ namespace REALWorks.AuthServer.Controllers
             return Ok(result);
         }
 
-
+/*
         [HttpPost]
         [Route("addrole1")]
         public async Task<IActionResult> AddRole1([FromBody]ApplicationRoleModel model)
@@ -113,7 +113,7 @@ namespace REALWorks.AuthServer.Controllers
 
             return new OkObjectResult("Application Role: " + role.Name + ", Added");
         }
-
+*/
         [HttpPost]
         [Route("addrole")]
         public async Task<IActionResult> AddRole([FromBody]AddUserRoleCommand command)
@@ -131,7 +131,7 @@ namespace REALWorks.AuthServer.Controllers
 
         [HttpPost]
         [Route("resetpass")]
-        public async Task<IActionResult> ResetPassword(string email)
+        public async Task<IActionResult> ResetPassword(string email) // This endpoint may not be used in production, instead sending email to admin for resetting password
         {
             var user = await _userManager.FindByEmailAsync(email);
 
@@ -145,7 +145,7 @@ namespace REALWorks.AuthServer.Controllers
 
             var emailBody = "";
 
-            EmailNotificationEvent e = new EmailNotificationEvent(email, "Password Reset", emailBody);
+            EmailNotificationEvent e = new EmailNotificationEvent(new Guid(), email, "Password Reset", emailBody);
 
             try
             {

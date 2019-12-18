@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace REALWorks.AuthServer.Events
+namespace REALWorks.AssetServer.Events
 {
-    public class EmailNotificationEvent : Event
+    public class EmailNotificationEvent: Event
     {
         public EmailNotificationEvent(Guid messageId, string email, string subject, string body) : base(messageId)
         {

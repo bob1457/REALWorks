@@ -56,11 +56,13 @@ namespace REALWorks.AssetServer.CommandHandlers
                         string subject = "Online Access Enabled";
                         string body = "Dear " + user.FirstName + ": \n Your online access privilage has been enabled, please go to this link to register your account! \n Thanks.";
 
-                        AuthServer.Events.EnableOnlineAccessEvent e = new AuthServer.Events.EnableOnlineAccessEvent(new Guid(), user.ContactEmail, subject, body);
+                        //Construct notification event to Notificaiton message queue
+                        Events.EmailNotificationEvent e = new Events.EmailNotificationEvent(new Guid(), user.ContactEmail, subject, body);                        
 
-                        // send message to notificaiotn queue
                         try
                         {
+                            await _context.SaveChangesAsync();
+
                             await _messagePublisher.PublishMessageAsync(e.MessageType, e, "notification");
                             Log.Information("Message  {MessageType} with Id {MessageId} has been published successfully", e.MessageType, e.MessageId);
                         }
