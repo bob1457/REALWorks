@@ -29,6 +29,15 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             var addedOwner = new AddOwnerToExistingPropertyCommandResult();
 
+            // Check if the email already exist
+            //
+            var user = _context.PropertyOwner.FirstOrDefault(e => e.ContactEmail == request.ContactEmail);
+
+            if (user != null)
+            {
+                return new AddOwnerToExistingPropertyCommandResult() { Notes = "The email already exists!"};
+            }
+
             // populate the addedOnwer
             addedOwner.UserAvartaImgUrl = request.UserAvartaImgUrl;
             addedOwner.FirstName = request.FirstName;

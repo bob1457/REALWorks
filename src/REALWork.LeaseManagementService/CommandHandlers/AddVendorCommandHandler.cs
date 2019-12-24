@@ -22,6 +22,11 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
         public async Task<Unit> Handle(AddVendorCommand request, CancellationToken cancellationToken)
         {
+            // Check if the email already exist (enforce unique email) 
+            //
+
+
+
             var vendor = new Vendor("NotSet", request.VendorBusinessName, request.FirstName, request.LastName,
                 request.VendorDesc, request.VendorSpecialty, request.VendorContactTelephone1, request.VendorContactOthers,
                 request.VendorContactEmail, request.IsActive, 4, false, request.UserAvartaImgUrl, DateTime.Now, DateTime.Now);

@@ -268,8 +268,8 @@ POST https://localhost:44336/api/Auth/signin HTTP/1.1
 content-type: application/json
 
 {
-  "password": "Bob@123456",
-"username": "bob"
+  "password": "Jac@123456",
+"username": "jack"
 }
 ###
 
@@ -580,21 +580,21 @@ POST https://localhost:44336/api/Account/register HTTP/1.1
 content-type: application/json
 
 {
-  "email": "string",
+  "email": "bob.yuan@yahoo.com",
   "password": "Jac@123456",
-  "firstName": "string",
-  "lastName": "string",
+  "firstName": "Jack",
+  "lastName": "Ma",
   "userName": "jack",
   "userRole": "owner",
-  "telephone1": "string",
-  "telephone2": "string",
-  "socialMediaContact1": "string",
-  "socialMediaContact2": "string",
-  "addressStreet": "string",
-  "addressCity": "string",
-  "addressProvState": "string",
-  "addressPostZipCode": "string",
-  "addressCountry": "string"
+  "telephone1": "123-456-7890",
+  "telephone2": "",
+  "socialMediaContact1": "",
+  "socialMediaContact2": "",
+  "addressStreet": "123 Main Street",
+  "addressCity": "Vancouver",
+  "addressProvState": "BC",
+  "addressPostZipCode": "V1V 1V1",
+  "addressCountry": "Canada"
 }
 
 ###\\###

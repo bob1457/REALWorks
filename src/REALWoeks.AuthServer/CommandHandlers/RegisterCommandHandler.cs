@@ -58,7 +58,7 @@ namespace REALWorks.AuthServer.CommandHandlers
             var user = new ApplicationUser
             {
                 UserName = request.UserName,
-                Email = request.Email,
+                Email = request.Email, // it is critical here, it comes from client via query string
                 AvatarImgUrl = "Images/Avatars/default.png",
                 //FirstName = request.FirstName,
                 //LastName = request.LastName,
@@ -109,7 +109,7 @@ namespace REALWorks.AuthServer.CommandHandlers
                 if (!online) return "Not eligible for self-registration";
 
 
-                user.Email = json.SelectToken("email").Value<string>();
+                //user.Email = json.SelectToken("email").Value<string>(); // it takes from input request
                 user.FirstName = json.SelectToken("firstName").Value<string>();
                 user.LastName = json.SelectToken("lastName").Value<string>();
                 user.Telephone1 = json.SelectToken("telephone1").Value<string>();

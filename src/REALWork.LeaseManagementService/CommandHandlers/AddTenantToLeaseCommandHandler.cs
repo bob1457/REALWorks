@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace REALWork.LeaseManagementService.CommandHandlers
 {
-    public class AddTenantToLeaseCommandHandler : IRequestHandler<AddTenantToLeaseCommand, Unit>
+    public class AddTenantToLeaseCommandHandler : IRequestHandler<AddTenantToLeaseCommand, AddTenantToLeaseCommandResult>
     {
         private readonly AppLeaseManagementDbContext _context;
 
@@ -24,10 +24,20 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             _messagePublisher = messagePublisher;
         }
 
-        public async Task<Unit> Handle(AddTenantToLeaseCommand request, CancellationToken cancellationToken)
+        public async Task<AddTenantToLeaseCommandResult> Handle(AddTenantToLeaseCommand request, CancellationToken cancellationToken)
         {
             var existingLease = _context.Lease.FirstOrDefault(l => l.Id == request.LeaseId);
-            object tenant;
+
+            Tenant tenant = null;
+
+            // Check if the email already exists
+            // 
+            var user = _context.Tenant.FirstOrDefault(e => e.ContactEmail == request.ContactEmail); 
+
+            if (user != null)
+            {
+                return new AddTenantToLeaseCommandResult() { Message = "The email already exists!" };
+            }
 
             if(request.NewTenantId != 0) // newTenant exists and approved
             {
@@ -44,12 +54,26 @@ namespace REALWork.LeaseManagementService.CommandHandlers
                 request.ContactOthers, request.OnlineAccessEnbaled, request.UserAvartaImgUrl, 3, true, request.LeaseId, DateTime.Now, DateTime.Now);
             }
 
-            _context.Tenant.Add((Tenant)tenant);
+            _context.Tenant.Add(tenant);
+
+            var addedTenant = new AddTenantToLeaseCommandResult();
+
+            addedTenant.FirstName = request.FirstName;
+            addedTenant.LastName = request.LastName;
+            addedTenant.ContactEmail = request.ContactEmail;
+            addedTenant.ContactTelephone1 = request.ContactTelephone1;
+            addedTenant.ContactTelephone2 = request.ContactTelephone2;
+            addedTenant.ContactOthers = request.ContactOthers;
+            addedTenant.UserAvartaImgUrl = request.UserAvartaImgUrl;
+            addedTenant.LeaseId = request.LeaseId;
+            addedTenant.RoleId = request.RoleId;
+
 
             try
             {
                 await _context.SaveChangesAsync(); // comment out for testing message sending ONLY
 
+                addedTenant.TenantId = tenant.Id;//.Id;
 
                 // Send message to MQ if needed
                 //
@@ -65,7 +89,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             }
             //throw new NotImplementedException();
 
-            return await Unit.Task;
+            return addedTenant;
         }
     }
 }

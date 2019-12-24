@@ -1,18 +1,13 @@
-﻿using MediatR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace REALWork.LeaseManagementService.Commands
 {
-    public class AddTenantToLeaseCommand: IRequest<AddTenantToLeaseCommandResult>
+    public class AddTenantToLeaseCommandResult
     {
-        public int NewTenantId { get; set; }
-
-        /// <summary>
-        /// For tenant not in approved process
-        /// </summary>
+        public int TenantId { get; set; }
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -24,7 +19,6 @@ namespace REALWork.LeaseManagementService.Commands
         public bool OnlineAccessEnbaled { get; set; }
         public string UserAvartaImgUrl { get; set; }
         public int RoleId { get; set; }
-
-
+        public string Message { get; set; }
     }
 }
