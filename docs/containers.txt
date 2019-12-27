@@ -1,0 +1,6 @@
+Seq:
+
+ docker run -e ACCEPT_EULA=Y -p 89:80 -p 5341:5341 datalust/seq:latest
+
+ps id: 32a790159622
+
