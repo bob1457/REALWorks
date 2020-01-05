@@ -1,0 +1,50 @@
+version: '3.4'
+
+services:
+  realworks.notificationservice:
+    image: ${DOCKER_REGISTRY-}realworksnotificationservice
+    build:
+      context: .
+      dockerfile: REALWorks.NotificationService/Dockerfile
+
+  realworks.apigateway:
+    image: ${DOCKER_REGISTRY-}realworksapigateway
+    build:
+      context: .
+      dockerfile: REALWorks.APIGateway/Dockerfile
+
+
+  realworks.marketingservice:
+    image: ${DOCKER_REGISTRY-}realworksmarketingservice
+    build:
+      context: .
+      dockerfile: REALWorks.MarketingService/Dockerfile
+
+
+  realworks.assetserver:
+    image: ${DOCKER_REGISTRY-}realworksassetserver
+    build:
+      context: .
+      dockerfile: REALWorks.AssetServer/Dockerfile
+
+
+  realworks.adminservice:
+    image: ${DOCKER_REGISTRY-}realworksadminservice
+    build:
+      context: .
+      dockerfile: REALWorks.AdminService/Dockerfile
+
+
+  realworks.authserver:
+    image: ${DOCKER_REGISTRY-}realworksauthserver
+    build:
+      context: .
+      dockerfile: REALWoeks.AuthServer/Dockerfile
+
+
+  realwork.leasemanagementservice:
+    image: ${DOCKER_REGISTRY-}realworkleasemanagementservice
+    build:
+      context: .
+      dockerfile: REALWork.LeaseManagementService/Dockerfile
+
