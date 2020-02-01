@@ -393,6 +393,25 @@
         "AuthenticationProviderKey": "TestKey",
         "AllowedScopes": []
       }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Charts/piechart",
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 19807
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/property/asset",
+      //"UpstreamHttpMethod": [ "POST" ]
+      "ServiceName": "AssetManager",
+      "UpstreamPathTemplate": "/Charts/piechart",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": { // authentication DOES NOT to be set on resources server side, i.e. web api level
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
     }
   ]
 

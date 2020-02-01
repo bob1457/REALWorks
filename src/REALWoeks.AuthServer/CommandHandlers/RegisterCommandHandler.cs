@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using REALWorks.AuthServer.Commands;
@@ -34,8 +35,10 @@ namespace REALWorks.AuthServer.CommandHandlers
         private IMediator _mediator;
         //private readonly HttpClient _httpClient;
 
+        public IConfiguration _config { get; }
+
         public RegisterCommandHandler(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager,/*IMapper mapper,, HttpClient httpClient*/  
-            ApplicationDbContext appDbContext, IMessagePublisher messagePublisher, IMediator mediator)
+            ApplicationDbContext appDbContext, IMessagePublisher messagePublisher, IMediator mediator, IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -44,9 +47,11 @@ namespace REALWorks.AuthServer.CommandHandlers
             _messagePublisher = messagePublisher;
             _mediator = mediator;
             //_httpClient = httpClient;
+            _config = configuration;
         }
 
         
+
 
         public async Task<string> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
@@ -54,6 +59,10 @@ namespace REALWorks.AuthServer.CommandHandlers
             //{
             //    return BadRequest(ModelState);
             //}
+            var configSection = _config.GetSection("ServiceUri");
+
+            string AssetServiceHost = configSection["Asset"];
+
 
             var user = new ApplicationUser
             {
@@ -63,6 +72,7 @@ namespace REALWorks.AuthServer.CommandHandlers
                 //FirstName = request.FirstName,
                 //LastName = request.LastName,
                 JoinDate = DateTime.Now,
+                LastUpdated = DateTime.Now,
                 EmailConfirmed = true,
                 UserRole = request.UserRole,
                 CustomId = 0,
@@ -82,7 +92,7 @@ namespace REALWorks.AuthServer.CommandHandlers
                 // Verify the eligibility of registration ***********************************
 
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:19807/api/Property");
+                client.BaseAddress = new Uri(AssetServiceHost + "api/Property");
                 var status = await client.GetAsync(client.BaseAddress + "/user/" + user.Email);
 
                 status.EnsureSuccessStatusCode();
@@ -97,7 +107,7 @@ namespace REALWorks.AuthServer.CommandHandlers
 
                 // New code *******************************************************************
 
-                var queryString = "http://localhost:19807/api/Property/userInfo/" + request.Email;
+                var queryString = AssetServiceHost + "api/Property/userInfo/" + request.Email;
                 var response = await client.GetAsync(queryString);
 
                 var content = response.Content.ReadAsStringAsync();

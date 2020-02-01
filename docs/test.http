@@ -152,7 +152,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqd
 GET http://localhost:21799/applications HTTP/1.1
 # http://localhost:63899/api/RentalApplication/4
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI2ZGJlYzUxNy1iOWFlLTRiMTEtYTE4Ny05YWY3YWI4OWEzOTciLCJuYmYiOjE1Njc1Mjc0MTAsImV4cCI6MTU3MjcxMTQxMCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.dIQh_MbSXb9kH7Csa3faB7Hrc58a9MBXvxDu7Z_MCXU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiIzNTY5YTcyNC1lZWRlLTRmMGQtYjNmYi05ZjgzZmMzYWVlNTIiLCJuYmYiOjE1Nzg3ODg1NTQsImV4cCI6MTU4Mzk3MjU1NCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.m3b1zniWzNonqYomHYRhFevZUwCogWqPDYCI5ryXkA4
 
 ###
 
@@ -268,8 +268,8 @@ POST https://localhost:44336/api/Auth/signin HTTP/1.1
 content-type: application/json
 
 {
-  "password": "Jac@123456",
-"username": "jack"
+  "password": "Bob@123456",
+"username": "bob"
 }
 ###
 
@@ -402,6 +402,13 @@ content-type: application/json
 GET http://localhost:21799/property/10 HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiIzZDI5NWY2Zi1jNTY0LTRmNWEtYmEwZi0xNTZhMjJjYTI5ZTQiLCJuYmYiOjE1Njc1MzMyOTgsImV4cCI6MTU3MjcxNzI5OCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.md40YexSF-O_7bZpRzNW1Kw0gCJ4nRPZLmfcLLSjjwE
+###
+
+
+###
+GET http://localhost:21799/Charts/marketing/piechart HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiI5MmRiOWQ0YS0xNGIxLTQ3NzktODFmNC02MjllMzAzYTM3YzYiLCJuYmYiOjE1Nzk5OTgxMDQsImV4cCI6MTU4NTE4MjEwNCwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.ADT6viZNXqjiUK5mHhyAYg9yHdifj0PFwRby8LI0sA4
 ###
 
 ###
@@ -580,11 +587,11 @@ POST https://localhost:44336/api/Account/register HTTP/1.1
 content-type: application/json
 
 {
-  "email": "bob.yuan@yahoo.com",
-  "password": "Jac@123456",
-  "firstName": "Jack",
-  "lastName": "Ma",
-  "userName": "jack",
+  "email": "jlu@gmail.com",
+  "password": "Jlu@123456",
+  "firstName": "John",
+  "lastName": "Lu",
+  "userName": "john",
   "userRole": "owner",
   "telephone1": "123-456-7890",
   "telephone2": "",

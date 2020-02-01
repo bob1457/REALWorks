@@ -1,18 +1,12 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Http;
-using REALWorks.AuthServer.Models;
-using REALWorks.AuthServer.Models.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace REALWorks.AuthServer.Commands
+namespace REALWorks.AuthServer.Models.ViewModels
 {
-    public class UpdateUserProfileCommand: IRequest<Unit>
+    public class UserProfileViewModel
     {
-        //public IFormFile AvatarImage { get; set; }
-
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

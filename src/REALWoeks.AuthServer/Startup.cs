@@ -85,6 +85,8 @@ namespace REALWorks.AuthServer
 
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
+            services.AddSingleton(Configuration);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info

@@ -4,6 +4,7 @@ using REALWorks.AuthServer.Commands;
 using REALWorks.AuthServer.Data;
 using REALWorks.AuthServer.Events;
 using REALWorks.AuthServer.Models;
+using REALWorks.AuthServer.Models.ViewModels;
 using REALWorks.MessagingServer.Messages;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.AuthServer.CommandHandlers
 {
-    public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, string>
+    public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, Unit>
     {
         private readonly ApplicationDbContext _appDbContext;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -33,7 +34,7 @@ namespace REALWorks.AuthServer.CommandHandlers
         }
 
 
-        public async Task<string> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
         {
             /*
             // Get the attached file
@@ -110,7 +111,7 @@ namespace REALWorks.AuthServer.CommandHandlers
             user.AddressStreet = request.AddressStreet;
             user.AddressCity = request.AddressCity;
             user.AddressStateProv = request.AddressProvState;
-            user.AddressZipPostCode = request.AddressProvState;
+            user.AddressZipPostCode = request.AddressPostZipCode;
             user.AddressCountry = request.AddressCountry;
 
             user.LastUpdated = DateTime.Now;
@@ -134,22 +135,30 @@ namespace REALWorks.AuthServer.CommandHandlers
                 request.Email, 0, request.Telephone1, request.Telephone2, request.SocialMediaContact1,
                 request.SocialMediaContact2, request.AddressStreet, request.AddressCity, request.AddressProvState, request.AddressPostZipCode, request.AddressCountry);
 
-                try
-                {                
-                    // send message to message bus so that the tenant/owner can update data
-                
-                return "User profile has been successfully updated.";
+                //var updatedProfile = new UserProfileViewModel();
 
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                //updatedProfile.FirstName = user.FirstName;
+
+                
+
+                //try
+                //{
+                //    // send message to message bus so that the tenant/owner can update data
+
+                //    //return "User profile has been successfully updated.";
+                //    return updatedProfile;
+
+                //}
+                //catch (Exception ex)
+                //{
+                //    throw ex;
+                //}
 
             }
 
-
-            return "Error occured when updating user profile";
+            return await Unit.Task;
+            //return "Error occured when updating user profile";
+            //return new UserProfileViewModel();
 
             
 

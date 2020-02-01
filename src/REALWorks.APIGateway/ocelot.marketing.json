@@ -232,6 +232,25 @@
     //  }
     //},
     {
+      "DownstreamPathTemplate": "/api/Charts/marketing/piechart", // Get rental application details
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/Charts/marketing/piechart",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/Listing/addopenhouse", // Add open house
       "DownstreamScheme": "http",
       //"DownstreamHostAndPorts": [
