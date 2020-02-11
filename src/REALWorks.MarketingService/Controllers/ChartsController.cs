@@ -64,5 +64,27 @@ namespace REALWorks.MarketingService.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("marketing/barchart2")]
+        public async Task<IActionResult> GetPropertyDataBarChart2()
+        {
+            try
+            {
+                var properties = await _mediator.Send(new GetBarChartDataQuery2());
+
+                if (properties == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(properties);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
     }
 }
