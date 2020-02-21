@@ -10,16 +10,41 @@ using REALWorks.MarketingData;
 namespace REALWorks.MarketingData.Migrations
 {
     [DbContext(typeof(AppMarketingDbDataContext))]
-    [Migration("20190318213713_update")]
-    partial class update
+    [Migration("20200212183729_update2")]
+    partial class update2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("REALWorks.MarketingCore.Entities.GeoLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(350);
+
+                    b.Property<string>("Country");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime>("Modified");
+
+                    b.Property<string>("Region");
+
+                    b.Property<string>("StateProv");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GeoLocation");
+                });
 
             modelBuilder.Entity("REALWorks.MarketingCore.Entities.OpenHouse", b =>
                 {
@@ -266,6 +291,8 @@ namespace REALWorks.MarketingData.Migrations
 
                     b.Property<DateTime>("Created");
 
+                    b.Property<int>("GeoLocationId");
+
                     b.Property<bool>("IsBasementSuite");
 
                     b.Property<bool>("IsShared");
@@ -410,7 +437,7 @@ namespace REALWorks.MarketingData.Migrations
 
                     b.OwnsOne("REALWorks.MarketingCore.ValueObjects.ListingContact", "Contact", b1 =>
                         {
-                            b1.Property<int?>("PropertyListingId");
+                            b1.Property<int>("PropertyListingId");
 
                             b1.Property<string>("ContactEmail")
                                 .IsRequired()
@@ -430,6 +457,8 @@ namespace REALWorks.MarketingData.Migrations
                             b1.Property<string>("ContactTel")
                                 .IsRequired()
                                 .HasMaxLength(50);
+
+                            b1.HasKey("PropertyListingId");
 
                             b1.ToTable("ListingContact");
 
@@ -469,7 +498,7 @@ namespace REALWorks.MarketingData.Migrations
                 {
                     b.OwnsOne("REALWorks.MarketingCore.ValueObjects.Address", "Address", b1 =>
                         {
-                            b1.Property<int?>("RentalPropertyId");
+                            b1.Property<int>("RentalPropertyId");
 
                             b1.Property<string>("City");
 
@@ -480,6 +509,8 @@ namespace REALWorks.MarketingData.Migrations
                             b1.Property<string>("StreetNum");
 
                             b1.Property<string>("ZipPostCode");
+
+                            b1.HasKey("RentalPropertyId");
 
                             b1.ToTable("Address");
 
@@ -499,7 +530,7 @@ namespace REALWorks.MarketingData.Migrations
 
                     b.OwnsOne("REALWorks.MarketingCore.ValueObjects.OwnerAddress", "OwnerAddress", b1 =>
                         {
-                            b1.Property<int?>("RentalPropertyOwnerId");
+                            b1.Property<int>("RentalPropertyOwnerId");
 
                             b1.Property<string>("City");
 
@@ -510,6 +541,8 @@ namespace REALWorks.MarketingData.Migrations
                             b1.Property<string>("StreetNumber");
 
                             b1.Property<string>("ZipPostCode");
+
+                            b1.HasKey("RentalPropertyOwnerId");
 
                             b1.ToTable("OwnerAddress");
 

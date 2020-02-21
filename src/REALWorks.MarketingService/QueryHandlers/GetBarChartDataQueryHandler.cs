@@ -27,14 +27,29 @@ namespace REALWorks.MarketingService.QueryHandlers
 
             ListingStatus status = (ListingStatus)Enum.Parse(typeof(ListingStatus), "Rented");
 
-            var query = (from p in _context.RentalProperty.Include(a => a.Address)
-                         //.Where(s => s.Status == status)
-                         group p by p.Address.City into s
-                         select new BarChartDataViewModel
-                         {
-                             City = s.Key.ToString(),
-                             Count = s.Count()
-                         }).AsQueryable();
+            //var query = (from p in _context.RentalProperty.Include(a => a.Address)
+            //                 //.Where(s => s.Status == status)
+            //             group p by p.Address.City into s
+            //             select new BarChartDataViewModel
+            //             {
+            //                 City = s.Key.ToString(),
+            //                 Count = s.Count()
+            //             }).AsQueryable();
+
+            var query = from l in _context.GeoLocation
+                        let pCount =
+                        (
+                            from p in _context.RentalProperty
+                            where l.Id == p.GeoLocationId && p.Status == status
+                            select p
+
+                        ).Count()
+                        select new BarChartDataViewModel
+                        {
+                            City = l.City.ToString(),
+                            Count = pCount
+                        };
+            // Ref: https://hant-kb.kutu66.com/linq/post_186957
 
             return query;
 

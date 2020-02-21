@@ -15,9 +15,34 @@ namespace REALWorks.MarketingData.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("REALWorks.MarketingCore.Entities.GeoLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(350);
+
+                    b.Property<string>("Country");
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<DateTime>("Modified");
+
+                    b.Property<string>("Region");
+
+                    b.Property<string>("StateProv");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GeoLocation");
+                });
 
             modelBuilder.Entity("REALWorks.MarketingCore.Entities.OpenHouse", b =>
                 {
@@ -263,6 +288,8 @@ namespace REALWorks.MarketingData.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Created");
+
+                    b.Property<int>("GeoLocationId");
 
                     b.Property<bool>("IsBasementSuite");
 

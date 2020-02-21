@@ -131,11 +131,14 @@ namespace REALWorks.MarketingService.EventHandlers
             var address = new Address(
                 @event.StreetNum, @event.City, @event.StateProvince, @event.Country, @event.ZipPostCode);
 
+            // Get geo location id
+            var geoId = _context.GeoLocation.FirstOrDefault(c => c.City == @event.City).Id;
+
             var property = new RentalProperty(
                    @event.PropertyId, @event.PropertyName, @event.Type, @event.PropertyManagerUserName, @event.PropertyBuildYear,
                    @event.IsShared, @event.IsBasementSuite, @event.NumberOfBedrooms, @event.NumberOfBathrooms,
                    @event.NumberOfLayers, @event.NumberOfParking, @event.TotalLivingArea, "", DateTime.Now, 
-                   DateTime.Now, address, owners);
+                   DateTime.Now, address, owners, geoId);
 
 
             await _context.AddAsync(property);

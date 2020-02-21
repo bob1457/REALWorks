@@ -27,15 +27,53 @@ namespace REALWorks.MarketingService.QueryHandlers
 
             ListingStatus status = (ListingStatus)Enum.Parse(typeof(ListingStatus), "Listed");
 
-            var query = (from p in _context.RentalProperty.Include(a => a.Address)                         
-                         //.Where(s => s.Status == status) // Here ALL propeties will be displayed
-                         //.SelectMany(g => g)
-                         group p by p.Address.City into s
-                         select new BarChartDataViewModel
-                         {
-                             City = s.Key.ToString(),
-                             Count = s.Count()
-                         }).AsQueryable();
+            //var query = (from p in _context.RentalProperty.Include(a => a.Address)
+            //                 .Where(s => s.Status == status) // Here ALL propeties will be displayed
+            //                 //.SelectMany(g => g)
+            //             group p by p.Address.City into s
+            //             select new BarChartDataViewModel
+            //             {
+            //                 City = s.Key.ToString(),
+            //                 Count = s.Count()
+            //             }).AsQueryable();
+
+            //var query = (from g in _context.GeoLocation
+            //             join p in _context.RentalProperty on g.RentalPropertyId equals p.Id into pg
+            //             //where (s.Status == status)
+            //             from l in pg.DefaultIfEmpty()
+            //             group l by g into grouped
+            //             select new 
+            //             {
+            //                 Location = grouped.Key,
+            //                 Count = grouped.Count(t => t.Id != null)
+            //             });
+
+            var query = from l in _context.GeoLocation
+                        let pCount =
+                        (
+                            from p in _context.RentalProperty
+                            where l.Id == p.GeoLocationId &&  p.Status == status
+                            select p
+
+                        ).Count()
+                        select new BarChartDataViewModel
+                        {
+                            City = l.City.ToString(),
+                            Count = pCount
+                        };
+            // Ref: https://hant-kb.kutu66.com/linq/post_186957
+
+            //var query = (from g in _context.GeoLocation
+            //             join p in _context.RentalProperty on g.Id equals p.GeoLocationId into pg
+            //             //where (s.Status == status)
+            //             from l in pg.DefaultIfEmpty()
+            //             group l by g into grouped
+            //             select new BarChartDataViewModel
+            //             {
+            //                 City = grouped.Key.ToString(),
+            //                 Count = grouped.Count(t => t.Id != null)
+            //             }).AsQueryable();
+
 
             return query;
 

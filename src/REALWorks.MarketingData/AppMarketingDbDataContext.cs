@@ -35,6 +35,7 @@ namespace REALWorks.MarketingData
         ////public virtual DbSet<ListingContact> Contact { get; set; }
 
         //public virtual DbSet<ListingContact> ListingContact { get; set; }
+        public virtual DbSet<GeoLocation> GeoLocation { get; set; }
         public virtual DbSet<OpenHouse> OpenHouse { get; set; }
         public virtual DbSet<OpenHouseViewer> OpenHouseViewer { get; set; }
         public virtual DbSet<OwnerAddress> PropertyOwnerAddress { get; set; }
@@ -98,6 +99,13 @@ namespace REALWorks.MarketingData
                     .HasForeignKey(d => d.RentalPropertyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OpenHouse_RentalProperty");
+            });
+
+            modelBuilder.Entity<GeoLocation>(entity =>
+            {
+                entity.Property(e => e.City)
+                    .IsRequired()
+                    .HasMaxLength(350);
             });
 
             modelBuilder.Entity<OpenHouseViewer>(entity =>

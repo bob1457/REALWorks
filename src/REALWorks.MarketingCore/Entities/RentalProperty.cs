@@ -34,7 +34,7 @@ namespace REALWorks.MarketingCore.Entities
         public RentalProperty(int originalId, string propertyName, string propertyType, string pmUserName,
             int propertyBuildYear, bool isShared, /*ListingStatus listingStatus,*/ bool isBasementSuite, 
             int numberOfBedrooms, int numberOfBathrooms, int numberOfLayers, int numberOfParking, 
-            int totalLivingArea, string notes, DateTime createdOn, DateTime updatedOn, Address address, ICollection<RentalPropertyOwner> owner)
+            int totalLivingArea, string notes, DateTime createdOn, DateTime updatedOn, Address address, ICollection<RentalPropertyOwner> owner, int geoLocationId)
         {
             OriginalId = originalId;
             PropertyName = propertyName;
@@ -56,6 +56,7 @@ namespace REALWorks.MarketingCore.Entities
             Modified = updatedOn;
             Address = address;
             RentalPropertyOwner = owner;
+            GeoLocationId = geoLocationId;
         }
 
         
@@ -87,6 +88,7 @@ namespace REALWorks.MarketingCore.Entities
         public ICollection<PropertyListing> PropertyListing { get; private set; }
         public ICollection<RentalApplication> RentalApplication { get; private set; }
 
+        public int GeoLocationId { get; private set; }
 
         public void ListingStatusUpdate(RentalProperty property, ListingStatus status)
         {
