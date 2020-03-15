@@ -1,0 +1,26 @@
+<mat-toolbar class="main-toolbar mat-elevation-z2" fxLayout="row" fxLayoutAlign="start center" color="">
+  <h1>Material Design</h1>
+  <div class="logo"></div>
+  <img src="../../../../assets/images/R.png" width="35px;" />
+
+
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span fxFlex></span>
+
+  
+
+  <button mat-icon-button>
+    <mat-icon>search</mat-icon>
+  </button>
+<!--
+  <stbui-toolbar-notification></stbui-toolbar-notification>
+  <stbui-toolbar-user></stbui-toolbar-user>
+-->
+  <button mat-button class="more-btn" (click)="customizer.open()">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+</mat-toolbar>

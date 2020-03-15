@@ -1,0 +1,332 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/Listing/all", // Get all listing
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listings",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/{id}", // Get listing details
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/add", // Add new listing
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/add",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/RentalApplication/all", // Get all rental applications
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/applications",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/RentalApplication/{id}", // Get rental application details
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/application/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/RentalApplication/approve", // Approve rental application
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/application/approve",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+
+
+
+    {
+      "DownstreamPathTemplate": "/api/Listing/status", // Change listed property status
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/status",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/update", // Update property listing
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/update",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/remove", // Update property listing
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/remove",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/addimg", // Add images to the isting
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/addimg",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/removeimg", // Remove images to the isting
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/removeimg",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    //{
+    //  "DownstreamPathTemplate": "/api/property/{id}",
+    //  "DownstreamScheme": "http",
+    //  //"DownstreamHostAndPorts": [
+    //  //  {
+    //  //    "Host": "localhost",
+    //  //    "Port": 63899
+    //  //  }
+    //  //],
+    //  //"UpstreamPathTemplate": "/listings",
+    //  //"UpstreamHttpMethod": []
+    //  "ServiceName": "MarketingManager",
+    //  "UpstreamPathTemplate": "/property/{id}",
+    //  "UpstreamHttpMethod": [ "Get" ],
+    //  "AuthenticationOptions": {
+    //    "AuthenticationProviderKey": "TestKey",
+    //    "AllowedScopes": []
+    //  }
+    //},
+    {
+      "DownstreamPathTemplate": "/api/Charts/marketing/piechart", // Get rental application details
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/Charts/marketing/piechart",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Charts/marketing/barchart", // Get rental application details
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/Charts/marketing/barchart",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Charts/marketing/barchart2", // Get rental application details
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/Charts/marketing/barchart2",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/addopenhouse", // Add open house
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/listing/addopenhouse",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Listing/openhouse/addviewer", // Add new open house viewers
+      "DownstreamScheme": "http",
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 63899
+      //  }
+      //],
+      //"UpstreamPathTemplate": "/listings",
+      //"UpstreamHttpMethod": []
+      "ServiceName": "MarketingManager",
+      "UpstreamPathTemplate": "/openhouse/addviewer",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    }
+  ]
+ 
+
+}

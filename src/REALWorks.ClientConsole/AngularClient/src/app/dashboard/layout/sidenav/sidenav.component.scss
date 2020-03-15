@@ -1,0 +1,176 @@
+.toolbar-icon {
+    padding: 0 14px;
+}
+
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.app-container {
+    flex-direction: column;
+    display: flex;
+    //width: 500px;
+    //min-height: 900px;
+    height: 100%; // when the main panel is pupulated, this should be used?
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.app-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-sidenav {
+    padding: 20px;
+    width: 300px;
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    height: 100%;
+    flex: 1;
+}
+
+.mat-button {
+    margin-right: auto;
+}
+
+.mat-drawer-container {
+    position: static;
+}
+
+.main-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    //height: calc(100% - #{$height__main-toolbar});
+    height: 100%;
+    position: relative;
+    // flex: 1;
+}
+
+.mat-drawer-container {
+    //background-color: transparent;
+    background-color: #f1efef;
+    color: black;
+    border: 0 solid white;
+}
+
+.navigation-footer {
+    /*flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
+  border-top: 1px solid rgba(0, 0, 0, .1);
+*/
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    >a {
+        display: flex;
+        align-items: center;
+        flex: 1 1 100%;
+        box-sizing: border-box;
+        max-width: 100%;
+        background-color: rgba(0, 0, 0, .12);
+        color: rgba(255, 255, 255, .8);
+        text-decoration: none;
+        text-align: center;
+        min-width: 88px;
+        line-height: 36px;
+        padding: 0 24px;
+        >mat-icon {
+            font-size: 16px;
+            width: 16px;
+            height: 16px;
+            min-width: 16px;
+            min-height: 16px;
+            line-height: 16px;
+            margin-right: 16px;
+        }
+    }
+}
+
+.brand {
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+/deep/ .mat-menu-content {
+    background-color: #f1efef !important;
+    color: black;
+}
+
+/deep/ .mat-menu-item {
+    color: #847a7a;
+}
+
+
+/*
+/deep/ .mat-form-field-underline{
+  border-bottom: 1px solid red!important;
+}
+*/
+
+/deep/ .mat-focused .mat-form-field-label {
+    color: #532083;
+}
+
+/deep/ .mat-focused .mat-form-field-underline .mat-form-field-ripple {
+    background: #847a7a;
+    font-size: .85em;
+}
+
+.example-full-width {
+    font-size: .85em;
+}
+
+.side {
+    flex-direction: column;
+    flex: 1;
+}
+
+.mat-toolbar.mat-primary {
+    background: #e8e7e7;
+    color: #847a7a;
+}
+
+.mat-elevation-z2 {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, .2), 0 0 0 0 rgba(0, 0, 0, .14), 0 0 0 0 rgba(0, 0, 0, .12);
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex: 1;
+}
+
+.panel-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+:host .active {
+    color: #30fbfb;
+    font-size: 1.05em;
+}
+
+.mat-list-text {
+    margin-left: -15px;
+    font-size: .85em;
+}
+
+.mat-nav-list a:hover {
+    text-decoration: none;
+    color: #30fbfb;
+}
+
+/deep/ .mat-menu-panel {
+    background: transparent;
+}
+
+.right-container {
+    width: 100%;
+    border: 1px solid rgba(111, 111, 111, 0.50);
+}

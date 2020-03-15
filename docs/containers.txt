@@ -1,0 +1,70 @@
+Seq:
+
+ docker run -e ACCEPT_EULA=Y -p 89:80 -p 5341:5341 datalust/seq:latest
+
+ps id: 32a790159622
+
+***********************************************
+Consul Cluster in Container
+***********************************************
+- Server:
+docker run -d -p 8500:8500 -p 8600:8600/udp --name=badger consul agent -server -ui -node=server-1 -bootstrap-expect=1 -client 0.0.0.0
+
+- Client:
+
+docker run --name=fox consul agent -node=client-1 -join 172.17.0.2
+
+- Cluster Info (IP, ect)
+docker exec badger[server name] consul members
+
+
+Rabbitmq:
+
+docker run -d -p 15672:15672 -p 5672:5672 --name real-rabbit rabbitmq:3-management
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+************************************************************************
+You can pass environment variables to your containers with the -e flag.
+************************************************************************
+
+
+An example from a startup script:
+
+sudo docker run -d -t -i -e REDIS_NAMESPACE='staging' \ 
+-e POSTGRES_ENV_POSTGRES_PASSWORD='foo' \
+-e POSTGRES_ENV_POSTGRES_USER='bar' \
+-e POSTGRES_ENV_DB_NAME='mysite_staging' \
+-e POSTGRES_PORT_5432_TCP_ADDR='docker-db-1.hidden.us-east-1.rds.amazonaws.com' \
+-e SITE_URL='staging.mysite.com' \
+-p 80:80 \
+--link redis:redis \  
+--name container_name dockerhub_id/image_name
+Or, if you don't want to have the value on the command-line where it will be displayed by ps, etc., -e can pull in the value from the current environment if you just give it without the =:
+
+sudo PASSWORD='foo' docker run  [...] -e PASSWORD [...]
+If you have many environment variables and especially if they're meant to be secret, you can use an env-file:
+
+$ docker run --env-file ./env.list ubuntu bash

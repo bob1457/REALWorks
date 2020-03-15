@@ -1,0 +1,17 @@
+{
+  "rentalPropertyId": 0,
+  "firstName": "string",
+  "lastName": "string",
+  "contactTel": "string",
+  "contactEmail": "string",
+  "contactSms": "string",
+  "contactOthers": "string",
+  "annualIncome": 0,
+  "numberOfOccupant": 0,
+  "withChildren": true,
+  "status": 0,
+  "creditRating": "string",
+  "empoyedStatus": "string",
+  "rentalApplicationId": 0,
+  "reasonToMove": "string"
+}

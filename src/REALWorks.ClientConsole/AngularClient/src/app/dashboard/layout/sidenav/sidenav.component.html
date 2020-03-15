@@ -1,0 +1,380 @@
+<mat-drawer-container class="app-container" autosize>
+    <mat-drawer #drawer class="app-sidenav" style="padding:0;" [opened]="opened" [mode]="mode" fxLayout="column" [ngStyle]="{ 'width.em': sidenavWidth }" (mouseenter)="increase()">
+        <!-- (mouseenter)="increase() (mouseleave)="decrease()""
+    (mouseleave)="decrease()"> -->
+
+
+
+
+        <div fxLayout="row" style="background-color: cadetblue;height: 63px;">
+            <button mat-icon-button (click)="changeSideNav()">
+                <mat-icon>menu</mat-icon>
+            </button>
+
+            <div class="brand" style="width: 100%;">
+                <span> </span>
+                <img src="../../../../assets/images/R.png" width="35px;" style="float: right;margin-right: 10px;">
+            </div>
+            <!--<img src="http://placehold.it/45x45" > http://localhost:58088/Contents/Images/Avatars/default.png        -->
+        </div>
+
+        <main class="side">
+            <!-- Side Menu -->
+            <mat-nav-list>
+                <mat-list-item>
+                    <mat-icon style="color: aqua;" [routerLink]="['/manage/dash_ui']" [routerLinkActive]="['active']" matListIcon>palette</mat-icon>
+                    <!--<div><i class="fas fa-tachometer-alt" style="float: left;"></i></div>-->
+                    <a matLine [routerLink]="['/manage/dash_ui']" [routerLinkActive]="['active']">Dashboard</a>
+                    <button mat-icon-button (click)="showInfo(link)">
+              <!----><mat-icon>info</mat-icon></button>
+                </mat-list-item>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-list-item style="margin-left: -22px;">
+                            <mat-icon style="color:brown;" matListIcon>layers</mat-icon>
+                            <a matLine [routerLinkActive]="['active']">Properties</a>
+                            <button mat-icon-button (click)="showInfo(link)">
+                        <!--<mat-icon>info</mat-icon>-->
+              </button>
+                        </mat-list-item>
+                    </mat-expansion-panel-header>
+                    <mat-list>
+                        <mat-list-item>
+                            <!---->
+                            <mat-icon style="color: rgb(72, 173, 219)" [routerLink]="['/manage/property']" [routerLinkActive]="['active']" matListIcon>list_alt</mat-icon>
+                            <a matLine [routerLink]="['/manage/property']" [routerLinkActive]="['active']">All List</a>
+                            <button mat-icon-button (click)="showInfo(link)">
+                    <!--<mat-icon>info</mat-icon>  -->
+                </button>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon style="color: rgb(58, 212, 66);" [routerLink]="['/manage/property_owner']" [routerLinkActive]="['active']" matListIcon>person</mat-icon>
+                            <a matLine [routerLink]="['/manage/property_owner']" [routerLinkActive]="['active']">Landlords</a>
+                            <button mat-icon-button (click)="showInfo(link)">
+                    <!--<mat-icon>info</mat-icon>-->
+                </button>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon style="color: rgb(189, 219, 20);" [routerLink]="['/manage/property_tenant']" [routerLinkActive]="['active']" matListIcon>people</mat-icon>
+                            <a matLine [routerLink]="['/manage/property_tenant']" [routerLinkActive]="['active']">Tenants</a>
+                            <button mat-icon-button (click)="showInfo(link)">
+                  <!--<mat-icon>info</mat-icon>--></button>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-expansion-panel>
+
+                <mat-list-item>
+                    <mat-icon style="color:yellow;" [routerLink]="['/manage/lease_rental']" [routerLinkActive]="['active']" matListIcon>library_books</mat-icon>
+                    <a matLine [routerLink]="['/manage/lease_rental']" [routerLinkActive]="['active']">Lease/Rental</a>
+                    <button mat-icon-button (click)="showInfo(link)"></button>
+                </mat-list-item>
+                <!--
+                <mat-list-item>
+                    <mat-icon [routerLink]="['/manage/screening']" [routerLinkActive]="['active']" matListIcon>graphic_eq</mat-icon>
+                    <a matLine [routerLink]="['/manage/screening']" [routerLinkActive]="['active']">Tenant Screening</a>
+
+                </mat-list-item>
+                -->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-list-item style="margin-left: -22px;">
+                            <mat-icon style="color:rgb(231, 21, 21);" matListIcon>send</mat-icon>
+                            <a matLine [routerLinkActive]="['active']">Marketing</a>
+                            <button mat-icon-button (click)="showInfo(link)">
+                    <!--<mat-icon>info</mat-icon>--></button>
+                        </mat-list-item>
+                    </mat-expansion-panel-header>
+                    <mat-list>
+                        <mat-list-item>
+                            <!---->
+                            <mat-icon style="color: rgb(72, 173, 219)" [routerLink]="['/manage/marketing']" [routerLinkActive]="['active']" matListIcon>list_alt</mat-icon>
+                            <a matLine [routerLink]="['/manage/marketing']" [routerLinkActive]="['active']">Listing</a>
+                            <button mat-icon-button (click)="showInfo(link)"></button>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <!---->
+                            <mat-icon style="color: rgb(58, 212, 66);" [routerLink]="['/manage/applications']" [routerLinkActive]="['active']" matListIcon>open_in_browser</mat-icon>
+                            <a matLine [routerLink]="['/manage/applications']" [routerLinkActive]="['active']">Applications</a>
+                            <button mat-icon-button (click)="showInfo(link)"></button>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <!---->
+                            <mat-icon style="color: rgb(189, 219, 20);" [routerLink]="['/manage/screening']" [routerLinkActive]="['active']" matListIcon>open_with</mat-icon>
+                            <a matLine [routerLink]="['/manage/screening']" [routerLinkActive]="['active']">Screening</a>
+                            <button mat-icon-button (click)="showInfo(link)"></button>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-expansion-panel>
+
+
+
+
+
+
+                <!--
+                <mat-list-item>
+                    <mat-icon [routerLink]="['/manage/marketing']" [routerLinkActive]="['active']" matListIcon>send</mat-icon>
+                    <a matLine [routerLink]="['/manage/marketing']" [routerLinkActive]="['active']">Marketing</a>
+                    <button mat-icon-button (click)="showInfo(link)"></button>
+                </mat-list-item>
+-->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-list-item style="margin-left: -22px;">
+                            <mat-icon style="color: rgb(27, 214, 27);" matListIcon>widgets</mat-icon>
+                            <a matLine [routerLinkActive]="['active']">Management</a>
+                            <button mat-icon-button (click)="showInfo(link)">
+                        <!--<mat-icon>info</mat-icon>-->
+              </button>
+                        </mat-list-item>
+                    </mat-expansion-panel-header>
+                    <mat-list>
+                        <mat-list-item>
+                            <mat-icon style="color: rgb(72, 173, 219)" [routerLink]="['/manage/task_list']" [routerLinkActive]="['active']" matListIcon>dialpad</mat-icon>
+                            <a matLine [routerLink]="['/manage/task_list']" [routerLinkActive]="['active']">Task List</a>
+                            <button mat-icon-button (click)="showInfo(link)">
+                    <!--<mat-icon>info</mat-icon>-->
+                </button>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <!---->
+                            <mat-icon style="color: rgb(58, 212, 66);" [routerLink]="['/manage/calendar']" [routerLinkActive]="['active']" matListIcon>event</mat-icon>
+                            <a matLine [routerLink]="['/manage/calendar']" [routerLinkActive]="['active']">Calendar</a>
+                            <button mat-icon-button (click)="showInfo(link)">
+                    <!--<mat-icon>info</mat-icon>  -->
+                </button>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon style="color: rgb(189, 219, 20);" [routerLink]="['/manage/messages']" [routerLinkActive]="['active']" matListIcon>email</mat-icon>
+                            <a matLine [routerLink]="['/manage/messages']" [routerLinkActive]="['active']">Mail Inbox</a>
+                            <!--<button mat-icon-button (click)="showInfo(link)">
+                    <mat-icon>info</mat-icon>
+                </button>-->
+                        </mat-list-item>
+
+
+                    </mat-list>
+                </mat-expansion-panel>
+
+
+
+
+
+
+                <!--<mat-list-item >
+            <mat-icon matListIcon>folder</mat-icon>
+          <a matLine href="...">Menu Item 3</a>
+          <button mat-icon-button (click)="showInfo(link)">
+              <mat-icon>info</mat-icon>
+          </button>
+        </mat-list-item>-->
+                <mat-list-item>
+                    <mat-icon style="color: rgb(134, 140, 226)" [routerLink]="['/manage/legal_cases']" [routerLinkActive]="['active']" matListIcon>blur_circular</mat-icon>
+                    <a matLine [routerLink]="['/manage/legal_cases']" [routerLinkActive]="['active']">Legal Cases</a>
+                    <button mat-icon-button (click)="showInfo(link)">
+                        <!--<mat-icon>info</mat-icon>-->
+                    </button>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon style="color: greenyellow" [routerLink]="['/manage/documentation']" [routerLinkActive]="['active']" matListIcon>import_contacts</mat-icon>
+                    <a matLine [routerLink]="['/manage/documentation']" [routerLinkActive]="['active']">Documentation</a>
+                    <button mat-icon-button (click)="showInfo(link)">
+              <!--<mat-icon>info</mat-icon>-->
+                    </button>
+                </mat-list-item>
+
+
+
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-list-item style="margin-left: -22px;">
+                            <mat-icon style="color: rgb(100, 15, 15)" matListIcon>line_style</mat-icon>
+                            <a matLine [routerLinkActive]="['active']">Analytics</a>
+                            <button mat-icon-button (click)="showInfo(link)">
+                          <!--<mat-icon>info</mat-icon>-->
+                </button>
+                        </mat-list-item>
+                    </mat-expansion-panel-header>
+                    <mat-list>
+                        <mat-list-item>
+                            <mat-icon style="color: rgb(58, 212, 66);" [routerLink]="['/manage/overview']" [routerLinkActive]="['active']" matListIcon>dvr</mat-icon>
+                            <a matLine [routerLink]="['/manage/overview']" [routerLinkActive]="['active']">Overview</a>
+                            <button mat-icon-button (click)="showInfo(link)">
+                      <!--<mat-icon>info</mat-icon>-->
+                  </button>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon style="color: rgb(189, 219, 20);" [routerLink]="['/manage/reporting']" [routerLinkActive]="['active']" matListIcon>insert_chart</mat-icon>
+                            <a matLine [routerLink]="['/manage/reporting']" [routerLinkActive]="['active']">Reporting</a>
+                            <!--<button mat-icon-button (click)="showInfo(link)">
+                      <mat-icon>info</mat-icon>
+                  </button>-->
+                        </mat-list-item>
+
+
+                    </mat-list>
+                </mat-expansion-panel>
+
+                <mat-list-item *ngIf='isAdmin'>
+                    <mat-icon [routerLink]="['/manage/administration']" [routerLinkActive]="['active']" matListIcon>brightness_7</mat-icon>
+                    <a matLine [routerLink]="['/manage/administration']" [routerLinkActive]="['active']">Administration</a>
+                    <button mat-icon-button (click)="showInfo(link)">
+              <!--<mat-icon>info</mat-icon>-->
+                    </button>
+                </mat-list-item>
+
+            </mat-nav-list>
+
+        </main>
+
+        <div class="navigation-footer">
+            <a matRipple href="https://github.com/stbui/angular-material-app/issues" target="blank">
+                <mat-icon>help</mat-icon>
+                Help & Support</a>
+        </div>
+        <!-- Side Footer-->
+
+    </mat-drawer>
+    <!-- Entire Side Panel -->
+    <!-- Experiment wtih additional side nav on right -->
+
+
+
+    <!-- ********************************************************************-->
+    <div class="panel-wrapper">
+
+        <div class="main-content">
+
+            <div class="app-sidenav-content">
+                <!-- Content, must be inside the drawer so that it stays inside and visiable -->
+
+                <mat-toolbar class="main-toolbar mat-elevation-z2" fxLayout="row" fxLayoutAlign="start center" color="primary">
+                    <!-- <h1>Material Design</h1>-->
+                    <div [ngStyle]="{ 'display': ToggleButtonDisplay }">
+                        <div fxLayout="row">
+                            <div class="logo">
+                                <img src="../../../../assets/images/R.png" width="35px;" />
+                            </div>
+
+                            <button mat-icon-button (click)="drawer.toggle()">
+                  <mat-icon>menu</mat-icon>
+                </button>
+                        </div>
+                    </div>
+
+
+
+                    <div [ngStyle]="{ 'display': OpenButtonDisplay}">
+                        <button mat-icon-button (click)="drawer.toggle()">
+                      <mat-icon>menu</mat-icon>
+                    </button>
+                    </div>
+                    <!--
+              <button mat-icon-button [matMenuTriggerFor]="appMail"><mat-icon style="color: #2c46ad;" title="messages">email</mat-icon></button>
+              <button mat-icon-button [matMenuTriggerFor]="appNote"><mat-icon style="color: #ff0266;" title="notification">notification_important</mat-icon></button>
+-->
+                    <button style="margin-right: 20px; border: 0 transparent;" [matMenuTriggerFor]="appMail"><mat-icon matBadge="5" style="color: blue;" matBadgeColor="primary">email</mat-icon></button>
+                    <button style=" border: 0 transparent;"><mat-icon matBadge="3" [matMenuTriggerFor]="appNote" matBadgeColor="warn" style="color: rgb(241, 150, 57);">notification_important</mat-icon></button>
+
+                    <mat-menu #appMail="matMenu" [overlapTrigger]="false" style="background: transparent;">
+                        <button mat-menu-item>
+                  <!--<mat-icon style="color: black;">dialpad</mat-icon>
+                  <i class="far fa-user-circle" style="color: #09af00"></i>-->
+                  <span>&nbsp; My Messages</span><br>
+
+                </button>
+
+                        <button mat-menu-item (click)="logout()">
+                  <!--<mat-icon style="color: black;">notifications_off</mat-icon>
+                  <i class="fas fa-sign-out-alt" style="color: #e9176b"></i>-->
+                  <span>&nbsp; Logout</span>
+                </button>
+                    </mat-menu>
+
+                    <mat-menu #appNote="matMenu" [overlapTrigger]="false">
+                        <button mat-menu-item>
+                <!--<mat-icon style="color: black;">dialpad</mat-icon>
+                <i class="far fa-user-circle" style="color: #09af00"></i>-->
+                <span>&nbsp; My Notification</span><br>
+
+              </button>
+
+                        <button mat-menu-item (click)="logout()">
+                <!--<mat-icon style="color: black;">notifications_off</mat-icon>
+                <i class="fas fa-sign-out-alt" style="color: #e9176b"></i>-->
+                <span>&nbsp; Logout</span>
+              </button>
+                    </mat-menu>
+
+
+                    <span fxFlex></span>
+                    <form class="example-form">
+                        <mat-form-field *ngIf="visible" class="example-full-width visible">
+                            <!--<mat-placeholder><mat-icon>search</mat-icon></mat-placeholder>-->
+
+                            <input #search (blur)="onBlurMethod()" type="text" matInput appAutofocus>
+
+                        </mat-form-field>
+                    </form>
+
+                    <button mat-icon-button (click)="showSearch()">
+                    <mat-icon>search</mat-icon>
+                </button>
+
+
+                    <button mat-button class="more-btn" [matMenuTriggerFor]="menu" *ngIf="user">
+                <!--<mat-icon>more_vert</mat-icon>-->
+                <img attr.src="{{serverUrl}}{{user.avatarImgUrl}}" width="38" height="38" title="{{user.userName}}" >
+              </button>
+
+                    <!-- To be reviewed -->
+                    <button mat-icon-button (click)="drawer2.toggle()">
+                <i class="fas fa-cog" style="color: #09af00;  font-size: 1.5em;" title="Quick Links"></i>
+              </button>
+
+                    <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                        <button [routerLink]="['/manage/profile']" mat-menu-item>
+                    <!--<mat-icon style="color: black;">dialpad</mat-icon>-->
+                    <i class="far fa-user-circle" style="color: #09af00;"></i>
+                    <span>&nbsp; My Account</span><br>
+
+                  </button>
+                        <button mat-menu-item disabled>
+                    <mat-icon style="color:#d6c7c7;">voicemail</mat-icon>
+                    <span>Check voicemail</span>
+                  </button>
+                        <button mat-menu-item (click)="logout()">
+                    <!--<mat-icon style="color: black;">notifications_off</mat-icon>-->
+                    <i class="fas fa-sign-out-alt" style="color: #e9176b"></i>
+                    <span>&nbsp; Logout</span>
+                  </button>
+                    </mat-menu>
+
+                </mat-toolbar>
+                <!-- Top Nav Toolbar -->
+            </div>
+
+            <div class="main-container">
+                <!-- DASH UI component -->
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+
+        <app-footer></app-footer>
+
+    </div>
+
+
+
+</mat-drawer-container>
+
+<!-- Right Side Drawer -->
+<mat-drawer-container class="right-container">
+    <mat-drawer style="width: 240px;background: rgb(201, 199, 199);" #drawer2 mode="over" opened="false" position="end">
+        Right drawer
+    </mat-drawer>
+    <!--<mat-drawer-content>
+    Main content
+  </mat-drawer-content>-->
+</mat-drawer-container>

@@ -1,0 +1,1 @@
+﻿This messaging component, using RabbitMQ, is currently being used for all three services, asset, marketing and lease

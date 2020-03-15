@@ -1,0 +1,1 @@
+Loading spinner: https://www.npmjs.com/package/ng4-loading-spinner
