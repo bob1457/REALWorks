@@ -1,0 +1,44 @@
+.step-button {
+    align-items: end;
+    /* align-content: end; */
+    /* float: right; */
+    /* float: left; */
+    width: 100%;
+}
+
+.step-back-button {
+    align-items: end;
+    /* align-content: end; */
+    /* float: right; */
+    /* float: left; */
+    width: 100%;
+}
+
+.icon-pos {
+    vertical-align: middle;
+}
+
+.property-full-width {
+    width: 75%;
+}
+
+.selection {
+    margin-top: 30px;
+}
+
+.selectOwner {
+    width: 40%;
+}
+
+
+.line {
+    display:block;
+    border:none;
+    color:white;
+    height:1px;
+    background:black;
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 350, from(#98243a), to(#fff));
+    width: 75%;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}

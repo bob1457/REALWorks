@@ -1,0 +1,21 @@
+<!-- <p>
+  indicator-property works!
+</p> -->
+<div class="card_banner" style="background: #9a67ea;" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap.lg="20px" fxLayoutGap.xs="-5px">
+  <div>
+      <img src="../../../assets/images/house.png" [ngStyle.xs]="{'margin-top': '20px'}">
+  </div>
+  <div>
+      <h3>ASSETS</h3>
+  </div>
+</div>
+<mat-card-content class="dashboard-card-content card_content" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap.lg="20px" fxLayoutGap.xs="-5px">
+
+  <div fxFlex="50%" style="text-align: center;">
+      <span style="padding-left: 10px; font-weight: bold;">Managed Properties</span>
+  </div>
+  <div div fxFlex="50%" style="font-size: 3em; font-weight: 700; color: #676565;" *ngIf="propertyList">
+
+      {{propertyList.length}}
+  </div>
+  <!-- *ngIf="propertyList" -->

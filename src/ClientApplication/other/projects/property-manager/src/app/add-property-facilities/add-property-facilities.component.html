@@ -1,0 +1,13 @@
+<!-- <p>
+  add-property-facilities works!
+</p> -->
+
+<div [formGroup]="addForm">
+  <mat-radio-group aria-label="Select an option" formControlName="type">
+      <mat-radio-button value="1" checked >New</mat-radio-button>
+      <mat-radio-button value="2">Renewal</mat-radio-button>
+  </mat-radio-group>
+  <button mat-button matStepperPrevious type="button">Back</button>
+  <button mat-button matStepperNext type="button">Next</button>
+
+</div>

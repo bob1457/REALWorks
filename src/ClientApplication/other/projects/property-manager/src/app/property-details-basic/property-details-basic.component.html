@@ -1,0 +1,72 @@
+<!-- <p>
+  property-details-basic works!
+</p> [(ngModel)]="property.propertyName"-->
+<div [formGroup]="detailsForm" fxLayout="column" fxLayoutAlign="start center">
+    <mat-form-field class="property-full-width" style="margin-top: 25px;">
+        <span class="iocn-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+        <input hidden type="text" id="id" formControlName="id" matInput placeholder="Property Id" name="id">
+        <!-- {{firstName}} -->
+
+        <!-- <mat-hint>Should be a valid email address</mat-hint>
+<mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+<mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+    </mat-form-field>
+    <mat-form-field class="property-full-width" style="margin-top: 25px;">
+        <span class="iocn-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+        <input type="text" id="propertyName" formControlName="propertyName" matInput placeholder="Property Name" name="propertyName">
+        <!-- {{firstName}} -->
+
+        <!-- <mat-hint>Should be a valid email address</mat-hint>
+    <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+    <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+    </mat-form-field>
+    <mat-form-field class="property-full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput></textarea>
+    </mat-form-field>
+    <mat-form-field class="property-full-width">
+        <span class="iocn-pos" matPrefix><mat-icon>library_books</mat-icon> &nbsp;</span>
+        <input type="text" id="propertyName" formControlName="propertyName" matInput placeholder="Address: Street Number">
+        <!-- {{firstName}} -->
+
+        <!-- <mat-hint>Should be a valid email address</mat-hint>
+    <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+    <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+    </mat-form-field>
+    <mat-form-field class="property-full-width">
+        <span class="iocn-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+        <input type="text" id="propertyName" formControlName="propertyName" matInput placeholder="Property Name">
+        <!-- {{firstName}} -->
+
+        <!-- <mat-hint>Should be a valid email address</mat-hint>
+    <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+    <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+    </mat-form-field>
+    <mat-form-field class="property-full-width">
+        <span class="iocn-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+        <input type="text" id="propertyName" formControlName="propertyName" matInput placeholder="Property Name">
+        <!-- {{firstName}} -->
+
+        <!-- <mat-hint>Should be a valid email address</mat-hint>
+    <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+    <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+    </mat-form-field>
+    <mat-form-field class="property-full-width">
+        <span class="iocn-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+        <input type="text" id="propertyName" formControlName="propertyName" matInput placeholder="Property Name">
+        <!-- {{firstName}} -->
+
+        <!-- <mat-hint>Should be a valid email address</mat-hint>
+    <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+    <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+    </mat-form-field>
+    <mat-form-field class="property-full-width">
+        <span class="iocn-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+        <input type="text" id="propertyName" formControlName="propertyName" matInput placeholder="Property Name">
+        <!-- {{firstName}} -->
+
+        <!-- <mat-hint>Should be a valid email address</mat-hint>
+    <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+    <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+    </mat-form-field>
+</div>

@@ -1,0 +1,62 @@
+.property-details-card {
+    width: 100%;
+    // background: #f5f5f5;
+    background: transparent;
+    // margin-left: 25px;
+    // margin-right: 25px;
+}
+
+.property-details-card-content {
+    height: 600px;
+    background: #fafafa;
+}
+
+.images {
+    margin-top: 25px;
+}
+
+.images img {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.property-full-width {
+    width: 75%;
+}
+
+.property-full-width2 {
+    width: 100%;
+}
+
+.date-time {
+    margin-top: 30px;
+    font-size: .75em;
+    font-style: italic;
+}
+
+.owner-list {
+    list-style-type: none;
+    margin-top: 10px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.line {
+    display:block;
+    border:none;
+    color:white;
+    height:1px;
+    background:black;
+    background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 350, from(#98243a), to(#fff));
+    width: 75%;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.icon-pos {
+    vertical-align: middle;
+}

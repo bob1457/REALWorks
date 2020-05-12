@@ -1,0 +1,118 @@
+<!-- <p>
+  profile-home works!
+</p> -->
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="1%" fxFlexFill>
+    <div fxFlex="10%" fxLayoutAlign="end">
+        <i class="far fa-arrow-alt-circle-left" style="cursor: pointer; color: seagreen; font-size: 1.5em;" (click)="goBack()">
+
+      </i>
+    </div>
+    <div fxFlex="25%" fxLayout="column" style="background: transparent;">
+        <div fxLayout="column" class="avatar_sec" fxLayoutAlign="center center">
+            <div *ngIf="user">
+                <img [src]="gAvatar? gravatar : imgUrl" *ngIf="gravatar" style="border-radius: 50%; border: 4px solid white; margin-left: 15px; margin-top: 20px; width: 200px; height: 200px;" title="{{ user.username }}">
+                <!-- <img attr.src="{{serverUrl}}{{user.avatarUrl}}" style="border-radius: 50%; border: 4px solid white; margin-left: 15px; margin-top: 20px; width: 200px; height: 200px;" title="{{ user.username }}">                 -->
+            </div>
+
+
+            <a *ngIf="!gAvatar" fxHide.xs (click)="openInput()" class="up-icon" style="margin-left:150px;" title="update avatar">
+                <!-- <i class="material-icons">
+                  publish  attr.src="{{serverUrl}}{{user.avatarUrl}}"
+                  </i> -->
+                <!--*ngIf="loading | async" -->
+                <i class="fas fa-arrow-circle-up"></i>
+                <img *ngIf="loading" style="width: 20px; height: 20px; margin-left: 20px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                />
+                <span style="font-size: small;margin-left: 25px;" *ngIf="showMsg">{{uploadMsg}}</span>
+            </a>
+
+            <mat-radio-group aria-label="Select an option" (change)="AvatarTypeChange($event)" style="margin-top: 30px;">
+                <mat-radio-button value="1" checked style="margin-right: 20px;">Gravatar</mat-radio-button>
+                <mat-radio-button value="2">Custom</mat-radio-button>
+            </mat-radio-group>
+
+            <div style="margin-left: 20px; margin-top: 15px;">
+                <span><span style="font-style: italic;">Join at</span>: {{user.joindate | date }}</span>
+                <br />
+                <span><span style="font-style: italic;">Updated</span>: {{user.lastupdated | date}}</span>
+            </div>
+            <div>
+
+                <!-- <button mat-raised-button (click)="openInput()" style="margin-top: 25px; margin-bottom: 30px;">
+        Select File to Upload
+      </button> -->
+            </div>
+            <input #file id="fileInput" (change)="onChange(file.files)" hidden type="file">
+        </div>
+        <div class="info_sec" fxLayout="column" fxLayoutGap="5%" fxLayoutAlign="end center" style="flex-grow: 1;">
+            <!-- <div><img src="http://placehold.it/100x100" style="margin-bottom: 25px;; border: 4px solid white; margin-left: 15px; margin-top: 20px;" ></div> -->
+            <div>
+                <!-- <i class="material-icons">
+      control_point
+      </i>
+      <span>Add Service Request</span> -->
+
+                <!-- *****************************************************************More buttons to be done in the future-->
+
+                <button mat-flat-button color="accent" style="width: 200px; visibility: hidden;"><i class="material-icons">
+          email
+          </i> Contact Manager
+        </button>
+            </div>
+            <div>
+                <button mat-flat-button color="primary" style="width: 200px; visibility: hidden;">
+            <i class="material-icons">
+                attach_file
+            </i> Service Request</button>
+            </div>
+            <div>
+                <button mat-flat-button color="warn" style="width: 200px;margin-bottom: 20px; visibility: hidden;">
+            <i class="material-icons">
+              visibility
+            </i> More Actions...</button>
+            </div>
+            <!-- <div>gfsg</div>
+
+
+    <div>gfsg</div> -->
+        </div>
+
+    </div>
+    <div fxFlex="55%" style="">
+        <!-- <mat-card>
+
+  </mat-card> -->
+        <mat-card class="profile-card">
+            <mat-card-header>
+                <div mat-card-avatar class="profile-header-image">
+                    <img src="../../../assets/images/profile.png" style="margin-left: -10px; margin-top: -20px;">
+                </div>
+                <mat-card-title *ngIf="user">{{user.firstname}} {{user.lastname | uppercase }}</mat-card-title>
+                <mat-card-subtitle>{{rolename}}</mat-card-subtitle>
+            </mat-card-header>
+            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+            <mat-card-content>
+                <p>
+                    Manage your personal profile, including general information, avatar images and manage the security settings (chaange password).
+                </p>
+                <div [@.disabled]="true">
+                    <mat-tab-group>
+                        <mat-tab label="General" *ngIf="user">
+                            <lib-profile [user]="user"></lib-profile>
+                        </mat-tab>
+                        <!-- <mat-tab label="Details"> Details </mat-tab> -->
+                        <mat-tab label="Settings" *ngIf="user">
+                            <lib-change-pass></lib-change-pass>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+
+            </mat-card-content>
+            <!-- <mat-card-actions>
+              <button mat-button>LIKE</button>
+              <button mat-button>SHARE</button>
+          </mat-card-actions> -->
+        </mat-card>
+    </div>
+    <div fxFlex="10%"></div>
+</div>

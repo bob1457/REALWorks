@@ -1,0 +1,93 @@
+<!-- <p>
+  owner-details works! {{id}}
+</p> title="{{property.propertyName}}"*ngIf="property"-->
+
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="1%" fxFlexFill *ngIf="owner">
+    <div>
+        <div fxFlex="10%" fxLayoutAlign="end">
+            <i class="far fa-arrow-alt-circle-left" title="back to list" style="cursor: pointer; color: seagreen; font-size: 1.5em;" (click)="goBack()"></i>
+        </div>
+    </div>
+    <div fxFlex="20%" fxLayout="column" class="avatar_sec" fxLayoutAlign="start center">
+        <img src="http://placehold.it/120x120" style="border-radius: 50%;" width="120px" height="120px">
+        <div style="margin-top: 25px;">
+            <span style="font-weight: 500;">Owned Property</span>
+            <ul class="property-list">
+                <li *ngFor="let property of owner.ownerProperty" style="margin-left: -40px;">
+                    {{property.property.propertyName}} <a href="" style="cursor: pointer;">details</a>
+                </li>
+            </ul>
+        </div>
+        <div class="date-time">
+            <p>
+                Created: {{owner.created | date }}
+            </p>
+            <p style="margin-top: -10px;">
+                Updated: {{owner.modified | date }}
+            </p>
+        </div>
+    </div>
+
+    <div fxFlex="70%">
+        <mat-card class="owner-details-card">
+            <mat-card-header style="background-color: #f5f5f5; ">
+                <div mat-card-avatar class="property-details-header-image ">
+                    <i class="material-icons " style="font-size: 2.5em;color: #e64a19; margin-left: 5px; ">
+              person
+            </i>
+                    <!-- <img src="../../assets/images/pmgmnt.png " height="40px " width="40px "> *ngIf="property*ngIf="detailsForm.value"-->
+                </div>
+                <mat-card-title>Property Owner: </mat-card-title>
+                <mat-card-subtitle>Contact: </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="owner-details-card-content">
+                <div fxLayout="column" fxLayoutAlign="start center">
+                    <form novalidate fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="detailsForm" (ngSubmit)="submit()" style="width: 100%;">
+
+                        <mat-form-field class="owner-full-width-1" style="margin-top: 25px;">
+                            <span class="iocn-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                            <input type="text" id="firstName" formControlName="firstName" matInput placeholder="First Name" [ngModel]="owner.firstName" name="firstName">
+                            <!-- {{firstName}} -->
+
+                            <!-- <mat-hint>Should be a valid email address</mat-hint>
+                  <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+                  <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+                        </mat-form-field>
+                        <mat-form-field class="owner-full-width" style="margin-top: 25px;">
+                            <span class="iocn-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                            <input type="text" id="lastName" formControlName="lastName" matInput placeholder="Last Name" [ngModel]="owner.lastName" name="lastName">
+                            <!-- {{firstName}} -->
+
+                            <!-- <mat-hint>Should be a valid email address</mat-hint>
+                  <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+                  <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+                        </mat-form-field>
+                        <mat-form-field class="owner-full-width">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput></textarea>
+                        </mat-form-field>
+                        <mat-form-field class="owner-full-width">
+                            <span class="iocn-pos" matPrefix><mat-icon>library_books</mat-icon> &nbsp;</span>
+                            <input type="text" id="contactEmail" formControlName="contactEmail" matInput placeholder="Contact Email">
+                            <!-- {{firstName}} -->
+
+                            <!-- <mat-hint>Should be a valid email address</mat-hint>
+                  <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+                  <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+                        </mat-form-field>
+
+                        <div fxLayout="row" fxLayoutGap="7px" fxLayoutAlign="end center" style="width: 75%;">
+                            <!-- <span *ngIf="showMsg" style="color: rgb(189, 150, 25);">Updated successfully!</span>
+            <img *ngIf=" loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+            /> [disabled]="f.invalid || !f.dirty"-->
+                            <button type="submit" mat-raised-button color="primary">UPDATE</button>
+                            <button mat-raised-button color="accent">CANCEL</button>
+                        </div>
+
+                    </form>
+                </div>
+            </mat-card-content>
+
+        </mat-card>
+    </div>
+</div>

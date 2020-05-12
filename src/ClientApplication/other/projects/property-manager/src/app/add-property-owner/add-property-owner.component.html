@@ -1,0 +1,105 @@
+<!-- <p>
+  add-property-owner works!
+</p> -->
+
+<div [formGroup]="addForm" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <div>
+        <h5 style="margin-top: 25px;">Add Property Owner</h5>
+    </div>
+    <span class="line" style="margin-bottom: 20px;"></span>
+    <div class="selection">
+        <mat-radio-group aria-label="Select an option" style="margin-top: 13px;margin-left: 25px;padding-right: 5px;" formControlName="ownerOption" [(ngModel)]="ownerOption">
+            <mat-radio-button value="existing" checked style="padding-right: 10px;"  >Select existing property owner</mat-radio-button>
+            <mat-radio-button value="new" >Add a new property owner</mat-radio-button>
+        </mat-radio-group>
+        <!-- <p>{{ownerOption}}</p> -->
+    </div>
+    <div *ngIf="ownerOption == 'existing'" class="selectOwner">
+        <mat-form-field style="width: 90%;">
+            <!-- <mat-label>Favorite food</mat-label> -->
+            <mat-select>
+              <mat-option *ngFor="let owner of owners" [value]="owner.value">
+                {{owner.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div>
+
+    <div *ngIf="ownerOption == 'new'" style="width: 80%;">        
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start start" fxLayoutGap="1%" fxFlexFill>
+                <div fxFlex="50" fxLayout="column">                    
+                    <mat-form-field class="property-full-width" fxFlex="85" style="margin-top: 25px;">
+                        <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                        <input type="text" id="firstName" formControlName="firstName" matInput placeholder="Owner First Name" >
+                        
+                    </mat-form-field>
+                    <mat-form-field class="property-full-width" fxFlex="85" >
+                        <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                        <input type="text" id="lastName" formControlName="lastName" matInput placeholder="Owner First Name" >
+                        
+                    </mat-form-field>
+                    <mat-form-field class="property-full-width" fxFlex="85" >
+                        <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                        <input type="text" id="emal" formControlName="contactEmail" matInput placeholder="Owner Email" >
+                        
+                    </mat-form-field>
+                    <mat-form-field class="property-full-width" fxFlex="85" >
+                        <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                        <input type="text" id="tel" formControlName="contactTelephone1" matInput placeholder="Owner Telephone" >
+                        
+                    </mat-form-field>
+                    <mat-form-field class="property-full-width" fxFlex="85">
+                        <!-- <input matInput type="text" placeholder="Property Name" formControlName="propertyName" id="title"> -->
+                        <mat-label>Notes</mat-label>
+                        <textarea matInput formControlName="notes"></textarea>
+                        <!-- <mat-hint align="end">Not more then 60 characters long.</mat-hint>
+              <mat-error *ngIf="hasError('title', 'required')">Name is required</mat-error>
+              <mat-error *ngIf="hasError('title', 'maxlength')">You have more than 60 characters</mat-error> -->
+                    </mat-form-field>
+                </div>
+                <div fxFlex="50" fxLayout="column" >
+                    <mat-checkbox formControlName="isSameAddress" class="property-full-width" style="margin-top: 30px;">Same as Property Address</mat-checkbox>
+                    <mat-form-field class="property-full-width" fxFlex="85" style="margin-top: 25px;">
+                        <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                        <input type="text" id="street" formControlName="ownerStreetNumber" matInput placeholder="Address: Number & Street" >
+                        
+                    </mat-form-field>
+                    <div fxLayout="row">
+                        <mat-form-field class="property-full-width" fxFlex="50" >
+                            <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                            <input type="text" id="city" formControlName="ownerCity" matInput placeholder="Address: City" >
+                            
+                        </mat-form-field>
+                        <mat-form-field class="property-full-width" fxFlex="45" style="margin-left: 15px;">
+                            <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                            <input type="text" id="prov" formControlName="ownerStateProv" matInput placeholder="Address: Province/State" >
+                            
+                        </mat-form-field>
+                    </div>
+                    <mat-form-field class="property-full-width" fxFlex="85" >
+                        <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                        <input type="text" id="post" formControlName="ownerZipPostCode" matInput placeholder="Address: Post/Zip Code" >
+                        
+                    </mat-form-field>
+                    <mat-form-field class="property-full-width" fxFlex="85" >
+                        <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                        <input type="text" id="country" formControlName="ownerCountry" matInput placeholder="Address: country" >
+                        
+                    </mat-form-field>
+                </div>
+            </div>
+            
+       
+        
+    </div>
+    
+    <!-- <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Choose start date" formControlName="startDate" id="startDate" readonly (click)="picker.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field> -->
+    <div class="step-button">        
+        <button mat-button matStepperNext type="button" style="float: right;background: #64b5f6; color: white;">Next</button>
+        <button mat-button matStepperPrevious type="button" style="float: right;background: #ff5722; color: white;margin-right: 5px;">Back</button>
+    </div>
+</div>

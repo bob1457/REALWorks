@@ -1,0 +1,46 @@
+<!-- <p>
+  change-pass works!
+</p> -->
+<div>
+    <div class="section-head">
+        <span style="color: turquoise; margin-left: 70px; "><i class="fas fa-check-circle" style="vertical-align: text-bottom;"></i></span> Change Password
+    </div>
+    <div style="margin-left: 120px; color: grey;">
+        The password must be at least six (6) digit long
+    </div>
+</div>
+<form fxLayout="column" fxLayoutAlign="center center" #f="ngForm" (ngSubmit)="onSubmit(f)" class="settings-form">
+    <!-- <fieldset fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" class="section">
+      <legend>Change Password</legend> -->
+    <mat-form-field class="settings-full-width">
+        <span class="iocn-pos" matPrefix><mat-icon style="color: royalblue;">lock</mat-icon> &nbsp;</span>
+        <input type="password" matInput placeholder="Current password" ngModel name="oldpass" #oldpassInput="ngModel" required>
+        <mat-error *ngIf="oldpassInput.hasError('required')">Existing password is required</mat-error>
+        <!-- <mat-hint>Should be a valid email address</mat-hint>
+      <mat-error *ngIf="oldpassInput.hasError('required')">Email is required</mat-error>
+      <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field class="settings-full-width">
+        <!--hintLabel="Should be at least 6 characters long"-->
+        <span class="iocn-pos" matPrefix><mat-icon style="color:tomato;">lock</mat-icon> &nbsp;</span>
+        <input type="password" matInput placeholder="New password" ngModel name="newpass" required minLength="6" #pwInput="ngModel" required>
+        <!-- <mat-hint align="end">{{pwInput.value?.length}} / 6</mat-hint> -->
+        <mat-error>Must be at least 6 characters long</mat-error>
+    </mat-form-field>
+    <mat-form-field class="settings-full-width">
+        <span class="iocn-pos" matPrefix><mat-icon style="color:tomato;">lock</mat-icon> &nbsp;</span>
+        <input type="password" matInput appEqualValidator="newpass" placeholder="Confirm Your password" ngModel name="confimpass" #pw2Input="ngModel" required>
+        <mat-error *ngIf="pw2Input.touched && pw2Input.errors?.notEqual">password and confirm password do not match!</mat-error>
+        <!-- <div *ngIf="confimpass.errors.mustMatch">Passwords must match</div> -->
+        <!-- <mat-error>Must be at least 6 characters long</mat-error> -->
+    </mat-form-field>
+    <!-- <mat-checkbox color="primary" ngModel name="agree" required>Agree to the terms and conditions</mat-checkbox> -->
+    <div fxLayout="row" fxLayoutGap="7px" style="align-self: flex-end;">
+        <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">UPDATE</button>
+        <!-- [disabled]="f.invalid" -->
+    </div>
+
+    <!-- </fieldset> -->
+
+</form>

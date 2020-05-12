@@ -1,0 +1,72 @@
+<!-- <p>  
+  add-property-features works!
+</p> -->
+
+<div [formGroup]="addForm" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1%">
+  <div style="margin-top: 25px;">
+    <h5 style="margin-top: 25px;">Property Features</h5>
+  </div> 
+  <span class="line"></span>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="1%" fxFlexFill style="margin-top: 25px;">
+    <mat-form-field class="property-full-width" fxFlex="20" style="margin-top: 25px;">
+      <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+      <input type="text" id="numberOfBedrooms" formControlName="numberOfBedrooms" matInput placeholder="Number of Bedrooms" >
+          
+    </mat-form-field>
+    <mat-form-field class="property-full-width" fxFlex="20" style="margin-top: 25px;">
+          <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+          <input type="text" id="numberOfBathrooms" formControlName="numberOfBathrooms" matInput placeholder="Number of Bathrooms" >
+          
+    </mat-form-field>
+    <mat-form-field class="property-full-width" fxFlex="20" style="margin-top: 25px;">
+          <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+          <input type="text" id="numberOfLayers" formControlName="numberOfLayers" matInput placeholder="Number of Layers" >
+          
+    </mat-form-field>
+    <mat-form-field class="property-full-width" fxFlex="20" style="margin-top: 25px;">
+          <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+          <input type="text" id="numberOfParking" formControlName="numberOfParking" matInput placeholder="Number of Parking">
+          
+    </mat-form-field>
+  </div>
+  <div style="margin-top: 25px;">
+    <h5 style="margin-top: 25px;">Property Facilities</h5>
+  </div>                                    
+  <span class="line"></span>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="10px" style="width:75%;">
+      <div fxLayout="column" fxLayoutAlign="start center" fxFlex="30" fxLayoutGap="10px">
+        <mat-checkbox formControlName="stove" class="property-full-width">Stove</mat-checkbox>
+        <mat-checkbox formControlName="refrigerator" class="property-full-width">Refrigerator</mat-checkbox>
+        <mat-checkbox formControlName="dishwasher"  class="property-full-width">Dish Washer</mat-checkbox>
+        <mat-checkbox formControlName="airConditioner" class="property-full-width">Air Conditioner</mat-checkbox>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="start center"  fxFlex="30" fxLayoutGap="10px">
+        <mat-checkbox formControlName="laundry" class="property-full-width">Laundry</mat-checkbox>
+        <mat-checkbox formControlName="blindsCurtain" class="property-full-width">Window Blinds</mat-checkbox>
+        <mat-checkbox formControlName="furniture"  class="property-full-width">Furniture</mat-checkbox>
+        <mat-checkbox formControlName="tvinternet" class="property-full-width">TV/Internet</mat-checkbox>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="start center"  fxFlex="30" fxLayoutGap="10px">
+          <mat-checkbox formControlName="commonFacility"  class="property-full-width">Common Area</mat-checkbox>
+          <mat-checkbox formControlName="securitySystem"  class="property-full-width">Security/Alarm</mat-checkbox>
+          <mat-checkbox formControlName="fireAlarmSystem" class="property-full-width">Fire/Smoke Detectors</mat-checkbox>
+          <mat-checkbox formControlName="utilityIncluded" class="property-full-width">Utility</mat-checkbox>
+      </div>
+    </div>
+  <mat-form-field class="property-full-width">
+      <mat-label>Notes</mat-label>
+      <textarea matInput formControlName="facilityNotes"></textarea>
+  </mat-form-field>
+  
+    <!-- <mat-form-field>
+     <input matInput [matDatepicker]="picker" placeholder="Choose start date" formControlName="startDate" id="startDate"
+        readonly (click)="picker.open()">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field> -->
+    <div class="step-button">
+      <button mat-button matStepperNext type="button" style="float: right;background: #64b5f6; color: white;">Next</button>
+      <button mat-button matStepperPrevious type="button" style="float: right;background: #ff5722; color: white;margin-right: 5px;">Back</button>
+      
+    </div>
+</div>

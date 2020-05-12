@@ -1,0 +1,105 @@
+<!-- <p>
+  profile works!
+</p> -->
+<form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)" class="profile-form">
+    <mat-form-field class="profile-full-width" style="display: none;">
+        <span class="iocn-pos" matPrefix><mat-icon>person</mat-icon> &nbsp;</span>
+        <input type="text" matInput placeholder="Your username" ngModel name="userName" [(ngModel)]="user.username" #fnameInput="ngModel" uname>
+    </mat-form-field>
+
+    <mat-form-field class="profile-full-width">
+        <span class="iocn-pos" matPrefix><mat-icon>person</mat-icon> &nbsp;</span>
+        <input type="text" matInput placeholder="Your first name" ngModel name="firstName" [(ngModel)]="user.firstname" #fnameInput="ngModel" fname>
+        <!-- {{firstName}} -->
+
+        <!-- <mat-hint>Should be a valid email address</mat-hint>
+      <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+      <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field class="profile-full-width">
+        <span class="iocn-pos" matPrefix><mat-icon>person</mat-icon> &nbsp;</span>
+        <input type="text" matInput placeholder="Your last name" ngModel name="lastName" [(ngModel)]="user.lastname" #fnameInput="ngModel" lname>
+        <!-- <mat-hint>Should be a valid email address</mat-hint>
+      <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+      <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field class="profile-full-width">
+        <span class="iocn-pos" matPrefix><mat-icon>email</mat-icon> &nbsp;</span>
+        <input type="email" matInput placeholder="Your email" ngModel name="email" [(ngModel)]="user.email" #emailInput="ngModel" email>
+        <!-- <mat-hint>Should be a valid email address</mat-hint>
+      <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+      <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error> -->
+    </mat-form-field>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="10px" style="width: 70%;">
+        <mat-form-field class="profile-full-width" style="width: 100%;">
+            <span class="iocn-pos" matPrefix><mat-icon>phone</mat-icon> &nbsp;</span>
+            <input type="text" matInput placeholder="Primary telephone number" ngModel name="telephone1" [(ngModel)]="user.telephone1" #telInput="ngModel" tel1>
+        </mat-form-field>
+
+        <mat-form-field class="profile-full-width" style="width: 100%;">
+            <span class="iocn-pos" matPrefix><mat-icon>phone</mat-icon> &nbsp;</span>
+            <input type="text" matInput placeholder="Secondary telephone number" ngModel name="telephone2" [(ngModel)]="user.telephone2" #telInput="ngModel" tel2>
+        </mat-form-field>
+
+    </div>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="10px" style="width: 70%;">
+        <mat-form-field class="profile-full-width" style="width: 100%;">
+            <span class="iocn-pos" matPrefix><mat-icon>dialpad</mat-icon> &nbsp;</span>
+            <input type="text" matInput placeholder="Primary social media contact" ngModel name="socialMediaContact1" [(ngModel)]="user.socialmedia1" #contactInput="ngModel" contact1>
+        </mat-form-field>
+        <mat-form-field class="profile-full-width" style="width: 100%;">
+            <span class="iocn-pos" matPrefix><mat-icon>dialpad</mat-icon> &nbsp;</span>
+            <input type="text" matInput placeholder="Secondary social media contact" ngModel name="socialMediaContact2" [(ngModel)]="user.socialmedia2" #contactInput="ngModel" contact2>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="10px" style="width: 70%;">
+        <mat-form-field class="profile-full-width" style="width: 100%;">
+            <span class="iocn-pos" matPrefix><mat-icon>mobile_friendly</mat-icon> &nbsp;</span>
+            <input type="text" matInput placeholder="Address: Number and Street" ngModel name="addressstreet" [(ngModel)]="user.addressstreet" #contactInput="ngModel" contact1>
+        </mat-form-field>
+        <mat-form-field class="profile-full-width" style="width: 100%;">
+            <span class="iocn-pos" matPrefix><mat-icon>mobile_friendly</mat-icon> &nbsp;</span>
+            <input type="text" matInput placeholder="Address: City" ngModel name="addresscity" [(ngModel)]="user.addresscity" #contactInput="ngModel" contact2>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="10px" style="width: 70%;">
+        <mat-form-field class="profile-full-width" style="width: 100%;">
+            <span class="iocn-pos" matPrefix><mat-icon>mobile_friendly</mat-icon> &nbsp;</span>
+            <input type="text" matInput placeholder="Address: Province/State" ngModel name="addressProvstate" [(ngModel)]="user.addressprovstate" #contactInput="ngModel" contact1>
+        </mat-form-field>
+        <mat-form-field class="profile-full-width" style="width: 100%;">
+            <span class="iocn-pos" matPrefix><mat-icon>mobile_friendly</mat-icon> &nbsp;</span>
+            <input type="text" matInput placeholder="Address: Post/Zip Code" ngModel name="addresspostzipcode" [(ngModel)]="user.addresspostzipcode" #contactInput="ngModel" contact2>
+        </mat-form-field>
+    </div>
+
+    <mat-form-field class="profile-full-width">
+        <span class="iocn-pos" matPrefix><mat-icon>mobile_friendly</mat-icon> &nbsp;</span>
+        <input type="text" matInput placeholder="Address: Country" ngModel name="addresscountry" [(ngModel)]="user.addresscountry" #emailInput="ngModel" country>
+        <!-- <mat-form-field>
+            <mat-label>Country</mat-label>
+            <mat-select [(value)]="selected">
+                <mat-option value="CA">Canada</mat-option>
+                <mat-option value="US">United States</mat-option>
+            </mat-select>
+        </mat-form-field> -->
+    </mat-form-field>
+
+
+
+    <!-- <mat-checkbox color="primary" ngModel name="agree" required>Agree to the terms and conditions</mat-checkbox> -->
+    <div fxLayout="row" fxLayoutGap="7px" style="align-self: flex-end;">
+        <span *ngIf="showMsg" style="color: rgb(189, 150, 25);">Updated successfully!</span>
+        <img *ngIf=" loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+        />
+        <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid || !f.dirty">UPDATE</button>
+        <button mat-raised-button color="accent">CANCEL</button>
+    </div>
+
+</form>

@@ -1,0 +1,13 @@
+<!-- <p>
+  property-details-features works!
+</p> -->
+<div [formGroup]="detailsForm" fxLayout="column" fxLayoutAlign="start center">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="10px" style="width: 75%;">
+    <mat-form-field class="property-full-width">
+      <span class="iocn-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+      <input type="text" id="numberOfBedrooms" formControlName="numberOfBedrooms" matInput placeholder="Number of Bedrooms" [ngModel]="property.numberOfBedrooms">
+        
+    </mat-form-field>
+  </div>
+    
+</div>

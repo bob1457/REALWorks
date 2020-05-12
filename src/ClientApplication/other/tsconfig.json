@@ -1,0 +1,60 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "app-material": [
+        "dist/app-material"
+      ],
+      "app-material/*": [
+        "dist/app-material/*"
+      ],
+      "auth": [
+        "dist/auth"
+      ],
+      "auth/*": [
+        "dist/auth/*"
+      ],
+      "app-logging": [
+        "dist/app-logging"
+      ],
+      "app-logging/*": [
+        "dist/app-logging/*"
+      ],
+      "app-error-handling": [
+        "dist/app-error-handling"
+      ],
+      "app-error-handling/*": [
+        "dist/app-error-handling/*"
+      ],
+      "dashboard": [
+        "dist/dashboard"
+      ],
+      "dashboard/*": [
+        "dist/dashboard/*"
+      ],
+      "app-core": [
+        "dist/app-core"
+      ],
+      "app-core/*": [
+        "dist/app-core/*"
+      ]
+    }
+  }
+}

@@ -1,0 +1,106 @@
+<!-- <p>
+  add-property-basic works!
+</p> -->
+
+<div [formGroup]="addForm" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1%">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutGap="1%" fxFlexFill>
+        <div style="width: 59%;">
+            <mat-form-field style="margin-top: 25px;width: 70%;">
+                <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                <input matInput type="text" placeholder="Property Name" formControlName="propertyName" id="title">
+                <!-- <mat-hint align="end">Not more then 60 characters long.</mat-hint>
+        <mat-error *ngIf="hasError('title', 'required')">Name is required</mat-error>
+        <mat-error *ngIf="hasError('title', 'maxlength')">You have more than 60 characters</mat-error> -->
+            </mat-form-field>
+            <mat-form-field style="width: 70%;">
+                <!-- <input matInput type="text" placeholder="Property Name" formControlName="propertyName" id="title"> -->
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="propertyDesc"></textarea>
+                <!-- <mat-hint align="end">Not more then 60 characters long.</mat-hint>
+      <mat-error *ngIf="hasError('title', 'required')">Name is required</mat-error>
+      <mat-error *ngIf="hasError('title', 'maxlength')">You have more than 60 characters</mat-error> -->
+            </mat-form-field>
+            <mat-form-field style="width: 70%;">
+                <mat-label>Property Type</mat-label>                                        
+                    <mat-select [(value)]="current" id="propertyType1" formControlName="propertyType1" >
+                        <mat-option>None</mat-option>
+                        <mat-option value="SingleHouse">SingleHouse</mat-option>
+                        <mat-option value="Apartment">Apartment</mat-option>
+                        <mat-option value="TownHouse">TownHouse</mat-option>
+                        <mat-option value="Others">Others</mat-option>
+                    </mat-select>                
+            </mat-form-field>
+            <mat-form-field style="width: 70%;">
+                <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                <input matInput type="text" placeholder="Build Year" formControlName="propertyBuildYear" id="year">                
+            </mat-form-field>
+            <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+                <mat-checkbox formControlName="isShared" class="property-full-width">Is Shared</mat-checkbox>
+                <mat-checkbox formControlName="isBasementSuite" class="property-full-width">Is Basement</mat-checkbox>
+            </div>
+            <mat-form-field style="width: 70%;">
+                <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                <input matInput type="text" placeholder="Total Living Area" formControlName="totalLivingArea" id="living">                
+            </mat-form-field>
+            <!-- <mat-form-field style="width: 70%;">
+                <input matInput type="text" placeholder="Property Name" formControlName="propertyName" id="title">
+                
+            </mat-form-field> -->
+            
+        </div>
+        <div style="width: 59%;">
+            <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px" style="margin-top: 50px;">
+                <mat-form-field style="margin-top: 50px; width: 30%;">
+                    <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                    <input matInput type="text" placeholder="Unit Number" formControlName="propertySuiteNumber" id="SuiteNUmber">
+                    
+                </mat-form-field>
+                <mat-form-field style="margin-top: 50px; width: 40%;">
+                    <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                    <input matInput type="text" placeholder="Street Number" formControlName="propertyNumber" id="StreetNUmber">
+                    
+                </mat-form-field>
+            </div>           
+            
+            <mat-form-field style="width: 70%;">
+                <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                <input matInput type="text" placeholder="Street Name" formControlName="propertyStreet" id="street">
+                <!-- <mat-hint align="end">Not more then 60 characters long.</mat-hint>
+  <mat-error *ngIf="hasError('title', 'required')">Name is required</mat-error>
+  <mat-error *ngIf="hasError('title', 'maxlength')">You have more than 60 characters</mat-error> -->
+            </mat-form-field>
+            <mat-form-field style="width: 70%;">
+                <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                <input matInput type="text" placeholder="City" formControlName="propertyCity" id="city">
+                <!-- <mat-hint align="end">Not more then 60 characters long.</mat-hint>
+  <mat-error *ngIf="hasError('title', 'required')">Name is required</mat-error>
+  <mat-error *ngIf="hasError('title', 'maxlength')">You have more than 60 characters</mat-error> -->
+            </mat-form-field>
+            <mat-form-field style="width: 70%;">
+                <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                <input matInput type="text" placeholder="Province/State" formControlName="propertyStateProvince" id="province">
+                <!-- <mat-hint align="end">Not more then 60 characters long.</mat-hint>
+  <mat-error *ngIf="hasError('title', 'required')">Name is required</mat-error>
+  <mat-error *ngIf="hasError('title', 'maxlength')">You have more than 60 characters</mat-error> -->
+            </mat-form-field>
+            <mat-form-field style="width: 70%;">
+                <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                <input matInput type="text" placeholder="Post/Zip Code" formControlName="propertyZipPostCode" id="post">
+                <!-- <mat-hint align="end">Not more then 60 characters long.</mat-hint>
+  <mat-error *ngIf="hasError('title', 'required')">Name is required</mat-error>
+  <mat-error *ngIf="hasError('title', 'maxlength')">You have more than 60 characters</mat-error> -->
+            </mat-form-field>
+            <mat-form-field style="width: 70%;">
+                <span class="icon-pos" matPrefix><mat-icon>developer_board</mat-icon> &nbsp;</span>
+                <input matInput type="text" placeholder="Country" formControlName="propertyCountry" id="country">
+                <!-- <mat-hint align="end">Not more then 60 characters long.</mat-hint>
+  <mat-error *ngIf="hasError('title', 'required')">Name is required</mat-error>
+  <mat-error *ngIf="hasError('title', 'maxlength')">You have more than 60 characters</mat-error> -->
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="step-button">
+        <button mat-raised-button matStepperNext type="button" style="float: right;background: #64b5f6; color: white;">Next</button>
+    </div>
+</div>

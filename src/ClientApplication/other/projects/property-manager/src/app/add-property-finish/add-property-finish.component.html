@@ -1,0 +1,170 @@
+<!-- <p>
+  add-property-finish works!
+</p> -->
+
+<div [formGroup]="addForm">
+    <!-- <mat-radio-group aria-label="Select an option" formControlName="type">
+      <mat-radio-button value="1" checked >New</mat-radio-button>
+      <mat-radio-button value="2">Renewal</mat-radio-button>
+  </mat-radio-group> -->
+  <div>
+    <h5 style="margin-top: 25px;">Data Preview</h5>
+    </div>
+    <span class="line" style="margin-bottom: 40px;"></span>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start start" fxLayoutGap="40px" style="width: 100%;">
+      <div fxLayout="column" fxLayoutAlign="start start" fxFlex="30" fxLayoutGap="40px">
+        <table>
+          <tr>
+            <td><span class="bold">Name: </span></td>
+            <td colspan="3">{{addForm.get("propertyName").value}}</td>
+          </tr> 
+          <tr>
+            <td><span class="bold">Description: </span></td>
+            <td colspan="3">{{addForm.get("propertyDesc").value}}</td>
+          </tr>         
+          <tr>
+            <td><span class="bold">Type: </span></td>
+            <td>{{addForm.get("propertyType1").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Build Year: </span></td>
+            <td colspan="3">{{addForm.get("propertyBuildYear").value}}</td>
+          </tr>          
+          <tr>
+            <td><span class="bold">Shared:</span> </td>
+            <td>{{addForm.get("isShared").value}}</td>
+            <td><span class="bold">Basedment: </span></td>
+            <td>{{addForm.get("isBasementSuite").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Living Area(sqFT): </span></td>
+            <td colspan="3">{{addForm.get("totalLivingArea").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Others/Notes: </span></td>
+            <td colspan="3">{{addForm.get("facilityNotes").value}}</td>
+          </tr>
+        </table> 
+      </div>
+      <div fxLayout="column" fxLayoutAlign="center center" fxFlex="30" fxLayoutGap="40px">
+        <table style="margin-left: -45px;">
+          <tr>
+            <td><span class="bold">Property Number: </span></td>
+            <td colspan="2">{{addForm.get("propertySuiteNumber").value}} {{addForm.get("propertyNumber").value}}</td>
+          </tr>          
+          <tr>
+            <td><span class="bold">Proeprty Street: </span></td>
+            <td colspan="2">{{addForm.get("propertyStreet").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">City: </span></td>
+            <td colspan="2">{{addForm.get("propertyCity").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Province/Sate: </span></td>
+            <td colspan="2">{{addForm.get("propertyStateProvince").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Post/Zip Code:</span> </td>
+            <td colspan="2">{{addForm.get("propertyZipPostCode").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Country: </span></td>
+            <td colspan="2">{{addForm.get("propertyCountry").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Owner Name: </span></td>
+            <td>{{addForm.get("firstName").value}}</td>
+            <td>{{addForm.get("lastName").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Owner Contact: </span></td>
+            <td>{{addForm.get("contactEmail").value}}</td>
+            <td>{{addForm.get("contactTelephone1").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Same as the propertyOwner Address: </span></td>
+            <td>{{addForm.get("isSameAddress").value}}</td>            
+          </tr>
+          <tr>
+            <td><span class="bold">Owner Address: </span></td>            
+            <td>{{addForm.get("ownerStreetNumber").value}} 
+              {{addForm.get("ownerCity").value}} {{addForm.get("ownerStateProv").value}} 
+              {{addForm.get("ownerZipPostCode").value}} {{addForm.get("ownerCountry").value}}</td>
+          </tr>
+        </table>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="center center" fxFlex="30" fxLayoutGap="40px">
+        <table>
+          <tr>
+            <td><span class="bold">No of Bedrooms: </span></td>
+            <td>{{addForm.get("numberOfBedrooms").value}}</td>
+            <td><span class="bold">No of Bathrooms: </span></td>
+            <td>{{addForm.get("numberOfBathrooms").value}}</td>
+          </tr>          
+          <!-- <tr>
+            <td><span class="bold">No of Bathrooms: </span></td>
+            <td>{{addForm.get("numberOfBathrooms").value}}</td>
+          </tr> -->
+          <tr>
+            <td><span class="bold">No. of Layers: </span></td>
+            <td>{{addForm.get("numberOfLayers").value}}</td>
+            <td><span class="bold">No. of Parking: </span></td>
+            <td>{{addForm.get("numberOfParking").value}}</td>
+          </tr>
+          <!-- <tr>
+            <td><span class="bold">No. of Parking: </span></td>
+            <td>{{addForm.get("numberOfParking").value}}</td>
+          </tr> -->
+          <tr>
+            <td><span class="bold">Stove:</span> </td>
+            <td>{{addForm.get("stove").value}}</td>
+            <td><span class="bold">Frigde: </span></td>
+            <td>{{addForm.get("refrigerator").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Dishwasher: </span></td>
+            <td>{{addForm.get("dishwasher").value}}</td>
+            <td><span class="bold">Air Conditoner: </span></td>
+            <td>{{addForm.get("airConditioner").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Laundry:</span> </td>
+            <td>{{addForm.get("laundry").value}}</td>
+            <td><span class="bold">Win. Blinds: </span></td>
+            <td>{{addForm.get("blindsCurtain").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Furniture: </span></td>
+            <td>{{addForm.get("furniture").value}}</td>
+            <td><span class="bold">TV/Internet: </span></td>
+            <td>{{addForm.get("tvinternet").value}}</td>
+          </tr>
+           <tr>
+            <td><span class="bold">Utilities:</span> </td>
+            <td>{{addForm.get("utilityIncluded").value}}</td>
+            <td><span class="bold">Fire/Smoke Alarm: </span></td>
+            <td>{{addForm.get("fireAlarmSystem").value}}</td>
+          </tr>
+          <tr>
+            <td><span class="bold">Ccommon Facility: </span></td>
+            <td>{{addForm.get("commonFacility").value}}</td>
+            <td><span class="bold">Security: </span></td>
+            <td>{{addForm.get("securitySystem").value}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+
+
+
+  <div class="step-button">
+    <button mat-button style="float: right;background: #11c447; color: white;" (click)="submit(addForm.value)">Submit</button>
+    <button mat-button matStepperPrevious type="button" style="float: right;background: #ff5722; color: white;margin-right: 5px;">Back</button>
+  </div>
+    
+    
+
+</div>

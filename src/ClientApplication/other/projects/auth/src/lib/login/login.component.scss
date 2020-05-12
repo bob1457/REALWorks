@@ -1,0 +1,87 @@
+/* SASS/SCSS Variables */
+
+$gray-lighter: #eceeef !default;
+$image_path: "/assets/images/" !default;
+.login-card {
+    margin-left: auto;
+    margin-right: auto;
+    width: 28em;
+}
+
+mat-form-field {
+    width: 300px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+signup-card {
+    max-width: 300px;
+}
+
+.signup-header-image img {
+    border-radius: 50%;
+    margin-right: 25px;
+}
+
+:host-context .mat-card-header-text {
+    position: relative;
+    margin-left: 25px;
+}
+
+.err {
+    color: red;
+    text-align: center;
+    margin-top: 25px;
+}
+
+
+/*Login Page Header Banner */
+
+.material-half-bg {
+    height: 100vh;
+    background-color: #e7e7e7;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.pl-2 {
+    margin-top: 20px;
+}
+
+.material-half-bg .cover {
+    background-color: #424242;
+    /*#00796b;*/
+    height: 50vh;
+}
+
+.loginbox {
+    position: relative;
+    margin-top: 300px;
+}
+
+.iocn-pos {
+    position: relative;
+    top: 5px;
+}
+
+.login-header {
+    /* to be applied? */
+    background: #82808c;
+    margin: -16px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.mat-card-header {
+    background-color: #245796;
+    color: white;
+    align-items: center;
+}
+
+.mat-card {
+    padding: 0;
+}

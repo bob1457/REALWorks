@@ -1,0 +1,101 @@
+<!-- <p>
+  dash-lease works!
+</p> -->
+
+<!-- <mat-grid-tile [colspan]="breakpoint" [rowspan]="1" (window:resize)="onResize($event)"> -->
+<mat-card class="dashboard-card">
+    <!-- <mat-card-header>
+        <mat-card-title>
+            Leases & Rentals
+            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                  <button mat-menu-item>Expand</button>
+                  <button mat-menu-item>Remove</button>
+              </mat-menu>
+        </mat-card-title>
+        <mat-card-subtitle>Currently tenants and rental agreements</mat-card-subtitle>
+    </mat-card-header> -->
+    <mat-card-header style="background: #fafafa; padding: 5px;">
+        <div mat-card-avatar class="card-header-img">
+            <img src="../../assets/images/people.png" width="40px" height="40px" style="margin-left: 10px; margin-top: 5px;">
+        </div>
+        <mat-card-title style="margin-top: 5px; margin-left: 10px;">
+            Leases Management
+            <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                  <button mat-menu-item>Expand</button>
+                  <button mat-menu-item>Remove</button>
+              </mat-menu> -->
+        </mat-card-title>
+        <mat-card-subtitle style="color: #5d5b5b;margin-left: 10px;">Currently managed rentals</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="dashboard-card-content">
+        <div [@.disabled]="true">
+            <!--<app-rental></app-rental>-->
+            <mat-tab-group>
+                <mat-tab style="height: 390px; background: #f5f5f5;">
+                    <ng-template mat-tab-label>
+                        <!-- <i class="material-icons" style="color: black;">
+                            account_circle
+                        </i> &nbsp;&nbsp; -->
+                        <span class="tab-label">Tenants <span *ngIf="tenants">({{tenants.length}})</span></span>
+                    </ng-template>
+                    <div class="container" fxLayout="column" fxLayoutAlign="start" fxLayoutGap="1%" fxFlexFill>
+                        <mat-grid-list cols="1" rowHeight="85px">
+                            <mat-grid-tile *ngFor="let tenant of tenants">
+                                <mat-card class="user-card" style="margin-left: 5px;">
+                                    <mat-card-header>
+                                        <div mat-card-avatar>
+                                            <img class="user-avatar" src="../../assets/images/user_a.png">
+                                        </div>
+                                        <mat-card-title style="font-size: .85em; font-weight: bold;">{{tenant.firstName}} {{tenant.lastName | uppercase}}</mat-card-title>
+                                        <mat-card-subtitle style="font-size: 12px; color: black;">Tenant</mat-card-subtitle>
+                                        <div style="margin-left: 25px;font-size: 12px;">Email: {{tenant.contactEmail}}<br>{{tenant.contactTelephone1}}</div>
+                                        <!--{{user.email}}{{user.tel}}-->
+                                    </mat-card-header>
+                                </mat-card>
+                            </mat-grid-tile>
+
+                        </mat-grid-list>
+                    </div>
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <!-- <i class="material-icons" style="color: black;">
+                            assignment
+                        </i> &nbsp;&nbsp; -->
+                        <span class="tab-label">Rentals <span *ngIf="rentals">({{rentals.length}})</span></span>
+                    </ng-template>
+                    <!-- <div class="container" fxLayout="column" fxLayoutAlign="start" fxLayoutGap="1%" fxFlexFill>
+                        Rental Agreement
+                    </div> -->
+                    <div class="container" fxLayout="column" fxLayoutAlign="start" fxLayoutGap="1%" fxFlexFill>
+                        <mat-grid-list cols="1" rowHeight="85px">
+                            <mat-grid-tile *ngFor="let rental of rentals">
+                                <mat-card class="user-card">
+                                    <mat-card-header>
+                                        <div mat-card-avatar>
+                                            <img class="rental-avatar" src="../../assets/images/doc.png">
+                                        </div>
+                                        <mat-card-title style="font-size: .85em; font-weight: bold;">{{rental.leaseTitle}}</mat-card-title>
+                                        <!-- <mat-card-subtitle style="font-size: 12px;">{{user.role | uppercase}}</mat-card-subtitle> -->
+                                        <div style="margin-left: 25px;font-size: 12px;">Details: <br>{{rental.leaseDesc}}</div>
+                                    </mat-card-header>
+                                </mat-card>
+                            </mat-grid-tile>
+                        </mat-grid-list>
+
+
+
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+
+    </mat-card-content>
+</mat-card>
+<!-- </mat-grid-tile> -->

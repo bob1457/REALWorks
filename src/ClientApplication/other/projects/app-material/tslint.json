@@ -1,0 +1,17 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "rwcLib",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "rwc-lib",
+      "kebab-case"
+    ]
+  }
+}
