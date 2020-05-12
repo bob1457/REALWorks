@@ -29,7 +29,7 @@ namespace REALWorks.AssetServer
 
         public static void Main(string[] args)
         {
-            Startup();
+            //Startup();
             CreateWebHostBuilder(args).Build().Run();
         }
 

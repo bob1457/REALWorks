@@ -258,7 +258,7 @@ namespace REALWorks.AssetServer.Controllers
         [Route("owners")]
         public async Task<IActionResult> GetAllOwnerList() 
         {
-            var owners = await _mediator.Send(new AllOwnerListQuery());
+            var owners = await _mediator.Send(new AllOwnerListQuery2());
 
             if (owners == null)
             {

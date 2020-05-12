@@ -58,8 +58,52 @@ namespace REALWorks.AssetServer.Queries
                 {
                     PropertyName = op.PropertyName,
                     PropertyId = op.Id,
+                    PropertyDesc = op.PropertyDesc,
+                    PropertyLogoImgUrl = op.PropertyLogoImgUrl,
+                    PropertyVideoUrl = op.PropertyVideoUrl,
+                    IsActive = op.IsActive,
+                    IsShared = op.IsShared,
+                    IsBasementSuite = op.IsBasementSuite,
+                    PropertyType1 = op.Type.ToString(),
+                    Status = op.Status.ToString(),
+                    PropertyBuildYear = op.PropertyBuildYear,
+
+                    PropertySuiteNumber = op.Address.PropertySuiteNumber,
+                    PropertyNumber = op.Address.PropertyNumber,
+                    PropertyStreet = op.Address.PropertyStreet,
+                    PropertyCity = op.Address.PropertyCity,
+                    PropertyStateProvince = op.Address.PropertyStateProvince,
+                    PropertyZipPostCode = op.Address.PropertyZipPostCode,
+                    PropertyCountry = op.Address.PropertyCountry,
+                    GpslatitudeValue = op.Address.GpslatitudeValue,
+                    GpslongitudeValue = op.Address.GpslongitudeValue,
+
+                    NumberOfBathrooms = op.Feature.NumberOfBathrooms,
+                    NumberOfBedrooms = op.Feature.NumberOfBedrooms,
+                    NumberOfLayers = op.Feature.NumberOfLayers,
+                    NumberOfParking = op.Feature.NumberOfParking,
+                    BasementAvailable = op.Feature.BasementAvailable,
+                    FeatureNotes = op.Feature.Notes,
+
+                    Stove = op.Facility.Stove,
+                    Refrigerator = op.Facility.Refrigerator,
+                    Dishwasher = op.Facility.Dishwasher,
+                    Laundry = op.Facility.Laundry,
+                    BlindsCurtain = op.Facility.BlindsCurtain,
+                    Furniture = op.Facility.Furniture,
+                    Tvinternet = op.Facility.Tvinternet,
+                    CommonFacility = op.Facility.CommonFacility,
+                    SecuritySystem = op.Facility.SecuritySystem,
+                    UtilityIncluded = op.Facility.UtilityIncluded,
+                    FireAlarmSystem = op.Facility.FireAlarmSystem,
+                    Others = op.Facility.Others,
+                    FacilityNotes = op.Facility.Others,
+
+                    CreationDate = op.Created,
+                    UpdateDate = op.Modified,
                     OwnerList = op.OwnerProperty.Select(o => o.PropertyOwner).ToList(),
-                    ContractList = op.ManagementContract/*.Where(c =>c.IsActive == true)*/.ToList()
+                    ContractList = op.ManagementContract/*.Where(c =>c.IsActive == true)*/.ToList(),
+                    ImagetList = op.PropertyImg.ToList()
                 });
                 //.FirstOrDefault(op => op.PropertyId == request.Id);
 

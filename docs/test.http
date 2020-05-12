@@ -592,12 +592,12 @@ POST https://localhost:44336/api/Account/register HTTP/1.1
 content-type: application/json
 
 {
-  "email": "jlu@gmail.com",
-  "password": "Jlu@123456",
-  "firstName": "John",
-  "lastName": "Lu",
-  "userName": "john",
-  "userRole": "owner",
+  "email": "bob.yuan@yahoo.com",
+  "password": "Bob@123456",
+  "firstName": "Bob",
+  "lastName": "Yuan",
+  "userName": "bob",
+  "userRole": "pm",
   "telephone1": "123-456-7890",
   "telephone2": "",
   "socialMediaContact1": "",
@@ -610,3 +610,15 @@ content-type: application/json
 }
 
 ###\\###
+
+###
+
+POST https://localhost:44336/api/Account/addrole HTTP/1.1
+content-type: application/json
+
+{
+  "Name": "owner",
+  "Description": "Property Owner"
+}
+
+###

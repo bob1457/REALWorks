@@ -72,6 +72,7 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public ICollection<PropertyOwner> OwnerList { get; set; }
         public ICollection<OwnerProperty> OwnerProperty { get; set; }
         public ICollection<ManagementContract> ContractList { get; set; }
+        public ICollection<PropertyImg> ImagetList { get; set; }
 
         /// <summary>
         /// Management Contract
@@ -88,6 +89,6 @@ namespace REALWorks.AssetServer.Services.ViewModels
         //public DateTime ContractCreationDate { get; set; }
         //public DateTime ContractUpdateDate { get; set; }
 
-        
+
     }
 }

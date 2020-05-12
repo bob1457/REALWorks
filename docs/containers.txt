@@ -20,7 +20,9 @@ docker exec badger[server name] consul members
 
 Rabbitmq:
 
-docker run -d -p 15672:15672 -p 5672:5672 --name real-rabbit rabbitmq:3-management
+--------------docker run -d -p 15672:15672 -p 5672:5672 --name real-rabbit rabbitmq:3-management-----------Old
+
+ docker run -d --hostname my-rabbit --name my-rabbit -p 5672:5672 -p 8080:15672 rabbitmq:3-management
 
 
 

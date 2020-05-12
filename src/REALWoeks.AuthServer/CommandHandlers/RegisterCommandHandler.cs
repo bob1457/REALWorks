@@ -89,50 +89,54 @@ namespace REALWorks.AuthServer.CommandHandlers
 
             try
             {
-                // Verify the eligibility of registration ***********************************
-
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(AssetServiceHost + "api/Property");
-                var status = await client.GetAsync(client.BaseAddress + "/user/" + user.Email);
-
-                status.EnsureSuccessStatusCode();
-                string responseBody = await status.Content.ReadAsStringAsync(); //.;CopyToAsync()
-
-
-                if (responseBody == "false")
+                if (user.UserRole != "pm") // Verify the eligibility of registration for users other than property manager (pm) ***********************************
                 {
-                    return "Not eligible for self-registration";
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri(AssetServiceHost + "api/Property");
+                    var status = await client.GetAsync(client.BaseAddress + "/user/" + user.Email);
+
+                    status.EnsureSuccessStatusCode();
+                    string responseBody = await status.Content.ReadAsStringAsync(); //.;CopyToAsync()
+
+
+                    if (responseBody == "false")
+                    {
+                        return "Not eligible for self-registration";
+                    }
+
+
+                    // New code *******************************************************************
+
+                    var queryString = AssetServiceHost + "api/Property/userInfo/" + request.Email;
+                    var response = await client.GetAsync(queryString);
+
+                    var content = response.Content.ReadAsStringAsync();
+
+                    JObject json = JObject.Parse(content.Result);
+
+                    bool online = json.SelectToken("onlineEnabled").Value<bool>();
+
+                    if (!online) return "Not eligible for self-registration";
+
+
+                    //user.Email = json.SelectToken("email").Value<string>(); // it takes from input request
+                    user.FirstName = json.SelectToken("firstName").Value<string>();
+                    user.LastName = json.SelectToken("lastName").Value<string>();
+                    user.Telephone1 = json.SelectToken("telephone1").Value<string>();
+                    user.Telephone2 = json.SelectToken("telephone2").Value<string>();
+                    user.LastName = json.SelectToken("lastName").Value<string>();
+                    user.SocialMediaContact1 = json.SelectToken("socialMediaContact1").Value<string>();
+                    user.SocialMediaContact2 = json.SelectToken("socialMediaContact2").Value<string>();
+                    user.AddressStreet = json.SelectToken("addressStreet").Value<string>();
+                    user.AddressCity = json.SelectToken("addressCity").Value<string>();
+                    user.AddressStateProv = json.SelectToken("addressProvState").Value<string>();
+                    user.AddressZipPostCode = json.SelectToken("addressPostZipCode").Value<string>();
+                    user.AddressCountry = json.SelectToken("addressCountry").Value<string>();
+
                 }
+                
 
-
-                // New code *******************************************************************
-
-                var queryString = AssetServiceHost + "api/Property/userInfo/" + request.Email;
-                var response = await client.GetAsync(queryString);
-
-                var content = response.Content.ReadAsStringAsync();
-
-                JObject json = JObject.Parse(content.Result);
-
-                bool online = json.SelectToken("onlineEnabled").Value<bool>();
-
-                if (!online) return "Not eligible for self-registration";
-
-
-                //user.Email = json.SelectToken("email").Value<string>(); // it takes from input request
-                user.FirstName = json.SelectToken("firstName").Value<string>();
-                user.LastName = json.SelectToken("lastName").Value<string>();
-                user.Telephone1 = json.SelectToken("telephone1").Value<string>();
-                user.Telephone2 = json.SelectToken("telephone2").Value<string>();
-                user.LastName = json.SelectToken("lastName").Value<string>();
-                user.SocialMediaContact1 = json.SelectToken("socialMediaContact1").Value<string>();
-                user.SocialMediaContact2 = json.SelectToken("socialMediaContact2").Value<string>();
-                user.AddressStreet = json.SelectToken("addressStreet").Value<string>();
-                user.AddressCity = json.SelectToken("addressCity").Value<string>();
-                user.AddressStateProv = json.SelectToken("addressProvState").Value<string>();
-                user.AddressZipPostCode = json.SelectToken("addressPostZipCode").Value<string>();
-                user.AddressCountry = json.SelectToken("addressCountry").Value<string>();
-
+                
 
 
 
