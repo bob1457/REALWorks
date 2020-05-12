@@ -1,0 +1,9 @@
+$RWClient-dark-primary: mat-palette($mat-grey, 700, 300, 900);
+$RWClient-dark-accent: mat-palette($mat-blue-grey, 400);
+$RWClient-dark-warn: mat-palette($mat-red, 500);
+
+$RWClient-dark-theme: mat-dark-theme(
+  $RWClient-dark-primary,
+  $RWClient-dark-accent,
+  $RWClient-dark-warn
+);

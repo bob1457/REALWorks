@@ -1,0 +1,9 @@
+$RWClient-light-primary: mat-palette($mat-grey, 200, 500, 300);
+$RWClient-light-accent: mat-palette($mat-brown, 200);
+$RWClient-light-warn: mat-palette($mat-deep-orange, 200);
+
+$RWClient-light-theme: mat-light-theme(
+  $RWClient-light-primary,
+  $RWClient-light-accent,
+  $RWClient-light-warn
+);

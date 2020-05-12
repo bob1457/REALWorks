@@ -1,0 +1,67 @@
+<!-- <p>
+  weather works!
+</p> -->
+<div style="float: left; margin-left: 10px;" *ngIf="weatherData">
+    <!-- <i class='fas fa-cloud-showers-heavy' style='font-size:36px; margin-left: 15px;'></i> -->
+    <img src='http://openweathermap.org/img/w/{{weatherData.weather[0].icon}}.png' />
+</div>
+<div>
+    <span style="margin-left: 10px;;">16 &#8451;</span>
+</div>
+<div style="margin-left: 135px;clear: right;font-size: .9em;font-style: italic;color: #75a3ea;"  *ngIf="weatherData">{{weatherData.weather[0].main}}</div>
+<div style="margin-left: 85px;">
+    <!-- <select name="city" style="background: grey; color: white;">
+        <option value="1">Surrey</option>
+        <option value="2">Vancouver</option>
+        <option value="4">N. Vancouver</option>
+        <option value="3">Coquitlam</option>
+        <option value="4">Burnaby</option>
+      </select> -->
+      <!-- style="margin-left: -50px;" for below-->
+      <button mat-icon-button [matMenuTriggerFor]="selectCity" >
+        <mat-icon color="primary" title="Select City">open_with</mat-icon>
+      </button>
+      <span style="margin-left: 10px;" *ngIf="weatherData">{{weatherData.name}}</span>
+      <mat-menu #selectCity="matMenu" [overlapTrigger]="false" style="background: transparent;">
+         <button mat-menu-item (click)="getWeather('Burnaby')">
+                  <!--<mat-icon style="color: black;">dialpad</mat-icon>
+                    <i class="far fa-user-circle" style="color: #09af00"></i>-->
+         <span>&nbsp; Burnaby, CA</span><br />
+        </button>
+        <button mat-menu-item (click)="getWeather('Surrey')">
+                  <!--<mat-icon style="color: black;">notifications_off</mat-icon>
+                  <i class="fas fa-sign-out-alt" style="color: #e9176b"></i>-->
+          <span>&nbsp; Surrey, CA</span>
+        </button>
+        <!-- <button mat-menu-item (click)="getWeather('Surrey')">
+
+          <span>&nbsp; White Rock, CA</span>
+        </button> -->
+        <button mat-menu-item (click)="getWeather('North Vancouver')">
+                  <!--<mat-icon style="color: black;">notifications_off</mat-icon>
+                  <i class="fas fa-sign-out-alt" style="color: #e9176b"></i>-->
+          <span>&nbsp; N. Vancouver, CA</span>
+        </button>
+        <!-- <button mat-menu-item (click)="getWeather('North Vancouver')">
+
+          <span>&nbsp; W. Vancouver, CA</span>
+        </button> -->
+        <button mat-menu-item (click)="getWeather('Coquitlam')">
+                  <!--<mat-icon style="color: black;">notifications_off</mat-icon>
+                  <i class="fas fa-sign-out-alt" style="color: #e9176b"></i>-->
+          <span>&nbsp; Coquitlam, CA</span>
+        </button>
+        <button mat-menu-item (click)="getWeather('Langley')">
+                  <!--<mat-icon style="color: black;">notifications_off</mat-icon>
+                  <i class="fas fa-sign-out-alt" style="color: #e9176b"></i>-->
+          <span>&nbsp; Langley, CA</span>
+        </button>
+        <button mat-menu-item (click)="getWeather('Richmond')">
+                  <!--<mat-icon style="color: black;">notifications_off</mat-icon>
+                  <i class="fas fa-sign-out-alt" style="color: #e9176b"></i>-->
+          <span>&nbsp; Richmond, CA</span>
+        </button>
+
+      </mat-menu>
+</div>
+
