@@ -50,6 +50,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REALWorks.LoggingService", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REALWorks.NotificationService", "REALWorks.NotificationService\REALWorks.NotificationService.csproj", "{44595BF4-C994-472C-B01C-67380C8DFDBC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "REALWorks.Client", "REALWorks.Client", "{78844C01-1D75-4C3F-AF07-A986A1A85282}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApplication", "ClientApplication\ClientApplication.csproj", "{8D7ECF14-928F-4418-98D1-D5EA63BAF792}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -132,6 +136,10 @@ Global
 		{44595BF4-C994-472C-B01C-67380C8DFDBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44595BF4-C994-472C-B01C-67380C8DFDBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44595BF4-C994-472C-B01C-67380C8DFDBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D7ECF14-928F-4418-98D1-D5EA63BAF792}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D7ECF14-928F-4418-98D1-D5EA63BAF792}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D7ECF14-928F-4418-98D1-D5EA63BAF792}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D7ECF14-928F-4418-98D1-D5EA63BAF792}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +163,7 @@ Global
 		{56B613F2-E645-403A-ADD2-4A0FBCC9138A} = {1A851DB6-5360-463F-809D-F6ADF22FA3C3}
 		{1F32F56E-BB16-45BC-B24E-05F28AAB5318} = {1A851DB6-5360-463F-809D-F6ADF22FA3C3}
 		{44595BF4-C994-472C-B01C-67380C8DFDBC} = {1A851DB6-5360-463F-809D-F6ADF22FA3C3}
+		{8D7ECF14-928F-4418-98D1-D5EA63BAF792} = {78844C01-1D75-4C3F-AF07-A986A1A85282}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {88B7F9AF-B09B-4DDE-813D-35EF9707B15F}
