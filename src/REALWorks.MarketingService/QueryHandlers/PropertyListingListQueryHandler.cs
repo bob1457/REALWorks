@@ -27,6 +27,7 @@ namespace REALWorks.MarketingService.QueryHandlers
 
                          select new PropertyListingListViewModel
                          {
+                             Id = l.Id,
                              Title = l.Title,
                              ListingDesc = l.ListingDesc,
                              MonthlyRent = l.MonthlyRent,
@@ -36,6 +37,9 @@ namespace REALWorks.MarketingService.QueryHandlers
                              PropertyType = p.PropertyType,
                              PropertyBuildYear = p.PropertyBuildYear,
                              IsBasementSuite = p.IsBasementSuite,
+                             IsShared = p.IsShared,
+                             Created = p.Created,
+                             Updated = p.Modified,
                              ListingNote = l.Note
                          }).AsQueryable();
 

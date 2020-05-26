@@ -386,8 +386,15 @@ namespace REALWorks.AssetServer.Controllers
             {
                 Id = id
             };
-                        
+
             var ct = await _mediator.Send(getContract);
+
+            if(ct == null)
+            {
+                return NotFound();
+            }
+                        
+           
 
             return Ok(ct);
         }

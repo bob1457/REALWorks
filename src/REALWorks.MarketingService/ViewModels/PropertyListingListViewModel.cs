@@ -8,6 +8,7 @@ namespace REALWorks.MarketingService.ViewModels
 {
     public class PropertyListingListViewModel
     {
+        public int Id { get; set; }
         public string Title { get; set; }        //public int RentalPropertyId { get; set; }
         public string ListingDesc { get; set; }
         public decimal MonthlyRent { get; set; }
@@ -21,7 +22,10 @@ namespace REALWorks.MarketingService.ViewModels
         public bool IsShared { get; set; }
         //public ListingStatus Status { get; set; }
         public bool IsBasementSuite { get; set; }
-        
+
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
+
 
     }
 }
