@@ -1,0 +1,21 @@
+{
+  "name": "@lib/app-material",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.0.0",
+    "@angular/core": "^8.0.0"
+  },
+  "main": "bundles/lib-app-material.umd.js",
+  "module": "fesm5/lib-app-material.js",
+  "es2015": "fesm2015/lib-app-material.js",
+  "esm5": "esm5/lib-app-material.js",
+  "esm2015": "esm2015/lib-app-material.js",
+  "fesm5": "fesm5/lib-app-material.js",
+  "fesm2015": "fesm2015/lib-app-material.js",
+  "typings": "lib-app-material.d.ts",
+  "metadata": "lib-app-material.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}
