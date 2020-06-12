@@ -200,7 +200,7 @@ namespace REALWorks.AssetServer.Controllers
 
         [HttpPost]
         [Route("owner/update")]
-        public async Task<IActionResult> UpdateOwner(UpdatePropertyOwnerCommand command)
+        public async Task<IActionResult> UpdateOwner([FromBody] UpdatePropertyOwnerCommand command)
         {
             if (!ModelState.IsValid)
             {

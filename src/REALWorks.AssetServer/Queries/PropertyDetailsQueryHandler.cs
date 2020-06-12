@@ -66,8 +66,11 @@ namespace REALWorks.AssetServer.Queries
                     IsBasementSuite = op.IsBasementSuite,
                     PropertyType1 = op.Type.ToString(),
                     Status = op.Status.ToString(),
+                    PropertyBuildYear = op.PropertyBuildYear,
+                    
 
                     PropertySuiteNumber = op.Address.PropertySuiteNumber,
+                    PropertyNumber = op.Address.PropertyNumber,
                     PropertyStreet = op.Address.PropertyStreet,
                     PropertyCity = op.Address.PropertyCity,
                     PropertyStateProvince = op.Address.PropertyStateProvince,
@@ -81,6 +84,7 @@ namespace REALWorks.AssetServer.Queries
                     NumberOfLayers = op.Feature.NumberOfLayers,
                     NumberOfParking = op.Feature.NumberOfParking,
                     BasementAvailable = op.Feature.BasementAvailable,
+                    TotalLivingArea = op.Feature.TotalLivingArea,
                     FeatureNotes = op.Feature.Notes,
 
                     Stove = op.Facility.Stove,

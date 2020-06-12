@@ -33,7 +33,7 @@ namespace REALWorks.AssetServer.Queries
                                     IsActive = p.IsActive,
                                     IsShared = p.IsShared,
                                     Status = p.Status.ToString(),
-                                    PropertyType1 = p.Type.ToString(),
+                                    Type = p.Type.ToString(),
                                     PropertySuiteNumber = p.Address.PropertySuiteNumber,
                                     PropertyNumber = p.Address.PropertyNumber,
                                     PropertyStreet = p.Address.PropertyStreet,

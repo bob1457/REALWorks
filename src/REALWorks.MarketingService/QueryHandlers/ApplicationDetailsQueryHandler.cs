@@ -25,8 +25,9 @@ namespace REALWorks.MarketingService.QueryHandlers
         public async Task<RentalApplication> Handle(ApplicationDetailsQuery request, CancellationToken cancellationToken)
         {
             var application = _context.RentalApplication
-                .Include(a => a.RentalApplicant)
-                .Include(p => p.RentalProperty);
+                .Include(p => p.RentalProperty)
+                .Include(a => a.RentalApplicant).ToList();
+                //.Include(p => p.RentalProperty);
 
             return application.FirstOrDefault(i => i.Id == request.Id);
 

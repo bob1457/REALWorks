@@ -8,13 +8,13 @@ namespace REALWorks.AssetServer.Commands
 {
     public class CreatePropertyCommandResult
     {
-        public int PropertyId { get; set; }
+        public int Id { get; set; }
         public string PropertyName { get; set; }        
-        public PropertyType Type { get; set; }        
+        public string Type { get; set; }        
         public string PropertyLogoImgUrl { get; set; }       
         public bool IsActive { get; set; }
         public bool IsShared { get; set; }
-        public RentalStatus Status { get; set; }
+        public string Status { get; set; }
         public bool IsBasementSuite { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdateDate { get; set; }

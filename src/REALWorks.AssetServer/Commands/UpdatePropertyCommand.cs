@@ -12,14 +12,14 @@ namespace REALWorks.AssetServer.Commands
         public int PropertyId { get; set; }
         public string PropertyName { get; set; }
         public string PropertyDesc { get; set; }
-        public PropertyType Type { get; set; }
-        public int PropertyManagerId { get; set; }
-        public string PropertyLogoImgUrl { get; set; }
-        public string PropertyVideoUrl { get; set; }
+        public PropertyType PropertyType1 { get; set; }
+        //public int PropertyManagerId { get; set; }
+        //public string PropertyLogoImgUrl { get; set; }
+        //public string PropertyVideoUrl { get; set; }
         public int PropertyBuildYear { get; set; }
         public bool IsActive { get; set; }
         public bool IsShared { get; set; }
-        public int FurnishingId { get; set; }
+        //public int FurnishingId { get; set; }
         public RentalStatus Status { get; set; }
         public bool IsBasementSuite { get; set; }
         //public DateTime CreatedDate { get; set; }

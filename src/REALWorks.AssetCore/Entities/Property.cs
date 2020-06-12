@@ -137,7 +137,7 @@ namespace REALWorks.AssetCore.Entities
 
         #region Domain behaviours - methods/operations
 
-        public Property Update(
+        public Property Update(  // Note, rental status is NOT updated manually, but based on other services
             Property property,
             string propertyName,
             string propertyDesc,
@@ -203,10 +203,10 @@ namespace REALWorks.AssetCore.Entities
 
         public PropertyOwner UpdateOwner(PropertyOwner owner, string firstName, string lastName, string email,
             string telephone1, string telephone2, string avatarUrl, bool isActive,
-            string notes, string streetNumber, string city, string stateProv, string postZipCode, string country)
+            string notes, string streetNumber, string city, string stateProv, string country, string postZipCode)
         {
             OwnerAddress updatedAddress = new OwnerAddress(
-                streetNumber, city, stateProv, postZipCode, country
+                streetNumber, city, stateProv, country, postZipCode
                 );
 
             owner.Update(firstName, lastName, email, telephone1, telephone2, avatarUrl, isActive, notes,  updatedAddress);

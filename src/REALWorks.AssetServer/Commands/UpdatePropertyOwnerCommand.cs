@@ -22,11 +22,11 @@ namespace REALWorks.AssetServer.Commands
         //public int RoleId { get; set; }
         public string Notes { get; set; }
 
-        public string StreetNumber { get; private set; }
-        public string City { get; private set; }
-        public string StateProvince { get; private set; }
-        public string Country { get; private set; }
-        public string ZipPostCode { get; private set; }
+        public string StreetNumber { get; set; }
+        public string City { get; set; }
+        public string StateProvince { get; set; }
+        public string Country { get; set; }
+        public string ZipPostCode { get; set; }
 
         //public DateTime CreationDate { get; set; }
         public DateTime UpdateDate { get; set; }

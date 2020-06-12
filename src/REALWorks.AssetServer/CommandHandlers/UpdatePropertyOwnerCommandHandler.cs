@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using REALWorks.AssetCore.Entities;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using REALWorks.AssetServer.Services.ViewModels;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -36,6 +38,48 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             var updatedOwner = new UpdatePropertyOwnerCommandResult();
 
+            var address = new UpdatedOwnerAddress();
+
+            address.City = request.City;
+            address.StreetNUmber = request.StreetNumber;
+            address.StateProvince = request.StateProvince;
+            address.ZipPostCode = request.ZipPostCode;
+            address.Country = request.Country;
+
+            // Query list of property owned by this owner
+            //getOwnerPropertyList(request.Id);
+
+            /*
+             
+             */
+
+            //var propertyList = _context.Property
+            //    .Include(a => a.Address)
+            //    .Include(op => op.OwnerProperty)
+            //    .ThenInclude(o => o.PropertyOwner)
+            //    //.ThenInclude(p => p.Id == request.Id)
+            //    .Where(o => o.Id == request.Id)
+            //    .ToList();
+
+            //var propertyList = (from p in _context.Property.Include(a => a.Address)
+            //                    join op in _context.OwnerProperty on p.Id equals op.PropertyId
+            //                    join o in _context.PropertyOwner on op.PropertyOwnerId equals o.Id
+            //                    where o.Id == request.Id
+            //                    select new PropertyListViewModel
+            //                    {
+            //                        PropertyName = p.PropertyName.
+
+            //var powner = _context.PropertyOwner
+            //     .Include(op => op.OwnerProperty)
+            //     .ThenInclude(p => p.Property).ToList()
+            //     .Where(o => o.Id == request.Id);
+
+            var propertyList = owner.OwnerProperty.ToList();
+            //                    }).ToList();
+
+
+
+
             //populate the updated owner
             updatedOwner.Id = request.Id;
             updatedOwner.FirstName = request.FirstName;
@@ -47,8 +91,17 @@ namespace REALWorks.AssetServer.CommandHandlers
             updatedOwner.IsActive = request.IsActive;
             updatedOwner.Notes = request.Notes;
             updatedOwner.UpdateDate = DateTime.Now;
+            updatedOwner.City = request.City;
+            updatedOwner.StreetNUmber = request.StreetNumber;
+            updatedOwner.StateProvince = request.StateProvince;
+            updatedOwner.ZipPostCode = request.ZipPostCode;
+            updatedOwner.Country = request.Country;
+            updatedOwner.Created = owner.Created;
+            updatedOwner.Modified = owner.Modified;
 
+            updatedOwner.Address = address;
 
+            updatedOwner.OwnerProperty = propertyList;
 
             _context.Update(updated);
 
@@ -71,6 +124,11 @@ namespace REALWorks.AssetServer.CommandHandlers
             return updatedOwner;
 
             //throw new NotImplementedException();
+        }
+
+        private void getOwnerPropertyList(int id)
+        {
+
         }
     }
 }

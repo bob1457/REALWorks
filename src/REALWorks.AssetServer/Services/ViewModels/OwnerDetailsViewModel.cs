@@ -20,6 +20,12 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public int RoleId { get; private set; }
         public string Notes { get; private set; }
 
+        //public string StreetNUmber { get; set; }
+        //public string City { get; set; }
+        //public string StateProvince { get; set; }
+        //public string ZipPostCode { get; set; }
+        //public string Country { get; set; }
+
         public List<OwnerProperty> OwnerProperty { get; private set; } = new List<OwnerProperty>();
 
     }

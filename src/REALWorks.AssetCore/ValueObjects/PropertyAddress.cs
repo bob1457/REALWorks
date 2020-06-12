@@ -15,8 +15,8 @@ namespace REALWorks.AssetCore.ValueObjects
             string propertyStreet, 
             string propertyCity, 
             string propertyStateProvince, 
-            string propertyCountry, 
-            string propertyZipPostCode 
+            string propertyZipPostCode, 
+            string propertyCountry
             )
         {
             PropertySuiteNumber = propertySuiteNumber;

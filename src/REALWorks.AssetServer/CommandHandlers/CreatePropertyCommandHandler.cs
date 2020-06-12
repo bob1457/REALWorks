@@ -59,7 +59,7 @@ namespace REALWorks.AssetServer.CommandHandlers
 
 
             var property = new Property(request.PropertyName, request.PropertyDesc,  request.Type, request.PropertyManagerUserName,
-                request.PropertyBuildYear, request.IsActive, request.IsShared, request.Status, 
+                request.PropertyBuildYear, true, request.IsShared, request.Status, 
                 request.BasementAvailable, DateTime.Now, DateTime.Now, address, facility, feature);
 
 
@@ -111,11 +111,12 @@ namespace REALWorks.AssetServer.CommandHandlers
                 request.CreatedDate = property.Created;
                 request.UpdateDate = property.Modified;
 
-                //Populate return result
+                //Populate return resultEnum.GetName(typeof())
                 //
-                createdProperty.PropertyId = PropertyId;
+                createdProperty.Id = PropertyId;
                 createdProperty.PropertyName = request.PropertyName;
-                createdProperty.Type = request.Type;
+                createdProperty.Type = request.Type.ToString();
+                createdProperty.Status = request.Status.ToString();
                 createdProperty.PropertyLogoImgUrl = request.PropertyLogoImgUrl;
                 createdProperty.IsShared = request.IsShared;
                 createdProperty.IsActive = request.IsActive;

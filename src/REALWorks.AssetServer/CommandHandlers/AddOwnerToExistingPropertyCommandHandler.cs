@@ -29,14 +29,15 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             var addedOwner = new AddOwnerToExistingPropertyCommandResult();
 
-            // Check if the email already exist
+            // Check if the email already exist if adding new owner instead of existing owner
             //
-            var user = _context.PropertyOwner.FirstOrDefault(e => e.ContactEmail == request.ContactEmail);
 
-            if (user != null)
-            {
-                return new AddOwnerToExistingPropertyCommandResult() { Notes = "The email already exists!"};
-            }
+            //var user = _context.PropertyOwner.FirstOrDefault(e => e.ContactEmail == request.ContactEmail);
+
+            //if (user != null)
+            //{
+            //    return new AddOwnerToExistingPropertyCommandResult() { Notes = "The email already exists!"};
+            //}
 
             // populate the addedOnwer
             addedOwner.UserAvartaImgUrl = request.UserAvartaImgUrl;
@@ -59,6 +60,16 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             if (request.PropertyOwnerId == 0)
             {
+                // Check if the email already exist if adding new owner instead of existing owner
+                //
+
+                var user = _context.PropertyOwner.FirstOrDefault(e => e.ContactEmail == request.ContactEmail);
+
+                if (user != null)
+                {
+                    return new AddOwnerToExistingPropertyCommandResult() { Notes = "The email already exists!" };
+                }
+
                 var ownerAddress = new OwnerAddress(request.StreetNumber, request.City, request.StateProv, request.Country,request. ZipPostCode);
 
                 owner  = property.AddNewOwnerToProperty(request.PropertyId, request.UserName, request.FirstName, request.LastName, request.ContactEmail,
