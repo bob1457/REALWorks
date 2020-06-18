@@ -24,6 +24,7 @@ namespace REALWorks.AssetServer.Queries
                                join p in _context.Property on c.PropertyId equals p.Id
                                //join o in _context.OwnerProperty on p.Id equals o.PropertyId
                                //join po in _context.PropertyOwner on o.PropertyOwnerId equals po.Id
+                               where c.IsActive == true
 
                                select new ManagementContractListByPropertyViewModel
                                {

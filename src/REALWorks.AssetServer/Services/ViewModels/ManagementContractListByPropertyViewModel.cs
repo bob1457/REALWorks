@@ -1,4 +1,5 @@
-﻿using System;
+﻿using REALWorks.AssetCore.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,5 +26,8 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public string Notes { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
+
+        public Property Property { get; set; }
+
     }
 }

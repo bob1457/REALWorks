@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using REALWorks.AssetCore.Entities;
 using REALWorks.AssetCore.ValueObjects;
 using REALWorks.AssetData;
@@ -23,9 +24,9 @@ namespace REALWorks.AssetServer.CommandHandlers
 
         public async Task<UpdatePropertyCommandResult> Handle(UpdatePropertyCommand request, CancellationToken cancellationToken)
         {
-            var ppt = _context.Property.FirstOrDefault(p => p.Id == request.PropertyId);
+            var ppt = _context.Property.Include(op => op.OwnerProperty).ThenInclude(o => o.PropertyOwner ).FirstOrDefault(p => p.Id == request.PropertyId);
 
-
+//
             var address = new PropertyAddress(request.PropertySuiteNumber,
                 request.PropertyNumber, request.PropertyStreet,
                 request.PropertyCity, request.PropertyStateProvince, request.PropertyZipPostCode,
@@ -49,6 +50,22 @@ namespace REALWorks.AssetServer.CommandHandlers
                 address, facility, feature);
 
             _context.Property.Update(updated);
+
+            var owners = ppt.OwnerProperty.Select(o => o.PropertyOwner).ToList();
+
+
+
+
+            //var owners = _context.PropertyOwner
+            //    .Include(op => op.OwnerProperty)
+            //    .ThenInclude(p => p.FirstOrDefault().PropertyId == request.PropertyId).ToList();
+
+
+
+            var contracts = _context.ManagementContract
+                //.Include(p => p.Property)
+                .Where(p => p.PropertyId == request.PropertyId).ToList();
+               
 
             var updatedProperty = new UpdatePropertyCommandResult();
             // need to populate it either manual or automapper***************************
@@ -92,11 +109,14 @@ namespace REALWorks.AssetServer.CommandHandlers
             updatedProperty.TotalLivingArea = request.TotalLivingArea;
             updatedProperty.Tvinternet = request.Tvinternet;
 
-            updatedProperty.Type = request.PropertyType1.ToString(); //***************************************************************
+            updatedProperty.PropertyType1 = request.PropertyType1.ToString(); //***************************************************************
 
             updatedProperty.UtilityIncluded = request.UtilityIncluded;
             updatedProperty.CreatedDate = ppt.Created;
             updatedProperty.UpdateDate = updated.Modified;
+
+            updatedProperty.OwnerList = owners;
+            updatedProperty.ContractList = contracts;
 
             try
             {

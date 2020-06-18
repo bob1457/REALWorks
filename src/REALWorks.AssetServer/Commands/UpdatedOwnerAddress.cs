@@ -7,7 +7,7 @@ namespace REALWorks.AssetServer.Commands
 {
     public class UpdatedOwnerAddress
     {
-        public string StreetNUmber { get; set; }
+        public string StreetNumber { get; set; }
         public string City { get; set; }
         public string StateProvince { get; set; }
         public string ZipPostCode { get; set; }

@@ -41,7 +41,7 @@ namespace REALWorks.AssetServer.CommandHandlers
             var address = new UpdatedOwnerAddress();
 
             address.City = request.City;
-            address.StreetNUmber = request.StreetNumber;
+            address.StreetNumber = request.StreetNumber;
             address.StateProvince = request.StateProvince;
             address.ZipPostCode = request.ZipPostCode;
             address.Country = request.Country;
@@ -91,11 +91,11 @@ namespace REALWorks.AssetServer.CommandHandlers
             updatedOwner.IsActive = request.IsActive;
             updatedOwner.Notes = request.Notes;
             updatedOwner.UpdateDate = DateTime.Now;
-            updatedOwner.City = request.City;
-            updatedOwner.StreetNUmber = request.StreetNumber;
-            updatedOwner.StateProvince = request.StateProvince;
-            updatedOwner.ZipPostCode = request.ZipPostCode;
-            updatedOwner.Country = request.Country;
+            //updatedOwner.City = request.City;
+            //updatedOwner.StreetNUmber = request.StreetNumber;
+            //updatedOwner.StateProvince = request.StateProvince;
+            //updatedOwner.ZipPostCode = request.ZipPostCode;
+            //updatedOwner.Country = request.Country;
             updatedOwner.Created = owner.Created;
             updatedOwner.Modified = owner.Modified;
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using REALWorks.AssetCore.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace REALWorks.AssetServer.Commands
         public int PropertyId { get; set; }
         public string PropertyName { get; set; }
         public string PropertyDesc { get; set; }
-        public string Type { get; set; }
+        public string PropertyType1 { get; set; }
         //public int PropertyManagerId { get; set; }
         public string PropertyLogoImgUrl { get; set; }
         //public string PropertyVideoUrl { get; set; }
@@ -54,5 +55,9 @@ namespace REALWorks.AssetServer.Commands
         public bool BasementAvailable { get; set; }
         public int TotalLivingArea { get; set; }
         public string FeatureNotes { get; set; }
+
+        public IList<PropertyOwner> OwnerList  { get; set; }
+
+        public IList<ManagementContract> ContractList { get; set; }
     }
 }
