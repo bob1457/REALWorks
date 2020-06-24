@@ -52,6 +52,8 @@ namespace REALWorks.MarketingService.CommandHandlers
             addedListing.PropertyBuildYear = listingProeprty.PropertyBuildYear;
             addedListing.IsShared = listingProeprty.IsShared;
             addedListing.IsBasementSuite = listingProeprty.IsBasementSuite;
+            addedListing.Created = DateTime.Now;
+            addedListing.Updated = DateTime.Now;
 
             try
             {

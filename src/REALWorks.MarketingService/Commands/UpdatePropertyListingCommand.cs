@@ -14,7 +14,7 @@ namespace REALWorks.MarketingService.Commands
         public string ListingDesc { get; set; }
         //public ListingStatus Status { get; set; }
         public decimal MonthlyRent { get; set; }
-        public string Notes { get; set; }
+        public string Note { get; set; }
 
         public string ContactName { get; set; }
         public string ContactTel { get; set; }

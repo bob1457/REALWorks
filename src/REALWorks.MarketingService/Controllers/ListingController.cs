@@ -146,6 +146,30 @@ namespace REALWorks.MarketingService.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("allrentalproperties")]
+        public async Task<IActionResult> GetAllRentalProperties()
+        {
+            try
+            {
+                var properties = await _mediator.Send(new AllRentalPropertiesQuery());
+
+                if (properties == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(properties);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
+
         #region Open House
 
 

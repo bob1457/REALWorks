@@ -38,8 +38,8 @@ namespace REALWorks.MarketingService.QueryHandlers
                              PropertyBuildYear = p.PropertyBuildYear,
                              IsBasementSuite = p.IsBasementSuite,
                              IsShared = p.IsShared,
-                             Created = p.Created,
-                             Updated = p.Modified,
+                             Created = l.Created,
+                             Updated = l.Modified,
                              ListingNote = l.Note
                          }).AsQueryable();
 

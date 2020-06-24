@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using REALWorks.MarketingCore.ValueObjects;
 using REALWorks.MarketingData;
 using REALWorks.MarketingService.Commands;
@@ -26,27 +27,35 @@ namespace REALWorks.MarketingService.CommandHandlers
 
         public async Task<PropertyListingUpdateViewModel> Handle(UpdatePropertyListingCommand request, CancellationToken cancellationToken)
         {
-            var listing = _context.PropertyListing.FirstOrDefault(i => i.Id == request.Id);
+            var listing = _context.PropertyListing.Include(r => r.RentalProperty).FirstOrDefault(i => i.Id == request.Id);
 
             var contact = new ListingContact(request.ContactName, request.ContactTel, 
-                request.ContactEmail, request.ContactSMS, request.ContactOthers);            
+                request.ContactEmail, request.ContactSMS, request.ContactOthers);  
+            
 
-            var updated = listing.Update(listing, request.Title, request.ListingDesc, contact, request.MonthlyRent, request.Notes, DateTime.Now);
+            var updated = listing.Update(listing, request.Title, request.ListingDesc, contact, request.MonthlyRent, request.Note, DateTime.Now);
 
             _context.PropertyListing.Update(updated);
 
             var updatedList = new PropertyListingUpdateViewModel();
 
+            updatedList.Id = updated.Id;
             updatedList.Title = updated.Title;
             updatedList.ListingDesc = updated.ListingDesc;
             updatedList.MonthlyRent = updated.MonthlyRent;
-            updatedList.ListingNote = updated.Note;
+            updatedList.Note = updated.Note;
             updatedList.IsActive = updated.IsActive;
             updatedList.ContactName = updated.Contact.ContactName;
             updatedList.ContactEmail = updated.Contact.ContactEmail;
             updatedList.ContactTel = updated.Contact.ContactTel;
             updatedList.ContactSMS = updated.Contact.ContactSMS;
             updatedList.ContactOthers = updated.Contact.ContactOthers;
+            updatedList.Created = updated.Created;
+            updatedList.Modified = updated.Modified;
+
+            updatedList.RentalProperty = listing.RentalProperty;
+
+            updatedList.Contact = contact;
 
             try
             {
