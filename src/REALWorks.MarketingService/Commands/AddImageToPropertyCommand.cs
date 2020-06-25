@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using REALWorks.MarketingService.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.MarketingService.Commands
 {
-    public class AddImageToPropertyCommand: IRequest<bool>
+    public class AddImageToPropertyCommand: IRequest<AddImageToPropertyViewModel>
     {
         public IFormFile PropertyImage { get; set; }
 

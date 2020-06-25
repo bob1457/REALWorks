@@ -28,7 +28,7 @@ namespace REALWorks.MarketingService.CommandHandlers
         public async Task<PropertyListingUpdateViewModel> Handle(UpdatePropertyListingCommand request, CancellationToken cancellationToken)
         {
             var listing = _context.PropertyListing.Include(r => r.RentalProperty).FirstOrDefault(i => i.Id == request.Id);
-
+//.ThenInclude(m => m.PropertyImg.ToList())
             var contact = new ListingContact(request.ContactName, request.ContactTel, 
                 request.ContactEmail, request.ContactSMS, request.ContactOthers);  
             
@@ -56,6 +56,8 @@ namespace REALWorks.MarketingService.CommandHandlers
             updatedList.RentalProperty = listing.RentalProperty;
 
             updatedList.Contact = contact;
+
+            //updatedList.PropertyImg = listing.RentalProperty.PropertyImg.ToList();
 
             try
             {

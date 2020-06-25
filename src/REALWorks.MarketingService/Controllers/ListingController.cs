@@ -99,9 +99,10 @@ namespace REALWorks.MarketingService.Controllers
             if (command.PropertyImage == null || command.PropertyImage.Length == 0)
                 return Content("file not selected");
 
-            await _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-            return Content("Image uploaded successfully!");
+            //return Content("Image uploaded successfully!");
+            return Ok(result);
         }
 
         [HttpPost]

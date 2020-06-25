@@ -144,6 +144,8 @@ namespace REALWorks.MarketingService
 
             app.UseAuthentication();
 
+            app.UseStaticFiles();
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

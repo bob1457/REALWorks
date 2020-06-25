@@ -29,5 +29,7 @@ namespace REALWorks.MarketingService.ViewModels
         public RentalProperty RentalProperty { get; set; }
 
         public ListingContact Contact { get; set; }
+
+        //public IList<PropertyImg> PropertyImg { get; set; }
     }
 }
