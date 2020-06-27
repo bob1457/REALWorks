@@ -51,6 +51,7 @@ namespace REALWorks.MarketingService.CommandHandlers
 
             addedImage.PropertyImgUrl = image.PropertyImgUrl;            
             addedImage.PropertyImgTitle = image.PropertyImgTitle;
+            addedImage.RentalPropertyId = image.RentalPropertyId;
 
             _context.Add(image);
 

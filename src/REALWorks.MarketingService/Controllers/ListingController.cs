@@ -82,6 +82,30 @@ namespace REALWorks.MarketingService.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("allimgs")]
+        public async Task<IActionResult> GetAllPropertyImages()
+        {
+            try
+            {
+                var listing = await _mediator.Send(new AllPropertyImagesListQuery());
+
+                if (listing == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(listing);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
+
 
         [HttpPost]
         [Route("addimg")]

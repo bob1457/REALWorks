@@ -10,6 +10,6 @@ namespace REALWorks.MarketingService.ViewModels
         public int Id { get; set; }
         public string PropertyImgTitle { get; set; }
         public string PropertyImgUrl { get; set; }
-        //public int RentalPropertyId { get; set; }
+        public int RentalPropertyId { get; set; }
     }
 }
