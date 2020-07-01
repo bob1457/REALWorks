@@ -53,7 +53,7 @@ namespace REALWorks.AssetServer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string dbConnectionString = Configuration.GetConnectionString("AppDbConnection3"); // DB: REALAsset2
+            string dbConnectionString = Configuration.GetConnectionString("AppDbConnection"); // DB: REALAsset
 
             services.AddDbContext<AppDataBaseContext>(options =>
                      options.UseSqlServer(dbConnectionString, builder => builder.MigrationsAssembly("REALWorks.AssetData")));

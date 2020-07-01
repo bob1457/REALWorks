@@ -27,7 +27,7 @@ namespace REALWorks.AssetServer.CommandHandlers
             var contract = _context.ManagementContract.Include(p => p.Property).FirstOrDefault(c => c.Id == request.Id);      
 
             var updatedContract = contract.Property.UpdateContract(contract, request.ManagementContractTitle, request.StartDate, request.EndDate, 
-                request.PlacementFeeScale, request.ManagementFeeScale, request.Notes);
+                request.PlacementFeeScale, request.ManagementFeeScale, request.SolicitingOnly, request.Notes);
 
 
             _context.Update(updatedContract);
@@ -39,7 +39,7 @@ namespace REALWorks.AssetServer.CommandHandlers
                 await _context.SaveChangesAsync();
 
                 //Need to modify returned model to match the client end
-                var realtedProperty = _context.Property
+                var rentedProperty = _context.Property
                     .Include(a => a.Address)
                     .Include(op => op.OwnerProperty)
                     .ThenInclude(o => o.PropertyOwner).Where(p => p.Id == contract.PropertyId);
@@ -55,6 +55,7 @@ namespace REALWorks.AssetServer.CommandHandlers
                 updatedView.PlacementFeeScale = request.PlacementFeeScale;
                 updatedView.ManagementFeeScale = request.ManagementFeeScale;
                 updatedView.Notes = request.Notes;
+                updatedView.solicitingOnly = request.SolicitingOnly;
                 updatedView.PropertyName = contract.Property.PropertyName;
                 //updatedView.PropertyStreet = contract.Property.Address.PropertyStreet;
 
@@ -62,7 +63,7 @@ namespace REALWorks.AssetServer.CommandHandlers
                 updatedView.Created = contract.Created;
                 updatedView.Updated = DateTime.Now;
 
-                updatedView.Property = realtedProperty.FirstOrDefault(p => p.Id == contract.PropertyId);
+                updatedView.Property = rentedProperty.FirstOrDefault(p => p.Id == contract.PropertyId);
 
 
 

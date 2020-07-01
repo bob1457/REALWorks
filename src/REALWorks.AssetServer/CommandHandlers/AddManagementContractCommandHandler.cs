@@ -49,7 +49,7 @@ namespace REALWorks.AssetServer.CommandHandlers
 
 
             var contract = property.AddManabgementContract(request.PropertyId, request.ManagementContractTitle, request.ManagementContractType,  
-                request.StartDate, request.EndDate, request.PlacementFeeScale, request.ManagementFeeScale, 
+                request.StartDate, request.EndDate, request.PlacementFeeScale, request.ManagementFeeScale, request.SolicitingOnly,
                 request.ContractSignDate, true, request.Notes);            
 
             _context.Add(contract);

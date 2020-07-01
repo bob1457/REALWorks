@@ -17,6 +17,7 @@ namespace REALWorks.AssetServer.Commands
         public string PlacementFeeScale { get; set; }
         public string ManagementFeeScale { get; set; }
         public string Notes { get; set; }
+        public bool SolicitingOnly { get; set; }
         //public ContractType ManagementContractType { get; set; }
     }
 }

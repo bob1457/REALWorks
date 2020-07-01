@@ -16,6 +16,8 @@ namespace REALWorks.MarketingService.ViewModels
         public string Note { get; set; }
         public bool IsActive { get; set; }
 
+        public int RentalPropertyId { get; set; }
+
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
 
@@ -30,6 +32,6 @@ namespace REALWorks.MarketingService.ViewModels
 
         public ListingContact Contact { get; set; }
 
-        //public IList<PropertyImg> PropertyImg { get; set; }
+        //public IList<PropertyImg> PropertyImgs { get; set; }
     }
 }

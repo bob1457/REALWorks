@@ -19,7 +19,7 @@ namespace REALWorks.AssetCore.Entities
 
         public ManagementContract(string managementContractTitle, ContractType contractType, DateTime startDate, 
             DateTime endDate, string placementFeeScale, string managementFeeScale, 
-            DateTime contractSignDate, int propertyId,   
+            DateTime contractSignDate, int propertyId,  bool solicitingOnly, 
             bool isActive, string notes, DateTime created, DateTime updated)
         {
             ManagementContractTitle = managementContractTitle;
@@ -30,6 +30,7 @@ namespace REALWorks.AssetCore.Entities
             ManagementFeeScale = managementFeeScale;
             ContractSignDate = contractSignDate;
             PropertyId = propertyId;
+            SolicitingOnly = solicitingOnly;
             IsActive = isActive;
             Notes = notes;
             Created = DateTime.Now;
@@ -48,6 +49,9 @@ namespace REALWorks.AssetCore.Entities
         public bool IsActive { get; private set; }
         public string Notes { get; private set; }
 
+        public bool SolicitingOnly { get; private set; }
+        public string Contract { get; private set; }
+
         public Property Property { get; set; }
         public ICollection<FeePayment> FeePayment { get; private set; }
 
@@ -56,13 +60,14 @@ namespace REALWorks.AssetCore.Entities
 
 
         public void Update(string title, DateTime startDate, DateTime endDate, 
-            string placementFeeScale, string managementFeeScale, string notes)
+            string placementFeeScale, string managementFeeScale, bool solicitingOnly, string notes)
         {
             ManagementContractTitle = title;
             StartDate = startDate;
             EndDate = endDate;
             PlacementFeeScale = placementFeeScale;
             ManagementFeeScale = managementFeeScale;
+            SolicitingOnly = solicitingOnly;
             Notes = notes;
             Modified = DateTime.Now;
         }

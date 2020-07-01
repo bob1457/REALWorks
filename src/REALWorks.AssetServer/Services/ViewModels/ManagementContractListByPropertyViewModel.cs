@@ -23,6 +23,7 @@ namespace REALWorks.AssetServer.Services.ViewModels
         //public string OwnerFirstName { get; set; }
         //public string OnwerLastName { get; set; }
         public bool IsActive { get; set; }
+        public bool solicitingOnly { get; set; }
         public string Notes { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }

@@ -19,6 +19,8 @@ namespace REALWorks.AssetServer.Commands
         public int PropertyId { get; set; }
         public string ManagementContractDocUrl { get; set; }
         public ContractType ManagementContractType { get; set; }
+
+        public bool SolicitingOnly { get; set; }
         public bool IsActive { get; set; }
         public string Notes { get; set; }
     }

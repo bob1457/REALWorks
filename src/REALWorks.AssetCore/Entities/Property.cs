@@ -267,19 +267,19 @@ namespace REALWorks.AssetCore.Entities
 
 
         public ManagementContract AddManabgementContract(int propertyId, string title, ContractType type,
-            DateTime startDate, DateTime endDate, string placementFeeScale, string managementFeeScale, 
+            DateTime startDate, DateTime endDate, string placementFeeScale, string managementFeeScale, bool solicitingOnly,
             DateTime signDate, bool isActive, string notes)
         {
             var contract = new ManagementContract(title, type, startDate, endDate, placementFeeScale, managementFeeScale, 
-                signDate, propertyId, isActive, notes, DateTime.Now, DateTime.Now);
+                signDate, propertyId, solicitingOnly, isActive, notes, DateTime.Now, DateTime.Now);
 
             return contract;
         }
 
         public ManagementContract UpdateContract(ManagementContract contract, string title, DateTime startDate, DateTime endDate,
-            string placementFeeScale, string managementFeeScale, string notes)
+            string placementFeeScale, string managementFeeScale, bool solicitingOnly, string notes)
         {
-            contract.Update(title, startDate, endDate, placementFeeScale, managementFeeScale, notes);
+            contract.Update(title, startDate, endDate, placementFeeScale, managementFeeScale, solicitingOnly, notes);
 
             return contract;
         }

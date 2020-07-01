@@ -30,8 +30,10 @@ namespace REALWorks.MarketingService.CommandHandlers
             var listing = _context.PropertyListing.Include(r => r.RentalProperty).FirstOrDefault(i => i.Id == request.Id);
 //.ThenInclude(m => m.PropertyImg.ToList())
             var contact = new ListingContact(request.ContactName, request.ContactTel, 
-                request.ContactEmail, request.ContactSMS, request.ContactOthers);  
-            
+                request.ContactEmail, request.ContactSMS, request.ContactOthers);
+
+            var allImgs = _context.PropertyImg; // Get all property images
+
 
             var updated = listing.Update(listing, request.Title, request.ListingDesc, contact, request.MonthlyRent, request.Note, DateTime.Now);
 
@@ -40,6 +42,7 @@ namespace REALWorks.MarketingService.CommandHandlers
             var updatedList = new PropertyListingUpdateViewModel();
 
             updatedList.Id = updated.Id;
+            updatedList.RentalPropertyId = updated.RentalPropertyId;
             updatedList.Title = updated.Title;
             updatedList.ListingDesc = updated.ListingDesc;
             updatedList.MonthlyRent = updated.MonthlyRent;
@@ -57,7 +60,7 @@ namespace REALWorks.MarketingService.CommandHandlers
 
             updatedList.Contact = contact;
 
-            //updatedList.PropertyImg = listing.RentalProperty.PropertyImg.ToList();
+            //updatedList.PropertyImgs = allImgs.ToList();
 
             try
             {

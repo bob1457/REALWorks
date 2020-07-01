@@ -24,6 +24,9 @@ namespace REALWorks.MarketingService.CommandHandlers
             var file = request.PropertyImage;
 
             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images\\properties\\");
+            string ext = Path.GetExtension(file.Name);
+            string newFileName = "rental_property_" + request.RentalPropertyId.ToString() +  "." + ext;
+
             string url = "images/properties/" + file.FileName;
 
             if (file.Length > 0)
