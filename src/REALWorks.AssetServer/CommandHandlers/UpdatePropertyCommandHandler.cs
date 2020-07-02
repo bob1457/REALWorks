@@ -4,6 +4,8 @@ using REALWorks.AssetCore.Entities;
 using REALWorks.AssetCore.ValueObjects;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using REALWorks.AssetServer.Events;
+using REALWorks.MessagingServer.Messages;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -17,9 +19,12 @@ namespace REALWorks.AssetServer.CommandHandlers
     {
         private readonly AppDataBaseContext _context;
 
-        public UpdatePropertyCommandHandler(AppDataBaseContext context)
+        IMessagePublisher _messagePublisher;
+
+        public UpdatePropertyCommandHandler(AppDataBaseContext context, IMessagePublisher messagePublisher)
         {
             _context = context;
+            _messagePublisher = messagePublisher;
         }
 
         public async Task<UpdatePropertyCommandResult> Handle(UpdatePropertyCommand request, CancellationToken cancellationToken)
@@ -126,6 +131,24 @@ namespace REALWorks.AssetServer.CommandHandlers
                 Log.Information("The property {PorpertyName} has been updated successfully", ppt.PropertyName);
 
                 // Send messages if necessary
+
+                PropertyUpdateEvent e = new PropertyUpdateEvent(Guid.NewGuid(), request.PropertyId, request.PropertyName,
+                    request.PropertyBuildYear, request.PropertyType1.ToString(), request.BasementAvailable, request.IsShared, request.NumberOfBedrooms,
+                    request.NumberOfBathrooms, request.NumberOfLayers, request.NumberOfParking, request.TotalLivingArea,
+                    request.PropertyNumber, request.PropertyCity, request.PropertyStateProvince, request.PropertyCountry,
+                    request.PropertyZipPostCode);
+
+                try
+                {
+                    await _messagePublisher.PublishMessageAsync(e.MessageType, e, "asset_created"); // publishing the message
+
+                }
+                catch (Exception ex)
+                {
+
+                    Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
+                }
+                
             }
             catch (Exception ex)
             {

@@ -56,9 +56,9 @@ namespace REALWorks.MarketingService.EventHandlers
                     case "RentalPropertyStatusChangeEvent":
                         await HandleAsync(messageObject.ToObject<RentalPropertyStatusChangeEvent>());
                         break;
-                    //case "MaintenanceJobFinished":
-                    //    await HandleAsync(messageObject.ToObject<MaintenanceJobFinished>());
-                    //    break;
+                    case "PropertyUpdateEvent":
+                        await HandleAsync(messageObject.ToObject<PropertyUpdateEvent>());
+                        break;
                     default:
                         Console.WriteLine("Default case");
                         break;
@@ -72,6 +72,34 @@ namespace REALWorks.MarketingService.EventHandlers
 
             // always akcnowledge message - any errors need to be dealt with locally.
             return true;
+
+            //throw new NotImplementedException();
+        }
+
+        private async Task HandleAsync(PropertyUpdateEvent @event)
+        {
+            var rentalProperty = _context.RentalProperty.FirstOrDefault(i => i.OriginalId == @event.PropertyId);
+
+            var address = new Address(@event.StreetNum, @event.City, @event.StateProvince, @event.Country, @event.ZipPostCode);
+
+            var updated = rentalProperty.Update(rentalProperty, @event.PropertyName, @event.PropertyBuildYear, @event.Type, @event.IsBasementSuite, @event.IsShared,
+                @event.NumberOfBedrooms, @event.NumberOfBathrooms, @event.NumberOfLayers, @event.NumberOfParking, @event.TotalLivingArea, address);
+
+            _context.RentalProperty.Update(updated);
+
+            try
+            {
+                _context.SaveChanges();
+
+                Log.Information("Message  {MessageType} with Id {MessageId} has been handled successfully", @event.MessageType, @event.MessageId);
+
+            }
+            catch (Exception ex)
+            {
+
+                //throw;
+                Log.Error(ex, "Error while handling {MessageType} message with id {MessageId}.", @event.MessageType, @event.MessageId);
+            }
 
             //throw new NotImplementedException();
         }

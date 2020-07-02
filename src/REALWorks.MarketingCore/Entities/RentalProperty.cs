@@ -89,6 +89,25 @@ namespace REALWorks.MarketingCore.Entities
 
         public int GeoLocationId { get; private set; }
 
+        public RentalProperty Update(RentalProperty property, string propertyName, int buildYear, string type, bool basement, bool shared, int bedroom,
+            int bathroom, int layer, int parking, int livingArea, Address address)
+        {
+            property.PropertyName = propertyName;
+            property.PropertyBuildYear = PropertyBuildYear;
+            property.PropertyType = type;
+            property.IsBasementSuite = basement;
+            property.IsShared = shared;
+            property.NumberOfBathrooms = bathroom;
+            property.NumberOfBedrooms = bedroom;
+            property.NumberOfLayers = layer;
+            property.NumberOfParking = parking;
+            property.TotalLivingArea = livingArea;
+            property.Address = address;
+            property.Modified = DateTime.Now;
+
+            return property;
+        }
+
         public void ListingStatusUpdate(RentalProperty property, ListingStatus status)
         {
             property.Status = status;

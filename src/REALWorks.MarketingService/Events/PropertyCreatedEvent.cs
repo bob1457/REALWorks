@@ -64,7 +64,7 @@ namespace REALWorks.MarketingService.Events
             int numberOfLayers,
             int numberOfParking,
             int totalLivingArea,
-            string streetNumber,
+            string streetNum,
             string city,
             string stateProvince,
             string country,
@@ -94,7 +94,7 @@ namespace REALWorks.MarketingService.Events
             NumberOfLayers = numberOfLayers;
             NumberOfParking = numberOfParking;
             TotalLivingArea = totalLivingArea;
-            StreetNum = streetNumber;
+            StreetNum = streetNum;
             City = city;
             StateProvince = stateProvince;
             Country = country;

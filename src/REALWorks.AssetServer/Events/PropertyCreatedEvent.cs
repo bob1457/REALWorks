@@ -54,7 +54,7 @@ namespace REALWorks.AssetServer.Events
             int numberOfLayers,
             int numberOfParking,
             int totalLivingArea,
-            string streetNumber,
+            string streetNum,
             string city,
             string stateProvince,
             string country,
@@ -85,7 +85,7 @@ namespace REALWorks.AssetServer.Events
             NumberOfLayers = numberOfLayers;
             NumberOfParking = numberOfParking;
             TotalLivingArea = totalLivingArea;
-            StreetNum = streetNumber;
+            StreetNum = streetNum;
             City = city;
             StateProvince = stateProvince;
             Country = country;
