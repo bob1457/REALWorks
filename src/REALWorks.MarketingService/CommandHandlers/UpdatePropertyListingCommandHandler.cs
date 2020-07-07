@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using static REALWorks.MarketingCore.Entities.RentalProperty;
 
 namespace REALWorks.MarketingService.CommandHandlers
 {
@@ -34,8 +35,10 @@ namespace REALWorks.MarketingService.CommandHandlers
 
             var allImgs = _context.PropertyImg; // Get all property images
 
+            var rentalProperty = listing.RentalProperty;
 
-            var updated = listing.Update(listing, request.Title, request.ListingDesc, contact, request.MonthlyRent, request.Note, DateTime.Now);
+
+            var updated = listing.Update(listing, request.Title, request.ListingDesc, contact, request.MonthlyRent, request.isActive, request.Note, DateTime.Now);
 
             _context.PropertyListing.Update(updated);
 
@@ -62,9 +65,25 @@ namespace REALWorks.MarketingService.CommandHandlers
 
             //updatedList.PropertyImgs = allImgs.ToList();
 
+            // Update rental property status
+
+            ListingStatus status;
+
+            if (request.isActive == true)
+            {
+                status = (ListingStatus)Enum.Parse(typeof(ListingStatus), "Listed");                
+            }
+            else
+            {
+                status = (ListingStatus)Enum.Parse(typeof(ListingStatus), "NotSet");
+            }
+
+            rentalProperty.StatusUpdate(status);
+
             try
             {
                 await _context.SaveChangesAsync();
+
             }
             catch (Exception ex)
             {

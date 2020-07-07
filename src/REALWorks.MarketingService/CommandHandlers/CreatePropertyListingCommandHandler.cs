@@ -46,7 +46,7 @@ namespace REALWorks.MarketingService.CommandHandlers
             addedListing.ListingDesc = request.ListingDesc;
             addedListing.MonthlyRent = request.MonthlyRent;
             addedListing.ListingNote = request.Notes;
-            addedListing.IsActive = true;
+            addedListing.IsActive = false; // this represents the status of listing: published or not
             addedListing.PropertyName = listingProeprty.PropertyName;
             addedListing.PropertyType = listingProeprty.PropertyType;
             addedListing.PropertyBuildYear = listingProeprty.PropertyBuildYear;

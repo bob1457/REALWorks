@@ -25,9 +25,11 @@ namespace REALWorks.MarketingService.QueryHandlers
             //var returnedImg = new AddImageToPropertyViewModel();
 
             var list = (from i in _context.PropertyImg
+                        join p in _context.RentalProperty on i.RentalPropertyId equals p.Id
                         select new AddImageToPropertyViewModel
                         {
                             Id = i.Id,
+                            OriginalId = p.OriginalId,
                             PropertyImgUrl = i.PropertyImgUrl,
                             PropertyImgTitle = i.PropertyImgTitle,
                             RentalPropertyId = i.RentalPropertyId

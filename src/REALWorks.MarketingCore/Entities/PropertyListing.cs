@@ -46,6 +46,7 @@ namespace REALWorks.MarketingCore.Entities
             string listingDesc,
             ListingContact contact,
             decimal rent, 
+            bool isActive, // add to update the publishing status -- may refactor in the future 
             string notes, 
             DateTime updated)
         {
@@ -54,15 +55,18 @@ namespace REALWorks.MarketingCore.Entities
             Contact = contact;
             MonthlyRent = rent;
             Note = notes;
+            IsActive = isActive; // add to update the publishing status -- may refactor in the future 
             Modified = updated;
 
             return listing;
         }
 
-        public void StatusUpdate(PropertyListing listing, bool status)
+        public PropertyListing StatusUpdate(PropertyListing listing, bool status)
         {
             listing.IsActive = status;
             listing.Modified = DateTime.Now;
+
+            return this;
         }
 
         public void DeActivate(PropertyListing listing)

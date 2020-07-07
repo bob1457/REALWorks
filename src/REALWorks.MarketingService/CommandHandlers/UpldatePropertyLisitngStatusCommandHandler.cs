@@ -2,6 +2,7 @@
 using REALWorks.MarketingData;
 using REALWorks.MarketingService.Commands;
 using REALWorks.MarketingService.Events;
+using REALWorks.MarketingService.ViewModels;
 using REALWorks.MessagingServer.Messages;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.MarketingService.CommandHandlers
 {
-    public class UpldatePropertyLisitngStatusCommandHandler : IRequestHandler<UpldatePropertyLisitngStatusCommand, bool>
+    public class UpldatePropertyLisitngStatusCommandHandler : IRequestHandler<UpldatePropertyLisitngStatusCommand, PropertyListingUpdateViewModel>
     {
         private readonly AppMarketingDbDataContext _context;
 
@@ -23,14 +24,15 @@ namespace REALWorks.MarketingService.CommandHandlers
             _messagePublisher = messagePublisher;
         }
 
-        public async Task<bool> Handle(UpldatePropertyLisitngStatusCommand request, CancellationToken cancellationToken)
+        public async Task<PropertyListingUpdateViewModel> Handle(UpldatePropertyLisitngStatusCommand request, CancellationToken cancellationToken)
         {
 
             var listing = _context.PropertyListing.FirstOrDefault(l => l.Id == request.Id);
 
-            listing.StatusUpdate(listing, request.IsActive);
+            var updated = listing.StatusUpdate(listing, request.IsActive);
+            
 
-            _context.PropertyListing.Update(listing);
+            _context.PropertyListing.Update(updated);
 
             int origId = 0;
 
@@ -43,6 +45,27 @@ namespace REALWorks.MarketingService.CommandHandlers
 
                 _context.RentalProperty.Update(property);
             }
+
+            var updatedList = new PropertyListingUpdateViewModel();
+
+            updatedList.Id = updated.Id;
+            updatedList.RentalPropertyId = updated.RentalPropertyId;
+            updatedList.Title = updated.Title;
+            updatedList.ListingDesc = updated.ListingDesc;
+            updatedList.MonthlyRent = updated.MonthlyRent;
+            updatedList.Note = updated.Note;
+            updatedList.IsActive = updated.IsActive;
+            updatedList.ContactName = updated.Contact.ContactName;
+            updatedList.ContactEmail = updated.Contact.ContactEmail;
+            updatedList.ContactTel = updated.Contact.ContactTel;
+            updatedList.ContactSMS = updated.Contact.ContactSMS;
+            updatedList.ContactOthers = updated.Contact.ContactOthers;
+            updatedList.Created = updated.Created;
+            updatedList.Modified = updated.Modified;
+
+            updatedList.RentalProperty = listing.RentalProperty;
+
+            //updatedList.Contact = contact;
 
             try
             {
@@ -63,7 +86,7 @@ namespace REALWorks.MarketingService.CommandHandlers
             }
 
             
-            return true;
+            return updatedList;
 
             //throw new NotImplementedException();
         }

@@ -16,6 +16,8 @@ namespace REALWorks.MarketingService.Commands
         public decimal MonthlyRent { get; set; }
         public string Note { get; set; }
 
+        public bool isActive { get; set; } // add to update the publishing status -- may refactor in the future 
+
         public string ContactName { get; set; }
         public string ContactTel { get; set; }
         public string ContactEmail { get; set; }

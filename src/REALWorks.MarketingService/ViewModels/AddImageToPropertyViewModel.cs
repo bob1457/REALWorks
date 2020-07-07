@@ -8,6 +8,7 @@ namespace REALWorks.MarketingService.ViewModels
     public class AddImageToPropertyViewModel
     {
         public int Id { get; set; }
+        public int OriginalId { get; set; }
         public string PropertyImgTitle { get; set; }
         public string PropertyImgUrl { get; set; }
         public int RentalPropertyId { get; set; }
