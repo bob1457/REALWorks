@@ -98,22 +98,41 @@ namespace REALWorks.AssetServer.EventHandlers
             //throw new NotImplementedException();
         }
 
-        private async Task HandleAsync(RentalPropertyStatusChangeEvent @event)
+        private async Task HandleAsync(RentalPropertyStatusChangeEvent e)
         {
             var property = _context.Property
-                .FirstOrDefault(p => p.Id == @event.OriginalPropertyId);
+                .FirstOrDefault(p => p.Id == e.OriginalPropertyId);
 
-            RentalStatus status = (RentalStatus)Enum.Parse(typeof(RentalStatus), @event.CurrentStatus, true);
+            string newStatus = "";
+            
+            if(e.CurrentStatus == "Listed")
+            {
+                newStatus = "Vacant";
+            }
+
+            if (e.CurrentStatus == "NotSetted")
+            {
+                newStatus = "UnSet";
+            }
+
+
+
+            RentalStatus status = (RentalStatus)Enum.Parse(typeof(RentalStatus), newStatus, true);
 
             //property.StatusUpdate(property, status); // update method chagned
+            
+            
             property.StatusUpdate(status);
 
             try
             {
                 await _context.SaveChangesAsync();
+
+                Log.Information("Message  {MessageType} with Id {MessageId} has been handled successfully: Updated property status!", e.MessageType, e.MessageId);
             }
             catch (Exception ex)
             {
+                Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}. Property status not updated!d", e.MessageType, e.MessageId);
                 throw ex;
             }
 

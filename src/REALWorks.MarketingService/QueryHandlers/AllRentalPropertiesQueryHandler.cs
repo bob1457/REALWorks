@@ -23,7 +23,7 @@ namespace REALWorks.MarketingService.QueryHandlers
         public async Task<IQueryable<AllRenatlPropertiesViewModel>> Handle(AllRentalPropertiesQuery request, CancellationToken cancellationToken)
         {
             var properties = (from p in _context.RentalProperty.Include(a => a.Address)
-                              where p.Status.ToString() == "NotSet"
+                              //where p.Status.ToString() == "NotSet"
                               select new AllRenatlPropertiesViewModel
                               {
                                   Id = p.Id,

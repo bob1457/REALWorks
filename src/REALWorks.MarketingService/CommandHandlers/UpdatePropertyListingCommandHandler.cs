@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using static REALWorks.MarketingCore.Entities.RentalProperty;
+using REALWorks.MarketingService.Events;
+using Serilog;
 
 namespace REALWorks.MarketingService.CommandHandlers
 {
@@ -26,6 +28,12 @@ namespace REALWorks.MarketingService.CommandHandlers
             _messagePublisher = messagePublisher;
         }
 
+        /// <summary>
+        /// This update listing process only catches published/listed event so that Asset microservice can upate the property status from "UnSet" to "Vacant" or vice verser
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<PropertyListingUpdateViewModel> Handle(UpdatePropertyListingCommand request, CancellationToken cancellationToken)
         {
             var listing = _context.PropertyListing.Include(r => r.RentalProperty).FirstOrDefault(i => i.Id == request.Id);
@@ -83,6 +91,23 @@ namespace REALWorks.MarketingService.CommandHandlers
             try
             {
                 await _context.SaveChangesAsync();
+
+                // send message to the message queue for status change
+                
+
+                RentalPropertyStatusChangeEvent e = new RentalPropertyStatusChangeEvent(new Guid(), listing.RentalProperty.OriginalId, status.ToString());
+
+                try
+                {
+                    await _messagePublisher.PublishMessageAsync(e.MessageType, e, "status_updated"); // publishing the message
+                    Log.Information("Message  {MessageType} with Id {MessageId} has been published successfully: Proeprty status change.", e.MessageType, e.MessageId);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}. Proeprty status change.", e.MessageType, e.MessageId);
+
+                    throw ex;
+                }
 
             }
             catch (Exception ex)

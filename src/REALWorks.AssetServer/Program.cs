@@ -29,7 +29,7 @@ namespace REALWorks.AssetServer
 
         public static void Main(string[] args)
         {
-            //Startup();
+            Startup();
             CreateWebHostBuilder(args).Build().Run();
         }
 
@@ -45,12 +45,12 @@ namespace REALWorks.AssetServer
             string connName = configSection["ConnectionName"];
 
             // setup messagehandler
-            RabbitMQMessageHandler messageHandler = new RabbitMQMessageHandler(host, userName, password, exchange, connName, "status_updated", "status_updated.*"); // subscribe/listen to queue 
+            RabbitMQMessageHandler messageHandler = new RabbitMQMessageHandler(host, userName, password, exchange, connName, "status_updated", "status_updated.#"); // subscribe/listen to queue 
 
             RabbitMQMessageHandler messageHandler2 = new RabbitMQMessageHandler(host, userName, password, exchange, connName, "lease_finalized.asset", "lease_finalized.#");  // subscribe/listen to queue 
 
             // setup DBContext
-            var sqlConnectionString = Config.GetConnectionString("AppDbConnection3");
+            var sqlConnectionString = Config.GetConnectionString("AppDbConnection");
             var dbContextOptions = new DbContextOptionsBuilder<AppDataBaseContext>()
                 .UseSqlServer(sqlConnectionString)
                 .Options;
