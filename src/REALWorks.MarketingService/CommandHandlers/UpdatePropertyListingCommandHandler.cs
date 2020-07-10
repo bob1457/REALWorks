@@ -92,26 +92,30 @@ namespace REALWorks.MarketingService.CommandHandlers
             {
                 await _context.SaveChangesAsync();
 
-                // send message to the message queue for status change
+                // Only send message to the message queue for status change, i.e. isActive from true to false or vice versa
+                if(listing.IsActive != request.isActive)
+                {
+                    RentalPropertyStatusChangeEvent e = new RentalPropertyStatusChangeEvent(new Guid(), listing.RentalProperty.OriginalId, status.ToString());
+
+                    try
+                    {
+                        await _messagePublisher.PublishMessageAsync(e.MessageType, e, "status_updated"); // publishing the message
+                        Log.Information("Message  {MessageType} with Id {MessageId} has been published successfully: Proeprty status change.", e.MessageType, e.MessageId);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}. Proeprty status change.", e.MessageType, e.MessageId);
+
+                        throw ex;
+                    }
+                }
+
                 
-
-                RentalPropertyStatusChangeEvent e = new RentalPropertyStatusChangeEvent(new Guid(), listing.RentalProperty.OriginalId, status.ToString());
-
-                try
-                {
-                    await _messagePublisher.PublishMessageAsync(e.MessageType, e, "status_updated"); // publishing the message
-                    Log.Information("Message  {MessageType} with Id {MessageId} has been published successfully: Proeprty status change.", e.MessageType, e.MessageId);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}. Proeprty status change.", e.MessageType, e.MessageId);
-
-                    throw ex;
-                }
 
             }
             catch (Exception ex)
             {
+                Log.Information("Error {Message} saving to database!", ex.Message);
                 throw ex;
             }
 

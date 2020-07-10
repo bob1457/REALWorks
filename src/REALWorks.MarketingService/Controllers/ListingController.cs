@@ -49,6 +49,68 @@ namespace REALWorks.MarketingService.Controllers
            
         }
 
+        /// <summary>
+        /// The following two endpoints are for public website to see for rent listing and details
+        /// </summary>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Route("show")]
+        public async Task<IActionResult> ShowAllListing()
+        {
+            try
+            {
+                var listing = await _mediator.Send(new PublishedListingQuery());
+
+                if (listing == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(listing);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
+
+
+        [HttpGet]
+        [Route("showdetails/{id}")]
+        public async Task<IActionResult> ShowListingDetails(int id)
+        {
+            try
+            {
+                var getListing = new PropertyListingDetailsQuery()
+                {
+                    Id = id
+                };
+
+                var listing = await _mediator.Send(getListing);
+
+                if (listing == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(listing);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
+
+
+
+
 
         [HttpGet]
         [Route("{id}")]
@@ -72,6 +134,8 @@ namespace REALWorks.MarketingService.Controllers
 
             return Ok(result);
         }
+
+
 
         [HttpPost]
         [Route("status")]

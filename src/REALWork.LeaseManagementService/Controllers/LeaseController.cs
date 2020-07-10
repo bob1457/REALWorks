@@ -232,6 +232,51 @@ namespace REALWork.LeaseManagementService.Controllers
         }
 
 
+        [HttpGet]
+        [Route("allproperty")]
+        public async Task<IActionResult> GetAllRentalProperty()
+        {
+            try
+            {
+                var ppts = await _mediator.Send(new AllRentalPropeprtyListQuery());
+
+                if (ppts == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(ppts);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
+
+        [HttpGet]
+        [Route("newtenants")]
+        public async Task<IActionResult> GetAllNewTenants()
+        {
+            try
+            {
+                var ppts = await _mediator.Send(new AlNewTenantsListQuery());
+
+                if (ppts == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(ppts);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
 
         //************************************
         // The following endpoints have been moved to RentPaymentController

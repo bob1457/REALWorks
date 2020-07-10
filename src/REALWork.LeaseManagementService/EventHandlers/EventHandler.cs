@@ -100,7 +100,7 @@ namespace REALWork.LeaseManagementService.EventHandlers
             {
                 var address = new Address(@event.StreetNum, @event.City, @event.StateProvince, @event.Country, @event.ZipPostCode);
 
-                var newRentalProperty = new RentalProperty(@event.PropertyId,DateTime.Now, DateTime.Now, 0,  @event.PropertyName,  @event.Type, @event.PropertyBuildYear,
+                var newRentalProperty = new RentalProperty(@event.PropertyId,DateTime.Now, DateTime.Now, @event.ListingId, /*0,*/  @event.PropertyName,  @event.Type, @event.PropertyBuildYear,
                     @event.IsShared, "Pending", @event.IsBasementSuite, @event.NumberOfBedrooms, @event.NumberOfBathrooms, @event.NumberOfLayers,
                    @event.NumberOfParking, @event.TotalLivingArea, @event.Notes, @event.PropertyManagerUserName, address);
 
@@ -124,7 +124,7 @@ namespace REALWork.LeaseManagementService.EventHandlers
             //throw new NotImplementedException();
         }
 
-        private async Task HandleAsync(PropertyCreatedEvent @event)
+        private async Task HandleAsync(PropertyCreatedEvent @event) //????
         {
             var address = new Address(@event.StreetNum, @event.City, @event.StateProvince, @event.City, @event.ZipPostCode);
             var rentalProperty = new RentalProperty(@event.PropertyId, DateTime.Now, DateTime.Now, 0, @event.PropertyName, @event.Type, @event.PropertyBuildYear, 

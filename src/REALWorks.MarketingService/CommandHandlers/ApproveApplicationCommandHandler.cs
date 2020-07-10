@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using static REALWorks.MarketingCore.Entities.RentalProperty;
 
 namespace REALWorks.MarketingService.CommandHandlers
 {
@@ -36,6 +37,14 @@ namespace REALWorks.MarketingService.CommandHandlers
                 .FirstOrDefault(a => a.Id == request.ApplicationId);
 
             //application.StatusUpdate(application, request.AppStatus);
+            
+            // Get related rental property
+            var rentalProperty = application.RentalProperty;
+            //Get the related listing for this rental property
+            var listing = _context.PropertyListing.FirstAsync(l => l.RentalPropertyId == rentalProperty.Id);
+            
+            
+
 
             //var rentalProperty = _context.RentalProperty.Include(l => l.PropertyListing).FirstOrDefault(p => p.Id == application.RentalPropertyId); // Get related rental property
             //var rentalProperty = application.RentalProperty;                       
@@ -43,7 +52,16 @@ namespace REALWorks.MarketingService.CommandHandlers
             ////Get the related listing for this rental property
             //var listing = _context.PropertyListing.FirstAsync(l => l.RentalPropertyId == rentalProperty.Id);
 
+            
+            // Update applicaiton status
+            //
             application.StatusUpdate(application, request.AppStatus);
+
+            // Update listing/rental property status
+            //
+            ListingStatus status = (ListingStatus)Enum.Parse(typeof(ListingStatus), "Pending");
+
+            rentalProperty.StatusUpdate(status);
 
             _context.RentalApplication.Update(application);
 
@@ -57,24 +75,19 @@ namespace REALWorks.MarketingService.CommandHandlers
             }
 
 
-            var rentalProperty = application.RentalProperty;
-
-            //Get the related listing for this rental property
-            var listing = _context.PropertyListing.FirstAsync(l => l.RentalPropertyId == rentalProperty.Id);
-
-
             // Send message to message queue on conditions
             //
             if (request.AppStatus.ToString() == "Approved")
             {
-                /*
+                
                 NewTemantCreatedEvent e = new NewTemantCreatedEvent(new Guid(), "NotSet", request.FirstName, request.LastName, request.ContactEmail, 
                     request.ContactTelephone1, request.ContactTelephone2, request.ContactOthers);
 
-                var rentalproperty = _context.RentalProperty.Include(a => a.Address).FirstOrDefault(a => a.Id == application.RentalPropertyId); // Get related rental property
+                //var rentalproperty = _context.RentalProperty.Include(a => a.Address).FirstOrDefault(a => a.Id == application.RentalPropertyId); // Get related rental property
 
                 //var address = new Address(request.);
 
+                /*
                 //if (rentalProperty == null) // check if the rental property exists, if not create it
                 //{
                 RentalPropertyCreatedEvent e2 = new RentalPropertyCreatedEvent(new Guid(), rentalProperty.OriginalId, 0, rentalProperty.PropertyName, rentalProperty.PmUserName, rentalProperty.PropertyBuildYear,
