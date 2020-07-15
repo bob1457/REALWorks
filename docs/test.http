@@ -3,9 +3,10 @@
 # POST http://localhost:21799//api/RentalApplication/approve HTTP/1.1
 # content-type: application/json
 
-POST http://localhost:21799/application/approve HTTP/1.1
+# POST http://localhost:21799/application/approve HTTP/1.1
+POST http://localhost:21799//api/RentalApplication/approve HTTP/1.1
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiJkOGY5MzY4Ni05MTZkLTRjMDMtYjFkYi0wMDRlZmM4NjYzZTgiLCJuYmYiOjE1NzAwNDAzODYsImV4cCI6MTU3NTIyNDM4NiwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.lmZSKFTOxeMBB_f7eZrqlBDa1Gnlsv82qjpCC4DDxmE
+# Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJib2IiLCJqdGkiOiJkOGY5MzY4Ni05MTZkLTRjMDMtYjFkYi0wMDRlZmM4NjYzZTgiLCJuYmYiOjE1NzAwNDAzODYsImV4cCI6MTU3NTIyNDM4NiwiaXNzIjoiaXNzdWVyIiwiYXVkIjoiYXVkaWVuY2UifQ.lmZSKFTOxeMBB_f7eZrqlBDa1Gnlsv82qjpCC4DDxmE
 {
   "applicationId": 4,
   "appStatus": 1,

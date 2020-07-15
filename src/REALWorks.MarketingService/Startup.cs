@@ -40,7 +40,7 @@ namespace REALWorks.MarketingService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string dbConnectionString = Configuration.GetConnectionString("AppDbConnection");
+            string dbConnectionString = Configuration.GetConnectionString("AppDbConnection2");
 
             //services.AddDbContext<AppMarketingDbDataContext>(ServiceLifetime.Transient);
             services.AddDbContext<AppMarketingDbDataContext>(options =>
