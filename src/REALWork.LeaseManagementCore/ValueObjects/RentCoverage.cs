@@ -73,7 +73,8 @@ namespace REALWork.LeaseManagementCore.ValueObjects
 
         protected override IEnumerable<object> GetAtomicValues()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            yield return Other;
         }
     }
 }

@@ -93,8 +93,8 @@ namespace REALWork.LeaseManagementCore.Entities
 
 
         public void Update(string leaseTitle, string leaseDesc, DateTime startDate, DateTime endDate, LeaseTerm term,
-            string rentFrequency, string rentDueOn, decimal damageDeposit, decimal petDisposit, DateTime signDate, 
-            bool isActive, bool addudum, int endCode, string renewTerm)
+            string rentFrequency, decimal rentAmount, string rentDueOn, decimal damageDeposit, decimal petDisposit, DateTime signDate, 
+            bool isActive, bool addudum, int endCode, string renewTerm, string notes, RentCoverage rentCoverage)
         {
             LeaseTitle = leaseTitle;
             LeaseDesc = LeaseDesc;
@@ -102,6 +102,7 @@ namespace REALWork.LeaseManagementCore.Entities
             LeaseEndDate = endDate;
             Term = term;
             RentFrequency = rentFrequency;
+            RentAmount = rentAmount;
             RentDueOn = rentDueOn;
             DamageDepositAmount = damageDeposit;
             PetDepositAmount = petDisposit;
@@ -111,6 +112,7 @@ namespace REALWork.LeaseManagementCore.Entities
             EndLeaseCode = endCode;
             RenewTerm = renewTerm;
             Modified = DateTime.Now;
+            RentCoverage = rentCoverage;
         }
 
 
