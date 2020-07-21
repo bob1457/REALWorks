@@ -36,7 +36,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             var coverage = new RentCoverage(request.Water, request.Cablevison, request.Electricity, request.Internet, request.Heat, 
                                             request.NaturalGas, request.SewageDisposal, request.SnowRemoval, request.Storage, request.RecreationFacility,
                                             request.GarbageCollection, request.RecycleServices, request.KitchenScrapCollection, request.Laundry, 
-                                            request.FreeLaundry, request.Regigerator, request.Dishwasher, request.StoveOven, request.WindowCovering, 
+                                            /*request.FreeLaundry, */request.Regigerator, request.Dishwasher, request.StoveOven, request.WindowCovering, 
                                             request.Furniture, request.Carpets, request.ParkingStall, request.Other);
             //lease.RentCoverage;
 

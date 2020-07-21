@@ -10,7 +10,7 @@ namespace REALWork.LeaseManagementService.ViewModels
     {
         // Coped from LeaseListViewModel but with public setter
         //
-        public int LeaseId { get; set; }
+        public int Id { get; set; }
         public string LeaseTitle { get; set; }
         public string LeaseDesc { get; set; }
         //public int RentalPropertyId { get;  set; }
@@ -30,6 +30,6 @@ namespace REALWork.LeaseManagementService.ViewModels
         public string RenewTerm { get;  set; }
         public string Notes { get;  set; }
         public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
+        public DateTime Modified { get; set; }
     }
 }

@@ -113,6 +113,7 @@ namespace REALWork.LeaseManagementCore.Entities
             RenewTerm = renewTerm;
             Modified = DateTime.Now;
             RentCoverage = rentCoverage;
+            Notes = notes;
         }
 
 

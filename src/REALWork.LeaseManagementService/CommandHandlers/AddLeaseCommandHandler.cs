@@ -34,11 +34,11 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             var newTenant = _context.NewTenant.FirstOrDefault(n => n.Id == request.NewTenantId);
 
             var tenant = new Tenant(newTenant.UserName, newTenant.FirstName, newTenant.LastName, newTenant.ContactEmail, newTenant.ContactTelephone1, newTenant.ContactTelephone2,
-                newTenant.ContactOthers, request.OnlineAccessEnbaled, request.UserAvartaImgUrl, 3, true, DateTime.Now, DateTime.Now);
+                newTenant.ContactOthers, false, "", 3, true, DateTime.Now, DateTime.Now); // isActive = false, avatarUrl = ""
 
             var rentalCoverage = new RentCoverage(request.Water, request.Cablevison, request.Electricity, request.Internet, request.Heat, request.NaturalGas,
                 request.SewageDisposal, request.SnowRemoval, request.Storage, request.RecreationFacility, request.GarbageCollection, request.RecreationFacility,
-                request.KitchenScrapCollection, request.Laundry, request.FreeLaundry, request.Regfrigerator, request.Dishwasher, request.StoveOven,
+                request.KitchenScrapCollection, request.Laundry, /*request.FreeLaundry,*/ request.Regfrigerator, request.Dishwasher, request.StoveOven,
                 request.WindowCovering, request.Furniture, request.Carpets, request.ParkingStall, request.Other);
 
             var agent = new Agent(request.AgentFirstName, request.AgentLastName, request.AgentContactEmail, request.ContatTel, request.Other, request.IsPropertyManager, request.AddressStreetNumber,
@@ -74,7 +74,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             addedLease.EndLeaseCode = request.LeaseEndCode;
             addedLease.Notes = request.Notes;
             addedLease.Created = DateTime.Now;
-            addedLease.Updated = DateTime.Now;
+            addedLease.Modified = DateTime.Now;
 
 
 
@@ -82,7 +82,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             {
                 await _context.SaveChangesAsync(); // comment out for testing message sending ONLY
 
-                addedLease.LeaseId = lease.Id;
+                addedLease.Id = lease.Id;
 
 
                 // Send message to MQ if needed

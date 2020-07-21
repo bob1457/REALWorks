@@ -15,7 +15,7 @@ namespace REALWork.LeaseManagementCore.ValueObjects
         public RentCoverage(bool water, bool cablevison, bool electricity, 
             bool internet, bool heat, bool naturalGas, bool sewageDisposal, bool snowRemoval, 
             bool storage, bool recreationFacility, bool garbageCollection, bool recycleServices, 
-            bool kitchenScrapCollection, bool laundry, bool freeLaundry, bool refrigerator, 
+            bool kitchenScrapCollection, bool laundry, /*bool freeLaundry,*/ bool refrigerator, 
             bool dishwasher, bool stoveOven, bool windowCovering, bool furniture, bool carpets, 
             int parkingStall, string other)
         {            
@@ -33,7 +33,7 @@ namespace REALWork.LeaseManagementCore.ValueObjects
             RecycleServices = recycleServices;
             KitchenScrapCollection = kitchenScrapCollection;
             Laundry = laundry;
-            FreeLaundry = freeLaundry;
+            //FreeLaundry = freeLaundry;
             Regigerator = refrigerator;
             Dishwasher = dishwasher;
             StoveOven = stoveOven;
@@ -59,7 +59,7 @@ namespace REALWork.LeaseManagementCore.ValueObjects
         public bool RecycleServices { get; private set; }
         public bool KitchenScrapCollection { get; private set; }
         public bool Laundry { get; private set; }
-        public bool FreeLaundry { get; private set; }
+        //public bool FreeLaundry { get; private set; }
         public bool Regigerator { get; private set; }
         public bool Dishwasher { get; private set; }
         public bool StoveOven { get; private set; }

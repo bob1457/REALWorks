@@ -95,7 +95,7 @@ namespace REALWork.LeaseManagementService.Commands
         public bool RecycleServices { get; set; }
         public bool KitchenScrapCollection { get; set; }
         public bool Laundry { get; set; }
-        public bool FreeLaundry { get; set; }
+        //public bool FreeLaundry { get; set; }
         public bool Regfrigerator { get; set; }
         public bool Dishwasher { get; set; }
         public bool StoveOven { get; set; }
