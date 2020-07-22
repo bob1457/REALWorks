@@ -42,7 +42,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
                 request.WindowCovering, request.Furniture, request.Carpets, request.ParkingStall, request.Other);
 
             var agent = new Agent(request.AgentFirstName, request.AgentLastName, request.AgentContactEmail, request.ContatTel, request.Other, request.IsPropertyManager, request.AddressStreetNumber,
-                request.AddressCity, request.AddressStateProv, request.AddressZipPostCode, request.AddressCountry);
+                request.AddressCity, request.AddressStateProv, request.AddressZipPostCode, request.AddressCountry, DateTime.Now, DateTime.Now);
 
             var agents = new List<Agent>();
             var tenants = new List<Tenant>();
@@ -53,6 +53,10 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             var lease = new Lease(request.LeaseTitle, request.LeaseDesc, request.RentalPropertyId, request.LeaseStartDate, request.LeaseEndDate, request.Term, 
                 request.RentFrequency, request.RentAmount, request.RentDueOn, request.DamageDepositAmount, request.PetDepositAmount, request.LeaseSignDate,
                 request.LeaseAgreementDocUrl, true, request.IsAddendumAvailable, request.LeaseEndCode, request.RenewTerm,  DateTime.Now, DateTime.Now, request.Notes, rentalCoverage, agents, tenants);
+
+            var property = lease.RentalProperty;
+
+            property.StatusUpdate("Rented");
 
             _context.Add(lease);
 
@@ -75,8 +79,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             addedLease.Notes = request.Notes;
             addedLease.Created = DateTime.Now;
             addedLease.Modified = DateTime.Now;
-
-
+            
 
             try
             {

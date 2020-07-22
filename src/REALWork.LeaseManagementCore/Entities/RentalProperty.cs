@@ -26,7 +26,7 @@ namespace REALWork.LeaseManagementCore.Entities
             PropertyType = propertyType;
             PropertyBuildYear = propertyBuildYear;
             IsShared = isShared;
-            Status = status;
+            Status = status; // Pending, In Processing Rented
             IsBasementSuite = isBasementSuite;
             NumberOfBedrooms = numberOfBedrooms;
             NumberOfBathrooms = numberOfBathrooms;

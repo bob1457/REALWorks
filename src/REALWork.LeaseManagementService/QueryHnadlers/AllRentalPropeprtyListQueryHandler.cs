@@ -20,7 +20,7 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
         }
         public async Task<IQueryable<RentalProperty>> Handle(AllRentalPropeprtyListQuery request, CancellationToken cancellationToken)
         {
-            var propertyList = _context.RentalProperty;
+            var propertyList = _context.RentalProperty.Where(p => p.Status == "Pending");
 
             return propertyList;
 

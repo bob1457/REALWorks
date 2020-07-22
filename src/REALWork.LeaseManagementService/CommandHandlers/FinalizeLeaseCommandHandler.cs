@@ -32,7 +32,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
             var updated = lease.Finalize(request.LeaseSignDate);
 
-            rentalproeprty.StatusUpdate("rented");
+            rentalproeprty.StatusUpdate("Rented");
 
             _context.RentalProperty.Update(rentalproeprty);
 

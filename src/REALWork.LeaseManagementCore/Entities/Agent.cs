@@ -14,7 +14,8 @@ namespace REALWork.LeaseManagementCore.Entities
         public Agent(string firstName, string lastName, 
             string contactEmial, string contztTel, string contactOthers, 
             bool isPropertyManager, string addressStreetNumber, string addressCity, 
-            string addressStateProv, string addressZipPostCode, string addressCountry)
+            string addressStateProv, string addressZipPostCode, string addressCountry,
+            DateTime create, DateTime modified)
         {            
             FirstName = firstName;
             LastName = lastName;
@@ -27,6 +28,8 @@ namespace REALWork.LeaseManagementCore.Entities
             AddressStateProv = addressStateProv;
             AddressZipPostCode = addressZipPostCode;
             AddressCountry = addressCountry;
+            Created = create;
+            Modified = modified;
         }
 
         public int LeaseId { get; private set; }
