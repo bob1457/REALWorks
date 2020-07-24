@@ -26,7 +26,7 @@ namespace REALWork.LeaseManagementService.Commands
         public string LeaseAgreementDocUrl { get; set; }
         public bool IsActive { get; set; }
         public bool IsAddendumAvailable { get; set; }
-        public int LeaseEndCode { get; set; }
+        public int EndLeaseCode { get; set; }
         public string RenewTerm { get; set; }
         public string Notes { get; set; }
 

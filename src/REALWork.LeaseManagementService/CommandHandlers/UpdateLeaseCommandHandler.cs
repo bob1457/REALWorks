@@ -46,7 +46,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
             lease.Update(request.LeaseTitle, request.LeaseDesc, request.LeaseStartDate, request.LeaseEndDate, 
                 request.Term, request.RentFrequency, request.RentAmount, request.RentDueOn, request.DamageDepositAmount, request.PetDepositAmount,
-                request.LeaseSignDate, request.IsActive, request.IsAddendumAvailable, request.LeaseEndCode, request.RenewTerm,
+                request.LeaseSignDate, request.IsActive, request.IsAddendumAvailable, request.EndLeaseCode, request.RenewTerm,
                 request.Notes, coverage);
 
             _context.Lease.Update(lease);
@@ -56,9 +56,11 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             updatedLease.LeaseTitle = request.LeaseTitle;
             updatedLease.LeaseDesc = request.LeaseDesc;
             updatedLease.LeaseStartDate = request.LeaseStartDate;
-            updatedLease.LeaseId = request.Id;
+            updatedLease.Id = request.Id;
             updatedLease.LeaseEndDate = request.LeaseEndDate;
             updatedLease.RentAmount = request.RentAmount;
+            updatedLease.RentDueOn = request.RentDueOn;
+            updatedLease.RentFrequency = request.RentFrequency;
             updatedLease.DamageDepositAmount = request.DamageDepositAmount;
             updatedLease.PetDepositAmount = request.PetDepositAmount;
             updatedLease.Term = request.Term;
@@ -66,12 +68,13 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             updatedLease.LeaseSignDate = request.LeaseSignDate;
             updatedLease.IsActive = request.IsActive;
             updatedLease.IsAddendumAvailable = request.IsAddendumAvailable;
-            updatedLease.LeaseEndCode = request.LeaseEndCode;
+            updatedLease.EndLeaseCode = request.EndLeaseCode;
             updatedLease.Notes = request.Notes;
             updatedLease.Created = DateTime.Now;
             updatedLease.Updated = DateTime.Now;
             updatedLease.rentCoverage = coverage;
             updatedLease.rentalProperty = lease.RentalProperty;
+            updatedLease.RentalPropertyId = lease.RentalPropertyId;
             updatedLease.Tenant = tenants.ToList();
 
             try

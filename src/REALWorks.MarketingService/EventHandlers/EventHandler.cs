@@ -59,6 +59,9 @@ namespace REALWorks.MarketingService.EventHandlers
                     case "PropertyUpdateEvent":
                         await HandleAsync(messageObject.ToObject<PropertyUpdateEvent>());
                         break;
+                    case "AddOwnerEvent":
+                        await HandleAsync(messageObject.ToObject<AddOwnerEvent>());
+                        break;
                     default:
                         Console.WriteLine("Default case");
                         break;
@@ -72,6 +75,32 @@ namespace REALWorks.MarketingService.EventHandlers
 
             // always akcnowledge message - any errors need to be dealt with locally.
             return true;
+
+            //throw new NotImplementedException();
+        }
+
+        private async Task HandleAsync(AddOwnerEvent @event)
+        {
+            var rentalProperty = _context.RentalProperty.FirstOrDefault(p => p.OriginalId == @event.PropertyId);
+
+            var address = new OwnerAddress(@event.StreetNumber, @event.City, @event.StateProv, @event.Country, @event.ZipPostCode);
+
+            var owner = new RentalPropertyOwner(@event.FirstName, @event.LastName, @event.ContactEmail, 
+                @event.ContactTelephone1, @event.ContactTelephone2, address, rentalProperty.Id, DateTime.Now, DateTime.Now);
+
+            _context.Add(owner);
+            
+            try
+            {
+               await _context.SaveChangesAsync();
+
+                Log.Information("Owner {Owner} has been added to property {Property} successfully", @event.FirstName + " " + @event.LastName, rentalProperty.PropertyName);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error while addinng owner {Owner} to {Property}.", @event.FirstName + " " + @event.LastName, rentalProperty.PropertyName);
+                throw ex;
+            }
 
             //throw new NotImplementedException();
         }
@@ -148,7 +177,7 @@ namespace REALWorks.MarketingService.EventHandlers
 
             var ownerAddress = new OwnerAddress(@event.OwnerStreetNum, @event.OwnerCity, @event.OwnerStateProvince, @event.OwnerZipPostCode, @event.OwnerCountry);
 
-            var owner = new RentalPropertyOwner(@event.OwnerFirstName, @event.OwnerLastName, @event.OwnerContactEmail, @event.OwnerContactTel, @event.OwnerContactOther, ownerAddress, DateTime.Now, DateTime.Now);
+            var owner = new RentalPropertyOwner(@event.OwnerFirstName, @event.OwnerLastName, @event.OwnerContactEmail, @event.OwnerContactTel, @event.OwnerContactOther, ownerAddress,  DateTime.Now, DateTime.Now);
 
             var owners = new List<RentalPropertyOwner>();
 

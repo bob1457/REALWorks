@@ -10,7 +10,7 @@ namespace REALWork.LeaseManagementService.ViewModels
 {
     public class UpdateLeaseAgreementViewModel
     {
-        public int LeaseId { get; set; }
+        public int Id { get; set; }
         public string LeaseTitle { get; set; }
         public string LeaseDesc { get; set; }
         public int RentalPropertyId { get; set; }
@@ -26,7 +26,7 @@ namespace REALWork.LeaseManagementService.ViewModels
         public string LeaseAgreementDocUrl { get; set; }
         public bool IsActive { get; set; }
         public bool IsAddendumAvailable { get; set; }
-        public int LeaseEndCode { get; set; }
+        public int EndLeaseCode { get; set; }
         public string RenewTerm { get; set; }
         public string Notes { get; set; }
         public DateTime Created { get; set; }

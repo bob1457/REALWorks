@@ -27,6 +27,11 @@ namespace REALWork.LeaseManagementData
         public virtual DbSet<Lease> Lease { get; set; }
         public virtual DbSet<PropertyVisit> PropertyVisit { get; set; }
         public virtual DbSet<RentalProperty> RentalProperty { get; set; }
+
+        public virtual DbSet<RentalPropertyOwner> RentalPropertyOnwer { get; set; }
+        public virtual DbSet<OwnerAddress> OwnerAddress { get; set; }
+
+
         public virtual DbSet<RentCoverage> RentCoverage { get; set; }
         public virtual DbSet<RentPayment> RentPayment { get; set; }
         public virtual DbSet<Tenant> Tenant { get; set; }
@@ -607,6 +612,36 @@ namespace REALWork.LeaseManagementData
             //        sa.ToTable("Invoice");
             //    }
             //);
+
+            modelBuilder.Entity<RentalPropertyOwner>(entity =>
+            {
+                entity.Property(e => e.ContactEmail).HasMaxLength(50);
+
+                entity.Property(e => e.ContactOther).HasMaxLength(50);
+
+                entity.Property(e => e.ContactTelephone).HasMaxLength(50);
+
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.LastName).HasMaxLength(50);
+
+                entity.HasOne(d => d.RentalProperty)
+                    .WithMany(p => p.RentalPropertyOwner)
+                    .HasForeignKey(d => d.RentalPropertyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RentalPropertyOwner_RentalProperty");
+            });
+
+
+            modelBuilder.Entity<RentalPropertyOwner>().OwnsOne(
+                a => a.OwnerAddress,
+                sa =>
+                {
+                    sa.ToTable("OwnerAddress");
+                }
+            );
         }
 
 

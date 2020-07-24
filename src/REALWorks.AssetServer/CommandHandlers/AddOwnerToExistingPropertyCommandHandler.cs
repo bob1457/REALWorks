@@ -1,8 +1,11 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using REALWorks.AssetCore.Entities;
 using REALWorks.AssetCore.ValueObjects;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using REALWorks.AssetServer.Events;
+using REALWorks.MessagingServer.Messages;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -16,9 +19,12 @@ namespace REALWorks.AssetServer.CommandHandlers
     {
         private readonly AppDataBaseContext _context;
 
-        public AddOwnerToExistingPropertyCommandHandler(AppDataBaseContext context)
+        IMessagePublisher _messagePublisher;
+
+        public AddOwnerToExistingPropertyCommandHandler(AppDataBaseContext context, IMessagePublisher messagePublisher)
         {
             _context = context;
+            _messagePublisher = messagePublisher;
         }
 
         public async Task<AddOwnerToExistingPropertyCommandResult> Handle(AddOwnerToExistingPropertyCommand request, CancellationToken cancellationToken)
@@ -79,7 +85,7 @@ namespace REALWorks.AssetServer.CommandHandlers
             }
             else
             {
-                owner = _context.PropertyOwner.FirstOrDefault(o => o.Id == request.PropertyOwnerId);
+                owner = _context.PropertyOwner.Include(a => a.Address).FirstOrDefault(o => o.Id == request.PropertyOwnerId);
 
                 var ownerProperty = property.AddExistingOwnerToProperty(owner, request.PropertyId);
 
@@ -98,8 +104,25 @@ namespace REALWorks.AssetServer.CommandHandlers
                 Log.Information("The new owner {OwnerName} has been added to the property {PorpertyName} successfully", request.FirstName + " " + request.LastName, property.PropertyName);
 
                 // Send messages if necessary
+                // Publish message to MQ for other service to consume
 
-               
+                AddOwnerEvent e = new AddOwnerEvent(new Guid(), request.PropertyId, owner.UserName, owner.FirstName, owner.LastName,
+                                                    owner.ContactEmail, owner.ContactTelephone1, owner.ContactTelephone2, owner.OnlineAccess,
+                                                    owner.UserAvartaImgUrl, owner.IsActive, owner.RoleId, owner.Notes, owner.Address.StreetNumber,
+                                                    owner.Address.City, owner.Address.StateProvince, owner.Address.ZipPostCode, owner.Address.Country);
+
+
+                try
+                {
+                    await _messagePublisher.PublishMessageAsync(e.MessageType, e, "asset_created"); // publishing the message
+                    Log.Information("Message  {MessageType} with Id {MessageId} has been published successfully", e.MessageType, e.MessageId);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
+                }
+
+
             }
             catch (Exception ex)
             {

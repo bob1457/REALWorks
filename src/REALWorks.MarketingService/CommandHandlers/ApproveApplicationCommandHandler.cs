@@ -38,8 +38,10 @@ namespace REALWorks.MarketingService.CommandHandlers
 
             //application.StatusUpdate(application, request.AppStatus);
             
-            // Get related rental property
+            // Get related rental property and its onwer
             var rentalProperty = application.RentalProperty;
+            var owner = rentalProperty.RentalPropertyOwner;
+
             //Get the related listing for this rental property
             var listing = _context.PropertyListing.FirstAsync(l => l.RentalPropertyId == rentalProperty.Id);
             

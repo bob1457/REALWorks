@@ -1,10 +1,10 @@
-﻿using REALWorks.MarketingCore.Base;
-using REALWorks.MarketingCore.ValueObjects;
+﻿using REALWork.LeaseManagementCore.ValueObjects;
+using REALWorks.LeaseManagementCore.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace REALWorks.MarketingCore.Entities
+namespace REALWork.LeaseManagementCore.Entities
 {
     public class RentalPropertyOwner : Entity
     {
@@ -20,21 +20,7 @@ namespace REALWorks.MarketingCore.Entities
             ContactEmail = contactEmail;
             ContactTelephone = contactTelephone;
             ContactOther = contactOther;
-            OwnerAddress = ownerAddress;            
-            Created = create;
-            Modified = updated;
-        }
-
-        public RentalPropertyOwner(string firstName, string lastName, string contactEmail, 
-            string contactTelephone, string contactOther, OwnerAddress ownerAddress, int rentalPropertyId, DateTime create, DateTime updated)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            ContactEmail = contactEmail;
-            ContactTelephone = contactTelephone;
-            ContactOther = contactOther;
             OwnerAddress = ownerAddress;
-            RentalPropertyId = rentalPropertyId;
             Created = create;
             Modified = updated;
         }
@@ -53,6 +39,7 @@ namespace REALWorks.MarketingCore.Entities
         //public string Notes { get; private set; }
         public RentalProperty RentalProperty { get; private set; }
 
+        //public OwnerAddress Address { get; private set; }
         public OwnerAddress OwnerAddress { get; private set; }
     }
 }

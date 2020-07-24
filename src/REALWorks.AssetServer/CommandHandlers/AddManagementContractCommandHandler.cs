@@ -66,8 +66,8 @@ namespace REALWorks.AssetServer.CommandHandlers
                 property.UpdateManagementContractStatus(existingContract, false); // disable the previous contract, use case: ownership change
 
                 // map the return view model
-                newContract.ManagementContractId = contract.Id;
-                newContract.ManagementContractTitile = request.ManagementContractTitle;
+                newContract.Id = contract.Id;
+                newContract.ManagementContractTitle = request.ManagementContractTitle;
                 newContract.StartDate = request.StartDate;
                 newContract.EndDate = request.EndDate;
                 newContract.ContractSignDate = request.StartDate;

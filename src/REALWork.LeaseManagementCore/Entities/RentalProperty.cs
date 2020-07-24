@@ -59,6 +59,9 @@ namespace REALWork.LeaseManagementCore.Entities
         public Address Address { get; private set; }
         public ICollection<Lease> Lease { get; private set; }
         public ICollection<PropertyVisit> PropertyVisit { get; private set; }
+
+        public ICollection<RentalPropertyOwner> RentalPropertyOwner { get; private set; }
+
         public ICollection<WorkOrder> WorkOrder { get; private set; }
 
 

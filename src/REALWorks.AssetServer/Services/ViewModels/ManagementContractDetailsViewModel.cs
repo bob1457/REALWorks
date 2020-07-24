@@ -7,8 +7,8 @@ namespace REALWorks.AssetServer.Services.ViewModels
 {
     public class ManagementContractDetailsViewModel
     {
-        public int ManagementContractId { get; set; }
-        public string ManagementContractTitile { get; set; }
+        public int Id { get; set; }
+        public string ManagementContractTitle { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string PlacementFeeScale { get; set; }

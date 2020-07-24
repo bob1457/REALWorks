@@ -1,9 +1,9 @@
-﻿using REALWorks.MarketingCore.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using REALWorks.LeaseManagementCore.Base;
 
-namespace REALWorks.MarketingCore.ValueObjects
+namespace REALWork.LeaseManagementCore.ValueObjects
 {
     public class OwnerAddress : ValueObject
     {
@@ -29,7 +29,9 @@ namespace REALWorks.MarketingCore.ValueObjects
 
         protected override IEnumerable<object> GetAtomicValues()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+
+            yield return City;
         }
     }
 }
