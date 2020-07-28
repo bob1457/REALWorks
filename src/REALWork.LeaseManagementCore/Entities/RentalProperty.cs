@@ -16,7 +16,7 @@ namespace REALWork.LeaseManagementCore.Entities
         public RentalProperty(int originalId, DateTime created, DateTime modified, int listinglId, string propertyName, 
             string propertyType, int propertyBuildYear, bool isShared, string status, bool isBasementSuite, 
             int numberOfBedrooms, int numberOfBathrooms, int numberOfLayers, int numberOfParking, 
-            int totalLivingArea, string notes, string pmUserName, Address address)
+            int totalLivingArea, string notes, string pmUserName, Address address, ICollection<RentalPropertyOwner> rentalPropertyOwners)
         {
             OriginalId = originalId;
             Created = created;
@@ -36,6 +36,32 @@ namespace REALWork.LeaseManagementCore.Entities
             Notes = notes;
             PmUserName = pmUserName;
             Address = address;
+            RentalPropertyOwners = rentalPropertyOwners;
+        }
+
+        public RentalProperty(int originalId, DateTime created, DateTime modified, int listinglId, string propertyName,
+            string propertyType, int propertyBuildYear, bool isShared, string status, bool isBasementSuite,
+            int numberOfBedrooms, int numberOfBathrooms, int numberOfLayers, int numberOfParking,
+            int totalLivingArea, string notes, string pmUserName, Address address)
+        {
+            OriginalId = originalId;
+            Created = created;
+            Modified = modified;
+            ListinglId = listinglId;
+            PropertyName = propertyName;
+            PropertyType = propertyType;
+            PropertyBuildYear = propertyBuildYear;
+            IsShared = isShared;
+            Status = status; // Pending, In Processing Rented
+            IsBasementSuite = isBasementSuite;
+            NumberOfBedrooms = numberOfBedrooms;
+            NumberOfBathrooms = numberOfBathrooms;
+            NumberOfLayers = numberOfLayers;
+            NumberOfParking = numberOfParking;
+            TotalLivingArea = totalLivingArea;
+            Notes = notes;
+            PmUserName = pmUserName;
+            Address = address;            
         }
 
         public int OriginalId { get; private set; }
@@ -60,7 +86,7 @@ namespace REALWork.LeaseManagementCore.Entities
         public ICollection<Lease> Lease { get; private set; }
         public ICollection<PropertyVisit> PropertyVisit { get; private set; }
 
-        public ICollection<RentalPropertyOwner> RentalPropertyOwner { get; private set; }
+        public ICollection<RentalPropertyOwner> RentalPropertyOwners { get; private set; }
 
         public ICollection<WorkOrder> WorkOrder { get; private set; }
 

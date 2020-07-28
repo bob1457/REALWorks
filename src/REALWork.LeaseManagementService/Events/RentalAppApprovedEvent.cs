@@ -1,4 +1,5 @@
-﻿using REALWorks.MessagingServer.Events;
+﻿using REALWork.LeaseManagementCore.Entities;
+using REALWorks.MessagingServer.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace REALWork.LeaseManagementService.Events
             string propertyManagerUserName, int propertyBuildYear, string type, bool isBasementSuite,
             bool isShared, int numberOfBedrooms, int numberOfBathrooms, int numberOfLayers,
             int numberOfParking, int totalLivingArea, string streetNum, string city,
-            string stateProvince, string country, string zipPostCode) : base(messageId)
+            string stateProvince, string country, string zipPostCode, List<RentalPropertyOwner> propertyOwners) : base(messageId)
         {
             UserName = userName;
             FirstName = firstName;
@@ -66,7 +67,9 @@ namespace REALWork.LeaseManagementService.Events
             StateProvince = stateProvince;
             Country = country;
             ZipPostCode = zipPostCode;
-        }
+            PropertyOwners = propertyOwners;
+            
+    }
 
         public bool IsShared { get; }
         public int NumberOfBedrooms { get; }
@@ -80,5 +83,7 @@ namespace REALWork.LeaseManagementService.Events
         public string StateProvince { get; }
         public string Country { get; }
         public string ZipPostCode { get; }
+
+        public IList<RentalPropertyOwner> PropertyOwners { get; }
     }
 }

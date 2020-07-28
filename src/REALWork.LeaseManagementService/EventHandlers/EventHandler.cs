@@ -54,6 +54,9 @@ namespace REALWork.LeaseManagementService.EventHandlers
                     case "RentalPropertyCreatedEvent":
                         await HandleAsync(messageObject.ToObject<PropertyCreatedEvent>());
                         break;
+                    case "AddOwnerEvent":
+                        await HandleAsync(messageObject.ToObject<AddOwnerEvent>());
+                        break;
                     case "RentalAppApprovedEvent":
                         await HandleAsync(messageObject.ToObject<RentalAppApprovedEvent>());
                         break;
@@ -73,6 +76,33 @@ namespace REALWork.LeaseManagementService.EventHandlers
 
             // always akcnowledge message - any errors need to be dealt with locally.
             return true;
+
+            //throw new NotImplementedException();
+        }
+
+        private async Task HandleAsync(AddOwnerEvent @event)
+        {
+
+            var rentalProperty = _context.RentalProperty.Include(a => a.Address).FirstOrDefault(p => p.OriginalId == @event.PropertyId);
+
+            var address = new OwnerAddress(@event.StreetNumber, @event.City, @event.StateProv, @event.Country, @event.ZipPostCode);
+
+            var owner = new RentalPropertyOwner(@event.FirstName, @event.LastName, @event.ContactEmail,
+                @event.ContactTelephone1, @event.ContactTelephone2, rentalProperty.Id, address, DateTime.Now, DateTime.Now);
+
+            _context.Add(owner);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+
+                Log.Information("Owner {Owner} has been added to property {Property} successfully", @event.FirstName + " " + @event.LastName, rentalProperty.PropertyName);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error while addinng owner {Owner} to {Property}.", @event.FirstName + " " + @event.LastName, rentalProperty.PropertyName);
+                throw ex;
+            }
 
             //throw new NotImplementedException();
         }
@@ -99,10 +129,11 @@ namespace REALWork.LeaseManagementService.EventHandlers
             if (rentalproperty == null)
             {
                 var address = new Address(@event.StreetNum, @event.City, @event.StateProvince, @event.Country, @event.ZipPostCode);
+                                               
 
                 var newRentalProperty = new RentalProperty(@event.PropertyId,DateTime.Now, DateTime.Now, @event.ListingId, /*0,*/  @event.PropertyName,  @event.Type, @event.PropertyBuildYear,
                     @event.IsShared, "Pending", @event.IsBasementSuite, @event.NumberOfBedrooms, @event.NumberOfBathrooms, @event.NumberOfLayers,
-                   @event.NumberOfParking, @event.TotalLivingArea, @event.Notes, @event.PropertyManagerUserName, address);
+                   @event.NumberOfParking, @event.TotalLivingArea, @event.Notes, @event.PropertyManagerUserName, address, @event.PropertyOwners);
 
                 _context.RentalProperty.Add(newRentalProperty);
 
@@ -126,7 +157,15 @@ namespace REALWork.LeaseManagementService.EventHandlers
 
         private async Task HandleAsync(PropertyCreatedEvent @event) //????
         {
+            var ownerAddress = new OwnerAddress(@event.StreetNum, @event.City, @event.StateProvince, @event.City, @event.ZipPostCode);
+
             var address = new Address(@event.StreetNum, @event.City, @event.StateProvince, @event.City, @event.ZipPostCode);
+
+            // need to add owner infomration
+
+            var owner = new RentalPropertyOwner(@event.OwnerFirstName, @event.OwnerLastName, @event.OwnerContactEmail,
+               @event.OwnerContactTel, @event.OwnerContactOther,  @event.PropertyId, ownerAddress, DateTime.Now, DateTime.Now);
+
             var rentalProperty = new RentalProperty(@event.PropertyId, DateTime.Now, DateTime.Now, 0, @event.PropertyName, @event.Type, @event.PropertyBuildYear, 
                 @event.IsShared,"Rented", @event.IsBasementSuite, @event.NumberOfBedrooms, @event.NumberOfBathrooms, @event.NumberOfLayers, @event.NumberOfParking, 
                 @event.TotalLivingArea, "", @event.PropertyManagerUserName, address);

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using REALWorks.MarketingCore.Entities;
 using REALWorks.MarketingCore.ValueObjects;
 using REALWorks.MarketingData;
 using REALWorks.MarketingService.Commands;
@@ -40,7 +41,11 @@ namespace REALWorks.MarketingService.CommandHandlers
             
             // Get related rental property and its onwer
             var rentalProperty = application.RentalProperty;
-            var owner = rentalProperty.RentalPropertyOwner;
+            //var owner = rentalProperty.RentalPropertyOwner;
+
+            //var owners = rentalProperty.RentalPropertyOwner.ToList();
+
+            var owners = _context.RentalPropertyOwner.Include(a => a.OwnerAddress).Where(p => p.RentalPropertyId == rentalProperty.Id).ToList();
 
             //Get the related listing for this rental property
             var listing = _context.PropertyListing.FirstAsync(l => l.RentalPropertyId == rentalProperty.Id);
@@ -100,12 +105,20 @@ namespace REALWorks.MarketingService.CommandHandlers
                 //await _messagePublisher.PublishMessageAsync(e2.MessageType, e2, "rental_created.*");
                 //await _messagePublisher.PublishMessageAsync(e2.MessageType, e2, "app_approved"); // this event does not need to triggered, all combined as the following one!
                 //}
+
 */
+
+                // Get owners for this propeprty
+                //var owners = new List<RentalPropertyOwner>();
+
+
+
+
                 RentalAppApprovedEvent e3 = new RentalAppApprovedEvent(Guid.NewGuid(), "NotSet", request.FirstName, request.LastName, request.ContactEmail,
                     request.ContactTelephone1, request.ContactTelephone2, request.ContactOthers, rentalProperty.OriginalId, listing.Id, rentalProperty.PropertyName, rentalProperty.PmUserName, rentalProperty.PropertyBuildYear,
                    rentalProperty.PropertyType, rentalProperty.IsBasementSuite, rentalProperty.IsShared, rentalProperty.NumberOfBedrooms, rentalProperty.NumberOfBathrooms, rentalProperty.NumberOfLayers,
                    rentalProperty.NumberOfParking, rentalProperty.TotalLivingArea, rentalProperty.Address.StreetNum, rentalProperty.Address.City, rentalProperty.Address.StateProvince,
-                   rentalProperty.Address.Country, rentalProperty.Address.ZipPostCode);
+                   rentalProperty.Address.Country, rentalProperty.Address.ZipPostCode, owners);
 
                 try
                 {

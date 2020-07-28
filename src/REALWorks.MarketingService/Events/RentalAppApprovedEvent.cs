@@ -1,4 +1,5 @@
-﻿using REALWorks.MessagingServer.Events;
+﻿using REALWorks.MarketingCore.Entities;
+using REALWorks.MessagingServer.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,8 @@ namespace REALWorks.MarketingService.Events
             string propertyManagerUserName, int propertyBuildYear, string type, bool isBasementSuite, 
             bool isShared, int numberOfBedrooms, int numberOfBathrooms, int numberOfLayers, 
             int numberOfParking, int totalLivingArea, string streetNum, string city, 
-            string stateProvince, string country, string zipPostCode) : base(messageId)
+            string stateProvince, string country, string zipPostCode, List<RentalPropertyOwner> propertyOwners
+            /*string oStreetNum, string oCity, string oStateProvince, string oZipPostCode, string oCountry*/) : base(messageId)
         {
             UserName = userName;
             FirstName = firstName;
@@ -66,6 +68,12 @@ namespace REALWorks.MarketingService.Events
             StateProvince = stateProvince;
             Country = country;
             ZipPostCode = zipPostCode;
+            PropertyOwners = propertyOwners;
+            //OwnerStreetNum = oStreetNum;
+            //OwnerCity = oCity;
+            //OwnerStateProvince = oStateProvince;
+            //OwnerZipPostCode = oZipPostCode;
+            //OwnerCountry = oCountry;
         }
 
         public bool IsShared { get; }
@@ -80,5 +88,14 @@ namespace REALWorks.MarketingService.Events
         public string StateProvince { get; }
         public string Country { get; }
         public string ZipPostCode { get; }
+
+        public IList<RentalPropertyOwner> PropertyOwners { get; }
+
+        //public string OwnerStreetNum { get; set; }
+        //public string OwnerCity { get; }
+        //public string OwnerStateProvince { get; }
+        //public string OwnerCountry { get; }
+        //public string OwnerZipPostCode { get; }
+
     }
 }

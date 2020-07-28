@@ -628,7 +628,7 @@ namespace REALWork.LeaseManagementData
                 entity.Property(e => e.LastName).HasMaxLength(50);
 
                 entity.HasOne(d => d.RentalProperty)
-                    .WithMany(p => p.RentalPropertyOwner)
+                    .WithMany(p => p.RentalPropertyOwners)
                     .HasForeignKey(d => d.RentalPropertyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RentalPropertyOwner_RentalProperty");

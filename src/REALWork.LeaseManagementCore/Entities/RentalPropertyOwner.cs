@@ -25,6 +25,20 @@ namespace REALWork.LeaseManagementCore.Entities
             Modified = updated;
         }
 
+        public RentalPropertyOwner(string firstName, string lastName, string contactEmail,
+            string contactTelephone, string contactOther, int PropertyId, OwnerAddress ownerAddress, DateTime create, DateTime updated)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            ContactEmail = contactEmail;
+            ContactTelephone = contactTelephone;
+            ContactOther = contactOther;
+            RentalPropertyId = PropertyId;
+            OwnerAddress = ownerAddress;
+            Created = create;
+            Modified = updated;
+        }
+
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string ContactEmail { get; private set; }

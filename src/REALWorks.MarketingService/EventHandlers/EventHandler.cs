@@ -21,10 +21,18 @@ namespace REALWorks.MarketingService.EventHandlers
         private readonly AppMarketingDbDataContext _context;
 
         IMessageHandler _messageHandler;
+        IMessagePublisher _messagePublisher;
 
         public EventHandler(IMessageHandler messageHandler, AppMarketingDbDataContext context)
         {
+            _messageHandler = messageHandler;           
+            _context = context;
+        }
+
+        public EventHandler(IMessageHandler messageHandler, IMessagePublisher messagePublisher, AppMarketingDbDataContext context)
+        {
             _messageHandler = messageHandler;
+            _messagePublisher = messagePublisher;
             _context = context;
         }
 
@@ -92,9 +100,33 @@ namespace REALWorks.MarketingService.EventHandlers
             
             try
             {
-               await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
                 Log.Information("Owner {Owner} has been added to property {Property} successfully", @event.FirstName + " " + @event.LastName, rentalProperty.PropertyName);
+
+                // Send message so that lease service can consume to queue app_approved
+
+
+                // need to make sure the rental property exists in Lease service then send message if it does.
+                //************************************************
+                // It may not need this because as ApproveApplicaiton Event will send property including owner so that it should be created in Lease service already
+                //************************************************
+
+                AddOwnerEvent e = new AddOwnerEvent(new Guid(), @event.PropertyId, @event.UserName, @event.FirstName, @event.LastName,
+                                                    @event.ContactEmail, @event.ContactTelephone1, @event.ContactTelephone2, @event.OnlineAccessEnbaled,
+                                                    @event.UserAvartaImgUrl, @event.IsActive, @event.RoleId, @event.Notes, @event.StreetNumber,
+                                                    @event.City, @event.StateProv, @event.ZipPostCode, @event.Country);
+
+
+                try
+                {
+                    await _messagePublisher.PublishMessageAsync(e.MessageType, e, "asset_created"); // publishing the message
+                    Log.Information("Message  {MessageType} with Id {MessageId} has been published successfully", e.MessageType, e.MessageId);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
+                }
             }
             catch (Exception ex)
             {
