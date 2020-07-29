@@ -1,4 +1,5 @@
 ﻿using REALWorks.MarketingCore.Entities;
+using REALWorks.MarketingService.ViewModels;
 using REALWorks.MessagingServer.Events;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace REALWorks.MarketingService.Events
             string propertyManagerUserName, int propertyBuildYear, string type, bool isBasementSuite, 
             bool isShared, int numberOfBedrooms, int numberOfBathrooms, int numberOfLayers, 
             int numberOfParking, int totalLivingArea, string streetNum, string city, 
-            string stateProvince, string country, string zipPostCode, List<RentalPropertyOwner> propertyOwners
+            string stateProvince, string country, string zipPostCode, List<PropertyOwnerViewModel> propertyOwners
             /*string oStreetNum, string oCity, string oStateProvince, string oZipPostCode, string oCountry*/) : base(messageId)
         {
             UserName = userName;
@@ -89,7 +90,7 @@ namespace REALWorks.MarketingService.Events
         public string Country { get; }
         public string ZipPostCode { get; }
 
-        public IList<RentalPropertyOwner> PropertyOwners { get; }
+        public IList<PropertyOwnerViewModel> PropertyOwners { get; }
 
         //public string OwnerStreetNum { get; set; }
         //public string OwnerCity { get; }

@@ -44,7 +44,8 @@ namespace REALWorks.MarketingService
 
             //services.AddDbContext<AppMarketingDbDataContext>(ServiceLifetime.Transient);
             services.AddDbContext<AppMarketingDbDataContext>(options =>
-                     options.UseSqlServer(dbConnectionString, builder => builder.MigrationsAssembly("REALWorks.MarketingData")));
+                     options.UseSqlServer(dbConnectionString, builder => builder.MigrationsAssembly("REALWorks.MarketingData")),
+                     ServiceLifetime.Scoped);
 
 
             // add messagepublisher classes

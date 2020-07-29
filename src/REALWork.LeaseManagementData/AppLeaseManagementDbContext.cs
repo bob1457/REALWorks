@@ -28,7 +28,7 @@ namespace REALWork.LeaseManagementData
         public virtual DbSet<PropertyVisit> PropertyVisit { get; set; }
         public virtual DbSet<RentalProperty> RentalProperty { get; set; }
 
-        public virtual DbSet<RentalPropertyOwner> RentalPropertyOnwer { get; set; }
+        public virtual DbSet<RentalPropertyOwner> RentalPropertyOwner { get; set; }
         public virtual DbSet<OwnerAddress> OwnerAddress { get; set; }
 
 

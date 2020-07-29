@@ -129,11 +129,23 @@ namespace REALWork.LeaseManagementService.EventHandlers
             if (rentalproperty == null)
             {
                 var address = new Address(@event.StreetNum, @event.City, @event.StateProvince, @event.Country, @event.ZipPostCode);
-                                               
+
+                var owners = new List<RentalPropertyOwner>();
+
+                foreach (var owner in @event.PropertyOwners)
+                {
+                    var ownerAddress = new OwnerAddress(@event.StreetNum, @event.City, @event.StateProvince, @event.ZipPostCode, @event.Country);
+                    var pOwner = new RentalPropertyOwner(owner.FirstName, owner.LastName, owner.ContactEmail, owner.ContactTelephone, owner.ContactOther, ownerAddress, DateTime.Now, DateTime.Now);
+                    owners.Add(pOwner);
+
+                }
+
+//(IList<RentalPropertyOwner>)@event.PropertyOwners
+                                              
 
                 var newRentalProperty = new RentalProperty(@event.PropertyId,DateTime.Now, DateTime.Now, @event.ListingId, /*0,*/  @event.PropertyName,  @event.Type, @event.PropertyBuildYear,
                     @event.IsShared, "Pending", @event.IsBasementSuite, @event.NumberOfBedrooms, @event.NumberOfBathrooms, @event.NumberOfLayers,
-                   @event.NumberOfParking, @event.TotalLivingArea, @event.Notes, @event.PropertyManagerUserName, address, @event.PropertyOwners);
+                   @event.NumberOfParking, @event.TotalLivingArea, @event.Notes, @event.PropertyManagerUserName, address, owners);
 
                 _context.RentalProperty.Add(newRentalProperty);
 

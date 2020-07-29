@@ -13,10 +13,10 @@ namespace REALWork.LeaseManagementCore.Entities
         {
         }
 
-        public RentalProperty(int originalId, DateTime created, DateTime modified, int listinglId, string propertyName, 
-            string propertyType, int propertyBuildYear, bool isShared, string status, bool isBasementSuite, 
-            int numberOfBedrooms, int numberOfBathrooms, int numberOfLayers, int numberOfParking, 
-            int totalLivingArea, string notes, string pmUserName, Address address, ICollection<RentalPropertyOwner> rentalPropertyOwners)
+        public RentalProperty(int originalId, DateTime created, DateTime modified, int listinglId, string propertyName,
+            string propertyType, int propertyBuildYear, bool isShared, string status, bool isBasementSuite,
+            int numberOfBedrooms, int numberOfBathrooms, int numberOfLayers, int numberOfParking,
+            int totalLivingArea, string notes, string pmUserName, Address address, IList<RentalPropertyOwner> rentalPropertyOwners)
         {
             OriginalId = originalId;
             Created = created;
@@ -86,7 +86,7 @@ namespace REALWork.LeaseManagementCore.Entities
         public ICollection<Lease> Lease { get; private set; }
         public ICollection<PropertyVisit> PropertyVisit { get; private set; }
 
-        public ICollection<RentalPropertyOwner> RentalPropertyOwners { get; private set; }
+        public IList<RentalPropertyOwner> RentalPropertyOwners { get; private set; }
 
         public ICollection<WorkOrder> WorkOrder { get; private set; }
 

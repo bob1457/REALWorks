@@ -5,6 +5,7 @@ using REALWorks.MarketingCore.ValueObjects;
 using REALWorks.MarketingData;
 using REALWorks.MarketingService.Commands;
 using REALWorks.MarketingService.Events;
+using REALWorks.MarketingService.ViewModels;
 using REALWorks.MessagingServer.Messages;
 using Serilog;
 using System;
@@ -45,7 +46,23 @@ namespace REALWorks.MarketingService.CommandHandlers
 
             //var owners = rentalProperty.RentalPropertyOwner.ToList();
 
-            var owners = _context.RentalPropertyOwner.Include(a => a.OwnerAddress).Where(p => p.RentalPropertyId == rentalProperty.Id).ToList();
+            var owners = _context.RentalPropertyOwner
+                .Include(a => a.OwnerAddress)
+                .Where(p => p.RentalPropertyId == rentalProperty.Id)
+                .Select(p => new PropertyOwnerViewModel
+                    {                        
+                        FirstName = p.FirstName ,
+                        LastName = p.LastName,
+                        ContactEmail = p.ContactEmail,
+                        ContactTelephone = p.ContactTelephone,
+                        ContactOther = p.ContactOther,
+                        OwnerStreetNum = p.OwnerAddress.StreetNumber,
+                        OwnerCity = p.OwnerAddress.City,
+                        OwnerStateProvinc = p.OwnerAddress.StateProvince,
+                        OwnerZipPostCode = p.OwnerAddress.ZipPostCode,
+                        OwnerCountry = p.OwnerAddress.Country
+                        
+                    }).ToList();
 
             //Get the related listing for this rental property
             var listing = _context.PropertyListing.FirstAsync(l => l.RentalPropertyId == rentalProperty.Id);
