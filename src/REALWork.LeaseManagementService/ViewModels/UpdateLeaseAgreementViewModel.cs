@@ -41,5 +41,7 @@ namespace REALWork.LeaseManagementService.ViewModels
         public List<Tenant> Tenant { get; set; }
 
         public RentalProperty rentalProperty { get; set; }
+
+        public IList<RentalPropertyOwner> propertyOwners { get; set; }
     }
 }

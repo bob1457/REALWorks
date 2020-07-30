@@ -54,7 +54,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
                 request.RentFrequency, request.RentAmount, request.RentDueOn, request.DamageDepositAmount, request.PetDepositAmount, request.LeaseSignDate,
                 request.LeaseAgreementDocUrl, true, request.IsAddendumAvailable, request.LeaseEndCode, request.RenewTerm,  DateTime.Now, DateTime.Now, request.Notes, rentalCoverage, agents, tenants);
 
-            var property = lease.RentalProperty;
+            var property = _context.RentalProperty.FirstOrDefault(p => p.Id == request.RentalPropertyId);
 
             property.StatusUpdate("Rented");
 

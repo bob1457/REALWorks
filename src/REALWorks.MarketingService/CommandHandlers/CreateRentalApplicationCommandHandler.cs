@@ -42,7 +42,9 @@ namespace REALWorks.MarketingService.CommandHandlers
             {
                 await _context.SaveChangesAsync();
 
-                Log.Information("New Applicatn from {ApplicantName} with Id {ApplicantId} has been created successfully", request.FirstName + request.LastName, applicant.Id);
+                Log.Information("New Applicatn from {ApplicantName} with Id {ApplicantId} has been created successfully", request.FirstName + " " + request.LastName, applicant.Id);
+
+                // Sending notification??? by sending integration message to RabbitMQ for notification service to pickup and send notificaiotn
             }
             catch (Exception ex)
             {

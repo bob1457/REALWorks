@@ -24,8 +24,16 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
         {
             var lease = _context.Lease
                 .Include(p => p.RentalProperty).ThenInclude(a => a.Address)
+                .Include(l => l.RentalProperty).ThenInclude(p => p.RentalPropertyOwners)
                 .Include(a => a.Agent)
                 .Include(t => t.Tenant).ToList();
+
+            //var rentalProperty = _context.RentalProperty
+            //    .Include(p => p.Address)
+            //    .Include(p => p.RentalPropertyOwners).ToList();
+
+            
+
 
             //throw new NotImplementedException();
 

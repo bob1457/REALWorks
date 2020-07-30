@@ -29,6 +29,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
         {
             var lease = _context.Lease
                 .Include(p => p.RentalProperty)
+                .ThenInclude(p => p.RentalPropertyOwners)
                 .Include(l => l.RentCoverage)
                 .Include(t => t.Tenant).ToList()                
                 .FirstOrDefault(l => l.Id == request.Id);
@@ -43,6 +44,8 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
             var property = lease.RentalProperty;
             var tenants = lease.Tenant;
+
+            var owners = lease.RentalProperty.RentalPropertyOwners;
 
             lease.Update(request.LeaseTitle, request.LeaseDesc, request.LeaseStartDate, request.LeaseEndDate, 
                 request.Term, request.RentFrequency, request.RentAmount, request.RentDueOn, request.DamageDepositAmount, request.PetDepositAmount,
@@ -76,6 +79,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             updatedLease.rentalProperty = lease.RentalProperty;
             updatedLease.RentalPropertyId = lease.RentalPropertyId;
             updatedLease.Tenant = tenants.ToList();
+            updatedLease.propertyOwners = owners.ToList();
 
             try
             {
