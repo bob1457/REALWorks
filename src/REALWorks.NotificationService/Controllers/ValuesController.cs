@@ -65,7 +65,7 @@ namespace REALWorks.NotificationService.Controllers
 
             var subject = "Email Test";
 
-            var message = "This is a test message.";
+            var message = "This is a test message with configuration parameters.";
 
             var result = await _emailSender.SendEmailAsync(email, subject, message);
             //await _smtpMailSender.SendEmailAsync(email, "", subject, message);

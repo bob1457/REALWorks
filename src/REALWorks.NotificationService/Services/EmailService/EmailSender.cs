@@ -80,7 +80,8 @@ namespace REALWorks.NotificationService.Services.EmailService
                 mailMsg.To.Add(new MailAddress(email));
 
                 // From
-                mailMsg.From = new MailAddress("bob.h.yuan@gmail.com", "Admin@real.com");
+                //mailMsg.From = new MailAddress("bob.h.yuan@gmail.com", "Admin@real.com");
+                mailMsg.From = new MailAddress(_emailSettings.SenderName, "Admin@real.com");
 
                 // Subject and multipart/alternative Body
                 mailMsg.Subject = subject; // "Testing";
@@ -104,9 +105,10 @@ namespace REALWorks.NotificationService.Services.EmailService
                     smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                     smtp.UseDefaultCredentials = false;
                     smtp.EnableSsl = true;
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.Port = 587;
-                    smtp.Credentials = new NetworkCredential("bob.h.yuan@gmail.com", "MBA570924!");
+                    smtp.Host = _emailSettings.MailServer; 
+                    smtp.Port = _emailSettings.MailPort;
+                    
+                    smtp.Credentials = new NetworkCredential(_emailSettings.Sender, _emailSettings.Password);
                     // send the email
                     smtp.Send(mailMsg);
                 }
