@@ -28,7 +28,7 @@ namespace REALWorks.MarketingService.Commands
         public int RentalApplicationId { get; set; }
         public string ReasonToMove { get; set; }
 
-        public int NotificaitonType { get; set; }
+        public int NotificationType { get; set; }
 
 
     }

@@ -54,7 +54,7 @@ namespace REALWorks.MarketingService.CommandHandlers
 
                 
 
-                switch (request.NotificaitonType)
+                switch (request.NotificationType)
                 {
                     case 1:
                         recipient = request.ContactEmail;                        
@@ -76,7 +76,7 @@ namespace REALWorks.MarketingService.CommandHandlers
 
                 //EmailNotificationEvent e = new EmailNotificationEvent(new Guid(), recipients, request.NotificaitonType, subject, body, service, DateTime.Now);
 
-                NotificationEvent e = new NotificationEvent(new Guid(), recipient, request.NotificaitonType, subject, body, service, DateTime.Now);
+                NotificationEvent e = new NotificationEvent(new Guid(), recipient, request.NotificationType, subject, body, service, DateTime.Now);
 
                 try
                 {
