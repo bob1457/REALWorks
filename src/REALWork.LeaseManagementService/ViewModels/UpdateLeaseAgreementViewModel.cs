@@ -30,7 +30,7 @@ namespace REALWork.LeaseManagementService.ViewModels
         public string RenewTerm { get; set; }
         public string Notes { get; set; }
         public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
+        public DateTime Modified { get; set; }
 
 
         /// <summary>

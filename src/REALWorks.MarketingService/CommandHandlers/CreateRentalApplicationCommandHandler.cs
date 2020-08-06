@@ -2,6 +2,7 @@
 using REALWorks.MarketingCore.Entities;
 using REALWorks.MarketingData;
 using REALWorks.MarketingService.Commands;
+using REALWorks.MarketingService.Events;
 using REALWorks.MessagingServer.Messages;
 using Serilog;
 using System;
@@ -32,7 +33,7 @@ namespace REALWorks.MarketingService.CommandHandlers
 
             await _context.AddAsync(applicant);
 
-            var application = new RentalApplication(request.RentalPropertyId, applicant, request.AppStatus, DateTime.Now, DateTime.Now);
+            var application = new RentalApplication(request.RentalPropertyId, applicant, request.AppStatus, /*request.NotificaitonType,*/ DateTime.Now, DateTime.Now);
 
             await _context.AddAsync(application);
 
@@ -45,6 +46,49 @@ namespace REALWorks.MarketingService.CommandHandlers
                 Log.Information("New Applicatn from {ApplicantName} with Id {ApplicantId} has been created successfully", request.FirstName + " " + request.LastName, applicant.Id);
 
                 // Sending notification??? by sending integration message to RabbitMQ for notification service to pickup and send notificaiotn
+
+                string recipient = "";
+                string subject = "Rental Applicaiton Received";
+                string body = "Your application has been successfully submitted!"; // for testing purpose, To be improved
+                string service = "Marketing Service";
+
+                
+
+                switch (request.NotificaitonType)
+                {
+                    case 1:
+                        recipient = request.ContactEmail;                        
+                        break;
+                    case 2:
+                        if (request.ContactSms != null)
+                        {
+                            recipient = request.ContactSms; 
+                        }
+                        else
+                        {
+                            // throw errror 
+                            recipient = request.ContactTel;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                //EmailNotificationEvent e = new EmailNotificationEvent(new Guid(), recipients, request.NotificaitonType, subject, body, service, DateTime.Now);
+
+                NotificationEvent e = new NotificationEvent(new Guid(), recipient, request.NotificaitonType, subject, body, service, DateTime.Now);
+
+                try
+                {
+                    await _messagePublisher.PublishMessageAsync(e.MessageType, e, "notification"); // publishing the message
+
+                    Log.Information("Rental application submissin from  {Applicant} has been sent successfully from {service}", request.FirstName + " " + request.LastName, service);
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
             }
             catch (Exception ex)
             {

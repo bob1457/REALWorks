@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace REALWorks.NotificationService.Services.EmailService
 {
-    public interface IEmailSender
+    public class EmailAuthOptions
     {
-        Task<string> SendEmailAsync(string email, string subject, string message);
+        public string SendGridUser { get; set; }
+        public string SendGridKey { get; set; }
     }
 }

@@ -13,12 +13,13 @@ namespace REALWorks.MarketingCore.Entities
         }
 
         public RentalApplication(int propertyId, RentalApplicant rentalApplicant, ApplicationStatus status, 
-            DateTime created, DateTime updated)//, Reference rentlReference)
+            /*int notificationPreference,*/ DateTime created, DateTime updated)//, Reference rentlReference)
         {
             RentalPropertyId = propertyId;
             RentalApplicant = rentalApplicant;
             //RentalReference = rentlReference;
             Status = status;
+            //NotificationPreference = notificationPreference;
             Created = created;
             Modified = updated;
         }
@@ -40,7 +41,7 @@ namespace REALWorks.MarketingCore.Entities
         public RentalApplicant RentalApplicant { get; private set; }
         //public Reference RentalReference { get; private private set; }
 
-
+        //public int NotificationPreference { get; private set; }
 
 
         public void AddApplicant(RentalApplicant applicant)

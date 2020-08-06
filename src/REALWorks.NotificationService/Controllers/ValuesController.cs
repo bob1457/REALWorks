@@ -12,9 +12,13 @@ namespace REALWorks.NotificationService.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly IEmailSender _emailSender;
-        public ValuesController(IEmailSender emailSender)
+
+        //private readonly ISMTPMailSender _smtpMailSender;
+
+        public ValuesController(IEmailSender emailSender/*, ISMTPMailSender smtpMailSender*/)
         {
             _emailSender = emailSender;
+            //_smtpMailSender = smtpMailSender;
         }
 
         // GET api/values
@@ -53,13 +57,18 @@ namespace REALWorks.NotificationService.Controllers
         [Route("sendmail")]
         public async Task<IActionResult> SendMail([FromBody]string value)
         {
+            var emails = new List<string>();
+
             var email = "bob.yuan@yahoo.com";
+
+            emails.Add(email);
 
             var subject = "Email Test";
 
             var message = "This is a test message.";
 
-            await _emailSender.SendEmailAsync(email, subject, message);
+            var result = await _emailSender.SendEmailAsync(email, subject, message);
+            //await _smtpMailSender.SendEmailAsync(email, "", subject, message);
             /*
             String APIKey = "75e9a30fdb6750c5c5c5959ba1e0fba6";
             String SecretKey = "91e32634f1b7b24b8135f5380f927e8c";
@@ -84,7 +93,7 @@ namespace REALWorks.NotificationService.Controllers
                        client.Send(msg);
           */
 
-            return Ok("Send test email was successful.");
+            return Ok(result);
         }
     }
 }

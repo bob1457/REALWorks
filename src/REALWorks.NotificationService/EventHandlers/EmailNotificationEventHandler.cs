@@ -17,13 +17,14 @@ namespace REALWorks.NotificationService.EventHandlers
         IMessageHandler _messageHandler;
         //INotificationRepository _repo;
         ISMTPMailSender _smtpMailSender;
+        
 
-
-        public EmailNotificationEventHandler(IMessageHandler messageHandler, /*INotificationRepository repo,*/ ISMTPMailSender smtpMailSender)
+        public EmailNotificationEventHandler(IMessageHandler messageHandler, /*INotificationRepository repo, */ISMTPMailSender smtpMailSender)
         {
             _messageHandler = messageHandler;
             //_repo = repo;
             _smtpMailSender = smtpMailSender;
+            //_emailSender = emailSender;
         }
 
         public void Start()
@@ -51,8 +52,8 @@ namespace REALWorks.NotificationService.EventHandlers
                     case "MaintenanceJobPlanned":
                         //await HandleAsync(messageObject.ToObject<MaintenanceJobPlanned>());
                         break;
-                    case "MaintenanceJobFinished":
-                        //await HandleAsync(messageObject.ToObject<MaintenanceJobFinished>());
+                    case "NotificationEvent":
+                        await HandleAsync(messageObject.ToObject<NotificationEvent>());
                         break;
                     case "DayHasPassed":
                         //await HandleAsync(messageObject.ToObject<DayHasPassed>());
@@ -71,11 +72,27 @@ namespace REALWorks.NotificationService.EventHandlers
             //throw new NotImplementedException();
         }
 
+        private async Task HandleAsync(NotificationEvent @event)
+        {
+            try
+            {
+                await _smtpMailSender.SendEmailAsync(@event.NotificationRecipient, "", @event.NotificationSubject, @event.NotificationBody);
+                //await _emailSender.SendEmailAsync(@event.NotificationRecipients, @event.NotificationSubject, @event.NotificationBody);
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                Log.Error(ex, "Error while sending notification message to { user }.", @event.NotificationRecipient);
+            }
+            //throw new NotImplementedException();
+        }
+
         private async Task HandleAsync(EmailNotificationEvent @event)
         {
             try
             {
                 await _smtpMailSender.SendEmailAsync(@event.Email, "", @event.Subject, @event.Body);
+                //await _emailSender.SendEmailAsync(@event.NotificationRecipients, @event.NotificationSubject, @event.NotificationBody);
             }
             catch (Exception ex)
             {

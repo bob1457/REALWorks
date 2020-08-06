@@ -48,6 +48,12 @@ namespace REALWorks.NotificationService.EventHandlers
             {
                 switch (messageType)
                 {
+                    case "NotificationEvent":
+                        await HandleAsync(messageObject.ToObject<NotificationEvent>());
+                        break;
+
+                    // All the rest will NOT be used as they are integrated with the above message type
+                    #region
                     case "RegisterAccountEvent":
                         await HandleAsync(messageObject.ToObject<RegisterAccountEvent>());
                         break;
@@ -60,6 +66,7 @@ namespace REALWorks.NotificationService.EventHandlers
                     case "EnableOnlineAccessEvent":
                         await HandleAsync(messageObject.ToObject<EnableOnlineAccessEvent>());
                         break;
+                    #endregion
                     default:
                         Console.WriteLine("Default case");
                         break;
@@ -77,11 +84,41 @@ namespace REALWorks.NotificationService.EventHandlers
             //throw new NotImplementedException();
         }
 
+        private async Task HandleAsync(NotificationEvent @event)
+        {
+            try
+            {
+                
+                if(@event.NotificationType == 1)
+                {
+                    // Send email
+                    await _emailSender.SendEmailAsync(@event.NotificationRecipient, @event.NotificationSubject, @event.NotificationBody);
+                }
+
+                if (@event.NotificationType == 2)
+                {
+                    // Send sms text
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
+
+            //throw new NotImplementedException();
+        }
+
+#region
+
+
+
         private async Task HandleAsync(EnableOnlineAccessEvent @event)
         {
             try
             {
-                await _emailSender.SendEmailAsync(@event.Email, @event.Subject, @event.Body);
+                //await _emailSender.SendEmailAsync(@event.Email, @event.Subject, @event.Body);
             }
             catch (Exception ex)
             {
@@ -97,7 +134,7 @@ namespace REALWorks.NotificationService.EventHandlers
             //var emailSender = new EmailSender();
             try
             {
-                await _emailSender.SendEmailAsync(@event.EmailRecipient, @event.EmailSubject, @event.EmailBody);
+                //await _emailSender.SendEmailAsync(@event.EmailRecipient, @event.EmailSubject, @event.EmailBody);
             }
             catch(Exception ex)
             {
@@ -108,5 +145,8 @@ namespace REALWorks.NotificationService.EventHandlers
 
             //throw new NotImplementedException();
         }
+
+#endregion
+
     }
 }

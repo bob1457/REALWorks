@@ -96,9 +96,9 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
             }
             catch (Exception ex)
-            {
-                //throw ex;
+            {                
                 Log.Error(ex, "Error while creating lease {LeaseTile}.", lease.LeaseTitle);
+                throw ex;
             }
 
             return addedLease;

@@ -37,7 +37,7 @@ namespace REALWorks.AssetServer.CommandHandlers
                 request.PropertyCity, request.PropertyStateProvince, request.PropertyZipPostCode,
                 request.PropertyCountry);
 
-            var feature = new PropertyFeature(request.NumberOfBathrooms,
+            var feature = new PropertyFeature(request.NumberOfBedrooms,
                 request.NumberOfBathrooms, request.NumberOfLayers,
                 request.NumberOfParking, request.BasementAvailable,
                 request.TotalLivingArea, request.IsShared, request.FeatureNotes);

@@ -74,7 +74,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             updatedLease.EndLeaseCode = request.EndLeaseCode;
             updatedLease.Notes = request.Notes;
             updatedLease.Created = DateTime.Now;
-            updatedLease.Updated = DateTime.Now;
+            updatedLease.Modified = DateTime.Now;
             updatedLease.rentCoverage = coverage;
             updatedLease.rentalProperty = lease.RentalProperty;
             updatedLease.RentalPropertyId = lease.RentalPropertyId;

@@ -39,7 +39,7 @@ namespace REALWorks.MarketingService.CommandHandlers
                     }
                     catch (Exception ex)
                     {
-                        throw;
+                        throw ex;
                     }
 
                 }

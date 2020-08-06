@@ -52,9 +52,10 @@ namespace REALWorks.NotificationService
             string mailUserName = mailConfigSection["Sender"];
             string mailSenderName = mailConfigSection["SenderName"];
             string mailPassword = mailConfigSection["Password"];
-            ISMTPMailSender smtpMailServer = new SMTPMailSender(mailHost, mailPort, mailUserName, mailPassword, mailSenderName);
-            EmailSettings settings = new EmailSettings(mailHost, mailPort, mailSenderName, mailUserName, mailPassword );
-            //IEmailSender smtpMailServer = new EmailSender(settings);
+            //ISMTPMailSender smtpMailServer = new SMTPMailSender(mailHost, mailPort, mailUserName, mailPassword, mailSenderName); // original
+
+            EmailSettings settings = new EmailSettings(mailHost, mailPort, mailSenderName, mailUserName, mailPassword);
+            IEmailSender smtpMailServer = new EmailSender(settings);
 
             //var emailSender = new EmailSender();
             //var emailSettings = new EmailSettings();
@@ -64,9 +65,10 @@ namespace REALWorks.NotificationService
             // ABOVE: subscribe/listen to queue - queue name to be updated
 
             //IEmailSender emailSender = null;
-            //EventHandlers.EventHandler eventHandler = new EventHandlers.EventHandler(messageHandler, smtpMailServer); //, dbContext);
+            EventHandlers.EventHandler eventHandler = new EventHandlers.EventHandler(messageHandler, smtpMailServer); //, dbContext);
             //EventHandler eventHandler = new EventHandler(messageHandler, smtpMailServer);
-            EmailNotificationEventHandler eventHandler = new EmailNotificationEventHandler(messageHandler, smtpMailServer);
+
+            //EmailNotificationEventHandler eventHandler = new EmailNotificationEventHandler(messageHandler, smtpMailServer); // original
             eventHandler.Start();
 
         }

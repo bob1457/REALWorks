@@ -17,8 +17,7 @@ using REALWorks.MessagingServer.EventBusRabbitMQ;
 using REALWorks.NotificationService.EventHandlers;
 using REALWorks.NotificationService.Events;
 using REALWorks.NotificationService.Services.EmailService;
-
-
+using Serilog;
 
 namespace REALWorks.NotificationService
 {
@@ -26,6 +25,11 @@ namespace REALWorks.NotificationService
     {
         public Startup(IConfiguration configuration)
         {
+            // Init Serilog configuration
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                //.WriteTo.Seq("http://localhost:5341") // temporarily disabled so that the logs written to log files in E:\Temp\real --- by default
+                .CreateLogger();
             Configuration = configuration;
         }
 
@@ -72,6 +76,7 @@ namespace REALWorks.NotificationService
             //RegisterEventBus(services);
 
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddSingleton<ISMTPMailSender, SMTPMailSender>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
