@@ -26,12 +26,9 @@ namespace REALWorks.NotificationService.Services.MessageService
 
         public async Task<string> SendTextAsync(string to, string from, string message)
         {
-            //var smsConfiguration = Config.GetSection("SmsSettings");
-            //string accountSid = smsConfiguration["AccountSID"];
-            //string authToken = smsConfiguration["AuthToken"];
-
-            string accountSid = _smsSettings.accountSid; // "AC77d88a49c272f063fe810c7501361d4c";
-            string authToken = _smsSettings.authToken; // "85510000205de82211b993482351d6ce";
+            
+            string accountSid = _smsSettings.accountSid; 
+            string authToken = _smsSettings.authToken;
 
             TwilioClient.Init(accountSid, authToken);
 
