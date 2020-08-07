@@ -17,7 +17,9 @@ using REALWorks.MessagingServer.EventBusRabbitMQ;
 using REALWorks.NotificationService.EventHandlers;
 using REALWorks.NotificationService.Events;
 using REALWorks.NotificationService.Services.EmailService;
+using REALWorks.NotificationService.Services.MessageService;
 using Serilog;
+using Twilio.Clients;
 
 namespace REALWorks.NotificationService
 {
@@ -79,6 +81,8 @@ namespace REALWorks.NotificationService
             services.AddSingleton<ISMTPMailSender, SMTPMailSender>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddHttpClient<ITwilioRestClient, SmsSender>();
 
             var container = new ContainerBuilder();
             container.Populate(services);

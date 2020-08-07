@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using REALWorks.NotificationService.Services.EmailService;
+using Twilio.Clients;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
 namespace REALWorks.NotificationService.Controllers
 {
@@ -12,13 +15,14 @@ namespace REALWorks.NotificationService.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly IEmailSender _emailSender;
+        private readonly ITwilioRestClient _client;
 
         //private readonly ISMTPMailSender _smtpMailSender;
 
-        public ValuesController(IEmailSender emailSender/*, ISMTPMailSender smtpMailSender*/)
+        public ValuesController(IEmailSender emailSender, ITwilioRestClient client)
         {
             _emailSender = emailSender;
-            //_smtpMailSender = smtpMailSender;
+            _client = client;
         }
 
         // GET api/values
@@ -68,32 +72,23 @@ namespace REALWorks.NotificationService.Controllers
             var message = "This is a test message with configuration parameters.";
 
             var result = await _emailSender.SendEmailAsync(email, subject, message);
-            //await _smtpMailSender.SendEmailAsync(email, "", subject, message);
-            /*
-            String APIKey = "75e9a30fdb6750c5c5c5959ba1e0fba6";
-            String SecretKey = "91e32634f1b7b24b8135f5380f927e8c";
-                        String From = "ml477344@telus.net";
-                        String To = "bob.yuan@yahoo.com";
-
-                        MailMessage msg = new MailMessage();
-
-                        msg.From = new MailAddress(From);
-
-                        msg.To.Add(new MailAddress(To));
-
-                        msg.Subject = "Your mail from Gamil";
-                        msg.Body = "Your mail from Mailjet, sent by C#.";
-
-                        SmtpClient client = new SmtpClient("in-v3.mailjet.com", 587);
-                        client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                        client.EnableSsl = true;
-                        client.UseDefaultCredentials = false;
-                        client.Credentials = new NetworkCredential(APIKey, SecretKey);
-
-                       client.Send(msg);
-          */
+            
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("sendsms")]
+        public async Task<IActionResult> SendSmsText(MessageModel model)
+        {
+
+            var message = MessageResource.Create(
+                to: new PhoneNumber(model.To),
+                from: new PhoneNumber(model.From),
+                body: model.Message,
+                client: _client); // pass in the custom client
+
+            return Ok(message.Sid);
         }
     }
 }

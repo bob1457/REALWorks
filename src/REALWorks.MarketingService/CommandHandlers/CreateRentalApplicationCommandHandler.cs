@@ -49,7 +49,16 @@ namespace REALWorks.MarketingService.CommandHandlers
 
                 string recipient = "";
                 string subject = "Rental Applicaiton Received";
-                string body = "Your application has been successfully submitted!"; // for testing purpose, To be improved
+                //string body = "Your application has been successfully submitted!"; // for testing purpose, To be improved
+                string bodyContent = 
+                    "@Dear {name}: " +
+                    "Your application for teancy has been recieved." +
+                    "Please prepare to provide required reference materials for the screening process." +
+                    "Thanks." +
+                    "Property Manager";
+
+                string body = string.Format(bodyContent, request.FirstName + " " + request.LastName);
+
                 string service = "Marketing Service";
 
                 

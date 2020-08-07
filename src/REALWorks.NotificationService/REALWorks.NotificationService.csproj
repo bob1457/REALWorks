@@ -21,10 +21,7 @@
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="4.0.0" />
     <PackageReference Include="SerilogEnricherCollection" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\MessageService\" />
+    <PackageReference Include="Twilio" Version="5.45.2" />
   </ItemGroup>
 
   <ItemGroup>
