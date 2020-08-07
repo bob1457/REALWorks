@@ -10,7 +10,7 @@ namespace REALWorks.NotificationService.Services.MessageService
 {
     public class TextSender : ISmsSender
     {
-        public static IConfigurationRoot Config { get; private set; }
+        public static IConfiguration Config { get; private set; }
 
         private readonly SmsSettings _smsSettings;
 
@@ -24,14 +24,14 @@ namespace REALWorks.NotificationService.Services.MessageService
             _smsSettings = smsSettings;
         }
 
-        public async Task<string> SendTextAsync(string from, string to, string message)
+        public async Task<string> SendTextAsync(string to, string from, string message)
         {
             //var smsConfiguration = Config.GetSection("SmsSettings");
             //string accountSid = smsConfiguration["AccountSID"];
-            //string authCode = smsConfiguration["AuthToken"];
+            //string authToken = smsConfiguration["AuthToken"];
 
-            const string accountSid = "AC77d88a49c272f063fe810c7501361d4c";
-            const string authToken = "85510000205de82211b993482351d6ce";
+            string accountSid = _smsSettings.accountSid; // "AC77d88a49c272f063fe810c7501361d4c";
+            string authToken = _smsSettings.authToken; // "85510000205de82211b993482351d6ce";
 
             TwilioClient.Init(accountSid, authToken);
 

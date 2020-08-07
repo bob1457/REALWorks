@@ -64,7 +64,8 @@ namespace REALWorks.NotificationService
             EmailSettings settings = new EmailSettings(mailHost, mailPort, mailSenderName, mailUserName, mailPassword);
             IEmailSender smtpMailServer = new EmailSender(settings);
 
-            //SmsSettings smsSettings = new SmsSettings(accountSid, authCode);
+            SmsSettings smsSettings = new SmsSettings(accountSid, authCode);
+            ISmsSender smsSender = new TextSender(smsSettings);
             //ITwilioRestClient smsSender = new SmsSender();
 
             //var emailSender = new EmailSender();
@@ -75,7 +76,7 @@ namespace REALWorks.NotificationService
             // ABOVE: subscribe/listen to queue - queue name to be updated
 
             //IEmailSender emailSender = null;
-            EventHandlers.EventHandler eventHandler = new EventHandlers.EventHandler(messageHandler, smtpMailServer); //, dbContext);
+            EventHandlers.EventHandler eventHandler = new EventHandlers.EventHandler(messageHandler, smtpMailServer, smsSender); //, dbContext);
             //EventHandler eventHandler = new EventHandler(messageHandler, smtpMailServer);
 
             //EmailNotificationEventHandler eventHandler = new EmailNotificationEventHandler(messageHandler, smtpMailServer); // original

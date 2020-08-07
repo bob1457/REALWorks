@@ -41,7 +41,7 @@ namespace REALWorks.MarketingService.CommandHandlers
 
             try
             {
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync(); // commented out for testing only
 
                 Log.Information("New Applicatn from {ApplicantName} with Id {ApplicantId} has been created successfully", request.FirstName + " " + request.LastName, applicant.Id);
 
@@ -50,14 +50,15 @@ namespace REALWorks.MarketingService.CommandHandlers
                 string recipient = "";
                 string subject = "Rental Applicaiton Received";
                 //string body = "Your application has been successfully submitted!"; // for testing purpose, To be improved
-                string bodyContent = 
-                    "@Dear {name}: " +
-                    "Your application for teancy has been recieved." +
-                    "Please prepare to provide required reference materials for the screening process." +
-                    "Thanks." +
-                    "Property Manager";
+                //string bodyContent = 
+                //    "@Dear {name}: " +
+                //    "Your application for teancy has been recieved." +
+                //    "Please prepare to provide required reference materials for the screening process." +
+                //    "Thanks." +
+                //    "Property Manager";
 
-                string body = string.Format(bodyContent, request.FirstName + " " + request.LastName);
+                //string body = string.Format(bodyContent, request.FirstName + " " + request.LastName);
+                string body = "";
 
                 string service = "Marketing Service";
 
@@ -66,18 +67,21 @@ namespace REALWorks.MarketingService.CommandHandlers
                 switch (request.NotificationType)
                 {
                     case 1:
+                        body = "Dear " + request.FirstName + ": your application has been received. Best regards.";
                         recipient = request.ContactEmail;                        
                         break;
                     case 2:
-                        if (request.ContactSms != null)
-                        {
-                            recipient = request.ContactSms; 
-                        }
-                        else
-                        {
-                            // throw errror 
-                            recipient = request.ContactTel;
-                        }
+                        body = "Dear " + request.FirstName + ": your application has been received. Best regards.";
+                        recipient = request.ContactTel;
+                        //if (request.ContactSms != null)
+                        //{
+                        //    recipient = request.ContactSms; 
+                        //}
+                        //else
+                        //{
+                        //    // throw errror 
+                        //    recipient = request.ContactTel;
+                        //}
                         break;
                     default:
                         break;

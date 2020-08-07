@@ -94,9 +94,9 @@ namespace REALWorks.NotificationService.Controllers
 
             //return Ok(message.Sid);
 
-            string to = "+16042434804";
-            string from = "16043497898";
-            string content = "Test sms....";
+            string from = "+16042434804";
+            string to = "16043497898";
+            string content = "Test sms....with config data";
 
             var result = _smsSender.SendTextAsync(to, from, content);
 

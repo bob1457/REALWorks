@@ -2,6 +2,7 @@
 using REALWorks.MessagingServer.Messages;
 using REALWorks.NotificationService.Events;
 using REALWorks.NotificationService.Services.EmailService;
+using REALWorks.NotificationService.Services.MessageService;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,14 @@ namespace REALWorks.NotificationService.EventHandlers
         IMessageHandler _messageHandler;
         //private RabbitMQMessageHandler messageHandler;
         private readonly IEmailSender _emailSender;
+        private readonly ISmsSender _smsSender;
 
-        public EventHandler(IMessageHandler messageHandler, IEmailSender emailSender) //, AppMarketingDbDataContext context)
+        public EventHandler(IMessageHandler messageHandler, IEmailSender emailSender, ISmsSender smsSender) //, AppMarketingDbDataContext context)
         {
             _messageHandler = messageHandler;
             //_context = context;
             _emailSender = emailSender;
+            _smsSender = smsSender;
         }
 
         // To be reviewed ...
@@ -98,6 +101,9 @@ namespace REALWorks.NotificationService.EventHandlers
                 if (@event.NotificationType == 2)
                 {
                     // Send sms text
+                    string from = "+16042434804";
+
+                    await _smsSender.SendTextAsync( @event.NotificationRecipient, from, @event.NotificationBody);
                 }
             }
             catch (Exception ex)
