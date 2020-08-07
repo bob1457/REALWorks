@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using REALWorks.NotificationService.Services.EmailService;
+using REALWorks.NotificationService.Services.MessageService;
 using Twilio.Clients;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
@@ -15,13 +16,16 @@ namespace REALWorks.NotificationService.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly IEmailSender _emailSender;
+        private readonly ISmsSender _smsSender;
+
         private readonly ITwilioRestClient _client;
 
         //private readonly ISMTPMailSender _smtpMailSender;
 
-        public ValuesController(IEmailSender emailSender, ITwilioRestClient client)
+        public ValuesController(IEmailSender emailSender, ISmsSender smsSender, ITwilioRestClient client)
         {
             _emailSender = emailSender;
+            _smsSender = smsSender;
             _client = client;
         }
 
@@ -79,16 +83,24 @@ namespace REALWorks.NotificationService.Controllers
 
         [HttpPost]
         [Route("sendsms")]
-        public async Task<IActionResult> SendSmsText(MessageModel model)
+        public async Task<IActionResult> SendSmsText(/*MessageModel model*/)
         {
 
-            var message = MessageResource.Create(
-                to: new PhoneNumber(model.To),
-                from: new PhoneNumber(model.From),
-                body: model.Message,
-                client: _client); // pass in the custom client
+            //var message = MessageResource.Create(
+            //    to: new PhoneNumber(model.To),
+            //    from: new PhoneNumber(model.From),
+            //    body: model.Message,
+            //    client: _client); // pass in the custom client
 
-            return Ok(message.Sid);
+            //return Ok(message.Sid);
+
+            string to = "+16042434804";
+            string from = "16043497898";
+            string content = "Test sms....";
+
+            var result = _smsSender.SendTextAsync(to, from, content);
+
+            return Ok(result);
         }
     }
 }

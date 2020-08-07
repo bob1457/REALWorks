@@ -14,6 +14,8 @@ using REALWorks.MessagingServer.Messages;
 using REALWorks.NotificationService.Services.EmailService;
 using REALWorks.NotificationService.EventHandlers;
 using EventHandler = REALWorks.NotificationService.EventHandlers.EventHandler;
+using REALWorks.NotificationService.Services.MessageService;
+using Twilio.Clients;
 
 namespace REALWorks.NotificationService
 {
@@ -54,8 +56,16 @@ namespace REALWorks.NotificationService
             string mailPassword = mailConfigSection["Password"];
             //ISMTPMailSender smtpMailServer = new SMTPMailSender(mailHost, mailPort, mailUserName, mailPassword, mailSenderName); // original
 
+            var smsConfiguration = Config.GetSection("SmsSettings");
+            string accountSid = smsConfiguration["AccountSID"];
+            string authCode = smsConfiguration["AuthToken"];
+
+
             EmailSettings settings = new EmailSettings(mailHost, mailPort, mailSenderName, mailUserName, mailPassword);
             IEmailSender smtpMailServer = new EmailSender(settings);
+
+            //SmsSettings smsSettings = new SmsSettings(accountSid, authCode);
+            //ITwilioRestClient smsSender = new SmsSender();
 
             //var emailSender = new EmailSender();
             //var emailSettings = new EmailSettings();

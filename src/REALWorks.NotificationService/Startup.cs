@@ -79,6 +79,7 @@ namespace REALWorks.NotificationService
 
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSingleton<ISMTPMailSender, SMTPMailSender>();
+            services.AddSingleton<ISmsSender, TextSender>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

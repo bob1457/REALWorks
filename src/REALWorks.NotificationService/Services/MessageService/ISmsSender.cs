@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace REALWorks.NotificationService.Services.MessageService
 {
-    interface ISmsSender
+    public interface ISmsSender
     {
+        Task<string> SendTextAsync(string from, string to, string message);
     }
 }
