@@ -22,7 +22,7 @@ namespace REALWorks.MarketingCore.Entities
 
         public RentalApplicant(string firstName, string lastName, string contactTel, 
             string contactEmail, string contactSms, string contactOthers, int? annualIncome, int numberOfOccupant, 
-            bool? withChildren, LegalStatus legalStatus, string empoyedStatus, string reasonToMove,   DateTime created, DateTime updated )
+            bool? withChildren, LegalStatus legalStatus, string empoyedStatus, string credditRating, string reasonToMove,   DateTime created, DateTime updated )
         {
             FirstName = firstName;
             LastName = lastName;
@@ -34,6 +34,7 @@ namespace REALWorks.MarketingCore.Entities
             NumberOfOccupant = numberOfOccupant;
             WithChildren = withChildren;
             Status = legalStatus;
+            CreditRating = credditRating;
             EmpoyedStatus = empoyedStatus;            
             ReasonToMove = reasonToMove;
             Created = created;

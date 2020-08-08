@@ -29,7 +29,7 @@ namespace REALWorks.MarketingService.CommandHandlers
         {
             var applicant = new RentalApplicant(request.FirstName, request.LastName, request.ContactTel, request.ContactEmail,
                 request.ContactSms, request.ContactOthers, request.AnnualIncome, request.NumberOfOccupant, request.WithChildren, request.Status,
-                request.EmpoyedStatus, request.ReasonToMove, DateTime.Now, DateTime.Now);
+                request.EmpoyedStatus, request.CreditRating, request.ReasonToMove, DateTime.Now, DateTime.Now);
 
             await _context.AddAsync(applicant);
 

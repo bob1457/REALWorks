@@ -91,13 +91,13 @@ namespace REALWorks.AssetServer.CommandHandlers
             updatedOwner.IsActive = request.IsActive;
             updatedOwner.Notes = request.Notes;
             updatedOwner.UpdateDate = DateTime.Now;
-            //updatedOwner.City = request.City;
-            //updatedOwner.StreetNUmber = request.StreetNumber;
-            //updatedOwner.StateProvince = request.StateProvince;
-            //updatedOwner.ZipPostCode = request.ZipPostCode;
-            //updatedOwner.Country = request.Country;
+            updatedOwner.City = request.City;
+            updatedOwner.StreetNumber = request.StreetNumber;
+            updatedOwner.StateProvince = request.StateProvince;
+            updatedOwner.ZipPostCode = request.ZipPostCode;
+            updatedOwner.Country = request.Country;
             updatedOwner.Created = owner.Created;
-            updatedOwner.Modified = owner.Modified;
+            updatedOwner.Updated = owner.Modified;
 
             updatedOwner.Address = address;
 
