@@ -28,6 +28,7 @@ namespace REALWorks.MarketingService.QueryHandlers
                 .Include(c => c.Contact)
                 .Include(p => p.RentalProperty) //.ThenInclude(o => o.OpenHouse).ToList()                
                 .ThenInclude(a => a.Address)
+                .Include(rp => rp.RentalProperty).ThenInclude(p => p.OpenHouse)
                 .Include(rp => rp.RentalProperty)
                 .ThenInclude(i => i.PropertyImg).ToList()
                 //.Include(c => c.Contact)

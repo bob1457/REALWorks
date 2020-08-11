@@ -17,6 +17,8 @@ namespace REALWorks.MarketingService.ViewModels
         public bool IsActive { get; set; }
         public IList<PropertyImg> PropertyImages { get; set; }
 
+        public OpenHouse OpenHouseDetails { get; set; }
+
         public int RentalPropertyId { get; set; }
 
         public DateTime Created { get; set; }
