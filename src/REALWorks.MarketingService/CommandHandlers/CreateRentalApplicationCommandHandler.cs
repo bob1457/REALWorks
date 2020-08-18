@@ -41,7 +41,7 @@ namespace REALWorks.MarketingService.CommandHandlers
 
             try
             {
-                //await _context.SaveChangesAsync(); // commented out for testing only
+                await _context.SaveChangesAsync(); // commented out for testing only
 
                 Log.Information("New Applicatn from {ApplicantName} with Id {ApplicantId} has been created successfully", request.FirstName + " " + request.LastName, applicant.Id);
 
