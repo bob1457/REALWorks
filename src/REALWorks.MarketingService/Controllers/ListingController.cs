@@ -286,6 +286,15 @@ namespace REALWorks.MarketingService.Controllers
         }
 
         [HttpPost]
+        [Route("updatepenhouse")]
+        public async Task<IActionResult> UpdateOpenHouse([FromBody] CreateOpenHouseCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
+        [HttpPost]
         [Route("openhouse/addviewer")]
         public async Task<IActionResult> AddOpenHouseViewer([FromBody] CreateOpenHouseAttendeeCommand command)
         {

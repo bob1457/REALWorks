@@ -38,5 +38,20 @@ namespace REALWorks.MarketingCore.Entities
         public RentalProperty RentalProperty { get; private set; }
         public ICollection<OpenHouseViewer> OpenHouseViewer { get; private set; }
 
+
+        // Behaviors
+        public OpenHouse Update(OpenHouse openHouse, DateTime date, 
+            bool isActive, string startTime, string endTime, 
+            string notes)
+        {
+            openHouse.OpenhouseDate = date;
+            openHouse.IsActive = isActive;
+            openHouse.StartTime = startTime;
+            openHouse.EndTime = endTime;
+            openHouse.Notes = notes;
+
+            return this;
+        }
+
     }
 }
