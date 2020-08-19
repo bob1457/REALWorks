@@ -39,9 +39,9 @@ namespace REALWork.LeaseManagementService.Controllers
                 return BadRequest(400);
             }
 
-            await _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-            return Ok();
+            return Ok(result);
 
             //throw new NotImplementedException();
         }

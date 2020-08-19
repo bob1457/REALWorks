@@ -2,6 +2,7 @@
 using REALWork.LeaseManagementCore.Entities;
 using REALWork.LeaseManagementData;
 using REALWork.LeaseManagementService.Commands;
+using REALWork.LeaseManagementService.ViewModels;
 using REALWorks.MessagingServer.Messages;
 using Serilog;
 using System;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace REALWork.LeaseManagementService.CommandHandlers
 {
-    public class AddRentPaymentCommandHandler : IRequestHandler<AddRentPaymentCommand, Unit>
+    public class AddRentPaymentCommandHandler : IRequestHandler<AddRentPaymentCommand, RentPaymentHistoryViewModel>
     {
 
         private readonly AppLeaseManagementDbContext _context;
@@ -26,7 +27,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
         }
 
 
-        public async Task<Unit> Handle(AddRentPaymentCommand request, CancellationToken cancellationToken)
+        public async Task<RentPaymentHistoryViewModel> Handle(AddRentPaymentCommand request, CancellationToken cancellationToken)
         {
             var lease = _context.Lease.FirstOrDefault(l => l.Id == request.LeaseId);
 
@@ -40,11 +41,27 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
             _context.RentPayment.Add(rent);
 
+            var added = new RentPaymentHistoryViewModel();
+
+            added.ScheduledPaymentAmt = rent.ScheduledPaymentAmt;
+            added.ActualPaymentAmt = rent.ActualPaymentAmt;
+            added.PaymentDueDate = rent.PaymentDueDate;
+            added.PayMethod = rent.PayMethod;
+            added.PaymentDueDate = rent.PaymentDueDate;
+            added.PaymentReceivedDate = rent.PaymentReceivedDate;
+            added.IsOnTime = rent.IsOnTime;
+            added.Note = rent.Note;
+            added.Balance = rent.Balance;
+            added.RentalForMonth = rent.RentalForMonth;
+            added.RentalForYear = rent.RentalForYear;
+
+
+
             try
             {
                 await _context.SaveChangesAsync(); // comment out for testing message sending ONLY
 
-
+                added.Id = rent.Id;
                 // Send message to MQ if needed - notification
                 //
 
@@ -58,7 +75,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
                 Log.Error(ex, "Error while adding rent payment to lease {LeaseTile}.", lease.LeaseTitle);
             }
 
-            return await Unit.Task;
+            return added;
 
             //throw new NotImplementedException();
         }

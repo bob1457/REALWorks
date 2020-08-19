@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using REALWork.LeaseManagementService.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using static REALWork.LeaseManagementCore.Entities.RentPayment;
 
 namespace REALWork.LeaseManagementService.Commands
 {
-    public class AddRentPaymentCommand: IRequest<Unit>
+    public class AddRentPaymentCommand: IRequest<RentPaymentHistoryViewModel>
     {
         public int LeaseId { get; set; }
         public decimal ScheduledPaymentAmt { get; set; }
