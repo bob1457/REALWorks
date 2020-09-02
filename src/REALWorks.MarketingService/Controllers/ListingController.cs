@@ -263,6 +263,32 @@ namespace REALWorks.MarketingService.Controllers
 
 
         [HttpGet]
+        [Route("allopenhouses")]
+        public async Task<IActionResult> GetAllOpenHouses()
+        {
+            try
+            {
+                var openhouses = await _mediator.Send(new OpenHOuseListQuery());
+
+                if (openhouses == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(openhouses);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
+
+
+
+        [HttpGet]
         [Route("property/id")]
         public async Task<IActionResult> GetRentalPropertyDetails(int id)
         {

@@ -26,7 +26,9 @@ namespace REALWorks.MarketingService.QueryHandlers
 
         public async Task<IQueryable<OpenHouse>> Handle(OpenHOuseListQuery request, CancellationToken cancellationToken)
         {
-            var openHouseList = _context.OpenHouse.Include(p => p.RentalProperty).AsQueryable();
+            var openHouseList = _context.OpenHouse
+                .Include(v => v.OpenHouseViewer)
+                .Include(p => p.RentalProperty).AsQueryable();
 
             return openHouseList;
 

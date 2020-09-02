@@ -1,4 +1,5 @@
-﻿using REALWorks.MarketingCore.ValueObjects;
+﻿using REALWorks.MarketingCore.Entities;
+using REALWorks.MarketingCore.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,8 +39,10 @@ namespace REALWorks.MarketingService.ViewModels
         public string streetCity { get; set; }
         public string streetProvState { get; set; }
         public string streetPostZipCode { get; set; }
-        
-        
+
+        public PropertyListing Listing { get; set; }
+
+        public List<OpenHouseViewer> Viewers { get; set; }
 
     }
 }

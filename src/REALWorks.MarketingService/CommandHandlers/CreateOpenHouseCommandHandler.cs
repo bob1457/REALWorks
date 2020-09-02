@@ -28,7 +28,12 @@ namespace REALWorks.MarketingService.CommandHandlers
         public async Task<OpenHouseViewModel> Handle(CreateOpenHouseCommand request, CancellationToken cancellationToken)
         {
             var oh = new OpenHouse(request.RentalPropertyId, request.OpenhouseDate, request.StartTime, 
-                request.EndTime, request.IsActive, request.Notes, DateTime.Now, DateTime.Now);
+                request.EndTime, request.IsActive, request.Notes, DateTime.Now, DateTime.Now);            
+
+            var listing = await _context.PropertyListing
+                .Include(l=>l.Contact)
+                .Include(l=>l.RentalProperty)
+                .FirstAsync(l => l.RentalPropertyId == request.RentalPropertyId);
 
             _context.OpenHouse.Add(oh);
 
@@ -42,6 +47,7 @@ namespace REALWorks.MarketingService.CommandHandlers
 
             var openProeprty = _context.RentalProperty.Include(a => a.Address).FirstOrDefault(p => p.Id == request.RentalPropertyId);
 
+            newOpenHouse.RentalPropertyId = openProeprty.Id;
             newOpenHouse.PropertyName = openProeprty.PropertyName;
             newOpenHouse.PropertyType = openProeprty.PropertyType;
 
@@ -49,7 +55,8 @@ namespace REALWorks.MarketingService.CommandHandlers
             newOpenHouse.streetCity = openProeprty.Address.City;
             newOpenHouse.PropertyType = openProeprty.Address.StateProvince;
             newOpenHouse.streetPostZipCode = openProeprty.Address.ZipPostCode;
-
+            newOpenHouse.Listing = listing;
+            newOpenHouse.Viewers = null;
 
             try
             {

@@ -52,6 +52,54 @@ namespace REALWork.LeaseManagementService.Controllers
         //    }
         //}
 
+        #region Service Request
+
+        [HttpPost]
+        [Route("request/add")]
+        public async Task<IActionResult> AddServiceRequest([FromBody] AddServiceRequestCommand command)
+        {
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(400);
+            }
+
+            var request = await _mediator.Send(command);
+
+            return Ok(request);
+        }
+
+
+        #endregion
+
+        #region Vendor and Work Order
+
+        [HttpGet]
+        [Route("vendor/all")]
+        public async Task<IActionResult> GetAllVendors()
+        {           
+            try
+            {
+                var vendors = await _mediator.Send(new AllVendorsListQuery());
+
+                if (vendors == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(vendors);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
         [HttpPost]
         [Route("vendor/add")]
         public async Task<IActionResult> AddVendor([FromBody] AddVendorCommand command)
@@ -150,7 +198,32 @@ namespace REALWork.LeaseManagementService.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("all")]
+        public async Task<IActionResult> GetWorkOrderList()
+        {
+            try
+            {
+                var workOrders = await _mediator.Send(new AllWorkOrdersQuery());
 
+                if (workOrders == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(workOrders);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
+        #endregion
+
+
+        #region Invoice
 
 
         [HttpPost]
@@ -194,25 +267,10 @@ namespace REALWork.LeaseManagementService.Controllers
 
 
 
-        [HttpPost]
-        [Route("request/add")]
-        public async Task<IActionResult> AddServiceRequest([FromBody] AddServiceRequestCommand command)
-        {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
+        
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(400);
-            }
 
-            var request = await _mediator.Send(command);
-
-            return Ok(request);
-        }
-
+        #endregion
 
         //[HttpGet]
         //[Route("request/{id}")]

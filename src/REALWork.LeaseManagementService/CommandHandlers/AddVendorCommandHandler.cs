@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace REALWork.LeaseManagementService.CommandHandlers
 {
-    public class AddVendorCommandHandler : IRequestHandler<AddVendorCommand, Unit>
+    public class AddVendorCommandHandler : IRequestHandler<AddVendorCommand, Vendor>
     {
         private readonly AppLeaseManagementDbContext _context;
 
@@ -20,7 +20,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             _context = context;
         }
 
-        public async Task<Unit> Handle(AddVendorCommand request, CancellationToken cancellationToken)
+        public async Task<Vendor> Handle(AddVendorCommand request, CancellationToken cancellationToken)
         {
             // Check if the email already exist (enforce unique email) 
             //
@@ -45,7 +45,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
                 Log.Error(ex, "Error while adding the vendor {VendorName}.", vendor.VendorBusinessName);
             }
 
-            return await Unit.Task;
+            return vendor;
 
             //throw new NotImplementedException();
         }

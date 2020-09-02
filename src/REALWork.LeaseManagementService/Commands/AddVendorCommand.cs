@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using REALWork.LeaseManagementCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace REALWork.LeaseManagementService.Commands
 {
-    public class AddVendorCommand: IRequest<Unit>
+    public class AddVendorCommand: IRequest<Vendor>
     {
         public string UserName { get;  set; }
         public string VendorBusinessName { get;  set; }

@@ -8,7 +8,7 @@ using static REALWork.LeaseManagementCore.Entities.ServiceRequest;
 
 namespace REALWork.LeaseManagementService.Commands
 {
-    public class AddServiceRequestCommand: IRequest<ServiceRequest>
+    public class AddServiceRequestCommand : IRequest<ServiceRequest>
     {
         public string RequestSubject { get; set; }
         public string ServiceCategory { get; set; }

@@ -47,7 +47,7 @@ namespace REALWork.LeaseManagementCore.Entities
         }
 
         public string RequestSubject { get; private set; }
-        public string ServiceCategory { get; private set; }
+        public string ServiceCategory { get; private set; } // Plumbing, Applicances, 
         public string RequestDetails { get; private set; }
         public UrgencyLevel Urgent { get; private set; }
         public RequestStatus Status { get; private set; }

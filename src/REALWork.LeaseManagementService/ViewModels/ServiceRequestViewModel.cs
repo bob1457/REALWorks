@@ -12,7 +12,7 @@ namespace REALWork.LeaseManagementService.ViewModels
         public string ServiceCategory { get; set; }
         public string RequestDetails { get; set; }
         public UrgencyLevel Urgent { get; set; }
-        public RequestStatus Status { get; set; }        
+        public RequestStatus Status { get; set; }
         public string Notes { get; set; }
 
         public int LeaseId { get; set; }
