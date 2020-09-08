@@ -8,6 +8,7 @@ namespace REALWork.LeaseManagementService.ViewModels
 {
     public class ServiceRequestViewModel
     {
+        public int Id { get; set; } // Service request Id
         public string RequestSubject { get; set; }
         public string ServiceCategory { get; set; }
         public string RequestDetails { get; set; }
@@ -30,6 +31,10 @@ namespace REALWork.LeaseManagementService.ViewModels
         public string ContactTelephone1 { get; set; }
 
         public string WorkOrderName { get; set; }
+
+        public DateTime Created { get; set; }
+
+        public DateTime Updated { get; set; }
 
     }
 }

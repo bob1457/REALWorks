@@ -74,6 +74,28 @@ namespace REALWork.LeaseManagementService.Controllers
         }
 
 
+        [HttpGet]
+        [Route("ServiceRequest/all")]
+        public async Task<IActionResult> GetAllServiceRequests()
+        {
+            try
+            {
+                var requests = await _mediator.Send(new AllServiceRequestsQuery());
+
+                if (requests == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(requests);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
         #endregion
 
         #region Vendor and Work Order
@@ -92,6 +114,33 @@ namespace REALWork.LeaseManagementService.Controllers
                 }
 
                 return Ok(vendors);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
+        [HttpGet]
+        [Route("vendor/details/{id}")]
+        public async Task<IActionResult> GetVendorDetails(int id)
+        {
+            var getOrderDetails = new VendorDetailsQuery()
+            {
+                Id = id
+            };
+
+            try
+            {
+                var vendor = await _mediator.Send(getOrderDetails);
+
+                if (vendor == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(vendor);
             }
             catch (Exception ex)
             {
@@ -171,18 +220,45 @@ namespace REALWork.LeaseManagementService.Controllers
         }
 
 
+        //[HttpGet]
+        //[Route("rental/{id}")]
+        //public async Task<IActionResult> GetAllWorkOrders(int id)
+        //{
+        //    var getOrderList = new WorkOrderListForPropertyQuery()
+        //    {
+        //        PropertyId = id
+        //    };
+
+        //    try
+        //    {
+        //        var orders = await _mediator.Send(getOrderList);
+
+        //        if (orders == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        return Ok(orders);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+
+        //    }
+        //}
+
         [HttpGet]
-        [Route("rental/{id}")]
-        public async Task<IActionResult> GetAllWorkOrders(int id)
+        [Route("details/{id}")] // Get work order details
+        public async Task<IActionResult> GetWorkOrderDetails(int id)
         {
-            var getOrderList = new WorkOrderListForPropertyQuery()
+            var getOrderDetails = new WorkOrderDetailsQuery()
             {
-                PropertyId = id
+                Id = id
             };
 
             try
             {
-                var orders = await _mediator.Send(getOrderList);
+                var orders = await _mediator.Send(getOrderDetails);
 
                 if (orders == null)
                 {
