@@ -48,8 +48,8 @@ namespace REALWork.LeaseManagementCore.Entities
         //public decimal InvoiceAmount { get; private set; }
         //public string InvoiceDocUrl { get; private set; }
         //public DateTime InvoiceDate { get; private set; }
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
+        public DateTime? StartDate { get; private set; }
+        public DateTime? EndDate { get; private set; }
         public bool IsOwnerAuthorized { get; private set; }
         public bool IsEmergency { get; private set; }
         public string WorkOrderStatus { get; private set; }

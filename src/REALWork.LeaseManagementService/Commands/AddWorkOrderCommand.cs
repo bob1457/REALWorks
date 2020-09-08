@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using REALWork.LeaseManagementCore.Entities;
+using REALWork.LeaseManagementService.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace REALWork.LeaseManagementService.Commands
 {
-    public class AddWorkOrderCommand : IRequest<WorkOrder>
+    public class AddWorkOrderCommand : IRequest<WorkOrderListViewModel>
     {
         public string WorkOrderName { get;  set; }
         public string WorkOrderDetails { get;  set; }

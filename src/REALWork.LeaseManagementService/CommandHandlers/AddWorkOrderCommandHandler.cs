@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using REALWork.LeaseManagementCore.Entities;
 using REALWork.LeaseManagementData;
 using REALWork.LeaseManagementService.Commands;
+using REALWork.LeaseManagementService.ViewModels;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace REALWork.LeaseManagementService.CommandHandlers
 {
-    public class AddWorkOrderCommandHandler : IRequestHandler<AddWorkOrderCommand, WorkOrder>
+    public class AddWorkOrderCommandHandler : IRequestHandler<AddWorkOrderCommand, WorkOrderListViewModel>
     {
 
         private readonly AppLeaseManagementDbContext _context;
@@ -21,7 +23,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             _context = context;
         }
 
-        public async Task<WorkOrder> Handle(AddWorkOrderCommand request, CancellationToken cancellationToken)
+        public async Task<WorkOrderListViewModel> Handle(AddWorkOrderCommand request, CancellationToken cancellationToken)
         {
 
             var property = _context.RentalProperty.FirstOrDefault(p => p.Id == request.RentalPropertyId);
@@ -31,6 +33,8 @@ namespace REALWork.LeaseManagementService.CommandHandlers
                 request.Note);
 
             _context.WorkOrder.Add(workOrder);
+
+            var newWorkOrder = new WorkOrderListViewModel();
 
             try
             {
@@ -47,12 +51,21 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
             var serviceReq = _context.Request.FirstOrDefault(r => r.Id == request.ServiceRequestId);
 
-            var lease = _context.Lease.FirstOrDefault(l => l.RentalPropertyId == property.Id);
+            var lease = _context.Lease.Include(l => l.ServiceRequest).FirstOrDefault(l => l.RentalPropertyId == property.Id);
 
             var updatedReq = lease.UpdateServiceRequest(serviceReq, 2, workOrder.Id);
 
             _context.Request.Update(updatedReq);
 
+
+
+            newWorkOrder.Id = workOrder.Id;
+            newWorkOrder.WorkOrderName = workOrder.WorkOrderName;
+            newWorkOrder.StartDate = null;
+            newWorkOrder.EndDate = null;
+            newWorkOrder.WorkOrderType = workOrder.WorkOrderType;
+            newWorkOrder.IsEmergency = workOrder.IsEmergency;
+            newWorkOrder.WorkOrderStatus = workOrder.WorkOrderStatus;
 
             try
             {
@@ -67,7 +80,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             }
             
 
-            return workOrder;
+            return newWorkOrder;
 
             //throw new NotImplementedException();
         }
