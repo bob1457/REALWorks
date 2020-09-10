@@ -19,6 +19,9 @@ namespace REALWork.LeaseManagementService.ViewModels
         public DateTime? EndDate { get;  set; }
         public bool IsEmergency { get;  set; }
         public string WorkOrderStatus { get;  set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
+
 
     }
 }

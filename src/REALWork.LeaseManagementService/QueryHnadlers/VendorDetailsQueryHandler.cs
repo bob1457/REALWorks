@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using REALWork.LeaseManagementCore.Entities;
 using REALWork.LeaseManagementData;
 using REALWork.LeaseManagementService.Queries;
@@ -23,7 +24,9 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
         {
             //throw new NotImplementedException();
 
-            var vendor = _context.Vendor;
+            var vendor = _context.Vendor
+                .Include(v => v.WorkOrder)
+                .ToList();
 
             return vendor.FirstOrDefault(v => v.Id == request.Id);
         }

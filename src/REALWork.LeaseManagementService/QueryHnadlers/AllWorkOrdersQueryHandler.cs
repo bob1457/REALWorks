@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using REALWork.LeaseManagementData;
 using REALWork.LeaseManagementService.Queries;
 using REALWork.LeaseManagementService.ViewModels;
 using System;
@@ -11,9 +13,38 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
 {
     public class AllWorkOrdersQueryHandler : IRequestHandler<AllWorkOrdersQuery, IQueryable<WorkOrderListViewModel>>
     {
-        public Task<IQueryable<WorkOrderListViewModel>> Handle(AllWorkOrdersQuery request, CancellationToken cancellationToken)
+        private readonly AppLeaseManagementDbContext _context;
+
+        public AllWorkOrdersQueryHandler(AppLeaseManagementDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<IQueryable<WorkOrderListViewModel>> Handle(AllWorkOrdersQuery request, CancellationToken cancellationToken)
+        {
+            var workOrders = _context.WorkOrder
+                .Include(w => w.Vendor)
+                .Include(w => w.RentalProperty)
+                .Select(wo => new WorkOrderListViewModel
+                {
+                    Id = wo.Id,
+                    WorkOrderName = wo.WorkOrderName,
+                    WorkOrderCategory = wo.WorkOrderCategory,
+                    WorkOrderType = wo.WorkOrderType,
+                    WorkOrderStatus = wo.WorkOrderStatus,
+                    StartDate = wo.StartDate,
+                    EndDate = wo.EndDate,
+                    VendorName = wo.Vendor.VendorBusinessName,
+                    RentalPropertyName = wo.RentalProperty.PmUserName,
+                    Created = wo.Created,
+                    Updated = wo.Modified
+                    
+
+                });
+
+            return workOrders.AsQueryable();
+                
+
+            //throw new NotImplementedException();
         }
     }
 }

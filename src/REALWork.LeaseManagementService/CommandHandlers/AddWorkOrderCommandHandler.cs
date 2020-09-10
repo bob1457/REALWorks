@@ -66,6 +66,8 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             newWorkOrder.WorkOrderType = workOrder.WorkOrderType;
             newWorkOrder.IsEmergency = workOrder.IsEmergency;
             newWorkOrder.WorkOrderStatus = workOrder.WorkOrderStatus;
+            newWorkOrder.Created = workOrder.Created;
+            newWorkOrder.Updated = workOrder.Modified;
 
             try
             {
