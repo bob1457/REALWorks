@@ -20,6 +20,8 @@ namespace REALWork.LeaseManagementService.ViewModels
         public bool IsActive { get; private set; }        
         public bool OnlineAccessEnbaled { get; private set; }
         public string UserAvartaImgUrl { get; private set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
 
         public IList<WorkOrder> WrokOrderList { get; set; }
     }

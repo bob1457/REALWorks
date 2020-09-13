@@ -44,7 +44,7 @@ namespace REALWorks.AssetServer.Queries
                                    Notes = c.Notes,
                                    IsActive = c.IsActive,
                                    Created = c.Created,
-                                   Updated = c.Modified
+                                   Modified = c.Modified
                                };
 
             return contractList.AsQueryable();

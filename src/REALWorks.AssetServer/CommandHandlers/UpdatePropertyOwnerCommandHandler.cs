@@ -97,7 +97,7 @@ namespace REALWorks.AssetServer.CommandHandlers
             updatedOwner.ZipPostCode = request.ZipPostCode;
             updatedOwner.Country = request.Country;
             updatedOwner.Created = owner.Created;
-            updatedOwner.Updated = owner.Modified;
+            updatedOwner.Modified = owner.Modified;
 
             updatedOwner.Address = address;
 

@@ -24,9 +24,16 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
         {
             //throw new NotImplementedException();
 
+            //var result = (from v in _context.Vendor
+            //              join wo in _context.WorkOrder on v.Id equals wo.VendorId
+            //              join rp in _context.RentalProperty on wo.RentalPropertyId equals rp.Id
+            //              )
+
+
             var vendor = _context.Vendor
                 .Include(v => v.WorkOrder)
-                .ToList();
+                //
+                .ThenInclude(w => w.RentalProperty).ToList(); // newly added;
 
             return vendor.FirstOrDefault(v => v.Id == request.Id);
         }

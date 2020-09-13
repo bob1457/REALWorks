@@ -57,11 +57,12 @@ namespace REALWorks.AssetServer.CommandHandlers
                 updatedView.Notes = request.Notes;
                 updatedView.solicitingOnly = request.SolicitingOnly;
                 updatedView.PropertyName = contract.Property.PropertyName;
+                updatedView.Type = contract.Type;
                 //updatedView.PropertyStreet = contract.Property.Address.PropertyStreet;
 
 
                 updatedView.Created = contract.Created;
-                updatedView.Updated = DateTime.Now;
+                updatedView.Modified = DateTime.Now;
 
                 updatedView.Property = rentedProperty.FirstOrDefault(p => p.Id == contract.PropertyId);
 

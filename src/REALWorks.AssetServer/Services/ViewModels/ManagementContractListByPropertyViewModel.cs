@@ -11,6 +11,9 @@ namespace REALWorks.AssetServer.Services.ViewModels
     {
         public int Id { get; set; }
         public string ManagementContractTitle { get; set; }
+
+        public ContractType Type { get; set; }
+
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string PlacementFeeScale { get; set; }
@@ -26,7 +29,7 @@ namespace REALWorks.AssetServer.Services.ViewModels
         public bool solicitingOnly { get; set; }
         public string Notes { get; set; }
         public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
+        public DateTime Modified { get; set; }
 
         public Property Property { get; set; }
 

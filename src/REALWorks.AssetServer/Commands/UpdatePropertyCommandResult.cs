@@ -29,7 +29,7 @@ namespace REALWorks.AssetServer.Commands
         public string PropertyStateProvince { get; set; }
         public string PropertyCountry { get; set; }
         public string PropertyZipPostCode { get; set; }         
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreationDate { get; set; }
         public DateTime UpdateDate { get; set; }
 
 

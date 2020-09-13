@@ -31,7 +31,7 @@ namespace REALWorks.AssetServer.Commands
         public string Country { get; set; }
 
         public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
+        public DateTime Modified { get; set; }
 
         public UpdatedOwnerAddress Address { get; set; }
 

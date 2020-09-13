@@ -117,7 +117,7 @@ namespace REALWorks.AssetServer.CommandHandlers
             updatedProperty.PropertyType1 = request.PropertyType1.ToString(); //***************************************************************
 
             updatedProperty.UtilityIncluded = request.UtilityIncluded;
-            updatedProperty.CreatedDate = ppt.Created;
+            updatedProperty.CreationDate = ppt.Created;
             updatedProperty.UpdateDate = updated.Modified;
 
             updatedProperty.OwnerList = owners;

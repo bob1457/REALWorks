@@ -34,7 +34,9 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
                     StartDate = wo.StartDate,
                     EndDate = wo.EndDate,
                     VendorName = wo.Vendor.VendorBusinessName,
-                    RentalPropertyName = wo.RentalProperty.PmUserName,
+                    VendorId = wo.Vendor.Id,
+                    RentalPropertyId = wo.RentalProperty.Id,
+                    RentalPropertyName = wo.RentalProperty.PropertyName,
                     Created = wo.Created,
                     Updated = wo.Modified
                     

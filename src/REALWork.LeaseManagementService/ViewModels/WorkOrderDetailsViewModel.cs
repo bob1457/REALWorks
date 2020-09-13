@@ -8,6 +8,7 @@ namespace REALWork.LeaseManagementService.ViewModels
 {
     public class WorkOrderDetailsViewModel
     {
+        public int Id { get; set; }
         public string WorkOrderName { get;  set; }
         public string WorkOrderDetails { get;  set; }
         public string WorkOrderCategory { get;  set; }
@@ -17,8 +18,8 @@ namespace REALWork.LeaseManagementService.ViewModels
         //public decimal InvoiceAmount { get;  set; }
         //public string InvoiceDocUrl { get;  set; }
         //public DateTime InvoiceDate { get;  set; }
-        public DateTime StartDate { get;  set; }
-        public DateTime EndDate { get;  set; }
+        public DateTime? StartDate { get;  set; }
+        public DateTime?EndDate { get;  set; }
         public bool IsOwnerAuthorized { get;  set; }
         public bool IsEmergency { get;  set; }
         public string WorkOrderStatus { get;  set; }
@@ -27,6 +28,8 @@ namespace REALWork.LeaseManagementService.ViewModels
         //public string PaymentMethod { get;  set; }
         //public decimal? PaymentAmount { get;  set; }        
         public string Note { get;  set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
 
         public RentalProperty RentalProperty { get;  set; }
         public Invoice Invoice { get;  set; }

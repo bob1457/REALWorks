@@ -50,7 +50,7 @@ namespace REALWorks.MarketingService.CommandHandlers
 
             _context.PropertyListing.Update(updated);
 
-            var updatedList = new PropertyListingUpdateViewModel();
+            var updatedList = new PropertyListingUpdateViewModel();  // need to include all images?
 
             updatedList.Id = updated.Id;
             updatedList.RentalPropertyId = updated.RentalPropertyId;
