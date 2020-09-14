@@ -98,6 +98,29 @@ namespace REALWork.LeaseManagementService.Controllers
         }
 
         [HttpGet]
+        [Route("renthistory")]
+        public async Task<IActionResult> GetRentPaymentHistory() //id: lease id
+        {            
+            try
+            {
+                var rentpayments = await _mediator.Send(new AllRentPaymentHistoryQuery());
+
+                if (rentpayments == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(rentpayments);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
+
+        [HttpGet]
         [Route("rentpayment/{id}")]
         public async Task<IActionResult> GetRentPaymentDetails(int id) //id: rent payment id
         {

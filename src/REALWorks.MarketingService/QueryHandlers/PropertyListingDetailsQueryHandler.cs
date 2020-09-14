@@ -26,9 +26,9 @@ namespace REALWorks.MarketingService.QueryHandlers
         {
             var listing = _context.PropertyListing
                 .Include(c => c.Contact)
-                .Include(p => p.RentalProperty) //.ThenInclude(o => o.OpenHouse).ToList()                
+                .Include(p => p.RentalProperty)                
                 .ThenInclude(a => a.Address)
-                .Include(rp => rp.RentalProperty).ThenInclude(p => p.OpenHouse).ThenInclude(o => o.OpenHouseViewer)
+                //.Include(rp => rp.RentalProperty).ThenInclude(p => p.OpenHouse).ThenInclude(o => o.OpenHouseViewer) // use a separate query to get open house data
                 .Include(rp => rp.RentalProperty)
                 .ThenInclude(i => i.PropertyImg).ToList()
                 //.Include(c => c.Contact)

@@ -26,7 +26,7 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
                 .Include(p => p.RentalProperty).ThenInclude(a => a.Address)
                 .Include(l => l.RentalProperty).ThenInclude(p => p.RentalPropertyOwners)
                 .Include(a => a.Agent)
-                .Include(l => l.RentPayment)
+                .Include(l => l.RentPayment) // considering not inlcuded here, instead use a separate process
                 .Include(t => t.Tenant).ToList();
 
             //var rentalProperty = _context.RentalProperty
