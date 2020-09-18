@@ -121,7 +121,7 @@ namespace REALWork.LeaseManagementService.Controllers
 
 
         [HttpGet]
-        [Route("rentpayment/{id}")]
+        [Route("details/{id}")]
         public async Task<IActionResult> GetRentPaymentDetails(int id) //id: rent payment id
         {
             var getPayment = new RentPaymentDetailsQuery

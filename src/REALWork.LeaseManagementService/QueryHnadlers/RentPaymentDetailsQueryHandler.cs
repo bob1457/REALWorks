@@ -22,7 +22,10 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
 
         public async Task<RentPayment> Handle(RentPaymentDetailsQuery request, CancellationToken cancellationToken)
         {
-            var payment = _context.RentPayment.Include(l => l.Lease).ThenInclude(p => p.RentalProperty).FirstOrDefault(l => l.Id == request.Id);
+            var payment = _context.RentPayment
+                .Include(l => l.Lease)
+                .ThenInclude(p => p.RentalProperty)
+                .FirstOrDefault(l => l.Id == request.Id);
 
             return payment;
 

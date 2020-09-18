@@ -38,7 +38,8 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
                                       select new RentPaymentHistoryViewModel
                                       {
                                           LeaseTitle = lease.LeaseTitle,
-                                          Id = lease.Id,
+                                          Id = rent.Id,
+                                          LeaseId = lease.Id,
                                           PropertyName = property.PropertyName,
 
                                           FirstName = tenant.FirstName,

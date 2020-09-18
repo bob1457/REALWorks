@@ -21,6 +21,8 @@ namespace REALWork.LeaseManagementService.ViewModels
         public string RentalForMonth { get; set; }
         public string RentalForYear { get; set; }
 
+        public int LeaseId { get; set; }
+
         public int Id { get; set; }
         public string LeaseTitle { get; set; }
 
@@ -30,6 +32,9 @@ namespace REALWork.LeaseManagementService.ViewModels
         public string LastName { get; set; }
         public string ContactEmail { get; set; }
         public string ContactTelephone1 { get; set; }
+
+        public DateTime Created { get; set; }
+        public DateTime Modified { get; set; }
 
     }
 }

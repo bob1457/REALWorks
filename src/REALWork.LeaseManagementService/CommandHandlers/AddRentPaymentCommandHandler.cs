@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using REALWork.LeaseManagementCore.Entities;
 using REALWork.LeaseManagementData;
 using REALWork.LeaseManagementService.Commands;
@@ -29,11 +30,15 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
         public async Task<RentPaymentHistoryViewModel> Handle(AddRentPaymentCommand request, CancellationToken cancellationToken)
         {
-            var lease = _context.Lease.FirstOrDefault(l => l.Id == request.LeaseId);
+           
+            var lease = _context.Lease.Include(l => l.Tenant).FirstOrDefault(l => l.Id == request.LeaseId);
 
-            var rent = lease.AddRent(request.LeaseId, request.ScheduledPaymentAmt, request.ActualPaymentAmt, request.PayMethod,
+            var tenantId = lease.Tenant.FirstOrDefault().Id;
+            
+
+            var rent = lease.AddRent(request.LeaseId, /*request.ScheduledPaymentAmt*/lease.RentAmount, request.ActualPaymentAmt, request.PayMethod,
                 request.PaymentDueDate, request.PaymentReceivedDate, request.Balance, request.IsOnTime, request.RentalForMonth,
-                request.RentalForYear, request.InChargeTenantId, request.Note, DateTime.Now, DateTime.Now);
+                request.RentalForYear, /*request.InChargeTenantId*/tenantId, request.Note, DateTime.Now, DateTime.Now);
 
             //var rent = new RentPayment(request.LeaseId, request.ScheduledPaymentAmt, request.ActualPaymentAmt, request.PayMethod,
             //    request.PaymentDueDate, request.PaymentReceivedDate, request.Balance, request.IsOnTime, request.RentalForMonth, 
@@ -54,7 +59,9 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             added.Balance = rent.Balance;
             added.RentalForMonth = rent.RentalForMonth;
             added.RentalForYear = rent.RentalForYear;
-
+            added.LeaseId = rent.LeaseId;
+            added.Created = rent.Created;
+            added.Modified = rent.Modified;
 
 
             try
