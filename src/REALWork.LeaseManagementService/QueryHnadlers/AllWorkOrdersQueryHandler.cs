@@ -24,6 +24,7 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
             var workOrders = _context.WorkOrder
                 .Include(w => w.Vendor)
                 .Include(w => w.RentalProperty)
+                .ThenInclude(p => p.Lease)
                 .Select(wo => new WorkOrderListViewModel
                 {
                     Id = wo.Id,
@@ -36,6 +37,7 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
                     VendorName = wo.Vendor.VendorBusinessName,
                     VendorId = wo.Vendor.Id,
                     RentalPropertyId = wo.RentalProperty.Id,
+                    LeaseId = wo.RentalProperty.Lease.FirstOrDefault().Id,
                     RentalPropertyName = wo.RentalProperty.PropertyName,
                     Created = wo.Created,
                     Updated = wo.Modified

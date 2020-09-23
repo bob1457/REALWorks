@@ -11,6 +11,7 @@ namespace REALWork.LeaseManagementService.ViewModels
         public string WorkOrderName { get;  set; }        
         public string WorkOrderCategory { get;  set; }
         public int RentalPropertyId { get;  set; }
+        public int LeaseId { get; set; }
         public string RentalPropertyName { get; set; }
         public int VendorId { get;  set; }
         public string VendorName { get; set; }
