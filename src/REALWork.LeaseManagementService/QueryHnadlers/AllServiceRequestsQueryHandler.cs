@@ -35,6 +35,7 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
                                 Urgent = req.Urgent,
                                 Status = req.Status,
                                 Notes = req.Notes,
+                                LeaseId = lease.Id,
 
                                 PropertyName = property.PropertyName,
                                 RentalPropertyId = property.Id,
