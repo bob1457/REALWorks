@@ -41,6 +41,8 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
             orderDetails.WorkOrderType = workOrder.WorkOrderType;
             orderDetails.WorkOrderDetails = workOrder.WorkOrderDetails;
             orderDetails.Id = workOrder.Id;
+            orderDetails.VendorId = workOrder.Vendor.Id;
+            orderDetails.RentalPropertyId = workOrder.RentalProperty.Id;
             orderDetails.Created = workOrder.Created;
             orderDetails.Updated = workOrder.Modified;
 
