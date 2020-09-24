@@ -29,8 +29,13 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             var property = _context.RentalProperty.FirstOrDefault(p => p.Id == request.RentalPropertyId);
 
             var workOrder = property.AddWorkOrder(request.WorkOrderName, request.WorkOrderDetails, request.WorkOrderCategory, request.RentalPropertyId,
-                request.VendorId, request.WorkOrderType, request.StartDate, request.EndDate, request.IsOwnerAuthorized, request.IsEmergency, request.WorkOrderStatus,
+                request.VendorId, request.ServiceRequestId, request.WorkOrderType, request.StartDate, request.EndDate, request.IsOwnerAuthorized, request.IsEmergency, request.WorkOrderStatus,
                 request.Note);
+
+            var lease = _context.WorkOrder
+                .Include(w => w.RentalProperty)
+                .ThenInclude(p => p.Lease)
+                .FirstOrDefault(l => l.RentalPropertyId == property.Id);
 
             _context.WorkOrder.Add(workOrder);
 
@@ -49,37 +54,42 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             }
 
 
-            var serviceReq = _context.Request.FirstOrDefault(r => r.Id == request.ServiceRequestId);
+            //var serviceReq = _context.Request.FirstOrDefault(r => r.Id == request.ServiceRequestId);
 
-            var lease = _context.Lease.Include(l => l.ServiceRequest).FirstOrDefault(l => l.RentalPropertyId == property.Id);
+            //var lease = _context.Lease.Include(l => l.ServiceRequest).FirstOrDefault(l => l.RentalPropertyId == property.Id);
 
-            var updatedReq = lease.UpdateServiceRequest(serviceReq, 2, workOrder.Id);
+            //var updatedReq = lease.UpdateServiceRequest(serviceReq, 2, workOrder.Id);
 
-            _context.Request.Update(updatedReq);
+            //_context.Request.Update(updatedReq);
 
 
 
             newWorkOrder.Id = workOrder.Id;
             newWorkOrder.WorkOrderName = workOrder.WorkOrderName;
-            newWorkOrder.StartDate = null;
-            newWorkOrder.EndDate = null;
+            newWorkOrder.StartDate = workOrder.StartDate;
+            newWorkOrder.EndDate = workOrder.EndDate;
             newWorkOrder.WorkOrderType = workOrder.WorkOrderType;
             newWorkOrder.IsEmergency = workOrder.IsEmergency;
             newWorkOrder.WorkOrderStatus = workOrder.WorkOrderStatus;
+            newWorkOrder.ServiceRequestId = workOrder.ServiceRequestId;
             newWorkOrder.Created = workOrder.Created;
             newWorkOrder.Updated = workOrder.Modified;
+            newWorkOrder.LeaseId = lease.Id;
+            newWorkOrder.VendorId = workOrder.VendorId;
+            newWorkOrder.WorkOrderCategory = workOrder.WorkOrderCategory;
+            newWorkOrder.RentalPropertyId = workOrder.RentalPropertyId;
 
-            try
-            {
-                await _context.SaveChangesAsync();
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
 
-                Log.Information("Then service request  {ServiceRequest} has been updated successfully", serviceReq.RequestSubject);
-            }
-            catch (Exception ex)
-            {
-                //throw ex;
-                Log.Error(ex, "Error while updating the service request {ServiceRequest}.", serviceReq.RequestSubject);
-            }
+            //    Log.Information("Then service request  {ServiceRequest} has been updated successfully", serviceReq.RequestSubject);
+            //}
+            //catch (Exception ex)
+            //{
+            //    //throw ex;
+            //    Log.Error(ex, "Error while updating the service request {ServiceRequest}.", serviceReq.RequestSubject);
+            //}
             
 
             return newWorkOrder;

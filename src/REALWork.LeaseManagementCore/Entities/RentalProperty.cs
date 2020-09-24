@@ -97,9 +97,10 @@ namespace REALWork.LeaseManagementCore.Entities
         }
 
         public WorkOrder AddWorkOrder(string WorkOrderName, string WorkOrderDetails, string WorkOrderCategory, int RentalPropertyId,
-            int VendorId, string WorkOrderType, DateTime StartDate, DateTime EndDate, bool IsOwnerAuthorized, bool IsEmergency,
-            string WorkOrderStatus, string Note)        {
-            var order = new WorkOrder(WorkOrderName, WorkOrderDetails, WorkOrderCategory, RentalPropertyId, VendorId,
+            int VendorId, int ServiceRequestId, string WorkOrderType, DateTime StartDate, DateTime EndDate, bool IsOwnerAuthorized, bool IsEmergency,
+            string WorkOrderStatus, string Note) {
+
+            var order = new WorkOrder(WorkOrderName, WorkOrderDetails, WorkOrderCategory, RentalPropertyId, VendorId, ServiceRequestId,
                 WorkOrderType, StartDate, EndDate, IsOwnerAuthorized, IsEmergency, WorkOrderStatus, Note, DateTime.Now, DateTime.Now);
 
             return order;

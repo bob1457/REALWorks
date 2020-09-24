@@ -13,7 +13,7 @@ namespace REALWork.LeaseManagementCore.Entities
         }
 
         public WorkOrder(string workOrderName, string workOrderDetails, string workOrderCategory, 
-            int rentalPropertyId, int vendorId, string workOrderType, DateTime startDate, DateTime endDate, 
+            int rentalPropertyId, int vendorId, int serviceRequestId, string workOrderType, DateTime startDate, DateTime endDate, 
             bool isOwnerAuthorized, bool isEmergency, string workOrderStatus, string note, DateTime created, DateTime updated)
         {
             WorkOrderName = workOrderName;
@@ -21,6 +21,7 @@ namespace REALWork.LeaseManagementCore.Entities
             WorkOrderCategory = workOrderCategory;
             RentalPropertyId = rentalPropertyId;
             VendorId = vendorId;
+            ServiceRequestId = serviceRequestId;
             WorkOrderType = workOrderType;
             //InvoiceAmount = invoiceAmount;
             //InvoiceDocUrl = invoiceDocUrl;
@@ -44,6 +45,7 @@ namespace REALWork.LeaseManagementCore.Entities
         public string WorkOrderCategory { get; private set; }
         public int RentalPropertyId { get; private set; }
         public int VendorId { get; private set; }
+        public int ServiceRequestId { get; private set; }
         public string WorkOrderType { get; private set; }
         //public decimal InvoiceAmount { get; private set; }
         //public string InvoiceDocUrl { get; private set; }
@@ -62,7 +64,7 @@ namespace REALWork.LeaseManagementCore.Entities
         public RentalProperty RentalProperty { get; private set; }
         public Invoice Invoice { get; private set; }
         public Vendor Vendor { get; private set; }
-
+        
 
         public WorkOrder Update(string workOrderDetails, string workOrderCategory, string workOrderType, DateTime startDate, 
             DateTime endDate, string orderStatus, string note)

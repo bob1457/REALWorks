@@ -14,6 +14,7 @@ namespace REALWork.LeaseManagementService.ViewModels
         public string WorkOrderCategory { get;  set; }
         public int RentalPropertyId { get;  set; }
         public int VendorId { get;  set; }
+        public int ServiceRequestId { get; set; }
         public string WorkOrderType { get;  set; }
         //public decimal InvoiceAmount { get;  set; }
         //public string InvoiceDocUrl { get;  set; }
@@ -34,5 +35,6 @@ namespace REALWork.LeaseManagementService.ViewModels
         public RentalProperty RentalProperty { get;  set; }
         public Invoice Invoice { get;  set; }
         public Vendor Vendor { get;  set; }
+        public ServiceRequest ServiceRequest { get; set; }
     }
 }
