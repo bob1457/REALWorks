@@ -25,5 +25,7 @@ namespace REALWork.LeaseManagementService.ViewModels
         public RentalProperty RentalProperty { get; set; }
 
         public Lease Lease { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Modified { get; set; }
     }
 }

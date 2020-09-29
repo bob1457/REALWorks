@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using REALWorks.MarketingData;
 using REALWorks.MarketingService.Commands;
 using REALWorks.MarketingService.ViewModels;
@@ -21,7 +22,10 @@ namespace REALWorks.MarketingService.CommandHandlers
 
         public async Task<UpdateOpenHouseViewModel> Handle(UpdateOpenHouseCommand request, CancellationToken cancellationToken)
         {
-            var openHouse = _context.OpenHouse.FirstOrDefault(o => o.Id == request.Id);
+            var openHouse = _context.OpenHouse
+                .Include(p => p.RentalProperty)
+                .Include(o => o.OpenHouseViewer)                
+                .FirstOrDefault(o => o.Id == request.Id);
 
 
            var updated = openHouse.Update(openHouse, request.OpenhouseDate, request.IsActive, request.StartTime, request.EndTime, request.Notes);
@@ -36,6 +40,9 @@ namespace REALWorks.MarketingService.CommandHandlers
             updatedOH.IsActive = updated.IsActive;
             updatedOH.Notes = updated.Notes;
             updatedOH.Id = updated.Id;
+            updatedOH.OpenHouseViewer = openHouse.OpenHouseViewer.ToList();
+            updatedOH.RentalProperty = openHouse.RentalProperty;
+            updatedOH.RentalPropertyId = openHouse.RentalPropertyId;
 
             try
             {

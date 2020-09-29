@@ -44,6 +44,9 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             updated.ContactOthers = updatedTenant.ContactOthers;
             updated.ContactEmail = updatedTenant.ContactEmail;
             updated.UserAvartaImgUrl = updatedTenant.UserAvartaImgUrl;
+            updated.Created = updatedTenant.Created;
+            updated.Modified = updatedTenant.Modified;
+
 
             updated.Lease = lease;
             updated.RentalProperty = lease.RentalProperty;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using REALWorks.MarketingCore.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,5 +15,8 @@ namespace REALWorks.MarketingService.ViewModels
         public string StartTime { get; set; }
         public string EndTime { get; set; }
         public string Notes { get; set; }
+
+        public List<OpenHouseViewer> OpenHouseViewer { get; set; }
+        public RentalProperty RentalProperty { get; set; }
     }
 }

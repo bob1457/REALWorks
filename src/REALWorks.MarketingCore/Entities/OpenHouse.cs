@@ -49,6 +49,7 @@ namespace REALWorks.MarketingCore.Entities
             openHouse.StartTime = startTime;
             openHouse.EndTime = endTime;
             openHouse.Notes = notes;
+            openHouse.RentalPropertyId = openHouse.RentalPropertyId;
 
             return this;
         }
