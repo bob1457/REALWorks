@@ -20,9 +20,9 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
             _context = context;
         }
 
-        public async Task<Lease> Handle(LeaseDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<Lease> Handle(LeaseDetailsQuery request, CancellationToken cancellationToken) // need to refactor the query using view model
         {
-            var lease = _context.Lease
+            var lease = _context.Lease 
                 .Include(p => p.RentalProperty).ThenInclude(a => a.Address)
                 .Include(l => l.RentalProperty).ThenInclude(p => p.RentalPropertyOwners)
                 .Include(a => a.Agent)

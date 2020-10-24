@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.AuthServer.CommandHandlers
 {
-    public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, Unit>
+    public class UpdateUserProfileCommandHandler : IRequestHandler<UpdateUserProfileCommand, ApplicationUser>
     {
         private readonly ApplicationDbContext _appDbContext;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -34,7 +34,7 @@ namespace REALWorks.AuthServer.CommandHandlers
         }
 
 
-        public async Task<Unit> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
+        public async Task<ApplicationUser> Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
         {
             /*
             // Get the attached file
@@ -156,7 +156,7 @@ namespace REALWorks.AuthServer.CommandHandlers
 
             }
 
-            return await Unit.Task;
+            return user;
             //return "Error occured when updating user profile";
             //return new UserProfileViewModel();
 

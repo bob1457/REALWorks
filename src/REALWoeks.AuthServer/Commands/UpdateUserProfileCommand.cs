@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace REALWorks.AuthServer.Commands
 {
-    public class UpdateUserProfileCommand: IRequest<Unit>
+    public class UpdateUserProfileCommand: IRequest<ApplicationUser>
     {
         //public IFormFile AvatarImage { get; set; }
 
