@@ -46,7 +46,7 @@ namespace REALWork.LeaseManagementService
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            string dbConnectionString = Configuration.GetConnectionString("AppDbConnection2"); // DB: REALAsset2
+            string dbConnectionString = Configuration.GetConnectionString("AppDbConnection"); // DB: REALAsset2
 
             services.AddDbContext<AppLeaseManagementDbContext>(options =>
                      options.UseSqlServer(dbConnectionString, builder => builder.MigrationsAssembly("REALWork.LeaseManagementData")));
