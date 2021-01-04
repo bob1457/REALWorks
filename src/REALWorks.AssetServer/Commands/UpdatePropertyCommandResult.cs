@@ -9,10 +9,18 @@ namespace REALWorks.AssetServer.Commands
 {
     public class UpdatePropertyCommandResult
     {
+        public int Id { get; set; }
+
         public int PropertyId { get; set; }
+
+
         public string PropertyName { get; set; }
         public string PropertyDesc { get; set; }
         public string PropertyType1 { get; set; }
+
+        public string Type { get; set; }
+
+
         //public int PropertyManagerId { get; set; }
         public string PropertyLogoImgUrl { get; set; }
         //public string PropertyVideoUrl { get; set; }
@@ -30,6 +38,10 @@ namespace REALWorks.AssetServer.Commands
         public string PropertyCountry { get; set; }
         public string PropertyZipPostCode { get; set; }         
         public DateTime CreationDate { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+
+
         public DateTime UpdateDate { get; set; }
 
 

@@ -58,6 +58,8 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
                                  StartDate = w.StartDate,
                                  EndDate = w.EndDate,
                                  WorkOrderStatus = w.WorkOrderStatus,
+                                 WorkOrderType = w.WorkOrderType,
+                                 WorkOrderDetails = w.WorkOrderDetails,
                                  IsEmergency = w.IsEmergency,
                                  IsOwnerAuthorized = w.IsOwnerAuthorized,
                                  RentalProperty = p,
