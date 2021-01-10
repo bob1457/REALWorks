@@ -9,6 +9,8 @@ namespace REALWork.LeaseManagementService.ViewModels
     public class WorkOrderDetailsViewModel
     {
         public int Id { get; set; }
+
+        public int WorkOrderId { get; set; }
         public string WorkOrderName { get;  set; }
         public string WorkOrderDetails { get;  set; }
         public string WorkOrderCategory { get;  set; }

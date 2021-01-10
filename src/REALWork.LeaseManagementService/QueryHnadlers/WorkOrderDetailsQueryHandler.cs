@@ -68,6 +68,7 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
                                  Vendor = v,
                                  ServiceRequestId = r.Id,
                                  Id = w.Id,
+                                 WorkOrderId = w.Id,
                                  ServiceRequest = r,
                                  Created = w.Created,
                                  Updated = w.Modified
