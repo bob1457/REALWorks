@@ -75,6 +75,7 @@ namespace REALWorks.AssetServer.CommandHandlers
             var updatedProperty = new UpdatePropertyCommandResult();
             // need to populate it either manual or automapper***************************
             updatedProperty.PropertyId = request.PropertyId;
+            updatedProperty.Id = request.PropertyId;
             updatedProperty.AirConditioner = request.AirConditioner;
             updatedProperty.BasementAvailable = request.BasementAvailable;
             updatedProperty.CommonFacility = request.CommonFacility;
@@ -112,12 +113,15 @@ namespace REALWorks.AssetServer.CommandHandlers
 
             updatedProperty.Stove = request.Stove;
             updatedProperty.TotalLivingArea = request.TotalLivingArea;
-            updatedProperty.Tvinternet = request.Tvinternet;
+            updatedProperty.Tvinternet = request.Tvinternet; 
 
             updatedProperty.PropertyType1 = request.PropertyType1.ToString(); //***************************************************************
+            updatedProperty.Type = request.PropertyType1.ToString();// new for client side rendering
 
             updatedProperty.UtilityIncluded = request.UtilityIncluded;
             updatedProperty.CreationDate = ppt.Created;
+            updatedProperty.CreatedDate = ppt.Created; //new for client side rendering
+
             updatedProperty.UpdateDate = updated.Modified;
 
             updatedProperty.OwnerList = owners;
