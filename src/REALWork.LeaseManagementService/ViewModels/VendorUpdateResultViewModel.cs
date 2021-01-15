@@ -1,13 +1,12 @@
-﻿using MediatR;
-using REALWork.LeaseManagementService.ViewModels;
+﻿using REALWork.LeaseManagementCore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace REALWork.LeaseManagementService.Commands
+namespace REALWork.LeaseManagementService.ViewModels
 {
-    public class UpdateVendorCommand : IRequest<VendorUpdateResultViewModel>
+    public class VendorUpdateResultViewModel
     {
         public int Id { get; set; }
         public string VendorBusinessName { get;  set; }
@@ -19,5 +18,11 @@ namespace REALWork.LeaseManagementService.Commands
         public string VendorContactOthers { get;  set; }
         public string VendorContactEmail { get;  set; }
         public bool IsActive { get;  set; }
+        public bool OnlineAccessEnbaled { get;  set; }
+        public string UserAvartaImgUrl { get;  set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
+
+        public IList<WorkOrder> WrokOrderList { get; set; }
     }
 }
