@@ -96,6 +96,35 @@ namespace REALWork.LeaseManagementService.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("ServiceRequest/details/{id}")]
+        public async Task<IActionResult> GetServiceRequstDetails(int id)
+        {
+            var getRequestDetails = new ServiceRequestDetailsQuery()
+            {
+                Id = id
+            };
+
+            try
+            {
+                var request = await _mediator.Send(getRequestDetails);
+
+                if (request == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(request);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
+        }
+
+
         #endregion
 
         #region Vendor and Work Order
