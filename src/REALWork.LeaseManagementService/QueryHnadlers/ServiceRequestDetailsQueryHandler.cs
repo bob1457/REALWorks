@@ -25,7 +25,8 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
         {
             var serviceRequest = _context.Request
                 .Include(r => r.Lease)
-                .ThenInclude(l => l.RentalProperty);
+                .ThenInclude(l => l.RentalProperty)
+                .ThenInclude(p => p.WorkOrder).ToList();
 
             return serviceRequest.FirstOrDefault(r => r.Id == request.Id);
 
