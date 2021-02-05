@@ -74,6 +74,55 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
                                 }).FirstOrDefault();
 
+            // update status of related Service Request
+
+            var req = _context.Request.FirstOrDefault(r => r.Id == updatedOrder.ServiceRequestId);
+
+            var lease = _context.Lease.FirstOrDefault(l => l.Id == req.LeaseId);
+
+            int serviceReqStatus = 0;
+
+            switch(updatedOrder.WorkOrderStatus)
+            {
+                case "New":
+                    serviceReqStatus = 1;
+                    break;
+                case "Opened":
+                    serviceReqStatus = 2;
+                    break;
+                case "In Progress":
+                    serviceReqStatus = 3;
+                    break;
+                case "On Holde":
+                    serviceReqStatus = 4;
+                    break;
+                case "Completed":
+                    serviceReqStatus = 5;
+                    break;
+                case "Other":
+                    serviceReqStatus = 6;
+                    break;
+                default:
+                    serviceReqStatus = 0;
+                    break;
+
+            }
+
+            var updatedReq = lease.UpdateServiceRequest(req, serviceReqStatus, request.WorkOrderId);
+
+            _context.Request.Update(updatedReq);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            //
+
             var newlyUpdated = new WorkOrderUpdateResultViewModel();
 
             newlyUpdated.Id = updatedOrder.Id;
