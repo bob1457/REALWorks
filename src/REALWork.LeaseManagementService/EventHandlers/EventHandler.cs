@@ -52,7 +52,7 @@ namespace REALWork.LeaseManagementService.EventHandlers
                         //await HandleAsync(messageObject.ToObject<RentalPropertyStatusChangeEvent>());
                         break;
                     case "RentalPropertyCreatedEvent":
-                        await HandleAsync(messageObject.ToObject<PropertyCreatedEvent>());
+                        await HandleAsync(messageObject.ToObject<WorkOrderUpdatedEvent>());
                         break;
                     case "AddOwnerEvent":
                         await HandleAsync(messageObject.ToObject<AddOwnerEvent>());
@@ -167,7 +167,7 @@ namespace REALWork.LeaseManagementService.EventHandlers
             //throw new NotImplementedException();
         }
 
-        private async Task HandleAsync(PropertyCreatedEvent @event) //????
+        private async Task HandleAsync(WorkOrderUpdatedEvent @event) //????
         {
             var ownerAddress = new OwnerAddress(@event.StreetNum, @event.City, @event.StateProvince, @event.City, @event.ZipPostCode);
 

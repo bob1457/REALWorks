@@ -142,6 +142,8 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             newlyUpdated.ServiceRequest = updatedOrder.ServiceRequest;
             newlyUpdated.Vendor = updatedOrder.Vendor;
 
+            // Sending notification on related Service Request update to the requestor
+
 
             return newlyUpdated;
 

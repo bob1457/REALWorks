@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace REALWork.LeaseManagementService.Events
 {
-    public class PropertyCreatedEvent: Event
+    public class WorkOrderUpdatedEvent: Event
     {
         public readonly int PropertyId;
         public readonly string PropertyName;
@@ -40,7 +40,7 @@ namespace REALWork.LeaseManagementService.Events
         public readonly string OwnerCountry;
         public readonly string OwnerZipPostCode;
 
-        public PropertyCreatedEvent(
+        public WorkOrderUpdatedEvent(
             Guid messageId,
             int propertyId,
             string propertyName,
