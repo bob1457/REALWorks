@@ -25,9 +25,10 @@ namespace REALWorks.MarketingCore.Entities
             Modified = updated;
         }
 
-        public RentalPropertyOwner(string firstName, string lastName, string contactEmail, 
+        public RentalPropertyOwner(int originalId, string firstName, string lastName, string contactEmail, 
             string contactTelephone, string contactOther, OwnerAddress ownerAddress, int rentalPropertyId, DateTime create, DateTime updated)
         {
+            OriginalId = originalId;
             FirstName = firstName;
             LastName = lastName;
             ContactEmail = contactEmail;
@@ -39,6 +40,7 @@ namespace REALWorks.MarketingCore.Entities
             Modified = updated;
         }
 
+        public int OriginalId { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string ContactEmail { get; private set; }
@@ -54,5 +56,21 @@ namespace REALWorks.MarketingCore.Entities
         public RentalProperty RentalProperty { get; private set; }
 
         public OwnerAddress OwnerAddress { get; private set; }
+
+
+        public RentalPropertyOwner Update(RentalPropertyOwner owner, string firstName, string lastName, 
+            string contactEmail, string contactTel, string contactOther, OwnerAddress address)
+        {
+            owner.FirstName = firstName;
+            owner.LastName = lastName;
+            owner.ContactEmail = ContactEmail;
+            owner.ContactTelephone = ContactTelephone;
+            owner.ContactOther = contactOther;
+            owner.Modified = DateTime.Now;
+            owner.OwnerAddress = address;
+
+            return owner;
+
+        }
     }
 }

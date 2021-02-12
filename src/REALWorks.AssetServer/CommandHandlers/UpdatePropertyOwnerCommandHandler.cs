@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using REALWorks.AssetCore.Entities;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
+using REALWorks.AssetServer.Events;
 using REALWorks.AssetServer.Services.ViewModels;
+using REALWorks.MessagingServer.Messages;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -17,9 +19,12 @@ namespace REALWorks.AssetServer.CommandHandlers
     {
         private readonly AppDataBaseContext _context;
 
-        public UpdatePropertyOwnerCommandHandler(AppDataBaseContext context)
+        IMessagePublisher _messagePublisher;
+
+        public UpdatePropertyOwnerCommandHandler(AppDataBaseContext context, IMessagePublisher messagePublisher)
         {
             _context = context;
+            _messagePublisher = messagePublisher;
         }
 
         public async Task<UpdatePropertyOwnerCommandResult> Handle(UpdatePropertyOwnerCommand request, CancellationToken cancellationToken)
@@ -112,7 +117,23 @@ namespace REALWorks.AssetServer.CommandHandlers
                 // logging
                 Log.Information("The owner {OwnerName} for the property {PorpertyName} has been updated successfully", owner.FirstName + " " + owner.LastName, property.PropertyName);
 
-                // Send messages if necessary
+                // Send messages
+
+                UpdateOwnerEvent e = new UpdateOwnerEvent(new Guid(), request.Id, request.FirstName, request.LastName, request.ContactEmail, request.ContactTelephone1, 
+                                                          request.ContactTelephone2, owner.OnlineAccess, request.IsActive, 2, request.Notes, 
+                                                          request.StreetNumber, request.City, request.StateProvince, request.ZipPostCode, request.Country);
+
+                try
+                {
+                    await _messagePublisher.PublishMessageAsync(e.MessageType, e, "asset_created"); // publishing the message
+                    Log.Information("Message  {MessageType} with Id {MessageId} has been published successfully", e.MessageType, e.MessageId);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
+                }
+
+
 
             }
             catch (Exception ex)

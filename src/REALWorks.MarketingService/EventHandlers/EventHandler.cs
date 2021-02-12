@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
 using Newtonsoft.Json.Linq;
 using REALWorks.InfrastructureServer.MessageLog;
 using REALWorks.MarketingCore.Entities;
@@ -70,6 +71,9 @@ namespace REALWorks.MarketingService.EventHandlers
                     case "AddOwnerEvent":
                         await HandleAsync(messageObject.ToObject<AddOwnerEvent>());
                         break;
+                    case "UpdateOwnerEvent":
+                        await HandleAsync(messageObject.ToObject<UpdateOwnerEvent>());
+                        break;
                     default:
                         Console.WriteLine("Default case");
                         break;
@@ -87,13 +91,40 @@ namespace REALWorks.MarketingService.EventHandlers
             //throw new NotImplementedException();
         }
 
+        private async Task HandleAsync(UpdateOwnerEvent @event)
+        {
+            var owner = _context.RentalPropertyOwner.Include(o => o.OwnerAddress).FirstOrDefault(o => o.OriginalId == @event.PropertyOwnerId);
+
+            var oAddress = new OwnerAddress(@event.StreetNumber, @event.City, @event.StateProv, @event.ZipPostCode, @event.Country);
+
+            var updated = owner.Update(owner, @event.FirstName, @event.LastName, @event.ContactEmail, @event.ContactTelephone1, @event.ContactTelephone2, oAddress);
+
+            _context.RentalPropertyOwner.Update(updated);
+
+            try
+            {
+                _context.SaveChanges();
+
+                Log.Information("Message  {MessageType} with Id {MessageId} has been handled successfully", @event.MessageType, @event.MessageId);
+            }
+            catch (Exception ex)
+            {
+
+                //throw;
+                Log.Error(ex, "Error while handling {MessageType} message with id {MessageId}.", @event.MessageType, @event.MessageId);
+            }
+
+
+            //throw new NotImplementedException();
+        }
+
         private async Task HandleAsync(AddOwnerEvent @event)
         {
             var rentalProperty = _context.RentalProperty.FirstOrDefault(p => p.OriginalId == @event.PropertyId);
 
             var address = new OwnerAddress(@event.StreetNumber, @event.City, @event.StateProv, @event.Country, @event.ZipPostCode);
 
-            var owner = new RentalPropertyOwner(@event.FirstName, @event.LastName, @event.ContactEmail, 
+            var owner = new RentalPropertyOwner(@event.OriginalId, @event.FirstName, @event.LastName, @event.ContactEmail, 
                 @event.ContactTelephone1, @event.ContactTelephone2, address, rentalProperty.Id, DateTime.Now, DateTime.Now);
 
             _context.Add(owner);
@@ -112,6 +143,7 @@ namespace REALWorks.MarketingService.EventHandlers
                 // It may not need this because as ApproveApplicaiton Event will send property including owner so that it should be created in Lease service already
                 //************************************************
 
+                /*
                 AddOwnerEvent e = new AddOwnerEvent(new Guid(), @event.PropertyId, @event.UserName, @event.FirstName, @event.LastName,
                                                     @event.ContactEmail, @event.ContactTelephone1, @event.ContactTelephone2, @event.OnlineAccessEnbaled,
                                                     @event.UserAvartaImgUrl, @event.IsActive, @event.RoleId, @event.Notes, @event.StreetNumber,
@@ -127,6 +159,8 @@ namespace REALWorks.MarketingService.EventHandlers
                 {
                     Log.Error(ex, "Error while publishing {MessageType} message with id {MessageId}.", e.MessageType, e.MessageId);
                 }
+
+                */
             }
             catch (Exception ex)
             {

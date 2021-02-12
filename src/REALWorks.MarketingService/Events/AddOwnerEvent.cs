@@ -8,12 +8,13 @@ namespace REALWorks.MarketingService.Events
 {
     public class AddOwnerEvent : Event
     {
-        public AddOwnerEvent(Guid messageId, int propertyId, string userName, string firstName,
+        public AddOwnerEvent(Guid messageId, int originalId, int propertyId, string userName, string firstName,
             string lastName, string contactEmail, string contactTelephone1,
             string contactTelephone2, bool onlineAccessEnbaled, string userAvartaImgUrl,
             bool isActive, int roleId, string notes, string streetNumber, string city,
             string stateProv, string zipPostCode, string country) : base(messageId)
         {
+            OriginalId = originalId;
             PropertyId = propertyId;
             UserName = userName;
             FirstName = firstName;
@@ -33,6 +34,7 @@ namespace REALWorks.MarketingService.Events
             Country = country;
         }
 
+        public int OriginalId { get; set; }
         public int PropertyId { get; set; }
         public string UserName { get; set; }
         public string FirstName { get; set; }

@@ -106,7 +106,7 @@ namespace REALWorks.AssetServer.CommandHandlers
                 // Send messages if necessary
                 // Publish message to MQ for other service to consume
 
-                AddOwnerEvent e = new AddOwnerEvent(new Guid(), request.PropertyId, owner.UserName, owner.FirstName, owner.LastName,
+                AddOwnerEvent e = new AddOwnerEvent(new Guid(), owner.Id, request.PropertyId, owner.UserName, owner.FirstName, owner.LastName,
                                                     owner.ContactEmail, owner.ContactTelephone1, owner.ContactTelephone2, owner.OnlineAccess,
                                                     owner.UserAvartaImgUrl, owner.IsActive, owner.RoleId, owner.Notes, owner.Address.StreetNumber,
                                                     owner.Address.City, owner.Address.StateProvince, owner.Address.ZipPostCode, owner.Address.Country);
