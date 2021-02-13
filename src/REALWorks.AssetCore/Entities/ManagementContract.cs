@@ -78,5 +78,10 @@ namespace REALWorks.AssetCore.Entities
 
             return contract;
         }
+
+        public void AddSignedContractFile(string filePath, ManagementContract contract)
+        {
+            contract.ManagementContractDocUrl = filePath;
+        }
     }
 }

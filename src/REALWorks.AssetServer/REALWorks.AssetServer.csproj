@@ -50,4 +50,8 @@
     <ProjectReference Include="..\REALWorks.MessagingServer\REALWorks.MessagingServer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\files\" />
+  </ItemGroup>
+
 </Project>

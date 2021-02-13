@@ -356,6 +356,29 @@ namespace REALWorks.AssetServer.Controllers
             return Ok(ct);
         }
 
+
+        [HttpPost]
+        [Route("file/add")]
+        public async Task<IActionResult> UploadSignedContract([FromForm] UploadSignedContractCommand command)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var f = Request.Form.Files;
+
+            command.ContractFile = f[0];
+
+            if (command.ContractFile == null || command.ContractFile.Length == 0)
+                return Content("file not selected");
+
+            await _mediator.Send(command);
+
+            return Content("file uploaded successfully!");
+        }
+
+
         [HttpPost]
         [Route("fee/add")]
         public async Task<IActionResult> AddFeePayment([FromBody] AddFeePaymentCommand command)

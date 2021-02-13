@@ -241,7 +241,7 @@ namespace REALWorks.AssetCore.Entities
             return img;
         }
 
-
+               
         //public Property StatusUpdate(Property property, RentalStatus status) // for further review, needs to be re-tested
         //{
         //    property.Status = status;
