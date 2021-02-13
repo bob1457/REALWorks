@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using REALWorks.AssetData;
 using REALWorks.AssetServer.Commands;
 using REALWorks.AssetServer.Services.ViewModels;
@@ -22,30 +23,55 @@ namespace REALWorks.AssetServer.CommandHandlers
 
         public async Task<ManagementContractDetailsViewModel> Handle(AddManagementContractCommand request, CancellationToken cancellationToken)
         {
-            var property = _context.Property.FirstOrDefault(p => p.Id == request.PropertyId);
+            var property = _context.Property
+                .Include(p => p.ManagementContract)
+                .FirstOrDefault(p => p.Id == request.PropertyId);
 
-            var existingContract = _context.ManagementContract.FirstOrDefault(a => a.IsActive == true);
-            
+            // Get existing contract
+            //
+            var existingContract = property.ManagementContract.FirstOrDefault(c => c.IsActive == true);
 
-            if (request.ManagementContractType.ToString() == "Renewal")
+            if (existingContract != null)
             {
-                //var existingContract = _context.ManagementContract.FirstOrDefault(a => a.IsActive == true);
+                // Deactivate the existing active contract
+                //   
                 var updatedContract = property.UpdateManagementContractStatus(existingContract, false);
+
                 _context.Update(updatedContract);
 
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch(Exception ex)
-                {
-                    //throw ex;
-                    Log.Error(ex, "Error occured while renewing management contract to the property {PropertyName}.", property.PropertyName);
-                }
 
-                return new ManagementContractDetailsViewModel() { };
 
+                //if (request.ManagementContractType.ToString() == "Renewal")
+                //{
+                //    // Deactivate the existing active contract
+                //    //
+                //    var updatedContract = property.UpdateManagementContractStatus(existingContract, false);                
+
+                //    _context.Update(updatedContract);
+
+                //    // save to db aLL tegether at the end
+                //    //
+
+                //    //try
+                //    //{
+                //    //    await _context.SaveChangesAsync();
+                //    //}
+                //    //catch(Exception ex)
+                //    //{
+                //    //    //throw ex;
+                //    //    Log.Error(ex, "Error occured while renewing management contract to the property {PropertyName}.", property.PropertyName);
+                //    //}
+
+                //    //return new ManagementContractDetailsViewModel() { };
+
+                //}
+                //else
+                //{
+
+                //}
             }
+
+            
 
 
             var contract = property.AddManabgementContract(request.PropertyId, request.ManagementContractTitle, request.ManagementContractType,  
@@ -63,7 +89,7 @@ namespace REALWorks.AssetServer.CommandHandlers
             {
                 await _context.SaveChangesAsync();
 
-                property.UpdateManagementContractStatus(existingContract, false); // disable the previous contract, use case: ownership change
+                //property.UpdateManagementContractStatus(existingContract, false); // disable the previous contract, use case: ownership change
 
                 // map the return view model
                 newContract.Id = contract.Id;
@@ -82,7 +108,9 @@ namespace REALWorks.AssetServer.CommandHandlers
                 // logging
                 Log.Information("A management contract for the property {PorpertyName} has been added successfully", property.PropertyName);
 
-                // Send messages if necessary
+                // Send messages if necessary, e.g send notificaiton to the contract signers, including owners and pms
+
+
             }
             catch (Exception ex)
             {

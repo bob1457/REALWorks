@@ -103,7 +103,7 @@ namespace REALWorks.MarketingService.EventHandlers
 
             try
             {
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 Log.Information("Message  {MessageType} with Id {MessageId} has been handled successfully", @event.MessageType, @event.MessageId);
             }
@@ -184,7 +184,7 @@ namespace REALWorks.MarketingService.EventHandlers
 
             try
             {
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 Log.Information("Message  {MessageType} with Id {MessageId} has been handled successfully", @event.MessageType, @event.MessageId);
 
