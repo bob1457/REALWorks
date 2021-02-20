@@ -109,11 +109,15 @@ namespace REALWorks.AssetServer.EventHandlers
             {
                 newStatus = "Vacant";
             }
-
-            if (e.CurrentStatus == "NotSet")
+            else
             {
-                newStatus = "UnSet";
+                newStatus = e.CurrentStatus;
             }
+
+            //if (e.CurrentStatus == "NotSet")
+            //{
+            //    newStatus = "UnSet";
+            //}
 
 
 

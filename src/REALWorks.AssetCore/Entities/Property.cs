@@ -20,10 +20,11 @@ namespace REALWorks.AssetCore.Entities
 
         public enum RentalStatus
         {
-            UnSet,
-            Rented,
+            //UnSet,
+            New,
             Vacant, // listed for rent
             Pending, // application pending/screening
+            Rented,
             Other
         }
 

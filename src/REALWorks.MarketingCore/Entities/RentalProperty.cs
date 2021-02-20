@@ -24,7 +24,8 @@ namespace REALWorks.MarketingCore.Entities
 
         public enum ListingStatus
         {
-            NotSet,
+            //NotSet,
+            New,
             Listed,
             Pending, // Pending applications that are in the process of screening
             Rented,

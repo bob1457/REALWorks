@@ -235,6 +235,15 @@ namespace REALWorks.MarketingService.Controllers
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("publish")]
+        public async Task<IActionResult> PublishListing([FromBody] PublishPropertyListingCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
         [HttpGet]
         [Route("allrentalproperties")]
         public async Task<IActionResult> GetAllRentalProperties()
