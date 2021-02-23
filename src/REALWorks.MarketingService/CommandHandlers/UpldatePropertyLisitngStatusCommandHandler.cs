@@ -24,7 +24,7 @@ namespace REALWorks.MarketingService.CommandHandlers
             _messagePublisher = messagePublisher;
         }
 
-        public async Task<PropertyListingUpdateViewModel> Handle(UpldatePropertyLisitngStatusCommand request, CancellationToken cancellationToken) // This only update the isActive attribute
+        public async Task<PropertyListingUpdateViewModel> Handle(UpldatePropertyLisitngStatusCommand request, CancellationToken cancellationToken) 
         {
 
             var listing = _context.PropertyListing.FirstOrDefault(l => l.Id == request.Id);
@@ -36,7 +36,7 @@ namespace REALWorks.MarketingService.CommandHandlers
 
             int origId = 0;
 
-            if(request.RentalPropertyStatus.ToString() != "New")
+            if(request.RentalPropertyStatus.ToString() != "NotSet") 
             {
                 var property = _context.RentalProperty.FirstOrDefault(p => p.Id == listing.RentalPropertyId);
                 property.ListingStatusUpdate(property, request.RentalPropertyStatus);

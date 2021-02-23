@@ -104,8 +104,8 @@ namespace REALWorks.MarketingService.CommandHandlers
             if (request.AppStatus.ToString() == "Approved")
             {
                 
-                NewTemantCreatedEvent e = new NewTemantCreatedEvent(new Guid(), "NotSet", request.FirstName, request.LastName, request.ContactEmail, 
-                    request.ContactTelephone1, request.ContactTelephone2, request.ContactOthers);
+                //NewTemantCreatedEvent e = new NewTemantCreatedEvent(new Guid(), "NotSet", request.FirstName, request.LastName, request.ContactEmail, 
+                //    request.ContactTelephone1, request.ContactTelephone2, request.ContactOthers); // THE DATA ALREADY INCLUDED IN THE APP-APPROVE-EVENT
 
                 //var rentalproperty = _context.RentalProperty.Include(a => a.Address).FirstOrDefault(a => a.Id == application.RentalPropertyId); // Get related rental property
 

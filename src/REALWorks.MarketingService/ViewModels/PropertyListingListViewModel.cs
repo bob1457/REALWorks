@@ -15,6 +15,8 @@ namespace REALWorks.MarketingService.ViewModels
         public string ListingNote { get; set; }
         public bool IsActive { get; set; }
 
+        public string Status { get; set; }
+
         public int RentalPropertyId { get; set; }
         public string PropertyName { get; set; }
         public string PropertyType { get; set; }

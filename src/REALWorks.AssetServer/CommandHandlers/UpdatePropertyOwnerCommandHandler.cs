@@ -103,6 +103,7 @@ namespace REALWorks.AssetServer.CommandHandlers
             updatedOwner.Country = request.Country;
             updatedOwner.Created = owner.Created;
             updatedOwner.Modified = owner.Modified;
+            updatedOwner.Updated = owner.Modified;
 
             updatedOwner.Address = address;
 
