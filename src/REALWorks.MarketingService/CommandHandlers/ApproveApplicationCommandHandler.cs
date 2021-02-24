@@ -65,7 +65,7 @@ namespace REALWorks.MarketingService.CommandHandlers
                     }).ToList();
 
             //Get the related listing for this rental property
-            var listing = _context.PropertyListing.FirstAsync(l => l.RentalPropertyId == rentalProperty.Id);
+            var listing = _context.PropertyListing.FirstOrDefault(l => l.RentalPropertyId == rentalProperty.Id);
             
             
 
