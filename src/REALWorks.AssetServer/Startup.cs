@@ -43,8 +43,8 @@ namespace REALWorks.AssetServer
             // Init Serilog configuration
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
-                .Enrich.WithProperty("Application", "Asset Managemenr Service")
-                //.WriteTo.Seq("http://localhost:5341") // temporarily disabled so that the logs written to log files in E:\Temp\real --- by default
+                .Enrich.WithProperty("Application", "Asset Management Service")
+                .WriteTo.Seq("http://localhost:5341") // temporarily disabled so that the logs written to log files in E:\Temp\real --- by default
                 .CreateLogger();
             Configuration = configuration;
         }

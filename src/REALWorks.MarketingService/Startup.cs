@@ -30,7 +30,8 @@ namespace REALWorks.MarketingService
             // Init Serilog configuration
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
-                //.WriteTo.Seq("http://localhost:5341") // temporarily disabled so that the logs written to log files in E:\Temp\real --- by default
+                .Enrich.WithProperty("Application", "Marketing Management Service")
+                .WriteTo.Seq("http://localhost:5341") // temporarily disabled so that the logs written to log files in E:\Temp\real --- by default
                 .CreateLogger();
             Configuration = configuration;
         }

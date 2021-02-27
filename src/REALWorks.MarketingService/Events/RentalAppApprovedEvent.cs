@@ -51,7 +51,7 @@ namespace REALWorks.MarketingService.Events
             ContactTelephone1 = contactTelephone1;
             ContactTelephone2 = contactTelephone2;
             ContactOthers = contactOthers;
-            PropertyId = propertyId;
+            PropertyId = propertyId; // originalId from Marketeing and Assets Manager
             ListingId = listingId;
             PropertyName = propertyName;
             PropertyManagerUserName = propertyManagerUserName;

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using static REALWorks.MarketingCore.Entities.RentalProperty;
 
 namespace REALWorks.MarketingService.CommandHandlers
 {
@@ -32,6 +33,14 @@ namespace REALWorks.MarketingService.CommandHandlers
                 .FirstOrDefault(l => l.Id == request.Id);
 
             listing.Publish(listing);
+
+            // Update rental property status
+            //
+            string newStatus = "";
+
+            ListingStatus status = (ListingStatus)Enum.Parse(typeof(ListingStatus), newStatus, true);
+
+            listing.RentalProperty.StatusUpdate(status);
 
             try
             {

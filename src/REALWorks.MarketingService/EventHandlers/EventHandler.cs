@@ -211,11 +211,11 @@ namespace REALWorks.MarketingService.EventHandlers
         {
             // Handle lease finalize event - update property status
             //
-            var listing = _context.PropertyListing.FirstOrDefault(l => l.Id == @event.ListingId);
+            //var listing = _context.PropertyListing.FirstOrDefault(l => l.Id == @event.RentalPropertyId);
 
-            var pId = listing.RentalPropertyId;
+            //var pId = listing.RentalPropertyId;
 
-            var rentalProperty = _context.RentalProperty.FirstOrDefault(p => p.Id == pId);
+            var rentalProperty = _context.RentalProperty.FirstOrDefault(p => p.OriginalId == @event.RentalPropertyId);
 
             ListingStatus status = (ListingStatus)Enum.Parse(typeof(ListingStatus), "rented", true);
 
@@ -241,7 +241,7 @@ namespace REALWorks.MarketingService.EventHandlers
         {
             //var p = _context.RentalProperty.FirstOrDefault(r => r.Id == 2); // Test code
 
-            var ownerAddress = new OwnerAddress(@event.OwnerStreetNum, @event.OwnerCity, @event.OwnerStateProvince, @event.OwnerZipPostCode, @event.OwnerCountry);
+            var ownerAddress = new OwnerAddress(@event.OwnerStreetNum, @event.OwnerCity, @event.OwnerStateProvince, @event.OwnerCountry, @event.OwnerZipPostCode );
 
             var owner = new RentalPropertyOwner(@event.OwnerFirstName, @event.OwnerLastName, @event.OwnerContactEmail, @event.OwnerContactTel, @event.OwnerContactOther, ownerAddress,  DateTime.Now, DateTime.Now);
 

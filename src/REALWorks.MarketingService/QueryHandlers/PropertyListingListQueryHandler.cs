@@ -32,6 +32,7 @@ namespace REALWorks.MarketingService.QueryHandlers
                              ListingDesc = l.ListingDesc,
                              MonthlyRent = l.MonthlyRent,
                              IsActive = l.IsActive,
+                             Status = p.Status.ToString(),
                              RentalPropertyId = p.Id,
                              PropertyName = p.PropertyName,
                              PropertyType = p.PropertyType,

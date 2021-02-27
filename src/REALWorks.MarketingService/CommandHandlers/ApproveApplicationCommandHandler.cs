@@ -111,7 +111,7 @@ namespace REALWorks.MarketingService.CommandHandlers
 
                 //var address = new Address(request.);
 
-                /*
+ /*
                 //if (rentalProperty == null) // check if the rental property exists, if not create it
                 //{
                 RentalPropertyCreatedEvent e2 = new RentalPropertyCreatedEvent(new Guid(), rentalProperty.OriginalId, 0, rentalProperty.PropertyName, rentalProperty.PmUserName, rentalProperty.PropertyBuildYear,

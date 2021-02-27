@@ -45,7 +45,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
                 // Send message to MQ 
                 //
-                LeaseFinalizedEvent e = new LeaseFinalizedEvent(Guid.NewGuid(), rentalproeprty.ListinglId, rentalproeprty.OriginalId);
+                LeaseFinalizedEvent e = new LeaseFinalizedEvent(Guid.NewGuid(), /*rentalproeprty.ListinglId,*/ rentalproeprty.OriginalId);
 
                 try
                 {

@@ -9,12 +9,12 @@ namespace REALWork.LeaseManagementService.Events
     public class LeaseFinalizedEvent: Event
     {
         public readonly int RentalPropertyId;
-        public readonly int ListingId;
+        //public readonly int ListingId;
 
-        public LeaseFinalizedEvent(Guid messageId, int rentalPropertyId, int listingId) : base(messageId)
+        public LeaseFinalizedEvent(Guid messageId, int rentalPropertyId/*, int listingId*/) : base(messageId)
         {
             RentalPropertyId = rentalPropertyId;
-            ListingId = listingId;
+            //ListingId = listingId;
         }
     }
 }
