@@ -47,9 +47,9 @@ namespace REALWork.LeaseManagementService
 
             // setup messagehandler
             RabbitMQMessageHandler messageHandlerMarketing = new RabbitMQMessageHandler(host, userName, password, exchange, connName, "app_approved", "app_approved.#"); // "real", ""); listening queue: marketing.lease, 
-            //RabbitMQMessageHandler messageHandlerAsset = new RabbitMQMessageHandler(host, userName, password, exchange, "asset.lease", "");
-            
-            
+            RabbitMQMessageHandler messageHandlerAsset = new RabbitMQMessageHandler(host, userName, password, exchange, connName, "asset_created.lease", "asset_created.#");
+
+
             //setup DBContext
             //
             var sqlConnectionString = Config.GetConnectionString("AppDbConnection");
@@ -72,8 +72,8 @@ namespace REALWork.LeaseManagementService
             EventHandlers.EventHandler eventHandlerMarketing = new EventHandlers.EventHandler(messageHandlerMarketing, dbContext); // Subscribe/Handle message publshied by Marketing Service
             eventHandlerMarketing.Start();
 
-            //EventHandlers.EventHandler eventHandlerAsset = new EventHandlers.EventHandler(messageHandlerAsset, dbContext); // Subscribe/Handle message publshied by Asset Service
-            //eventHandlerAsset.Start();
+            EventHandlers.EventHandler eventHandlerAsset = new EventHandlers.EventHandler(messageHandlerAsset, dbContext); // Subscribe/Handle message publshied by Asset Service
+            eventHandlerAsset.Start();
 
             //if (_env == "Development")
             //{

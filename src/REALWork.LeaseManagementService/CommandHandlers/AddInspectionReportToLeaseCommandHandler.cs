@@ -12,12 +12,12 @@ namespace REALWork.LeaseManagementService.CommandHandlers
     public class AddInspectionReportToLeaseCommandHandler : IRequestHandler<AddInspectionReportToLeaseCommand, Unit>
     {
         private readonly AppLeaseManagementDbContext _context;
-        private readonly IMediator mediator;
+        //private readonly IMediator mediator;
 
-        public AddInspectionReportToLeaseCommandHandler(AppLeaseManagementDbContext context, IMediator _mediator)
+        public AddInspectionReportToLeaseCommandHandler(AppLeaseManagementDbContext context/*, IMediator _mediator*/)
         {
             _context = context;
-            _mediator = mediator;
+            //_mediator = mediator;
         }
 
         public Task<Unit> Handle(AddInspectionReportToLeaseCommand request, CancellationToken cancellationToken)

@@ -96,6 +96,25 @@ namespace REALWork.LeaseManagementCore.Entities
             Status = status;
         }
 
+        public RentalProperty Update(RentalProperty property, string propertyName, int buildYear, string type, bool basement, bool shared, int bedroom,
+            int bathroom, int layer, int parking, int livingArea, Address address)
+        {
+            property.PropertyName = propertyName;
+            property.PropertyBuildYear = PropertyBuildYear;
+            property.PropertyType = type;
+            property.IsBasementSuite = basement;
+            property.IsShared = shared;
+            property.NumberOfBathrooms = bathroom;
+            property.NumberOfBedrooms = bedroom;
+            property.NumberOfLayers = layer;
+            property.NumberOfParking = parking;
+            property.TotalLivingArea = livingArea;
+            property.Address = address;
+            property.Modified = DateTime.Now;
+
+            return property;
+        }
+
         public WorkOrder AddWorkOrder(string WorkOrderName, string WorkOrderDetails, string WorkOrderCategory, int RentalPropertyId,
             int VendorId, int ServiceRequestId, string WorkOrderType, DateTime StartDate, DateTime EndDate, bool IsOwnerAuthorized, bool IsEmergency,
             string WorkOrderStatus, string Note) {

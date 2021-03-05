@@ -45,7 +45,7 @@ namespace REALWorks.MarketingService
             string connName = configSection["ConnectionName"];
 
             // setup messagehandler
-            RabbitMQMessageHandler messageHandler = new RabbitMQMessageHandler(host, userName, password, exchange, connName, "asset_created", "asset_created.#");  // subscribe/listen to queue 
+            RabbitMQMessageHandler messageHandler = new RabbitMQMessageHandler(host, userName, password, exchange, connName, "asset_created.marketing", "asset_created.#");  // subscribe/listen to queue 
 
             RabbitMQMessageHandler messageHandler2 = new RabbitMQMessageHandler(host, userName, password, exchange, connName, "lease_finalized.marketing", "lease_finalized.#");  // subscribe/listen to queue 
 

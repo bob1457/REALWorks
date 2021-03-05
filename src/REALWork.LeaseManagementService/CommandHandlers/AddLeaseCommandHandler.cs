@@ -56,7 +56,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
 
             var property = _context.RentalProperty.FirstOrDefault(p => p.Id == request.RentalPropertyId);
 
-            property.StatusUpdate("Rented");
+            property.StatusUpdate("Pending");
 
             _context.Add(lease);
 

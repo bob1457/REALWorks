@@ -54,11 +54,17 @@ namespace REALWork.LeaseManagementService.EventHandlers
                     case "RentalPropertyCreatedEvent":
                         await HandleAsync(messageObject.ToObject<WorkOrderUpdatedEvent>());
                         break;
+                    case "PropertyUpdateEvent":
+                        await HandleAsync(messageObject.ToObject<PropertyUpdateEvent>());
+                        break;
                     case "AddOwnerEvent":
                         await HandleAsync(messageObject.ToObject<AddOwnerEvent>());
                         break;
                     case "RentalAppApprovedEvent":
                         await HandleAsync(messageObject.ToObject<RentalAppApprovedEvent>());
+                        break;
+                    case "UpdateOwnerEvent":
+                        await HandleAsync(messageObject.ToObject<UpdateOwnerEvent>());
                         break;
                     //case "LeaseFinalizedEvent":
                     //    await HandleAsync(messageObject.ToObject<LeaseFinalizedEvent>());
@@ -80,29 +86,99 @@ namespace REALWork.LeaseManagementService.EventHandlers
             //throw new NotImplementedException();
         }
 
-        private async Task HandleAsync(AddOwnerEvent @event)
+        private async Task HandleAsync(PropertyUpdateEvent @event)
         {
+            var rentalProperty = _context.RentalProperty.FirstOrDefault(i => i.OriginalId == @event.PropertyId);
 
-            var rentalProperty = _context.RentalProperty.Include(a => a.Address).FirstOrDefault(p => p.OriginalId == @event.PropertyId);
+            var address = new Address(@event.StreetNum, @event.City, @event.StateProvince, @event.Country, @event.ZipPostCode);
 
-            var address = new OwnerAddress(@event.StreetNumber, @event.City, @event.StateProv, @event.Country, @event.ZipPostCode);
+            var updated = rentalProperty.Update(rentalProperty, @event.PropertyName, @event.PropertyBuildYear, @event.Type, @event.IsBasementSuite, @event.IsShared,
+                @event.NumberOfBedrooms, @event.NumberOfBathrooms, @event.NumberOfLayers, @event.NumberOfParking, @event.TotalLivingArea, address);
 
-            var owner = new RentalPropertyOwner(@event.FirstName, @event.LastName, @event.ContactEmail,
-                @event.ContactTelephone1, @event.ContactTelephone2, rentalProperty.Id, address, DateTime.Now, DateTime.Now);
-
-            _context.Add(owner);
+            _context.RentalProperty.Update(updated);
 
             try
             {
                 await _context.SaveChangesAsync();
 
-                Log.Information("Owner {Owner} has been added to property {Property} successfully", @event.FirstName + " " + @event.LastName, rentalProperty.PropertyName);
+                Log.Information("Message  {MessageType} with Id {MessageId} has been handled successfully", @event.MessageType, @event.MessageId);
+
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Error while addinng owner {Owner} to {Property}.", @event.FirstName + " " + @event.LastName, rentalProperty.PropertyName);
-                throw ex;
+
+                //throw;
+                Log.Error(ex, "Error while handling {MessageType} message with id {MessageId}.", @event.MessageType, @event.MessageId);
             }
+            //throw new NotImplementedException();
+        }
+
+        private async Task HandleAsync(UpdateOwnerEvent @event)
+        {
+            var owner = _context.RentalPropertyOwner.Include(o => o.OwnerAddress).FirstOrDefault(o => o.OriginalId == @event.PropertyOwnerId);
+
+            if (owner != null)
+            {
+                var oAddress = new OwnerAddress(@event.StreetNumber, @event.City, @event.StateProv, @event.ZipPostCode, @event.Country);
+
+                var updated = owner.Update(owner, @event.FirstName, @event.LastName, @event.ContactEmail, @event.ContactTelephone1, @event.ContactTelephone2, oAddress);
+
+                _context.RentalPropertyOwner.Update(updated);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+
+                    Log.Information("Message  {MessageType} with Id {MessageId} has been handled successfully", @event.MessageType, @event.MessageId);
+                }
+                catch (Exception ex)
+                {
+
+                    //throw;
+                    Log.Error(ex, "Error while handling {MessageType} message with id {MessageId}.", @event.MessageType, @event.MessageId);
+                }
+            }
+            else
+            {
+                Log.Information("The owner with Id: {OwnerId} does not exist.", @event.PropertyOwnerId);
+            }
+
+
+            //throw new NotImplementedException();
+        }
+
+        private async Task HandleAsync(AddOwnerEvent @event)
+        {
+
+            var rentalProperty = _context.RentalProperty.Include(a => a.Address).FirstOrDefault(p => p.OriginalId == @event.PropertyId);
+
+            if (rentalProperty != null)
+            {
+                var address = new OwnerAddress(@event.StreetNumber, @event.City, @event.StateProv, @event.Country, @event.ZipPostCode);
+
+                var owner = new RentalPropertyOwner(@event.OriginalId, @event.FirstName, @event.LastName, @event.ContactEmail,
+                    @event.ContactTelephone1, @event.ContactTelephone2, rentalProperty.Id, address, DateTime.Now, DateTime.Now);
+
+                _context.Add(owner);
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+
+                    Log.Information("Owner {Owner} has been added to property {Property} successfully", @event.FirstName + " " + @event.LastName, rentalProperty.PropertyName);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Error while addinng owner {Owner} to {Property}.", @event.FirstName + " " + @event.LastName, rentalProperty.PropertyName);
+                    throw ex;
+                }
+            }
+            else
+            {
+                Log.Information("The rental property with Id: {PrpertyId} does not exist.", @event.PropertyId);
+            }
+
+            
 
             //throw new NotImplementedException();
         }
@@ -169,14 +245,14 @@ namespace REALWork.LeaseManagementService.EventHandlers
 
         private async Task HandleAsync(WorkOrderUpdatedEvent @event) //????
         {
-            var ownerAddress = new OwnerAddress(@event.StreetNum, @event.City, @event.StateProvince, @event.City, @event.ZipPostCode);
+            //var ownerAddress = new OwnerAddress(@event.StreetNum, @event.City, @event.StateProvince, @event.City, @event.ZipPostCode);
 
             var address = new Address(@event.StreetNum, @event.City, @event.StateProvince, @event.City, @event.ZipPostCode);
 
             // need to add owner infomration
 
-            var owner = new RentalPropertyOwner(@event.OwnerFirstName, @event.OwnerLastName, @event.OwnerContactEmail,
-               @event.OwnerContactTel, @event.OwnerContactOther,  @event.PropertyId, ownerAddress, DateTime.Now, DateTime.Now);
+            //var owner = new RentalPropertyOwner(@event.OwnerFirstName, @event.OwnerLastName, @event.OwnerContactEmail,
+            //   @event.OwnerContactTel, @event.OwnerContactOther,  @event.PropertyId, ownerAddress, DateTime.Now, DateTime.Now);
 
             var rentalProperty = new RentalProperty(@event.PropertyId, DateTime.Now, DateTime.Now, 0, @event.PropertyName, @event.Type, @event.PropertyBuildYear, 
                 @event.IsShared,"Rented", @event.IsBasementSuite, @event.NumberOfBedrooms, @event.NumberOfBathrooms, @event.NumberOfLayers, @event.NumberOfParking, 
