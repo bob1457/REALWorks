@@ -22,8 +22,8 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
 
         public async Task<Lease> Handle(LeaseDetailsQuery request, CancellationToken cancellationToken) // need to refactor the query using view model
         {
-            var lease = _context.Lease 
-                .Include(p => p.RentalProperty).ThenInclude(a => a.Address)
+            var lease = _context.Lease
+                //.Include(p => p.RentalProperty).ThenInclude(a => a.Address)
                 .Include(l => l.RentalProperty).ThenInclude(p => p.RentalPropertyOwners)
                 .Include(a => a.Agent)
                 .Include(l => l.RentPayment) // considering not inlcuded here, instead use a separate process
@@ -33,7 +33,7 @@ namespace REALWork.LeaseManagementService.QueryHnadlers
             //    .Include(p => p.Address)
             //    .Include(p => p.RentalPropertyOwners).ToList();
 
-            
+
 
 
             //throw new NotImplementedException();

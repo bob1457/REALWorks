@@ -99,7 +99,7 @@ namespace REALWork.LeaseManagementService.Controllers
 
         [HttpGet]
         [Route("renthistory")]
-        public async Task<IActionResult> GetRentPaymentHistory() //id: lease id
+        public async Task<IActionResult> GetRentPaymentHistory() 
         {            
             try
             {

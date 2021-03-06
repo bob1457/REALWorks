@@ -40,7 +40,7 @@ namespace REALWork.LeaseManagementCore.Entities
             Modified = updated;
         }
 
-        public int OriginalId { get; private set; }
+        public int? OriginalId { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string ContactEmail { get; private set; }

@@ -37,7 +37,7 @@ namespace REALWork.LeaseManagementService.CommandHandlers
             catch (Exception ex)
             {
                 //throw ex;
-                Log.Error(ex, "Error while updating the rent payment {LeaseTile}.", lease.LeaseTitle);
+                Log.Error(ex, "Error while updating the rent payment for {LeaseTile}.", lease.LeaseTitle);
             }
 
             return await Unit.Task;
