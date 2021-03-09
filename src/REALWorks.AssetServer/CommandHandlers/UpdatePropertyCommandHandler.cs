@@ -46,7 +46,7 @@ namespace REALWorks.AssetServer.CommandHandlers
             var facility = new PropertyFacility(request.Stove, request.Refrigerator, request.Dishwasher,
                 request.AirConditioner, request.Laundry, request.BlindsCurtain, request.Furniture,
                 request.Tvinternet, request.CommonFacility, request.SecuritySystem, request.UtilityIncluded,
-                request.FireAlarmSystem, request.FacilityNotes, request.Others);
+                request.FireAlarmSystem, request.Others, request.FacilityNotes );
 
 
 

@@ -99,7 +99,7 @@ namespace REALWorks.AssetServer.Queries
                     UtilityIncluded = op.Facility.UtilityIncluded,
                     FireAlarmSystem = op.Facility.FireAlarmSystem,
                     Others = op.Facility.Others,
-                    FacilityNotes = op.Facility.Others,
+                    FacilityNotes = op.Facility.Notes,
 
                     CreationDate = op.Created,
                     UpdateDate = op.Modified,
